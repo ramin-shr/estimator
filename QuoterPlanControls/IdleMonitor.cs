@@ -1,135 +1,90 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace QuoterPlanControls
 {
-	public class IdleMonitor : IDisposable
-	{
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		private static extern bool GetLastInputInfo(ref IdleMonitor.LastInputInfo plii);
+    public sealed class IdleMonitor : IDisposable
+    {
+        private readonly int idleThresholdMilliseconds;
+        private int lastUpdateTicks;
+        private bool isIdle;
 
-		public event EventHandler IdleStateChanged
-		{
-			add
-			{
-				EventHandler eventHandler = this.IdleStateChanged;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.IdleStateChanged, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-			remove
-			{
-				EventHandler eventHandler = this.IdleStateChanged;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.IdleStateChanged, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-		}
+        private LastInputInfo lastInputInfo = new LastInputInfo
+        {
+            cbSize = LastInputInfo.Size
+        };
 
-		public IdleMonitor(int idleThreshold, int refreshInterval)
-		{
-			this._IdleThreshold = idleThreshold;
-			this._LastUpdateTicks = Environment.TickCount;
-			this._Timer = new Timer
-			{
-				Interval = refreshInterval
-			};
-			this._Timer.Tick += delegate(object A_1, EventArgs A_2)
-			{
-				int tickCount = Environment.TickCount;
-				IdleMonitor.GetLastInputInfo(ref this._LastInputInfo);
-				this.IsIdle = ((long)tickCount - (long)((ulong)this._LastInputInfo.dwTime) > (long)this._IdleThreshold);
-				this._LastUpdateTicks = tickCount;
-			};
-			this._Timer.Enabled = true;
-		}
+        private readonly Timer timer;
 
-		public bool Enabled
-		{
-			get
-			{
-				return this._Timer.Enabled;
-			}
-			set
-			{
-				this._Timer.Enabled = value;
-			}
-		}
+        public event EventHandler IdleStateChanged;
 
-		public bool IsIdle
-		{
-			get
-			{
-				return this._IsIdle;
-			}
-			set
-			{
-				if (this._IsIdle != value)
-				{
-					this._IsIdle = value;
-					if (this.IdleStateChanged != null)
-					{
-						this.IdleStateChanged(this, EventArgs.Empty);
-					}
-				}
-			}
-		}
+        public bool Enabled
+        {
+            get => timer.Enabled;
+            set => timer.Enabled = value;
+        }
 
-		public void Dispose()
-		{
-			this._Timer.Dispose();
-		}
+        public bool IsIdle
+        {
+            get => isIdle;
+            private set
+            {
+                if (isIdle == value)
+                    return;
 
-		[CompilerGenerated]
-		private void <.ctor>b__2(object A_1, EventArgs A_2)
-		{
-			int tickCount = Environment.TickCount;
-			IdleMonitor.GetLastInputInfo(ref this._LastInputInfo);
-			this.IsIdle = ((long)tickCount - (long)((ulong)this._LastInputInfo.dwTime) > (long)this._IdleThreshold);
-			this._LastUpdateTicks = tickCount;
-		}
+                isIdle = value;
+                IdleStateChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
-		private int _IdleThreshold;
+        public IdleMonitor(int idleThreshold, int refreshInterval)
+        {
+            idleThresholdMilliseconds = idleThreshold;
+            lastUpdateTicks = Environment.TickCount;
 
-		private int _LastUpdateTicks;
+            timer = new Timer
+            {
+                Interval = refreshInterval,
+                Enabled = true
+            };
 
-		private bool _IsIdle;
+            timer.Tick += OnTimerTick;
+        }
 
-		private IdleMonitor.LastInputInfo _LastInputInfo = new IdleMonitor.LastInputInfo
-		{
-			cbSize = IdleMonitor.LastInputInfo.Size
-		};
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            int tickCount = Environment.TickCount;
 
-		private Timer _Timer;
+            GetLastInputInfo(ref lastInputInfo);
 
-		private EventHandler IdleStateChanged;
+            uint elapsedMs = unchecked((uint)tickCount - lastInputInfo.dwTime);
+            IsIdle = elapsedMs > (uint)idleThresholdMilliseconds;
 
-		private struct LastInputInfo
-		{
-			// Note: this type is marked as 'beforefieldinit'.
-			static LastInputInfo()
-			{
-			}
+            lastUpdateTicks = tickCount;
+        }
 
-			public static readonly uint Size = (uint)Marshal.SizeOf(typeof(IdleMonitor.LastInputInfo));
+        public void Dispose()
+        {
+            timer.Dispose();
+        }
 
-			public uint cbSize;
+        [DllImport("user32.dll", ExactSpelling = false, CharSet = CharSet.Auto)]
+        private static extern bool GetLastInputInfo(ref LastInputInfo plii);
 
-			public uint dwTime;
-		}
-	}
+        private struct LastInputInfo
+        {
+            public static readonly uint Size;
+
+            public uint cbSize;
+            public uint dwTime;
+
+            static LastInputInfo()
+            {
+                Size = (uint)Marshal.SizeOf(typeof(LastInputInfo));
+            }
+        }
+    }
 }

@@ -1,0 +1,6 @@
+C:\Estimator\QuoterImaging\bin\Debug\QuoterImaging.dll
+C:\Estimator\QuoterImaging\bin\Debug\QuoterImaging.pdb
+C:\Estimator\QuoterImaging\obj\x86\Debug\QuoterImaging.csproj.AssemblyReference.cache
+C:\Estimator\QuoterImaging\obj\x86\Debug\QuoterImaging.csproj.CoreCompileInputs.cache
+C:\Estimator\QuoterImaging\obj\x86\Debug\QuoterImaging.dll
+C:\Estimator\QuoterImaging\obj\x86\Debug\QuoterImaging.pdb

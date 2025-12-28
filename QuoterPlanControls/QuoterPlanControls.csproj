@@ -9,59 +9,76 @@
     <RootNamespace>QuoterPlanControls</RootNamespace>
     <AssemblyName>QuoterPlanControls</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <FileAlignment>512</FileAlignment>
+    <!-- Good defaults -->
+    <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <!-- External dependency -->
     <Reference Include="QuoterImaging">
       <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\QuoterImaging.dll</HintPath>
+      <Private>true</Private>
     </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.dll</HintPath>
-    </Reference>
+    <!-- Framework references (NO HintPath junk) -->
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DrawingBoard.cs" />
+    <Compile Include="DrawingBoard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="IdleMonitor.cs" />
     <Compile Include="InterpolationModes.cs" />
-    <Compile Include="MainControl.cs" />
+    <Compile Include="MainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="OriginChangeEventHandler.cs" />
     <Compile Include="PaintEventHandler.cs" />
-    <Compile Include="PanControl.cs" />
+    <Compile Include="PanControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="PanningEventHandler.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ZoomChangeEventHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DrawingBoard.resources" />
-    <EmbeddedResource Include="MainControl.resources" />
-    <EmbeddedResource Include="PanControl.resources" />
+    <EmbeddedResource Include="DrawingBoard.resx">
+      <DependentUpon>DrawingBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainControl.resx">
+      <DependentUpon>MainControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PanControl.resx">
+      <DependentUpon>PanControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

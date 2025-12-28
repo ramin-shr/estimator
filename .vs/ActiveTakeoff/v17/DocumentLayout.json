@@ -1,7 +1,40 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\estimator\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|QuoterImaging||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|QuoterPlanControls||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\drawingboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\drawingboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1152667A-20B8-4115-895C-288C49267F1F}|QuoterImaging\\QuoterImaging.csproj|c:\\estimator\\quoterimaging\\rotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1152667A-20B8-4115-895C-288C49267F1F}|QuoterImaging\\QuoterImaging.csproj|solutionrelative:quoterimaging\\rotator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1152667A-20B8-4115-895C-288C49267F1F}|QuoterImaging\\QuoterImaging.csproj|c:\\estimator\\quoterimaging\\imaging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1152667A-20B8-4115-895C-288C49267F1F}|QuoterImaging\\QuoterImaging.csproj|solutionrelative:quoterimaging\\imaging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1152667A-20B8-4115-895C-288C49267F1F}|QuoterImaging\\QuoterImaging.csproj|c:\\estimator\\quoterimaging\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,15 +42,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "QuoterImaging",
+              "DocumentMoniker": "C:\\Estimator\\QuoterImaging\\QuoterImaging.csproj",
+              "RelativeDocumentMoniker": "QuoterImaging\\QuoterImaging.csproj",
+              "ToolTip": "C:\\Estimator\\QuoterImaging\\QuoterImaging.csproj",
+              "RelativeToolTip": "QuoterImaging\\QuoterImaging.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-28T12:17:17.264Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainControl.cs",
+              "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\MainControl.cs",
+              "RelativeDocumentMoniker": "QuoterPlanControls\\MainControl.cs",
+              "ToolTip": "C:\\estimator\\QuoterPlanControls\\MainControl.cs",
+              "RelativeToolTip": "QuoterPlanControls\\MainControl.cs",
+              "ViewState": "AgIAALYBAAAAAAAAAAAcwNcBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:15:09.713Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainControl.cs [Design]",
+              "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\MainControl.cs",
+              "RelativeDocumentMoniker": "QuoterPlanControls\\MainControl.cs",
+              "ToolTip": "C:\\estimator\\QuoterPlanControls\\MainControl.cs [Design]",
+              "RelativeToolTip": "QuoterPlanControls\\MainControl.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:15:04.485Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QuoterPlanControls",
+              "DocumentMoniker": "C:\\Estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
+              "RelativeDocumentMoniker": "QuoterPlanControls\\QuoterPlanControls.csproj",
+              "ToolTip": "C:\\Estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
+              "RelativeToolTip": "QuoterPlanControls\\QuoterPlanControls.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-28T12:14:44.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DrawingBoard.cs [Design]",
+              "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\DrawingBoard.cs",
+              "RelativeDocumentMoniker": "QuoterPlanControls\\DrawingBoard.cs",
+              "ToolTip": "C:\\estimator\\QuoterPlanControls\\DrawingBoard.cs [Design]",
+              "RelativeToolTip": "QuoterPlanControls\\DrawingBoard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:14:19.474Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Rotator.cs",
+              "DocumentMoniker": "C:\\estimator\\QuoterImaging\\Rotator.cs",
+              "RelativeDocumentMoniker": "QuoterImaging\\Rotator.cs",
+              "ToolTip": "C:\\estimator\\QuoterImaging\\Rotator.cs",
+              "RelativeToolTip": "QuoterImaging\\Rotator.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBQAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:14:06.97Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Imaging.cs",
+              "DocumentMoniker": "C:\\estimator\\QuoterImaging\\Imaging.cs",
+              "RelativeDocumentMoniker": "QuoterImaging\\Imaging.cs",
+              "ToolTip": "C:\\estimator\\QuoterImaging\\Imaging.cs",
+              "RelativeToolTip": "QuoterImaging\\Imaging.cs",
+              "ViewState": "AgIAAPABAAAAAAAAAAAcwBECAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:13:59.717Z",
+              "EditorCaption": ""
             }
           ]
         }

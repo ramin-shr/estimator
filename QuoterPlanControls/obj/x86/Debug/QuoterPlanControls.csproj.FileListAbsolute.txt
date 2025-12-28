@@ -1,0 +1,12 @@
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.csproj.AssemblyReference.cache
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.DrawingBoard.resources
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.MainControl.resources
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.PanControl.resources
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.csproj.GenerateResource.cache
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.csproj.CoreCompileInputs.cache
+C:\Estimator\QuoterPlanControls\bin\Debug\QuoterPlanControls.dll
+C:\Estimator\QuoterPlanControls\bin\Debug\QuoterPlanControls.pdb
+C:\Estimator\QuoterPlanControls\bin\Debug\QuoterImaging.dll
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPl.E7466172.Up2Date
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.dll
+C:\Estimator\QuoterPlanControls\obj\x86\Debug\QuoterPlanControls.pdb
