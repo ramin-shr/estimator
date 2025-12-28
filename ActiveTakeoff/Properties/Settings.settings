@@ -1,0 +1,138 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile CurrentProfile="(Default)" GeneratedClassNamespace="QuoterPlan.Properties" GeneratedClassName="Settings" xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WindowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="ImportDpi" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">172</Value>
+    </Setting>
+    <Setting Name="ImportManualDpi" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">172</Value>
+    </Setting>
+    <Setting Name="AngleType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PDFFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="ThemeStyle" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="MruList" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="SlopeType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ImagesFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="UICulture" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="InstallLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fr</Value>
+    </Setting>
+    <Setting Name="ScrollSpeed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="DataFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="ReportTheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bleu ciel</Value>
+    </Setting>
+    <Setting Name="ExportToExcelType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Ortho" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PrintPlanType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ConvertPDFToColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MaxPDFImportSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">50000000</Value>
+    </Setting>
+    <Setting Name="TakeoffLayout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;dotnetbarlayout version="6" zorder="2,3,4,5"&gt; &lt;docksite size="0" dockingside="Top" originaldocksitesize="0" /&gt; &lt;docksite size="0" dockingside="Bottom" originaldocksitesize="0" /&gt; &lt;docksite size="333" dockingside="Left" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="189"&gt; &lt;bar name="containerBarNavigation" dockline="0" layout="2" dockoffset="0" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemPreview" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="350"&gt; &lt;bar name="containerBarProperties" dockline="0" layout="2" dockoffset="193" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemProperties" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="109"&gt; &lt;bar name="containerBarLayers" dockline="0" layout="2" dockoffset="527" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemLayers" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;docksite size="333" dockingside="Right" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="423"&gt; &lt;bar name="containerBarGroups" dockline="0" layout="2" dockoffset="-1" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemGroups" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="208"&gt; &lt;bar name="containerBarRecentPlans" dockline="999" layout="2" dockoffset="427" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemRecentPlans" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;bars&gt; &lt;bar name="containerBarEstimating" dockline="0" layout="2" dockoffset="0" state="2" dockside="2" visible="true" autohide="true" dockwidth="548"&gt; &lt;items&gt; &lt;item name="dockContainerItemEstimating" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/bars&gt; &lt;/dotnetbarlayout&gt;</Value>
+    </Setting>
+    <Setting Name="EstimatingLayout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;dotnetbarlayout version="6" zorder="2,3,4,5"&gt; &lt;docksite size="0" dockingside="Top" originaldocksitesize="0" /&gt; &lt;docksite size="0" dockingside="Bottom" originaldocksitesize="0" /&gt; &lt;docksite size="333" dockingside="Left" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="189"&gt; &lt;bar name="containerBarNavigation" dockline="0" layout="2" dockoffset="0" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemPreview" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="350"&gt; &lt;bar name="containerBarProperties" dockline="0" layout="2" dockoffset="193" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemProperties" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="109"&gt; &lt;bar name="containerBarLayers" dockline="0" layout="2" dockoffset="527" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemLayers" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;docksite size="333" dockingside="Right" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="423"&gt; &lt;bar name="containerBarGroups" dockline="0" layout="2" dockoffset="-1" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemGroups" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="208"&gt; &lt;bar name="containerBarRecentPlans" dockline="999" layout="2" dockoffset="427" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemRecentPlans" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;bars&gt; &lt;bar name="containerBarEstimating" dockline="0" layout="2" dockoffset="0" state="2" dockside="2" visible="true" autohide="true" dockwidth="548"&gt; &lt;items&gt; &lt;item name="dockContainerItemEstimating" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/bars&gt; &lt;/dotnetbarlayout&gt;</Value>
+    </Setting>
+    <Setting Name="Tax1Label" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Taxe 1</Value>
+    </Setting>
+    <Setting Name="Tax2Label" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Taxe 2</Value>
+    </Setting>
+    <Setting Name="Tax1Rate" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Tax2Rate" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="TaxOnTax" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DefaultLayout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;dotnetbarlayout version="6" zorder="2,3,4,5"&gt; &lt;docksite size="0" dockingside="Top" originaldocksitesize="0" /&gt; &lt;docksite size="0" dockingside="Bottom" originaldocksitesize="0" /&gt; &lt;docksite size="333" dockingside="Left" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="189"&gt; &lt;bar name="containerBarNavigation" dockline="0" layout="2" dockoffset="0" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemPreview" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="350"&gt; &lt;bar name="containerBarProperties" dockline="0" layout="2" dockoffset="193" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemProperties" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="109"&gt; &lt;bar name="containerBarLayers" dockline="0" layout="2" dockoffset="527" state="2" dockside="1" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemLayers" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;docksite size="333" dockingside="Right" originaldocksitesize="0"&gt; &lt;dockcontainer orientation="1" w="0" h="0"&gt; &lt;barcontainer w="330" h="423"&gt; &lt;bar name="containerBarGroups" dockline="0" layout="2" dockoffset="-1" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemGroups" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;barcontainer w="330" h="208"&gt; &lt;bar name="containerBarRecentPlans" dockline="999" layout="2" dockoffset="427" state="2" dockside="2" visible="true"&gt; &lt;items&gt; &lt;item name="dockContainerItemRecentPlans" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/barcontainer&gt; &lt;/dockcontainer&gt; &lt;/docksite&gt; &lt;bars&gt; &lt;bar name="containerBarEstimating" dockline="0" layout="2" dockoffset="0" state="2" dockside="2" visible="true" autohide="true" dockwidth="548"&gt; &lt;items&gt; &lt;item name="dockContainerItemEstimating" origBar="" origPos="-1" pos="0" /&gt; &lt;/items&gt; &lt;/bar&gt; &lt;/bars&gt; &lt;/dotnetbarlayout&gt;</Value>
+    </Setting>
+    <Setting Name="COfficePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\PrioSoft</Value>
+    </Setting>
+    <Setting Name="CompanyName" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="CompanyFullAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="CompanyRepresentative" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="DefaultSystemType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="DefaultPrecision" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="LastSaved" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="FiltersWindowPosition" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="FiltersWindowSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="ImportDBPricesSkuPosition" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ImportDBPricesPricePosition" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ImportDBPricesFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
+    <Setting Name="BackupInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="DBIsReadOnly" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableAutoBackup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AllowMultipleInstances" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{6BE1348B-04DF-495F-9931-234B29A4B833}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>QuoterPlan</RootNamespace>
+    <AssemblyName>ActiveTakeoff</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>ActiveTakeoff.ico</ApplicationIcon>
+    <StartupObject>QuoterPlan.Program</StartupObject>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="clipper_library">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Data.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v14.2.Core">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Printing.v14.2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Utils.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraEditors.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraPrinting.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraReports.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v14.2">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraTreeList.v14.2.dll</HintPath>
+    </Reference>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Foxit.PDF.Rasterizer.40.x86">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\Foxit.PDF.Rasterizer.40.x86.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="NPOI">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="QuoterImaging">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\QuoterImaging.dll</HintPath>
+    </Reference>
+    <Reference Include="QuoterPlanControls">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\QuoterPlanControls.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="TallComponents.PDF.Rasterizer">
+      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\TallComponents.PDF.Rasterizer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="-PrivateImplementationDetails-{E0438CCF-7425-4F3B-BA1B-66DC2.cs" />
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountCanceledException.cs" />
+    <Compile Include="AlreadyActivatedException.cs" />
+    <Compile Include="AlreadyVerifiedTrialException.cs" />
+    <Compile Include="ArgumentsReceivedEventArgs.cs" />
+    <Compile Include="BackupTimer.cs" />
+    <Compile Include="BaseFileInfo.cs" />
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseInfo.cs" />
+    <Compile Include="BaseUserControl.cs" />
+    <Compile Include="Bookmark.cs" />
+    <Compile Include="BrokenWMIException.cs" />
+    <Compile Include="ButtonEx.cs" />
+    <Compile Include="CEstimatingItem.cs" />
+    <Compile Include="CEstimatingItems.cs" />
+    <Compile Include="CEstimatingItemsBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CEstimatingItemsBrowserForm.Designer.cs">
+      <DependentUpon>CEstimatingItemsBrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CEstimatingItemsBrowserInterface.cs" />
+    <Compile Include="CEstimatingSection.cs" />
+    <Compile Include="CEstimatingsItemsControl.cs" />
+    <Compile Include="Clipboard.cs" />
+    <Compile Include="COfficeInterface.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="ColorPickerCombo.cs" />
+    <Compile Include="ComboBoxEx.cs" />
+    <Compile Include="COMException.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="CommandAdd.cs" />
+    <Compile Include="CommandAddLayer.cs" />
+    <Compile Include="CommandChangeState.cs" />
+    <Compile Include="CommandChangeStateEx.cs" />
+    <Compile Include="CommandDelete.cs" />
+    <Compile Include="CommandDeleteLayer.cs" />
+    <Compile Include="CommandPaste.cs" />
+    <Compile Include="CustomRendering.cs" />
+    <Compile Include="CustomRenderingGenericRows.cs" />
+    <Compile Include="CustomRenderingGenericTiles.cs" />
+    <Compile Include="CustomRenderingProperties.cs" />
+    <Compile Include="CustomRenderingResult.cs" />
+    <Compile Include="DataFolderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataFolderForm.Designer.cs">
+      <DependentUpon>DataFolderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimeException.cs" />
+    <Compile Include="DBEstimatingItem.cs" />
+    <Compile Include="DBEstimatingItemEventHandler.cs" />
+    <Compile Include="DBEstimatingItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBEstimatingItemForm.Designer.cs">
+      <DependentUpon>DBEstimatingItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBEstimatingItems.cs" />
+    <Compile Include="DBEstimatingItemsEditor.cs" />
+    <Compile Include="DBEstimatingItemUpdateEventHandler.cs" />
+    <Compile Include="DBEstimatingSection.cs" />
+    <Compile Include="DBEstimatingSections.cs" />
+    <Compile Include="DBManagement.cs" />
+    <Compile Include="DimensionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DimensionForm.Designer.cs">
+      <DependentUpon>DimensionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DimensionInput.cs" />
+    <Compile Include="DimensionInputEx.cs" />
+    <Compile Include="DockingWindow.cs" />
+    <Compile Include="DrawAngle.cs" />
+    <Compile Include="DrawCounter.cs" />
+    <Compile Include="DrawingArea.cs" />
+    <Compile Include="DrawingObjects.cs" />
+    <Compile Include="DrawingPens.cs" />
+    <Compile Include="DrawLegend.cs" />
+    <Compile Include="DrawLine.cs" />
+    <Compile Include="DrawNote.cs" />
+    <Compile Include="DrawObject.cs" />
+    <Compile Include="DrawObjectColorIndicator.cs" />
+    <Compile Include="DrawObjectEditor.cs" />
+    <Compile Include="DrawObjectGroup.cs" />
+    <Compile Include="DrawObjectGroups.cs" />
+    <Compile Include="DrawObjectIconIndicator.cs" />
+    <Compile Include="DrawObjectProperties.cs" />
+    <Compile Include="DrawObjectsNavigator.cs" />
+    <Compile Include="DrawPolyLine.cs" />
+    <Compile Include="DrawRectangle.cs" />
+    <Compile Include="DrawText.cs" />
+    <Compile Include="EEExchangeData.cs" />
+    <Compile Include="EEInterface.cs" />
+    <Compile Include="EELinkManager.cs" />
+    <Compile Include="EnableNetworkAdaptersException.cs" />
+    <Compile Include="EstimatingEditor.cs" />
+    <Compile Include="EstimatingItem.cs" />
+    <Compile Include="EstimatingItemPrice.cs" />
+    <Compile Include="EstimatingItems.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="ExtensionCategories.cs" />
+    <Compile Include="ExtensionCategory.cs" />
+    <Compile Include="ExtensionCategoryReader.cs" />
+    <Compile Include="ExtensionChoice.cs" />
+    <Compile Include="ExtensionChoiceElement.cs" />
+    <Compile Include="ExtensionChoiceElements.cs" />
+    <Compile Include="ExtensionChoices.cs" />
+    <Compile Include="ExtensionField.cs" />
+    <Compile Include="ExtensionFields.cs" />
+    <Compile Include="ExtensionResult.cs" />
+    <Compile Include="ExtensionResults.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ExtensionsManager.cs" />
+    <Compile Include="ExtensionsSupport.cs" />
+    <Compile Include="ExtraDataTooLongException.cs" />
+    <Compile Include="FillBrushes.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="FilterElement.cs" />
+    <Compile Include="FormulaBuilderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormulaBuilderForm.Designer.cs">
+      <DependentUpon>FormulaBuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormulaResult.cs" />
+    <Compile Include="FormulaResults.cs" />
+    <Compile Include="FormulaUtilities.cs" />
+    <Compile Include="GenericValue.cs" />
+    <Compile Include="GroupBoxEx.cs" />
+    <Compile Include="GroupStats.cs" />
+    <Compile Include="GroupUtilities.cs" />
+    <Compile Include="HatchStylePickerCombo.cs" />
+    <Compile Include="HelpUtilities.cs" />
+    <Compile Include="ImportSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportSettingsForm.Designer.cs">
+      <DependentUpon>ImportSettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InternetException.cs" />
+    <Compile Include="InternetTimeoutException.cs" />
+    <Compile Include="InternetTLSException.cs" />
+    <Compile Include="InvalidArgsException.cs" />
+    <Compile Include="InvalidFlagsException.cs" />
+    <Compile Include="InvalidHandleException.cs" />
+    <Compile Include="InvalidProductKeyException.cs" />
+    <Compile Include="IsGenuineResult.cs" />
+    <Compile Include="LabelEx.cs" />
+    <Compile Include="Layer.cs" />
+    <Compile Include="Layers.cs" />
+    <Compile Include="LayersNavigator.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MathParser.cs" />
+    <Compile Include="MathParserException.cs" />
+    <Compile Include="MathParserNode.cs" />
+    <Compile Include="MathParserOperator.cs" />
+    <Compile Include="MessageBoxEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageBoxEx.Designer.cs">
+      <DependentUpon>MessageBoxEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MruManager.cs" />
+    <Compile Include="MustSpecifyTrialTypeException.cs" />
+    <Compile Include="MustUseTrialException.cs" />
+    <Compile Include="NoMoreDeactivationsException.cs" />
+    <Compile Include="NoMoreTrialsAllowedException.cs" />
+    <Compile Include="NotActivatedException.cs" />
+    <Compile Include="NoteEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoteEditForm.Designer.cs">
+      <DependentUpon>NoteEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NumericComparer.cs" />
+    <Compile Include="OnColorHoverHandler.cs" />
+    <Compile Include="OnColorSelectedHandler.cs" />
+    <Compile Include="OnDeductionsParentReleaseHandler.cs" />
+    <Compile Include="OnDeductionsParentSetHandler.cs" />
+    <Compile Include="OnGetDefaultFormulaHandler.cs" />
+    <Compile Include="OnGroupChangeLayerHandler.cs" />
+    <Compile Include="OnLayerChangedHandler.cs" />
+    <Compile Include="OnLayerSelectedHandler.cs" />
+    <Compile Include="OnLoadEstimatingItemsHandler.cs" />
+    <Compile Include="OnLoadEstimatingSectionsHandler.cs" />
+    <Compile Include="OnNodeSelectedHandler.cs" />
+    <Compile Include="OnObjectChangedHandler.cs" />
+    <Compile Include="OnObjectPastedHandler.cs" />
+    <Compile Include="OnObjectSelectedHandler.cs" />
+    <Compile Include="OnObjectsSelectedHandler.cs" />
+    <Compile Include="OnPlanActionHandler.cs" />
+    <Compile Include="OnPlanDuplicateHandler.cs" />
+    <Compile Include="OnPlanRenameHandler.cs" />
+    <Compile Include="OnPlanSelectedHandler.cs" />
+    <Compile Include="OnRecentProjectSelectedHandler.cs" />
+    <Compile Include="OnSelectDatabaseHandler.cs" />
+    <Compile Include="OnSlopeFactorCancelHandler.cs" />
+    <Compile Include="OnSlopeFactorSaveHandler.cs" />
+    <Compile Include="PDFSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDFSelectionForm.Designer.cs">
+      <DependentUpon>PDFSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDFUtilities.cs" />
+    <Compile Include="PermissionException.cs" />
+    <Compile Include="PkeyMaxUsedException.cs" />
+    <Compile Include="PkeyRevokedException.cs" />
+    <Compile Include="Plan.cs" />
+    <Compile Include="PlanDuplicateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlanDuplicateForm.Designer.cs">
+      <DependentUpon>PlanDuplicateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlanPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlanPropertiesForm.Designer.cs">
+      <DependentUpon>PlanPropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlanRemoveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlanRemoveForm.Designer.cs">
+      <DependentUpon>PlanRemoveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plans.cs" />
+    <Compile Include="PlansNavigator.cs" />
+    <Compile Include="PreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreferencesForm.Designer.cs">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Preset.cs" />
+    <Compile Include="PresetChoice.cs" />
+    <Compile Include="PresetChoices.cs" />
+    <Compile Include="PresetEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresetEditForm.Designer.cs">
+      <DependentUpon>PresetEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PresetEventHandler.cs" />
+    <Compile Include="PresetField.cs" />
+    <Compile Include="PresetFields.cs" />
+    <Compile Include="PresetRenameEventHandler.cs" />
+    <Compile Include="PresetResult.cs" />
+    <Compile Include="PresetResults.cs" />
+    <Compile Include="Presets.cs" />
+    <Compile Include="ProductDetailsException.cs" />
+    <Compile Include="ProductEventHandler.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs" />
+    <Compile Include="ProjectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectForm.Designer.cs">
+      <DependentUpon>ProjectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="QuoteItem.cs" />
+    <Compile Include="QuoteItems.cs" />
+    <Compile Include="QuoteReportGenerator.cs" />
+    <Compile Include="QuoteSection.cs" />
+    <Compile Include="QuoteSections.cs" />
+    <Compile Include="RecentPlansNavigator.cs" />
+    <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="ReportEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportEditForm.Designer.cs">
+      <DependentUpon>ReportEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReportModule.cs" />
+    <Compile Include="ReportsControl.cs" />
+    <Compile Include="ReportSummary.cs" />
+    <Compile Include="ReportTabEnum.cs" />
+    <Compile Include="ReportTypeEnum.cs" />
+    <Compile Include="ScaleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScaleForm.Designer.cs">
+      <DependentUpon>ScaleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Segment.cs" />
+    <Compile Include="SegmentF.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="SlopeFactor.cs" />
+    <Compile Include="SlopeFactorControl.cs" />
+    <Compile Include="StatusArgs.cs" />
+    <Compile Include="StringLogicalComparer.cs" />
+    <Compile Include="TaxesConfiguration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TaxesConfiguration.Designer.cs">
+      <DependentUpon>TaxesConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TA_DateCheckFlags.cs" />
+    <Compile Include="TA_Flags.cs" />
+    <Compile Include="TA_TrialStatus.cs" />
+    <Compile Include="Template.cs" />
+    <Compile Include="Templates.cs" />
+    <Compile Include="TemplatesLibraryEditor.cs" />
+    <Compile Include="TemplatesSupport.cs" />
+    <Compile Include="TextBoxEx.cs" />
+    <Compile Include="Thumbnail.cs" />
+    <Compile Include="ThumbnailPanel.cs" />
+    <Compile Include="Tool.cs" />
+    <Compile Include="ToolAngle.cs" />
+    <Compile Include="ToolCounter.cs" />
+    <Compile Include="ToolDeduction.cs" />
+    <Compile Include="ToolEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolEditForm.Designer.cs">
+      <DependentUpon>ToolEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolLine.cs" />
+    <Compile Include="ToolNote.cs" />
+    <Compile Include="ToolObject.cs" />
+    <Compile Include="ToolOpening.cs" />
+    <Compile Include="ToolPan.cs" />
+    <Compile Include="ToolPointer.cs" />
+    <Compile Include="ToolPolyLine.cs" />
+    <Compile Include="ToolRectangle.cs" />
+    <Compile Include="ToolScale.cs" />
+    <Compile Include="ToolSettings.cs" />
+    <Compile Include="TransparentPictureBox.cs" />
+    <Compile Include="TreeListViewState.cs" />
+    <Compile Include="TreeViewNode.cs" />
+    <Compile Include="TreeViewNodes.cs" />
+    <Compile Include="TrialCallbackHandler.cs" />
+    <Compile Include="TrialDateCorruptedException.cs" />
+    <Compile Include="TrialExpiredException.cs" />
+    <Compile Include="TrialExtExpiredException.cs" />
+    <Compile Include="TrialExtUsedException.cs" />
+    <Compile Include="TriStateTreeViewComponent.cs" />
+    <Compile Include="TurboActivate.cs" />
+    <Compile Include="TurboActivateException.cs" />
+    <Compile Include="TurboFloatKeyException.cs" />
+    <Compile Include="TypeNames.cs" />
+    <Compile Include="UITypeEditorChoiceElements.cs" />
+    <Compile Include="UITypeEditorColorPicker.cs" />
+    <Compile Include="UITypeEditorHatchStyle.cs" />
+    <Compile Include="UITypeEditorSlopeControl.cs" />
+    <Compile Include="UndoManager.cs" />
+    <Compile Include="UnitScale.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Variable.cs" />
+    <Compile Include="Variables.cs" />
+    <Compile Include="VirtualMachineException.cs" />
+    <Compile Include="Workspace.cs" />
+    <Compile Include="XtraReportEstimatingByGroups.cs" />
+    <Compile Include="XtraReportEstimatingByPlans.cs" />
+    <Compile Include="XtraReportEstimatingTotalsByPlans.cs" />
+    <Compile Include="XtraReportQuote.cs" />
+    <Compile Include="XtraReportTakeoffByGroups.cs" />
+    <Compile Include="XtraReportTakeoffByPlans.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutForm.resources" />
+    <EmbeddedResource Include="ActiveTakeoff.exe.licenses" />
+    <EmbeddedResource Include="BaseForm.resources" />
+    <EmbeddedResource Include="CEstimatingItemsBrowserForm.resources" />
+    <EmbeddedResource Include="CEstimatingsItemsControl.resources" />
+    <EmbeddedResource Include="ColorPicker.resources" />
+    <EmbeddedResource Include="ColorPickerCombo.resources" />
+    <EmbeddedResource Include="DataFolderForm.resources" />
+    <EmbeddedResource Include="DBEstimatingItemForm.resources" />
+    <EmbeddedResource Include="DimensionForm.resources" />
+    <EmbeddedResource Include="DimensionInput.resources" />
+    <EmbeddedResource Include="DimensionInputEx.resources" />
+    <EmbeddedResource Include="DrawObjectColorIndicator.resources" />
+    <EmbeddedResource Include="DrawObjectIconIndicator.resources" />
+    <EmbeddedResource Include="EELinkManager.resources" />
+    <EmbeddedResource Include="Ellipse.cur" />
+    <EmbeddedResource Include="ExtensionsManager.resources" />
+    <EmbeddedResource Include="FormulaBuilderForm.resources" />
+    <EmbeddedResource Include="help.cur" />
+    <EmbeddedResource Include="ImportSettingsForm.resources" />
+    <EmbeddedResource Include="Line.cur" />
+    <EmbeddedResource Include="MainForm.resources" />
+    <EmbeddedResource Include="MessageBoxEx.resources" />
+    <EmbeddedResource Include="NoteEditForm.resources" />
+    <EmbeddedResource Include="Pan.cur" />
+    <EmbeddedResource Include="PDFSelectionForm.resources" />
+    <EmbeddedResource Include="Pencil.cur" />
+    <EmbeddedResource Include="PlanDuplicateForm.resources" />
+    <EmbeddedResource Include="PlanPropertiesForm.resources" />
+    <EmbeddedResource Include="PlanRemoveForm.resources" />
+    <EmbeddedResource Include="PolyHandle.cur" />
+    <EmbeddedResource Include="PreferencesForm.resources" />
+    <EmbeddedResource Include="PresetEditForm.resources" />
+    <EmbeddedResource Include="ProgressForm.resources" />
+    <EmbeddedResource Include="ProjectForm.resources" />
+    <EmbeddedResource Include="Properties\Resources.resources" />
+    <EmbeddedResource Include="Rectangle.cur" />
+    <EmbeddedResource Include="ReportEditForm.resources" />
+    <EmbeddedResource Include="ReportsControl.resources" />
+    <EmbeddedResource Include="ScaleForm.resources" />
+    <EmbeddedResource Include="SlopeFactorControl.resources" />
+    <EmbeddedResource Include="TaxesConfiguration.resources" />
+    <EmbeddedResource Include="TextTool.cur" />
+    <EmbeddedResource Include="ToolEditForm.resources" />
+    <EmbeddedResource Include="XtraReportEstimatingByGroups.resources" />
+    <EmbeddedResource Include="XtraReportEstimatingByPlans.resources" />
+    <EmbeddedResource Include="XtraReportEstimatingTotalsByPlans.resources" />
+    <EmbeddedResource Include="XtraReportQuote.resources" />
+    <EmbeddedResource Include="XtraReportTakeoffByGroups.resources" />
+    <EmbeddedResource Include="XtraReportTakeoffByPlans.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
