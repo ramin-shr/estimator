@@ -8,101 +8,73 @@ using System.Windows.Forms.Design;
 
 namespace QuoterPlan
 {
-	public class UITypeEditorColorPicker : UITypeEditor
-	{
-		public event OnColorHoverHandler OnColorHover
-		{
-			add
-			{
-				OnColorHoverHandler onColorHoverHandler = this.OnColorHover;
-				OnColorHoverHandler onColorHoverHandler2;
-				do
-				{
-					onColorHoverHandler2 = onColorHoverHandler;
-					OnColorHoverHandler value2 = (OnColorHoverHandler)Delegate.Combine(onColorHoverHandler2, value);
-					onColorHoverHandler = Interlocked.CompareExchange<OnColorHoverHandler>(ref this.OnColorHover, value2, onColorHoverHandler2);
-				}
-				while (onColorHoverHandler != onColorHoverHandler2);
-			}
-			remove
-			{
-				OnColorHoverHandler onColorHoverHandler = this.OnColorHover;
-				OnColorHoverHandler onColorHoverHandler2;
-				do
-				{
-					onColorHoverHandler2 = onColorHoverHandler;
-					OnColorHoverHandler value2 = (OnColorHoverHandler)Delegate.Remove(onColorHoverHandler2, value);
-					onColorHoverHandler = Interlocked.CompareExchange<OnColorHoverHandler>(ref this.OnColorHover, value2, onColorHoverHandler2);
-				}
-				while (onColorHoverHandler != onColorHoverHandler2);
-			}
-		}
+    public class UITypeEditorColorPicker : UITypeEditor
+    {
+        private IWindowsFormsEditorService frmSvr;
 
-		public UITypeEditorColorPicker()
-		{
-		}
+        private Color originalColor;
 
-		public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
-		{
-			return UITypeEditorEditStyle.DropDown;
-		}
+        private Color selectedColor;
 
-		public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
-		{
-			this.frmSvr = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-			if (this.frmSvr == null)
-			{
-				return null;
-			}
-			this.originalColor = (Color)value;
-			this.selectedColor = Color.Empty;
-			this.colorPicker = new ColorPicker();
-			this.colorPicker.OnColorHover += this.colorPicker_ColorHover;
-			this.colorPicker.OnColorSelected += this.colorPicker_ColorSelected;
-			this.frmSvr.DropDownControl(this.colorPicker);
-			if (this.selectedColor == Color.Empty)
-			{
-				this.ColorHover(this.originalColor);
-			}
-			return this.selectedColor;
-		}
+        private ColorPicker colorPicker;
 
-		private void ColorHover(Color color)
-		{
-			if (this.OnColorHover != null)
-			{
-				this.OnColorHover(color);
-			}
-		}
+        public UITypeEditorColorPicker()
+        {
+        }
 
-		private void colorPicker_ColorHover(Color color)
-		{
-			if (color == Color.Empty)
-			{
-				return;
-			}
-			this.ColorHover(color);
-			Application.DoEvents();
-		}
+        private void ColorHover(Color color)
+        {
+            if (this.OnColorHover != null)
+            {
+                this.OnColorHover(color);
+            }
+        }
 
-		private void colorPicker_ColorSelected(Color color)
-		{
-			if (this.frmSvr == null)
-			{
-				return;
-			}
-			this.selectedColor = color;
-			this.frmSvr.CloseDropDown();
-		}
+        private void colorPicker_ColorHover(Color color)
+        {
+            if (color == Color.Empty)
+            {
+                return;
+            }
+            this.ColorHover(color);
+            Application.DoEvents();
+        }
 
-		private OnColorHoverHandler OnColorHover;
+        private void colorPicker_ColorSelected(Color color)
+        {
+            if (this.frmSvr == null)
+            {
+                return;
+            }
+            this.selectedColor = color;
+            this.frmSvr.CloseDropDown();
+        }
 
-		private IWindowsFormsEditorService frmSvr;
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            this.frmSvr = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            if (this.frmSvr == null)
+            {
+                return null;
+            }
+            this.originalColor = (Color)value;
+            this.selectedColor = Color.Empty;
+            this.colorPicker = new ColorPicker();
+            this.colorPicker.OnColorHover += new OnColorHoverHandler(this.colorPicker_ColorHover);
+            this.colorPicker.OnColorSelected += new OnColorSelectedHandler(this.colorPicker_ColorSelected);
+            this.frmSvr.DropDownControl(this.colorPicker);
+            if (this.selectedColor == Color.Empty)
+            {
+                this.ColorHover(this.originalColor);
+            }
+            return this.selectedColor;
+        }
 
-		private Color originalColor;
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.DropDown;
+        }
 
-		private Color selectedColor;
-
-		private ColorPicker colorPicker;
-	}
+        public event OnColorHoverHandler OnColorHover;
+    }
 }

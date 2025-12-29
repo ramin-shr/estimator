@@ -3,71 +3,38 @@ using System.Runtime.CompilerServices;
 
 namespace QuoterPlan
 {
-	public class DBEstimatingSection
-	{
-		public int ID
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ID>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<ID>k__BackingField = value;
-			}
-		}
+    public class DBEstimatingSection
+    {
+        public int ID
+        {
+            get;
+            private set;
+        }
 
-		public int ParentID
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ParentID>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<ParentID>k__BackingField = value;
-			}
-		}
+        public string Name
+        {
+            get;
+            set;
+        }
 
-		public string Name
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Name>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<Name>k__BackingField = value;
-			}
-		}
+        public int ParentID
+        {
+            get;
+            private set;
+        }
 
-		public DBEstimatingSection(int id, int parentID, string name)
-		{
-			this.ID = id;
-			this.ParentID = parentID;
-			this.Name = name;
-		}
+        public DBEstimatingSection(int id, int parentID, string name)
+        {
+            this.ID = id;
+            this.ParentID = parentID;
+            this.Name = name;
+        }
 
-		public void Dump()
-		{
-			Console.WriteLine("ID = " + this.ID);
-			Console.WriteLine("ParentID = " + this.ParentID);
-			Console.WriteLine("Name = " + this.Name);
-		}
-
-		[CompilerGenerated]
-		private int <ID>k__BackingField;
-
-		[CompilerGenerated]
-		private int <ParentID>k__BackingField;
-
-		[CompilerGenerated]
-		private string <Name>k__BackingField;
-	}
+        public void Dump()
+        {
+            Console.WriteLine(string.Concat("ID = ", this.ID));
+            Console.WriteLine(string.Concat("ParentID = ", this.ParentID));
+            Console.WriteLine(string.Concat("Name = ", this.Name));
+        }
+    }
 }

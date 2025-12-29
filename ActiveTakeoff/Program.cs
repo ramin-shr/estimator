@@ -1,176 +1,196 @@
-﻿using System;
+﻿using DevComponents.DotNetBar;
+using QuoterPlan.Properties;
+using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	internal static class Program
-	{
-		[STAThread]
-		private static void Main()
-		{
-			using (Program.singleInstance)
-			{
-				bool flag = Program.singleInstance.IsFirstInstance || Settings.Default.AllowMultipleInstances;
-				bool allowMultipleInstances = Settings.Default.AllowMultipleInstances;
-				if (flag)
-				{
-					if (!allowMultipleInstances)
-					{
-						Program.singleInstance.ArgumentsReceived += Program.singleInstance_ArgumentsReceived;
-						Program.singleInstance.ListenForArgumentsFromSuccessiveInstances();
-					}
-					Application.EnableVisualStyles();
-					Application.SetCompatibleTextRenderingDefault(false);
-					if (!Program.WillDoUpdates() && Program.ValidateSettings())
-					{
-						Application.Run(Program.mainForm = new MainForm());
-					}
-				}
-				else if (!allowMultipleInstances)
-				{
-					Program.singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
-				}
-			}
-		}
+    internal static class Program
+    {
+        private static Guid guid;
 
-		private static void singleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)
-		{
-			if (Program.mainForm == null)
-			{
-				return;
-			}
-			Action<string[]> method = delegate(string[] arguments)
-			{
-				Program.mainForm.WindowState = ((Program.mainForm.WindowState == FormWindowState.Minimized) ? FormWindowState.Normal : Program.mainForm.WindowState);
-				Program.mainForm.OpenFileFromArgs(arguments, 1);
-				Program.mainForm.Focus();
-			};
-			Program.mainForm.Invoke(method, new object[]
-			{
-				e.Args
-			});
-		}
+        public static SingleInstance singleInstance;
 
-		private static bool ValidateSettings()
-		{
-			bool result;
-			try
-			{
-				Settings.Default.Reload();
-				UnitScale.DefaultUnitPrecision();
-				result = true;
-			}
-			catch (ConfigurationErrorsException ex)
-			{
-				string filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
-				Utilities.DisplayError(Resources.Une_erreur_système_est_survenue, string.Concat(new string[]
-				{
-					Utilities.ApplicationName,
-					" ",
-					Resources.SettingsCorrupt1,
-					" ",
-					Utilities.ApplicationName,
-					" ",
-					Resources.SettingsCorrupt2
-				}));
-				Utilities.FileDelete(filename, true);
-				Application.Restart();
-				Environment.Exit(0);
-				result = false;
-			}
-			return result;
-		}
+        private static MainForm mainForm;
 
-		private static Program.CheckForUpdatesEnum CheckForUpdates()
-		{
-			Program.CheckForUpdatesEnum result;
-			try
-			{
-				using (Process process = new Process
-				{
-					StartInfo = new ProcessStartInfo(Path.Combine(Utilities.GetInstallFolder(), "wyUpdate.exe"), "-quickcheck -justcheck -noerr")
-				})
-				{
-					process.Start();
-					process.WaitForExit();
-					result = ((process.ExitCode == 2) ? Program.CheckForUpdatesEnum.Available : Program.CheckForUpdatesEnum.NotAvailable);
-				}
-			}
-			catch
-			{
-				result = Program.CheckForUpdatesEnum.Error;
-			}
-			return result;
-		}
+        [CompilerGenerated]
+        // CS$<>9__CachedAnonymousMethodDelegate1
+        private static Action<string[]> CSu0024u003cu003e9__CachedAnonymousMethodDelegate1;
 
-		private static bool StartUpdater()
-		{
-			IntPtr zero = IntPtr.Zero;
-			return Utilities.StartProcess(Path.Combine(Utilities.GetInstallFolder(), "wyUpdate.exe"), ref zero, 5000);
-		}
+        static Program()
+        {
+            Program.guid = new Guid("{3074FD6B-AECE-4884-AB4A-06F81DF1D036}");
+            Program.singleInstance = new SingleInstance(Program.guid);
+        }
 
-		private static bool WillDoUpdates()
-		{
-			if (Program.CheckForUpdates() != Program.CheckForUpdatesEnum.Available)
-			{
-				return false;
-			}
-			string installLanguage;
-			string title;
-			string message;
-			if ((installLanguage = Utilities.GetInstallLanguage()) != null)
-			{
-				if (installLanguage == "fr")
-				{
-					title = "Nouvelle version disponible";
-					message = "Lancer la mise à jour automatique maintenant ?";
-					goto IL_62;
-				}
-				if (installLanguage == "es")
-				{
-					title = "Nueva versión disponible";
-					message = "¿Ejecutar la actualización automática ahora?";
-					goto IL_62;
-				}
-			}
-			title = "New version available";
-			message = "Run the automatic updater now?";
-			IL_62:
-			return Utilities.DisplayQuestionCustom(title, message, Resources.update_available_48x48) != DialogResult.No && Program.StartUpdater();
-		}
+        [CompilerGenerated]
+        // <singleInstance_ArgumentsReceived>b__0
+        private static void u003csingleInstance_ArgumentsReceivedu003eb__0(string[] arguments)
+        {
+            Program.mainForm.WindowState = (Program.mainForm.WindowState == FormWindowState.Minimized ? FormWindowState.Normal : Program.mainForm.WindowState);
+            Program.mainForm.OpenFileFromArgs(arguments, 1);
+            Program.mainForm.Focus();
+        }
 
-		[CompilerGenerated]
-		private static void <singleInstance_ArgumentsReceived>b__0(string[] arguments)
-		{
-			Program.mainForm.WindowState = ((Program.mainForm.WindowState == FormWindowState.Minimized) ? FormWindowState.Normal : Program.mainForm.WindowState);
-			Program.mainForm.OpenFileFromArgs(arguments, 1);
-			Program.mainForm.Focus();
-		}
+        private static Program.CheckForUpdatesEnum CheckForUpdates()
+        {
+            Program.CheckForUpdatesEnum checkForUpdatesEnum;
+            try
+            {
+                Process process = new Process()
+                {
+                    StartInfo = new ProcessStartInfo(Path.Combine(Utilities.GetInstallFolder(), "wyUpdate.exe"), "-quickcheck -justcheck -noerr")
+                };
+                using (Process process1 = process)
+                {
+                    process1.Start();
+                    process1.WaitForExit();
+                    checkForUpdatesEnum = (process1.ExitCode == 2 ? Program.CheckForUpdatesEnum.Available : Program.CheckForUpdatesEnum.NotAvailable);
+                }
+            }
+            catch
+            {
+                checkForUpdatesEnum = Program.CheckForUpdatesEnum.Error;
+            }
+            return checkForUpdatesEnum;
+        }
 
-		// Note: this type is marked as 'beforefieldinit'.
-		static Program()
-		{
-		}
+        [STAThread]
+        private static void Main()
+        {
+            using (Program.singleInstance)
+            {
+                bool flag = (Program.singleInstance.IsFirstInstance ? true : Settings.Default.AllowMultipleInstances);
+                bool allowMultipleInstances = Settings.Default.AllowMultipleInstances;
+                if (flag)
+                {
+                    if (!allowMultipleInstances)
+                    {
+                        Program.singleInstance.ArgumentsReceived += new EventHandler<ArgumentsReceivedEventArgs>(Program.singleInstance_ArgumentsReceived);
+                        Program.singleInstance.ListenForArgumentsFromSuccessiveInstances();
+                    }
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    if (!Program.WillDoUpdates() && Program.ValidateSettings())
+                    {
+                        MainForm mainForm = new MainForm();
+                        Program.mainForm = mainForm;
+                        Application.Run(mainForm);
+                    }
+                }
+                else if (!allowMultipleInstances)
+                {
+                    Program.singleInstance.PassArgumentsToFirstInstance(Environment.GetCommandLineArgs());
+                }
+            }
+        }
 
-		private static Guid guid = new Guid("{3074FD6B-AECE-4884-AB4A-06F81DF1D036}");
+        private static void singleInstance_ArgumentsReceived(object sender, ArgumentsReceivedEventArgs e)
+        {
+            if (Program.mainForm == null)
+            {
+                return;
+            }
+            Action<string[]> windowState = (string[] arguments) => {
+                Program.mainForm.WindowState = (Program.mainForm.WindowState == FormWindowState.Minimized ? FormWindowState.Normal : Program.mainForm.WindowState);
+                Program.mainForm.OpenFileFromArgs(arguments, 1);
+                Program.mainForm.Focus();
+            };
+            MainForm mainForm = Program.mainForm;
+            object[] args = new object[] { e.Args };
+            mainForm.Invoke(windowState, args);
+        }
 
-		public static SingleInstance singleInstance = new SingleInstance(Program.guid);
+        private static bool StartUpdater()
+        {
+            IntPtr zero = IntPtr.Zero;
+            return Utilities.StartProcess(Path.Combine(Utilities.GetInstallFolder(), "wyUpdate.exe"), ref zero, 0x1388);
+        }
 
-		private static MainForm mainForm;
+        private static bool ValidateSettings()
+        {
+            bool flag;
+            try
+            {
+                Settings.Default.Reload();
+                UnitScale.DefaultUnitPrecision();
+                flag = true;
+            }
+            catch (ConfigurationErrorsException configurationErrorsException)
+            {
+                string filename = ((ConfigurationErrorsException)configurationErrorsException.InnerException).Filename;
+                string uneErreurSystèmeEstSurvenue = Resources.Une_erreur_système_est_survenue;
+                string[] applicationName = new string[] { Utilities.ApplicationName, " ", Resources.SettingsCorrupt1, " ", Utilities.ApplicationName, " ", Resources.SettingsCorrupt2 };
+                Utilities.DisplayError(uneErreurSystèmeEstSurvenue, string.Concat(applicationName));
+                Utilities.FileDelete(filename, true);
+                Application.Restart();
+                Environment.Exit(0);
+                flag = false;
+            }
+            return flag;
+        }
 
-		[CompilerGenerated]
-		private static Action<string[]> CS$<>9__CachedAnonymousMethodDelegate1;
+        private static bool WillDoUpdates()
+        {
+            if (Program.CheckForUpdates() != Program.CheckForUpdatesEnum.Available)
+            {
+                return false;
+            }
+            string str = "";
+            string str1 = "";
+            string installLanguage = Utilities.GetInstallLanguage();
+            string str2 = installLanguage;
+            if (installLanguage != null)
+            {
+                if (str2 == "fr")
+                {
+                    str = "Nouvelle version disponible";
+                    str1 = "Lancer la mise à jour automatique maintenant ?";
+                    if (Utilities.DisplayQuestionCustom(str, str1, Resources.update_available_48x48) == DialogResult.No)
+                    {
+                        return false;
+                    }
+                    return Program.StartUpdater();
+                }
+                else
+                {
+                    if (str2 != "es")
+                    {
+                        str = "New version available";
+                        str1 = "Run the automatic updater now?";
+                        if (Utilities.DisplayQuestionCustom(str, str1, Resources.update_available_48x48) == DialogResult.No)
+                        {
+                            return false;
+                        }
+                        return Program.StartUpdater();
+                    }
+                    str = "Nueva versión disponible";
+                    str1 = "¿Ejecutar la actualización automática ahora?";
+                    if (Utilities.DisplayQuestionCustom(str, str1, Resources.update_available_48x48) == DialogResult.No)
+                    {
+                        return false;
+                    }
+                    return Program.StartUpdater();
+                }
+            }
+            str = "New version available";
+            str1 = "Run the automatic updater now?";
+            if (Utilities.DisplayQuestionCustom(str, str1, Resources.update_available_48x48) == DialogResult.No)
+            {
+                return false;
+            }
+            return Program.StartUpdater();
+        }
 
-		private enum CheckForUpdatesEnum
-		{
-			Available,
-			NotAvailable,
-			Error
-		}
-	}
+        private enum CheckForUpdatesEnum
+        {
+            Available,
+            NotAvailable,
+            Error
+        }
+    }
 }

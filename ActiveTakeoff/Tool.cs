@@ -5,59 +5,48 @@ using System.Windows.Forms;
 
 namespace QuoterPlan
 {
-	internal abstract class Tool
-	{
-		public DrawingArea DrawArea
-		{
-			[CompilerGenerated]
-			protected get
-			{
-				return this.<DrawArea>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<DrawArea>k__BackingField = value;
-			}
-		}
+    internal abstract class Tool
+    {
+        public DrawingArea DrawArea
+        {
+            protected get;
+            set;
+        }
 
-		public virtual void ReleaseTool()
-		{
-		}
+        protected Tool()
+        {
+        }
 
-		public virtual void LoadCursor(Cursor cursor)
-		{
-		}
+        public virtual void InitializeTool(Cursor cursor)
+        {
+        }
 
-		public virtual void InitializeTool(Cursor cursor)
-		{
-		}
+        public virtual void LoadCursor(Cursor cursor)
+        {
+        }
 
-		public virtual void TrackMouse(Point location)
-		{
-		}
+        public virtual void OnKeyDown(KeyEventArgs e)
+        {
+        }
 
-		public virtual void OnMouseDown(MouseEventArgs e)
-		{
-		}
+        public virtual void OnMouseDown(MouseEventArgs e)
+        {
+        }
 
-		public virtual void OnMouseMove(MouseEventArgs e)
-		{
-		}
+        public virtual void OnMouseMove(MouseEventArgs e)
+        {
+        }
 
-		public virtual void OnMouseUp(MouseEventArgs e)
-		{
-		}
+        public virtual void OnMouseUp(MouseEventArgs e)
+        {
+        }
 
-		public virtual void OnKeyDown(KeyEventArgs e)
-		{
-		}
+        public virtual void ReleaseTool()
+        {
+        }
 
-		protected Tool()
-		{
-		}
-
-		[CompilerGenerated]
-		private DrawingArea <DrawArea>k__BackingField;
-	}
+        public virtual void TrackMouse(Point location)
+        {
+        }
+    }
 }

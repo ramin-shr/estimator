@@ -3,110 +3,66 @@ using System.Runtime.CompilerServices;
 
 namespace QuoterPlan
 {
-	public class ExtensionField
-	{
-		public string Name
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Name>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<Name>k__BackingField = value;
-			}
-		}
+    public class ExtensionField
+    {
+        public string Caption
+        {
+            get;
+            set;
+        }
 
-		public string Caption
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Caption>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<Caption>k__BackingField = value;
-			}
-		}
+        public string Condition
+        {
+            get;
+            protected set;
+        }
 
-		public string Condition
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Condition>k__BackingField;
-			}
-			[CompilerGenerated]
-			protected set
-			{
-				this.<Condition>k__BackingField = value;
-			}
-		}
+        public ExtensionField.ExtensionFieldTypeEnum FieldType
+        {
+            get;
+            set;
+        }
 
-		public ExtensionField.ExtensionFieldTypeEnum FieldType
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<FieldType>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<FieldType>k__BackingField = value;
-			}
-		}
+        public string Name
+        {
+            get;
+            set;
+        }
 
-		public ExtensionField()
-		{
-		}
+        public ExtensionField()
+        {
+        }
 
-		public ExtensionField(string name, string caption, string condition, ExtensionField.ExtensionFieldTypeEnum fieldType)
-		{
-			this.Name = name;
-			this.Caption = caption;
-			this.Condition = condition;
-			this.FieldType = fieldType;
-		}
+        public ExtensionField(string name, string caption, string condition, ExtensionField.ExtensionFieldTypeEnum fieldType)
+        {
+            this.Name = name;
+            this.Caption = caption;
+            this.Condition = condition;
+            this.FieldType = fieldType;
+        }
 
-		public void Clear()
-		{
-			this.Name = "";
-			this.Caption = "";
-			this.Condition = "";
-		}
+        public void Clear()
+        {
+            this.Name = "";
+            this.Caption = "";
+            this.Condition = "";
+        }
 
-		public void Dump()
-		{
-			Console.WriteLine("Name = " + this.Name);
-			Console.WriteLine("Caption = " + this.Caption);
-			Console.WriteLine("Condition = " + this.Condition);
-			Console.WriteLine("FieldType = " + this.FieldType);
-		}
+        public void Dump()
+        {
+            Console.WriteLine(string.Concat("Name = ", this.Name));
+            Console.WriteLine(string.Concat("Caption = ", this.Caption));
+            Console.WriteLine(string.Concat("Condition = ", this.Condition));
+            Console.WriteLine(string.Concat("FieldType = ", this.FieldType));
+        }
 
-		[CompilerGenerated]
-		private string <Name>k__BackingField;
-
-		[CompilerGenerated]
-		private string <Caption>k__BackingField;
-
-		[CompilerGenerated]
-		private string <Condition>k__BackingField;
-
-		[CompilerGenerated]
-		private ExtensionField.ExtensionFieldTypeEnum <FieldType>k__BackingField;
-
-		public enum ExtensionFieldTypeEnum
-		{
-			FieldTypeDimension,
-			FieldTypeInteger,
-			FieldTypeDouble,
-			FieldTypeCurrency,
-			FieldTypeEnumCount
-		}
-	}
+        public enum ExtensionFieldTypeEnum
+        {
+            FieldTypeDimension,
+            FieldTypeInteger,
+            FieldTypeDouble,
+            FieldTypeCurrency,
+            FieldTypeEnumCount
+        }
+    }
 }

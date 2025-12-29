@@ -9,11 +9,15 @@
     <RootNamespace>QuoterPlan</RootNamespace>
     <AssemblyName>ActiveTakeoff</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>ActiveTakeoff.ico</ApplicationIcon>
     <StartupObject>QuoterPlan.Program</StartupObject>
-    <TargetFrameworkProfile />
+    <!-- All projects live under C:\estimator\ActiveTakeoff\..., so ..\..\ goes back to C:\estimator -->
+    <DependenciesDir>$(MSBuildThisFileDirectory)..\Dependencies\</DependenciesDir>
+    <!-- Nice-to-have defaults -->
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -36,79 +40,98 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <!-- Optional but helps when VS/solution flips platform to AnyCPU -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
+    <!-- Vendor/external DLLs from C:\estimator\Dependencies -->
     <Reference Include="clipper_library">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\clipper_library.dll</HintPath>
+      <HintPath>$(DependenciesDir)clipper_library.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevComponents.DotNetBar2.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevComponents.DotNetBar2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Data.v14.2.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.Data.v14.2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevExpress.Printing.v14.2.Core">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Printing.v14.2.Core.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.Printing.v14.2.Core.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevExpress.Utils.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.Utils.v14.2.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.Utils.v14.2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraEditors.v14.2.dll</HintPath>
-    </Reference>
+	<Reference Include="DevExpress.XtraEditors.v14.2">
+	  <HintPath>$(DependenciesDir)DevExpress.XtraEditors.v14.2.dll</HintPath>
+	  <Private>true</Private>
+	  <SpecificVersion>false</SpecificVersion>
+	</Reference>
     <Reference Include="DevExpress.XtraPrinting.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraPrinting.v14.2.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.XtraPrinting.v14.2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevExpress.XtraReports.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraReports.v14.2.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.XtraReports.v14.2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="DevExpress.XtraTreeList.v14.2">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\DevExpress.XtraTreeList.v14.2.dll</HintPath>
-    </Reference>
-    <Reference Include="FastColoredTextBox">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\FastColoredTextBox.dll</HintPath>
+      <HintPath>$(DependenciesDir)DevExpress.XtraTreeList.v14.2.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="Foxit.PDF.Rasterizer.40.x86">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\Foxit.PDF.Rasterizer.40.x86.dll</HintPath>
+      <HintPath>$(DependenciesDir)Foxit.PDF.Rasterizer.40.x86.dll</HintPath>
+      <Private>true</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NPOI">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\NPOI.dll</HintPath>
+      <HintPath>$(DependenciesDir)NPOI.dll</HintPath>
+      <Private>true</Private>
     </Reference>
     <Reference Include="PdfSharp">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\PdfSharp.dll</HintPath>
+      <HintPath>$(DependenciesDir)PdfSharp.dll</HintPath>
+      <Private>true</Private>
     </Reference>
-    <Reference Include="QuoterImaging">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\QuoterImaging.dll</HintPath>
+    <Reference Include="TallComponents.PDF.Rasterizer">
+      <HintPath>$(DependenciesDir)TallComponents.PDF.Rasterizer.dll</HintPath>
+      <Private>true</Private>
     </Reference>
-    <Reference Include="QuoterPlanControls">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\QuoterPlanControls.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.dll</HintPath>
-    </Reference>
+    <!-- Framework references (NO HintPath, NO duplicates) -->
+    <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml">
-      <HintPath>..\..\Users\ramin\Downloads\dnSpy-net-win64\bin\System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="TallComponents.PDF.Rasterizer">
-      <HintPath>..\..\Program Files (x86)\Active Takeoff\Version 1.0\TallComponents.PDF.Rasterizer.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.VisualBasic" />
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="-PrivateImplementationDetails-{E0438CCF-7425-4F3B-BA1B-66DC2.cs" />
     <Compile Include="AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,10 +151,14 @@
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="BaseInfo.cs" />
-    <Compile Include="BaseUserControl.cs" />
+    <Compile Include="BaseUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Bookmark.cs" />
     <Compile Include="BrokenWMIException.cs" />
-    <Compile Include="ButtonEx.cs" />
+    <Compile Include="ButtonEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CEstimatingItem.cs" />
     <Compile Include="CEstimatingItems.cs" />
     <Compile Include="CEstimatingItemsBrowserForm.cs">
@@ -142,12 +169,20 @@
     </Compile>
     <Compile Include="CEstimatingItemsBrowserInterface.cs" />
     <Compile Include="CEstimatingSection.cs" />
-    <Compile Include="CEstimatingsItemsControl.cs" />
+    <Compile Include="CEstimatingsItemsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Clipboard.cs" />
     <Compile Include="COfficeInterface.cs" />
-    <Compile Include="ColorPicker.cs" />
-    <Compile Include="ColorPickerCombo.cs" />
-    <Compile Include="ComboBoxEx.cs" />
+    <Compile Include="ColorPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorPickerCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="COMException.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CommandAdd.cs" />
@@ -189,8 +224,12 @@
     <Compile Include="DimensionForm.Designer.cs">
       <DependentUpon>DimensionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DimensionInput.cs" />
-    <Compile Include="DimensionInputEx.cs" />
+    <Compile Include="DimensionInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DimensionInputEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DockingWindow.cs" />
     <Compile Include="DrawAngle.cs" />
     <Compile Include="DrawCounter.cs" />
@@ -201,19 +240,27 @@
     <Compile Include="DrawLine.cs" />
     <Compile Include="DrawNote.cs" />
     <Compile Include="DrawObject.cs" />
-    <Compile Include="DrawObjectColorIndicator.cs" />
+    <Compile Include="DrawObjectColorIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DrawObjectEditor.cs" />
     <Compile Include="DrawObjectGroup.cs" />
     <Compile Include="DrawObjectGroups.cs" />
-    <Compile Include="DrawObjectIconIndicator.cs" />
-    <Compile Include="DrawObjectProperties.cs" />
+    <Compile Include="DrawObjectIconIndicator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawObjectProperties.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DrawObjectsNavigator.cs" />
     <Compile Include="DrawPolyLine.cs" />
     <Compile Include="DrawRectangle.cs" />
     <Compile Include="DrawText.cs" />
     <Compile Include="EEExchangeData.cs" />
     <Compile Include="EEInterface.cs" />
-    <Compile Include="EELinkManager.cs" />
+    <Compile Include="EELinkManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="EnableNetworkAdaptersException.cs" />
     <Compile Include="EstimatingEditor.cs" />
     <Compile Include="EstimatingItem.cs" />
@@ -232,7 +279,9 @@
     <Compile Include="ExtensionResult.cs" />
     <Compile Include="ExtensionResults.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ExtensionsManager.cs" />
+    <Compile Include="ExtensionsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ExtensionsSupport.cs" />
     <Compile Include="ExtraDataTooLongException.cs" />
     <Compile Include="FillBrushes.cs" />
@@ -248,10 +297,14 @@
     <Compile Include="FormulaResults.cs" />
     <Compile Include="FormulaUtilities.cs" />
     <Compile Include="GenericValue.cs" />
-    <Compile Include="GroupBoxEx.cs" />
+    <Compile Include="GroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GroupStats.cs" />
     <Compile Include="GroupUtilities.cs" />
-    <Compile Include="HatchStylePickerCombo.cs" />
+    <Compile Include="HatchStylePickerCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HelpUtilities.cs" />
     <Compile Include="ImportSettingsForm.cs">
       <SubType>Form</SubType>
@@ -267,7 +320,9 @@
     <Compile Include="InvalidHandleException.cs" />
     <Compile Include="InvalidProductKeyException.cs" />
     <Compile Include="IsGenuineResult.cs" />
-    <Compile Include="LabelEx.cs" />
+    <Compile Include="LabelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Layer.cs" />
     <Compile Include="Layers.cs" />
     <Compile Include="LayersNavigator.cs" />
@@ -415,7 +470,9 @@
       <DependentUpon>ReportEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReportModule.cs" />
-    <Compile Include="ReportsControl.cs" />
+    <Compile Include="ReportsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ReportSummary.cs" />
     <Compile Include="ReportTabEnum.cs" />
     <Compile Include="ReportTypeEnum.cs" />
@@ -429,7 +486,9 @@
     <Compile Include="SegmentF.cs" />
     <Compile Include="SingleInstance.cs" />
     <Compile Include="SlopeFactor.cs" />
-    <Compile Include="SlopeFactorControl.cs" />
+    <Compile Include="SlopeFactorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="StatusArgs.cs" />
     <Compile Include="StringLogicalComparer.cs" />
     <Compile Include="TaxesConfiguration.cs">
@@ -445,9 +504,13 @@
     <Compile Include="Templates.cs" />
     <Compile Include="TemplatesLibraryEditor.cs" />
     <Compile Include="TemplatesSupport.cs" />
-    <Compile Include="TextBoxEx.cs" />
+    <Compile Include="TextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Thumbnail.cs" />
-    <Compile Include="ThumbnailPanel.cs" />
+    <Compile Include="ThumbnailPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tool.cs" />
     <Compile Include="ToolAngle.cs" />
     <Compile Include="ToolCounter.cs" />
@@ -468,7 +531,9 @@
     <Compile Include="ToolRectangle.cs" />
     <Compile Include="ToolScale.cs" />
     <Compile Include="ToolSettings.cs" />
-    <Compile Include="TransparentPictureBox.cs" />
+    <Compile Include="TransparentPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TreeListViewState.cs" />
     <Compile Include="TreeViewNode.cs" />
     <Compile Include="TreeViewNodes.cs" />
@@ -477,7 +542,9 @@
     <Compile Include="TrialExpiredException.cs" />
     <Compile Include="TrialExtExpiredException.cs" />
     <Compile Include="TrialExtUsedException.cs" />
-    <Compile Include="TriStateTreeViewComponent.cs" />
+    <Compile Include="TriStateTreeViewComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TurboActivate.cs" />
     <Compile Include="TurboActivateException.cs" />
     <Compile Include="TurboFloatKeyException.cs" />
@@ -493,12 +560,24 @@
     <Compile Include="Variables.cs" />
     <Compile Include="VirtualMachineException.cs" />
     <Compile Include="Workspace.cs" />
-    <Compile Include="XtraReportEstimatingByGroups.cs" />
-    <Compile Include="XtraReportEstimatingByPlans.cs" />
-    <Compile Include="XtraReportEstimatingTotalsByPlans.cs" />
-    <Compile Include="XtraReportQuote.cs" />
-    <Compile Include="XtraReportTakeoffByGroups.cs" />
-    <Compile Include="XtraReportTakeoffByPlans.cs" />
+    <Compile Include="XtraReportEstimatingByGroups.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReportEstimatingByPlans.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReportEstimatingTotalsByPlans.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReportQuote.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReportTakeoffByGroups.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XtraReportTakeoffByPlans.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutForm.resources" />
@@ -559,6 +638,23 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
+      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
+      <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuoterImaging\QuoterImaging.csproj">
+      <Project>{1152667a-20b8-4115-895c-288c49267f1f}</Project>
+      <Name>QuoterImaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QuoterPlanControls\QuoterPlanControls.csproj">
+      <Project>{e63429c2-052d-4446-8fbd-79326dd332d0}</Project>
+      <Name>QuoterPlanControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

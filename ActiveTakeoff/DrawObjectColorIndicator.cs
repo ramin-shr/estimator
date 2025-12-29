@@ -6,62 +6,51 @@ using System.Windows.Forms;
 
 namespace QuoterPlan
 {
-	public class DrawObjectColorIndicator : UserControl
-	{
-		public DrawObject ParentObject
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ParentObject>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<ParentObject>k__BackingField = value;
-			}
-		}
+    public class DrawObjectColorIndicator : UserControl
+    {
+        private IContainer components;
 
-		public DrawObjectColorIndicator(DrawObject parentObject)
-		{
-			this.InitializeComponent();
-			Utilities.SetDoubleBuffered(this);
-			this.ParentObject = parentObject;
-			this.Font = Utilities.GetDefaultFont();
-		}
+        public DrawObject ParentObject
+        {
+            get;
+            set;
+        }
 
-		private void DrawObjectColorIndicator_Paint(object sender, PaintEventArgs e)
-		{
-			if (this.ParentObject != null)
-			{
-				Rectangle rect = new Rectangle(1, 1, 10, 10);
-				e.Graphics.DrawRectangle(new Pen(Color.FromArgb(this.ParentObject.Visible ? 255 : 35, Color.Black), 2f), rect);
-				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(this.ParentObject.Visible ? 255 : 135, this.ParentObject.Color)), rect);
-			}
-		}
+        public DrawObjectColorIndicator(DrawObject parentObject)
+        {
+            this.InitializeComponent();
+            Utilities.SetDoubleBuffered(this);
+            this.ParentObject = parentObject;
+            this.Font = Utilities.GetDefaultFont();
+        }
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.components != null)
+            {
+                this.components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		private void InitializeComponent()
-		{
-			base.SuspendLayout();
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = AutoScaleMode.Font;
-			base.Name = "DrawObjectColorIndicator";
-			base.Paint += this.DrawObjectColorIndicator_Paint;
-			base.ResumeLayout(false);
-		}
+        private void DrawObjectColorIndicator_Paint(object sender, PaintEventArgs e)
+        {
+            if (this.ParentObject != null)
+            {
+                Rectangle rectangle = new Rectangle(1, 1, 10, 10);
+                e.Graphics.DrawRectangle(new Pen(Color.FromArgb((this.ParentObject.Visible ? 0xff : 35), Color.Black), 2f), rectangle);
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb((this.ParentObject.Visible ? 0xff : 135), this.ParentObject.Color)), rectangle);
+            }
+        }
 
-		private IContainer components;
-
-		[CompilerGenerated]
-		private DrawObject <ParentObject>k__BackingField;
-	}
+        private void InitializeComponent()
+        {
+            base.SuspendLayout();
+            base.AutoScaleDimensions = new SizeF(6f, 13f);
+            base.AutoScaleMode = AutoScaleMode.Font;
+            base.Name = "DrawObjectColorIndicator";
+            base.Paint += new PaintEventHandler(this.DrawObjectColorIndicator_Paint);
+            base.ResumeLayout(false);
+        }
+    }
 }

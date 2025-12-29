@@ -1,383 +1,260 @@
-﻿using System;
+﻿using QuoterPlan.Properties;
+using System;
 using System.Runtime.CompilerServices;
-using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	public class DBEstimatingItem
-	{
-		public static string GetItemTypeCaption(DBEstimatingItem.EstimatingItemType itemType)
-		{
-			if (itemType < DBEstimatingItem.EstimatingItemType.MaterialItem || itemType >= DBEstimatingItem.EstimatingItemType.count)
-			{
-				return "";
-			}
-			return DBEstimatingItem.itemTypeString[(int)itemType];
-		}
+    public class DBEstimatingItem
+    {
+        private static string[] itemTypeString;
 
-		public static string GetUnitMeasureCaption(DBEstimatingItem.UnitMeasureType unitMeasure)
-		{
-			if (unitMeasure < DBEstimatingItem.UnitMeasureType.none || unitMeasure >= DBEstimatingItem.UnitMeasureType.count)
-			{
-				return "";
-			}
-			return DBEstimatingItem.unitMeasureString[(int)unitMeasure];
-		}
+        private static string[] unitMeasureString;
 
-		public int ID
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ID>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<ID>k__BackingField = value;
-			}
-		}
+        public string purchaseUnit;
 
-		public DBEstimatingItem.EstimatingItemType ItemType
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ItemType>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<ItemType>k__BackingField = value;
-			}
-		}
+        public string BidCode
+        {
+            get;
+            set;
+        }
 
-		public string Description
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Description>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<Description>k__BackingField = value;
-			}
-		}
+        public double CoverageRate
+        {
+            get
+            {
+                return this.CoverageValue / (this.CoverageUnit <= 0 ? 1 : this.CoverageUnit);
+            }
+        }
 
-		public string PurchaseUnit
-		{
-			get
-			{
-				string text = "";
-				if (this.purchaseUnit.Length > 0)
-				{
-					if (this.purchaseUnit[0] == '~')
-					{
-						text = this.purchaseUnit.Substring(1, this.purchaseUnit.Length - 1);
-						if (UnitScale.CastUnitSystem(Settings.Default.DefaultSystemType) == UnitScale.UnitSystem.metric)
-						{
-							if (text == Resources.pi)
-							{
-								text = "m";
-							}
-							else if (text == Resources.pi_2)
-							{
-								text = "m²";
-							}
-							else if (text == Resources.pi_3)
-							{
-								text = "m³";
-							}
-						}
-					}
-					else
-					{
-						text = this.purchaseUnit;
-					}
-				}
-				return text;
-			}
-			set
-			{
-				this.purchaseUnit = value;
-			}
-		}
+        public double CoverageUnit
+        {
+            get;
+            set;
+        }
 
-		public DBEstimatingItem.UnitMeasureType UnitMeasure
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<UnitMeasure>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<UnitMeasure>k__BackingField = value;
-			}
-		}
+        public double CoverageValue
+        {
+            get;
+            set;
+        }
 
-		public double CoverageValue
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<CoverageValue>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<CoverageValue>k__BackingField = value;
-			}
-		}
+        public string Description
+        {
+            get;
+            set;
+        }
 
-		public double CoverageUnit
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<CoverageUnit>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<CoverageUnit>k__BackingField = value;
-			}
-		}
+        public bool Dirty
+        {
+            get;
+            set;
+        }
 
-		public double CoverageRate
-		{
-			get
-			{
-				return this.CoverageValue / ((this.CoverageUnit <= 0.0) ? 1.0 : this.CoverageUnit);
-			}
-		}
+        public int ID
+        {
+            get;
+            private set;
+        }
 
-		public string UnitMeasureCaption
-		{
-			get
-			{
-				return DBEstimatingItem.unitMeasureString[(int)this.UnitMeasure];
-			}
-		}
+        public bool IsSystemItem
+        {
+            get;
+            set;
+        }
 
-		public double PriceEach
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<PriceEach>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<PriceEach>k__BackingField = value;
-			}
-		}
+        public DBEstimatingItem.EstimatingItemType ItemType
+        {
+            get;
+            private set;
+        }
 
-		public int SectionID
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<SectionID>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<SectionID>k__BackingField = value;
-			}
-		}
+        public double PriceEach
+        {
+            get;
+            set;
+        }
 
-		public int SubSectionID
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<SubSectionID>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<SubSectionID>k__BackingField = value;
-			}
-		}
+        public string PurchaseUnit
+        {
+            get
+            {
+                string str = "";
+                if (this.purchaseUnit.Length > 0)
+                {
+                    if (this.purchaseUnit[0] != '~')
+                    {
+                        str = this.purchaseUnit;
+                    }
+                    else
+                    {
+                        str = this.purchaseUnit.Substring(1, this.purchaseUnit.Length - 1);
+                        if (UnitScale.CastUnitSystem(Settings.Default.DefaultSystemType) == UnitScale.UnitSystem.metric)
+                        {
+                            if (str == Resources.pi)
+                            {
+                                str = "m";
+                            }
+                            else if (str == Resources.pi_2)
+                            {
+                                str = "m²";
+                            }
+                            else if (str == Resources.pi_3)
+                            {
+                                str = "m³";
+                            }
+                        }
+                    }
+                }
+                return str;
+            }
+            set
+            {
+                this.purchaseUnit = value;
+            }
+        }
 
-		public string BidCode
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<BidCode>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<BidCode>k__BackingField = value;
-			}
-		}
+        public int SectionID
+        {
+            get;
+            set;
+        }
 
-		public bool IsSystemItem
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<IsSystemItem>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<IsSystemItem>k__BackingField = value;
-			}
-		}
+        public int SubSectionID
+        {
+            get;
+            set;
+        }
 
-		public bool Dirty
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Dirty>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<Dirty>k__BackingField = value;
-			}
-		}
+        public DBEstimatingItem.UnitMeasureType UnitMeasure
+        {
+            get;
+            set;
+        }
 
-		public DBEstimatingItem(int id, DBEstimatingItem.EstimatingItemType itemType, string description, string purchaseUnit, DBEstimatingItem.UnitMeasureType unitMeasure, double coverageValue, double coverageUnit, double priceEach, int sectionID, int subSectionID, string bidCode, bool isSystemItem)
-		{
-			this.ID = id;
-			this.ItemType = ((itemType < DBEstimatingItem.EstimatingItemType.MaterialItem || itemType > DBEstimatingItem.EstimatingItemType.count) ? DBEstimatingItem.EstimatingItemType.MaterialItem : itemType);
-			this.Description = description;
-			this.PurchaseUnit = purchaseUnit;
-			this.UnitMeasure = ((unitMeasure < DBEstimatingItem.UnitMeasureType.none || unitMeasure >= DBEstimatingItem.UnitMeasureType.count) ? DBEstimatingItem.UnitMeasureType.none : unitMeasure);
-			this.CoverageValue = coverageValue;
-			this.CoverageUnit = ((coverageUnit <= 0.0) ? 1.0 : coverageUnit);
-			this.PriceEach = priceEach;
-			this.SectionID = sectionID;
-			this.SubSectionID = subSectionID;
-			this.BidCode = bidCode;
-			this.IsSystemItem = isSystemItem;
-			this.Dirty = false;
-		}
+        public string UnitMeasureCaption
+        {
+            get
+            {
+                return DBEstimatingItem.unitMeasureString[(int)this.UnitMeasure];
+            }
+        }
 
-		public DBEstimatingItem Duplicate(int id)
-		{
-			return new DBEstimatingItem(id, this.ItemType, this.Description, this.PurchaseUnit, this.UnitMeasure, this.CoverageValue, this.CoverageUnit, this.PriceEach, this.SectionID, this.SubSectionID, this.BidCode, this.IsSystemItem);
-		}
+        static DBEstimatingItem()
+        {
+            string[] matériel = new string[] { Resources.Matériel, Resources.Main_d_oeuvre, Resources.Sous_contracteur, Resources.Équipement };
+            DBEstimatingItem.itemTypeString = matériel;
+            string[] pi2 = new string[] { Resources.aucun, Resources.pi, Resources.pi_2, Resources.v_3, "m", "m²", "m³" };
+            DBEstimatingItem.unitMeasureString = pi2;
+        }
 
-		public bool MatchResultType(ExtensionResult.ExtensionResultTypeEnum resultType)
-		{
-			switch (resultType)
-			{
-			case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
-				return this.PurchaseUnit == "m" || this.PurchaseUnit == Resources.pi;
-			case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
-				return this.PurchaseUnit == "m²" || this.PurchaseUnit == Resources.pi_2;
-			case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
-				return this.PurchaseUnit == "m³" || this.PurchaseUnit == Resources.pi_3;
-			default:
-				return this.PurchaseUnit != "m" && this.PurchaseUnit != Resources.pi && this.PurchaseUnit != "m²" && this.PurchaseUnit != Resources.pi_2 && this.PurchaseUnit != "m³" && this.PurchaseUnit != Resources.pi_3;
-			}
-		}
+        public DBEstimatingItem(int id, DBEstimatingItem.EstimatingItemType itemType, string description, string purchaseUnit, DBEstimatingItem.UnitMeasureType unitMeasure, double coverageValue, double coverageUnit, double priceEach, int sectionID, int subSectionID, string bidCode, bool isSystemItem)
+        {
+            this.ID = id;
+            this.ItemType = (itemType < DBEstimatingItem.EstimatingItemType.MaterialItem || itemType > DBEstimatingItem.EstimatingItemType.count ? DBEstimatingItem.EstimatingItemType.MaterialItem : itemType);
+            this.Description = description;
+            this.PurchaseUnit = purchaseUnit;
+            this.UnitMeasure = (unitMeasure < DBEstimatingItem.UnitMeasureType.none || unitMeasure >= DBEstimatingItem.UnitMeasureType.count ? DBEstimatingItem.UnitMeasureType.none : unitMeasure);
+            this.CoverageValue = coverageValue;
+            this.CoverageUnit = (coverageUnit <= 0 ? 1 : coverageUnit);
+            this.PriceEach = priceEach;
+            this.SectionID = sectionID;
+            this.SubSectionID = subSectionID;
+            this.BidCode = bidCode;
+            this.IsSystemItem = isSystemItem;
+            this.Dirty = false;
+        }
 
-		public void Dump()
-		{
-			Console.WriteLine("ID = " + this.ID);
-			Console.WriteLine("ItemType = " + this.ItemType);
-			Console.WriteLine("Description = " + this.Description);
-			Console.WriteLine("PriceEach = " + this.PriceEach);
-			Console.WriteLine("SectionID = " + this.SectionID);
-			Console.WriteLine("SubSectionID = " + this.SubSectionID);
-			Console.WriteLine("BidCode = " + this.BidCode);
-			Console.WriteLine("IsSystemItem = " + this.IsSystemItem);
-			Console.WriteLine("IsDirty = " + this.Dirty);
-		}
+        public void Dump()
+        {
+            Console.WriteLine(string.Concat("ID = ", this.ID));
+            Console.WriteLine(string.Concat("ItemType = ", this.ItemType));
+            Console.WriteLine(string.Concat("Description = ", this.Description));
+            Console.WriteLine(string.Concat("PriceEach = ", this.PriceEach));
+            Console.WriteLine(string.Concat("SectionID = ", this.SectionID));
+            Console.WriteLine(string.Concat("SubSectionID = ", this.SubSectionID));
+            Console.WriteLine(string.Concat("BidCode = ", this.BidCode));
+            Console.WriteLine(string.Concat("IsSystemItem = ", this.IsSystemItem));
+            Console.WriteLine(string.Concat("IsDirty = ", this.Dirty));
+        }
 
-		// Note: this type is marked as 'beforefieldinit'.
-		static DBEstimatingItem()
-		{
-		}
+        public DBEstimatingItem Duplicate(int id)
+        {
+            return new DBEstimatingItem(id, this.ItemType, this.Description, this.PurchaseUnit, this.UnitMeasure, this.CoverageValue, this.CoverageUnit, this.PriceEach, this.SectionID, this.SubSectionID, this.BidCode, this.IsSystemItem);
+        }
 
-		private static string[] itemTypeString = new string[]
-		{
-			Resources.Matériel,
-			Resources.Main_d_oeuvre,
-			Resources.Sous_contracteur,
-			Resources.Équipement
-		};
+        public static string GetItemTypeCaption(DBEstimatingItem.EstimatingItemType itemType)
+        {
+            if (itemType < DBEstimatingItem.EstimatingItemType.MaterialItem || itemType >= DBEstimatingItem.EstimatingItemType.count)
+            {
+                return "";
+            }
+            return DBEstimatingItem.itemTypeString[(int)itemType];
+        }
 
-		private static string[] unitMeasureString = new string[]
-		{
-			Resources.aucun,
-			Resources.pi,
-			Resources.pi_2,
-			Resources.v_3,
-			"m",
-			"m²",
-			"m³"
-		};
+        public static string GetUnitMeasureCaption(DBEstimatingItem.UnitMeasureType unitMeasure)
+        {
+            if (unitMeasure < DBEstimatingItem.UnitMeasureType.none || unitMeasure >= DBEstimatingItem.UnitMeasureType.count)
+            {
+                return "";
+            }
+            return DBEstimatingItem.unitMeasureString[(int)unitMeasure];
+        }
 
-		public string purchaseUnit;
+        public bool MatchResultType(ExtensionResult.ExtensionResultTypeEnum resultType)
+        {
+            switch (resultType)
+            {
+                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
+                    {
+                        if (this.PurchaseUnit == "m")
+                        {
+                            return true;
+                        }
+                        return this.PurchaseUnit == Resources.pi;
+                    }
+                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
+                    {
+                        if (this.PurchaseUnit == "m²")
+                        {
+                            return true;
+                        }
+                        return this.PurchaseUnit == Resources.pi_2;
+                    }
+                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
+                    {
+                        if (this.PurchaseUnit == "m³")
+                        {
+                            return true;
+                        }
+                        return this.PurchaseUnit == Resources.pi_3;
+                    }
+            }
+            if (!(this.PurchaseUnit != "m") || !(this.PurchaseUnit != Resources.pi) || !(this.PurchaseUnit != "m²") || !(this.PurchaseUnit != Resources.pi_2) || !(this.PurchaseUnit != "m³"))
+            {
+                return false;
+            }
+            return this.PurchaseUnit != Resources.pi_3;
+        }
 
-		[CompilerGenerated]
-		private int <ID>k__BackingField;
+        public enum EstimatingItemType
+        {
+            MaterialItem,
+            LaborItem,
+            SubcontractItem,
+            EquipmentItem,
+            count
+        }
 
-		[CompilerGenerated]
-		private DBEstimatingItem.EstimatingItemType <ItemType>k__BackingField;
-
-		[CompilerGenerated]
-		private string <Description>k__BackingField;
-
-		[CompilerGenerated]
-		private DBEstimatingItem.UnitMeasureType <UnitMeasure>k__BackingField;
-
-		[CompilerGenerated]
-		private double <CoverageValue>k__BackingField;
-
-		[CompilerGenerated]
-		private double <CoverageUnit>k__BackingField;
-
-		[CompilerGenerated]
-		private double <PriceEach>k__BackingField;
-
-		[CompilerGenerated]
-		private int <SectionID>k__BackingField;
-
-		[CompilerGenerated]
-		private int <SubSectionID>k__BackingField;
-
-		[CompilerGenerated]
-		private string <BidCode>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <IsSystemItem>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <Dirty>k__BackingField;
-
-		public enum EstimatingItemType
-		{
-			MaterialItem,
-			LaborItem,
-			SubcontractItem,
-			EquipmentItem,
-			count
-		}
-
-		public enum UnitMeasureType
-		{
-			none,
-			lin_ft,
-			sq_ft,
-			cu_yd,
-			m,
-			sq_m,
-			cu_m,
-			count
-		}
-	}
+        public enum UnitMeasureType
+        {
+            none,
+            lin_ft,
+            sq_ft,
+            cu_yd,
+            m,
+            sq_m,
+            cu_m,
+            count
+        }
+    }
 }

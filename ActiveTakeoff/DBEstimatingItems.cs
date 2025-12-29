@@ -1,120 +1,109 @@
-﻿using System;
+﻿using QuoterPlan.Properties;
+using System;
 using System.Collections;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	public class DBEstimatingItems
-	{
-		public int NextAvailableIndex
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<NextAvailableIndex>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<NextAvailableIndex>k__BackingField = value;
-			}
-		}
+    public class DBEstimatingItems
+    {
+        private Hashtable estimatingItemsList;
 
-		public DBEstimatingItems()
-		{
-			this.estimatingItemsList = new Hashtable();
-			this.NextAvailableIndex = 0;
-		}
+        public Hashtable Collection
+        {
+            get
+            {
+                return this.estimatingItemsList;
+            }
+        }
 
-		public DBEstimatingItem this[int index]
-		{
-			get
-			{
-				DBEstimatingItem result;
-				try
-				{
-					result = (DBEstimatingItem)this.estimatingItemsList[index];
-				}
-				catch
-				{
-					result = null;
-				}
-				return result;
-			}
-		}
+        public int Count
+        {
+            get
+            {
+                return this.estimatingItemsList.Count;
+            }
+        }
 
-		public Hashtable Collection
-		{
-			get
-			{
-				return this.estimatingItemsList;
-			}
-		}
+        public DBEstimatingItem this[int index]
+        {
+            get
+            {
+                DBEstimatingItem item;
+                try
+                {
+                    item = (DBEstimatingItem)this.estimatingItemsList[index];
+                }
+                catch
+                {
+                    item = null;
+                }
+                return item;
+            }
+        }
 
-		public void Add(DBEstimatingItem estimatingItem)
-		{
-			this.estimatingItemsList.Add(estimatingItem.ID, estimatingItem);
-		}
+        public int NextAvailableIndex
+        {
+            get;
+            set;
+        }
 
-		public void Delete(DBEstimatingItem estimatingItem)
-		{
-			this.estimatingItemsList.Remove(estimatingItem.ID);
-		}
+        public DBEstimatingItems()
+        {
+            this.estimatingItemsList = new Hashtable();
+            this.NextAvailableIndex = 0;
+        }
 
-		public int Count
-		{
-			get
-			{
-				return this.estimatingItemsList.Count;
-			}
-		}
+        public void Add(DBEstimatingItem estimatingItem)
+        {
+            this.estimatingItemsList.Add(estimatingItem.ID, estimatingItem);
+        }
 
-		public string GetNameFromID(int itemID)
-		{
-			string result;
-			try
-			{
-				result = this[itemID].Description;
-			}
-			catch
-			{
-				result = Resources.Item_inconnu;
-			}
-			return result;
-		}
+        public void Clear()
+        {
+            this.estimatingItemsList.Clear();
+        }
 
-		public int GetNextAvailableIndex()
-		{
-			int num = this.NextAvailableIndex;
-			foreach (object obj in this.estimatingItemsList.Values)
-			{
-				DBEstimatingItem dbestimatingItem = (DBEstimatingItem)obj;
-				if (dbestimatingItem.ID >= num)
-				{
-					num = dbestimatingItem.ID + 1;
-				}
-			}
-			return num;
-		}
+        public void Delete(DBEstimatingItem estimatingItem)
+        {
+            this.estimatingItemsList.Remove(estimatingItem.ID);
+        }
 
-		public void Clear()
-		{
-			this.estimatingItemsList.Clear();
-		}
+        public void Dump()
+        {
+            foreach (DBEstimatingItem value in this.estimatingItemsList.Values)
+            {
+                value.Dump();
+            }
+        }
 
-		public void Dump()
-		{
-			foreach (object obj in this.estimatingItemsList.Values)
-			{
-				DBEstimatingItem dbestimatingItem = (DBEstimatingItem)obj;
-				dbestimatingItem.Dump();
-			}
-		}
+        public string GetNameFromID(int itemID)
+        {
+            string description;
+            try
+            {
+                description = this[itemID].Description;
+            }
+            catch
+            {
+                description = Resources.Item_inconnu;
+            }
+            return description;
+        }
 
-		private Hashtable estimatingItemsList;
-
-		[CompilerGenerated]
-		private int <NextAvailableIndex>k__BackingField;
-	}
+        public int GetNextAvailableIndex()
+        {
+            int nextAvailableIndex = this.NextAvailableIndex;
+            foreach (DBEstimatingItem value in this.estimatingItemsList.Values)
+            {
+                if (value.ID < nextAvailableIndex)
+                {
+                    continue;
+                }
+                nextAvailableIndex = value.ID + 1;
+            }
+            return nextAvailableIndex;
+        }
+    }
 }

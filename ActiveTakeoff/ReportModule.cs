@@ -1,6 +1,14 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using NPOI;
+using NPOI.HPSF;
+using NPOI.HSSF.UserModel;
+using NPOI.HSSF.Util;
+using NPOI.SS.UserModel;
+using QuoterPlan.Properties;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -9,4126 +17,3836 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Microsoft.Win32;
-using NPOI.HPSF;
-using NPOI.HSSF.UserModel;
-using NPOI.HSSF.Util;
-using NPOI.SS.UserModel;
-using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	public class ReportModule
-	{
-		public bool ExportReportToMemory
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ExportReportToMemory>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<ExportReportToMemory>k__BackingField = value;
-			}
-		}
-
-		public bool SortByLayers
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<SortByLayers>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<SortByLayers>k__BackingField = value;
-			}
-		}
-
-		public bool ExportEstimatingItems
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ExportEstimatingItems>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<ExportEstimatingItems>k__BackingField = value;
-			}
-		}
-
-		public string ReportSummaries
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<ReportSummaries>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<ReportSummaries>k__BackingField = value;
-			}
-		}
-
-		public bool ExportToCOffice
-		{
-			get
-			{
-				return this.exportToCOffice;
-			}
-			set
-			{
-				this.exportToCOffice = value;
-			}
-		}
-
-		public CEstimatingItems CEstimatingItems
-		{
-			get
-			{
-				return this.estimatingItems;
-			}
-			set
-			{
-				this.estimatingItems = value;
-			}
-		}
-
-		private void LoadResources()
-		{
-		}
-
-		private void InitializeWebBrowser()
-		{
-		}
-
-		public ReportModule(Project project, DrawingArea drawArea, ExtensionsSupport extensionSupport)
-		{
-			this.project = project;
-			this.drawArea = drawArea;
-			this.extensionSupport = extensionSupport;
-			this.filter = new Filter();
-			this.enabled = true;
-			this.InitializeWebBrowser();
-			this.LoadResources();
-		}
-
-		private void IESetupHeaderFooter(string dateString)
-		{
-			try
-			{
-				bool writable = true;
-				string name = "header";
-				string name2 = "footer";
-				RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", writable);
-				registryKey.SetValue(name, Resources.Page_x_de_n);
-				registryKey.SetValue(name2, Utilities.Ce_rapport_a_été_généré_grâce_à_Quoter_Plan + dateString);
-				registryKey.Close();
-			}
-			catch
-			{
-			}
-		}
-
-		private void IESetupRegistry()
-		{
-			try
-			{
-				bool writable = true;
-				string name = "header";
-				string name2 = "footer";
-				string name3 = "Print_Background";
-				RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", writable);
-				this.registerHeaderOriginalValue = registryKey.GetValue(name, "");
-				registryKey.SetValue(name, "");
-				this.registerFooterOriginalValue = registryKey.GetValue(name2, "");
-				registryKey.SetValue(name2, "");
-				this.registerPrintBackgroundOriginalValue = registryKey.GetValue(name3, "");
-				registryKey.SetValue(name3, "yes");
-				registryKey.Close();
-			}
-			catch
-			{
-			}
-		}
-
-		public void IERestoreRegistry()
-		{
-			try
-			{
-				bool writable = true;
-				string name = "header";
-				string name2 = "footer";
-				string name3 = "Print_Background";
-				RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", writable);
-				registryKey.SetValue(name, this.registerHeaderOriginalValue);
-				registryKey.SetValue(name2, this.registerFooterOriginalValue);
-				registryKey.SetValue(name3, this.registerPrintBackgroundOriginalValue);
-				registryKey.Close();
-			}
-			catch
-			{
-			}
-		}
-
-		private string FormatHtmlString(string text)
-		{
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.AppendLine("<head>");
-			stringBuilder.AppendLine("<title>Title</title>");
-			stringBuilder.AppendLine("<meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\"/>");
-			stringBuilder.AppendLine("</head>");
-			stringBuilder.AppendLine("<body>");
-			stringBuilder.AppendLine(text);
-			stringBuilder.AppendLine("</body>");
-			stringBuilder.AppendLine("</html>");
-			return stringBuilder.ToString();
-		}
-
-		private void LoadHtmlDocument(string htmlDocument)
-		{
-			if (this.webBrowser.Document != null)
-			{
-				this.webBrowser.Document.OpenNew(true);
-			}
-			else
-			{
-				this.webBrowser.Navigate("about:blank");
-			}
-			while (this.webBrowser.Document == null && this.webBrowser.Document.Body == null)
-			{
-				Application.DoEvents();
-			}
-			this.webBrowser.DocumentText = htmlDocument;
-		}
-
-		private string BuildXMLProjectInfo()
-		{
-			string text = "";
-			string text2 = text;
-			text = string.Concat(new string[]
-			{
-				text2,
-				"\t<Project Name=\"",
-				Utilities.EscapeString(this.project.Name),
-				"\">",
-				Environment.NewLine
-			});
-			string text3 = text;
-			text = string.Concat(new string[]
-			{
-				text3,
-				"\t\t<ContactName>",
-				Utilities.EscapeString(this.project.ContactName),
-				"</ContactName>",
-				Environment.NewLine
-			});
-			string[] fields = Utilities.GetFields(this.project.Description, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<Description>";
-				foreach (string s in fields)
-				{
-					text = text + Utilities.EscapeString(s) + "&#xD;";
-				}
-				text = text + "</Description>" + Environment.NewLine;
-			}
-			fields = Utilities.GetFields(this.project.ContactInfo, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<ContactInfo>";
-				foreach (string s2 in fields)
-				{
-					text = text + Utilities.EscapeString(s2) + "&#xD;";
-				}
-				text = text + "</ContactInfo>" + Environment.NewLine;
-			}
-			fields = Utilities.GetFields(this.project.Comment, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<Comment>";
-				foreach (string s3 in fields)
-				{
-					text = text + Utilities.EscapeString(s3) + "&#xD;";
-				}
-				text = text + "</Comment>" + Environment.NewLine;
-			}
-			return text + "\t</Project>" + Environment.NewLine;
-		}
-
-		private string BuildXMLEstimatingItemResults(DrawObject groupObject, GroupStats groupStats, UnitScale reportUnitScale, string extensionID, string resultID, string resultName, string estimatingCaption, double quantity, PresetResult presetResult, ref double costTotalSubTotal, ref double priceTotalSubTotal, string defaultUnit = "", double defaultCostEach = 0.0)
-		{
-			bool flag = false;
-			EstimatingItemPrice estimatingItemPrice = null;
-			string text = defaultUnit;
-			string text2 = "";
-			quantity = reportUnitScale.Round(quantity);
-			if (presetResult == null && resultName != "")
-			{
-				string objectType;
-				if ((objectType = groupObject.ObjectType) != null)
-				{
-					if (!(objectType == "Line"))
-					{
-						if (!(objectType == "Counter"))
-						{
-							if (!(objectType == "Area"))
-							{
-								if (objectType == "Perimeter")
-								{
-									text = ((reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m");
-									if (resultName != null)
-									{
-										if (!(resultName == "Length"))
-										{
-											if (!(resultName == "PerimeterMinusOpening"))
-											{
-												if (resultName == "NetLength")
-												{
-													flag = (groupStats.DropLength > 0.0);
-												}
-											}
-											else
-											{
-												flag = (groupStats.DeductionPerimeter > 0.0 && groupStats.DropLength == 0.0);
-											}
-										}
-										else
-										{
-											flag = (groupStats.DeductionPerimeter == 0.0 && groupStats.DropLength == 0.0);
-										}
-									}
-								}
-							}
-							else
-							{
-								text = ((reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²");
-								if (resultName != null)
-								{
-									if (!(resultName == "Area"))
-									{
-										if (resultName == "AreaMinusDeduction")
-										{
-											flag = (groupStats.DeductionsCount > 0);
-										}
-									}
-									else
-									{
-										flag = (groupStats.DeductionsCount == 0);
-									}
-								}
-							}
-						}
-						else
-						{
-							text = Resources.unité_;
-							flag = true;
-						}
-					}
-					else
-					{
-						text = ((reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m");
-						flag = true;
-					}
-				}
-			}
-			else
-			{
-				if (presetResult != null)
-				{
-					if (presetResult.ItemID != -1)
-					{
-						text2 = "\" ItemID=\"" + presetResult.ItemID;
-					}
-				}
-				else
-				{
-					text2 = "\" ItemID=\"" + resultID;
-				}
-				flag = true;
-			}
-			double num = 0.0;
-			double num2 = defaultCostEach;
-			double num3 = 0.0;
-			double num4 = 0.0;
-			double num5 = 0.0;
-			if (flag)
-			{
-				estimatingItemPrice = this.project.EstimatingItems.QueryEstimatingItemPrice(groupObject.GroupID, extensionID, resultID);
-				if (estimatingItemPrice != null)
-				{
-					if (num2 == 0.0)
-					{
-						num2 = estimatingItemPrice.CostEach;
-					}
-					num = Math.Round(num2 * (1.0 + estimatingItemPrice.MarkupEach / 100.0), 2);
-					num3 = Math.Round(quantity * num2, 2);
-					num4 = Math.Round(quantity * num, 2);
-					num5 = ((num > 0.0) ? ((num - num2) / num) : 0.0);
-					costTotalSubTotal += num3;
-					priceTotalSubTotal += num4;
-				}
-			}
-			if (estimatingItemPrice == null)
-			{
-				return "";
-			}
-			return string.Concat(new object[]
-			{
-				"\" EstimatingItem=\"",
-				true,
-				(estimatingCaption != "") ? ("\" EstimatingCaption=\"" + Utilities.EscapeString(estimatingCaption)) : "",
-				text2,
-				"\" Quantity=\"",
-				quantity,
-				"\" EstimatingUnit=\"",
-				text,
-				"\" CostEach=\"",
-				string.Format("{0:C}", num2),
-				"\" RawCostEach=\"",
-				num2,
-				"\" MarkupEach=\"",
-				string.Format("{0:C}", estimatingItemPrice.MarkupEach),
-				"\" RawMarkupEach=\"",
-				estimatingItemPrice.MarkupEach,
-				"\" CostTotal=\"",
-				string.Format("{0:C}", num3),
-				"\" RawCostTotal=\"",
-				num3,
-				"\" PriceEach=\"",
-				string.Format("{0:C}", num),
-				"\" RawPriceEach=\"",
-				num,
-				"\" PriceTotal=\"",
-				string.Format("{0:C}", num4),
-				"\" RawPriceTotal=\"",
-				num4,
-				"\" Margin=\"",
-				string.Format("{0:0.00%}", num5),
-				"\" RawMargin=\"",
-				num5
-			});
-		}
-
-		private string BuildXMLObject(DrawObject groupObject, Plan plan, string layerName, Variables plans, List<ReportSummary> reportSummaries, ref string indent, ref int resultID, ref int resultParentID, bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
-		{
-			string text = "";
-			bool flag = plan == null && layerName != "";
-			double num = 0.0;
-			double num2 = 0.0;
-			if (plan != null)
-			{
-				indent = (true ? "\t\t\t\t" : "\t\t\t");
-			}
-			else
-			{
-				indent = ((this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByPlans) ? "\t\t\t\t" : "\t");
-			}
-			if (groupObject != null && (groupObject.Visible || this.project.Report.ShowInvisibleObjects))
-			{
-				string text2 = string.Empty;
-				if (plans != null)
-				{
-					foreach (object obj in plans.Collection)
-					{
-						Variable variable = (Variable)obj;
-						if (variable.Name == groupObject.GroupID.ToString())
-						{
-							text2 = text2 + ((text2 == "") ? "" : ", ") + Utilities.EscapeString(variable.Value.ToString());
-						}
-					}
-				}
-				List<string> list = null;
-				if (!exportForExcel)
-				{
-					if (plan != null)
-					{
-						list = GroupUtilities.GetObjectLabels(plan, groupObject);
-					}
-					else
-					{
-						list = GroupUtilities.GetObjectLabels(this.project, groupObject, this.filter);
-					}
-				}
-				else
-				{
-					list = new List<string>();
-					list.Add(string.Empty);
-				}
-				for (int i = 0; i < list.Count; i++)
-				{
-					if (!false)
-					{
-						if (results == null)
-						{
-							object obj2 = text;
-							text = string.Concat(new object[]
-							{
-								obj2,
-								indent,
-								"\t<Object Name=\"",
-								Utilities.EscapeString(groupObject.Name + ((i > 0) ? (" - (" + Utilities.EscapeString(list[i]) + ")") : ((list.Count == 1) ? string.Empty : string.Empty))),
-								(text2 == "") ? "" : ("\" Plans=\"" + text2),
-								"\" Type=\"",
-								groupObject.ObjectType,
-								"\" Color=\"",
-								groupObject.Color.ToArgb(),
-								"\" IsLabel=\"",
-								i > 0,
-								"\">",
-								Environment.NewLine
-							});
-						}
-						if (this.project.Report.ShowComments && groupObject.Comment != string.Empty)
-						{
-							string[] fields = Utilities.GetFields(groupObject.Comment, new char[]
-							{
-								'\r',
-								'\n'
-							});
-							if (fields.GetUpperBound(0) >= 0)
-							{
-								text += "\t\t\t<Comment>";
-								foreach (string s in fields)
-								{
-									text = text + Utilities.EscapeString(s) + "&#xD;";
-								}
-								text = text + "</Comment>" + Environment.NewLine;
-							}
-						}
-						if (results == null)
-						{
-							text = text + indent + "\t\t<Extensions>" + Environment.NewLine;
-						}
-						if (results == null)
-						{
-							object obj2 = text;
-							text = string.Concat(new object[]
-							{
-								obj2,
-								indent,
-								"\t\t\t<Extension Name=\"",
-								Resources.Résultats,
-								"\" BaseExtension=\"",
-								true,
-								"\">",
-								Environment.NewLine
-							});
-							text = text + indent + "\t\t\t\t<Results>" + Environment.NewLine;
-						}
-						num = 0.0;
-						num2 = 0.0;
-						UnitScale.UnitSystem systemType = this.project.Report.SystemType;
-						UnitScale.UnitPrecision precision = this.project.Report.Precision;
-						UnitScale unitScale = new UnitScale(1f, systemType, precision, false);
-						UnitScale.UnitSystem unitSystem = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, "", groupObject.ObjectType, systemType, -1);
-						UnitScale unitScale2 = new UnitScale(1f, unitSystem, precision, false);
-						GroupStats groupStats = null;
-						if (plan != null)
-						{
-							groupStats = GroupUtilities.ComputeGroupStats(plan, groupObject, systemType, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-						}
-						else if (layerName != "")
-						{
-							groupStats = GroupUtilities.ComputeGroupStats(this.project, layerName, groupObject, this.filter, systemType, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-						}
-						GroupStats groupStats2 = GroupUtilities.ComputeGroupStats(this.project, groupObject, this.filter, systemType, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-						bool flag2 = groupStats2.DeductionsCount > 0 || exportForExcel;
-						bool flag3 = groupStats2.DropLength > 0.0 || exportForExcel;
-						bool flag4 = groupStats2.DeductionPerimeter > 0.0 || exportForExcel;
-						resultID++;
-						resultParentID = resultID;
-						string text3;
-						if ((text3 = groupObject.ObjectType) != null)
-						{
-							if (!(text3 == "Line"))
-							{
-								if (!(text3 == "Area"))
-								{
-									if (!(text3 == "Perimeter"))
-									{
-										if (text3 == "Counter")
-										{
-											if (results == null)
-											{
-												object obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"Count\" Caption=\"",
-													Resources.Nombre_d_objets,
-													"\" Unit=\"",
-													Resources.unité_,
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.GroupCount)),
-														"\" RawValue=\"",
-														groupStats.GroupCount
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.GroupCount)),
-													"\" TotalRawValue=\"",
-													groupStats2.GroupCount,
-													this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, "", groupObject.ObjectType, "Count", Resources.Nombre_d_objets, (double)((groupStats != null) ? groupStats.GroupCount : groupStats2.GroupCount), null, ref num, ref num2, "", 0.0),
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											else
-											{
-												results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, (double)groupStats2.GroupCount, Resources.unité_, 0.0, 0.0, -1));
-											}
-										}
-									}
-									else
-									{
-										double num3 = (systemType == unitSystem) ? ((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter) : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromMetersToFeet((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter) : UnitScale.FromFeetToMeters((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter));
-										if (results == null)
-										{
-											object obj2;
-											if (!this.ExportEstimatingItems)
-											{
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"Length\" Caption=\"",
-													Resources.Longueur,
-													"\" Unit=\"",
-													(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.Perimeter, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.Perimeter
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.Perimeter, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.Perimeter,
-													this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStats != null) ? num3 : num3, null, ref num, ref num2, "", 0.0),
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											else
-											{
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"Length\" Caption=\"",
-													Resources.Longueur,
-													"\" Unit=\"",
-													(unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale2.ToLengthStringFromUnitSystem(groupStats.Perimeter, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.Perimeter
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale2.ToLengthStringFromUnitSystem(groupStats2.Perimeter, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.Perimeter,
-													this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStats != null) ? num3 : num3, null, ref num, ref num2, "", 0.0),
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											if (flag4)
-											{
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"Openings\" Caption=\"",
-													Resources.Longueur_des_ouvertures,
-													"\" Unit=\"",
-													(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.DeductionPerimeter, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.DeductionPerimeter
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.DeductionPerimeter, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.DeductionPerimeter,
-													"\"/>",
-													Environment.NewLine
-												});
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"PerimeterMinusOpenings\" Caption=\"",
-													Resources.Longueur_sans_ouvertures,
-													"\" Unit=\"",
-													(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.PerimeterMinusOpening, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.PerimeterMinusOpening
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.PerimeterMinusOpening, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.PerimeterMinusOpening,
-													this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, "", groupObject.ObjectType, "PerimeterMinusOpening", Resources.Longueur, (groupStats != null) ? groupStats.PerimeterMinusOpening : groupStats2.PerimeterMinusOpening, null, ref num, ref num2, "", 0.0),
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											if (flag3)
-											{
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"DropLength\" Caption=\"",
-													Resources.Drop_length,
-													"\" Unit=\"",
-													(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.DropLength, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.DropLength
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.DropLength, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.DropLength,
-													"\"/>",
-													Environment.NewLine
-												});
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"NetLength\" Caption=\"",
-													Resources.Longueur_nette,
-													"\" Unit=\"",
-													(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.NetLength, false, true, true)),
-														"\" RawValue=\"",
-														groupStats.NetLength
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.NetLength, false, true, true)),
-													"\" TotalRawValue=\"",
-													groupStats2.NetLength,
-													this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, "", groupObject.ObjectType, "NetLength", Resources.Longueur, (groupStats != null) ? groupStats.NetLength : groupStats2.NetLength, null, ref num, ref num2, "", 0.0),
-													"\"/>",
-													Environment.NewLine
-												});
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"DropsCount\" Caption=\"",
-													Resources.Drops_count,
-													"\" Unit=\"",
-													Resources.unité_,
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.DropsCount)),
-														"\" RawValue=\"",
-														groupStats.DropsCount
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.DropsCount)),
-													"\" TotalRawValue=\"",
-													groupStats2.DropsCount,
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											if (flag2)
-											{
-												obj2 = text;
-												text = string.Concat(new object[]
-												{
-													obj2,
-													indent,
-													"\t\t\t\t\t<Result Name=\"OpeningsCount\" Caption=\"",
-													Resources.Nombre_d_ouvertures,
-													"\" Unit=\"",
-													Resources.unité_,
-													(groupStats != null) ? string.Concat(new object[]
-													{
-														"\" Value=\"",
-														Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.DeductionsCount)),
-														"\" RawValue=\"",
-														groupStats.DeductionsCount
-													}) : "",
-													"\" TotalValue=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.DeductionsCount)),
-													"\" TotalRawValue=\"",
-													groupStats2.DeductionsCount,
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"CornersCount\" Caption=\"",
-												Resources.Nombre_de_coins,
-												"\" Unit=\"",
-												Resources.unité_,
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.CornersCount)),
-													"\" RawValue=\"",
-													groupStats.CornersCount
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.CornersCount)),
-												"\" TotalRawValue=\"",
-												groupStats2.CornersCount,
-												"\"/>",
-												Environment.NewLine
-											});
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"EndsCount\" Caption=\"",
-												Resources.Nombre_de_bouts,
-												"\" Unit=\"",
-												Resources.unité_,
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.EndsCount)),
-													"\" RawValue=\"",
-													groupStats.EndsCount
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.EndsCount)),
-												"\" TotalRawValue=\"",
-												groupStats2.EndsCount,
-												"\"/>",
-												Environment.NewLine
-											});
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"SegmentsCount\" Caption=\"",
-												Resources.Nombre_de_segments,
-												"\" Unit=\"",
-												Resources.unité_,
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.SegmentsCount)),
-													"\" RawValue=\"",
-													groupStats.SegmentsCount
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.SegmentsCount)),
-												"\" TotalRawValue=\"",
-												groupStats2.SegmentsCount,
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-										else
-										{
-											results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num3, (unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi : "m", 0.0, 0.0, -1));
-										}
-									}
-								}
-								else
-								{
-									double num4 = (systemType == unitSystem) ? ((groupStats != null) ? groupStats.AreaMinusDeduction : groupStats2.AreaMinusDeduction) : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromSquareMetersToSquareFeet((groupStats != null) ? groupStats.AreaMinusDeduction : groupStats2.AreaMinusDeduction) : UnitScale.FromSquareFeetToSquareMeters((groupStats != null) ? groupStats.AreaMinusDeduction : groupStats2.AreaMinusDeduction));
-									if (results == null)
-									{
-										object obj2;
-										if (!this.ExportEstimatingItems)
-										{
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"Area\" Caption=\"",
-												Resources.Surface,
-												"\" Unit=\"",
-												(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²",
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats.Area, true)),
-													"\" RawValue=\"",
-													groupStats.Area
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats2.Area, true)),
-												"\" TotalRawValue=\"",
-												groupStats2.Area,
-												this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Area", Resources.Surface, (groupStats != null) ? num4 : num4, null, ref num, ref num2, "", 0.0),
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-										else
-										{
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"Area\" Caption=\"",
-												Resources.Surface,
-												"\" Unit=\"",
-												(unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²",
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(unitScale2.ToAreaStringFromUnitSystem(groupStats.Area, true)),
-													"\" RawValue=\"",
-													groupStats.Area
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(unitScale2.ToAreaStringFromUnitSystem(groupStats2.Area, true)),
-												"\" TotalRawValue=\"",
-												groupStats2.Area,
-												this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Area", Resources.Surface, (groupStats != null) ? num4 : num4, null, ref num, ref num2, "", 0.0),
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-										if (flag2)
-										{
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"Substractions\" Caption=\"",
-												Resources.Déduction,
-												"\" Unit=\"",
-												(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²",
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats.DeductionArea, true)),
-													"\" RawValue=\"",
-													groupStats.DeductionArea
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats2.DeductionArea, true)),
-												"\" TotalRawValue=\"",
-												groupStats2.DeductionArea,
-												"\"/>",
-												Environment.NewLine
-											});
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"AreaMinusSubstractions\" Caption=\"",
-												Resources.Surface_déductions,
-												"\" Unit=\"",
-												(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²",
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats.AreaMinusDeduction, true)),
-													"\" RawValue=\"",
-													groupStats.AreaMinusDeduction
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStats2.AreaMinusDeduction, true)),
-												"\" TotalRawValue=\"",
-												groupStats2.AreaMinusDeduction,
-												this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, "", groupObject.ObjectType, "AreaMinusDeduction", Resources.Surface, (groupStats != null) ? groupStats.AreaMinusDeduction : groupStats2.AreaMinusDeduction, null, ref num, ref num2, "", 0.0),
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-										obj2 = text;
-										text = string.Concat(new object[]
-										{
-											obj2,
-											indent,
-											"\t\t\t\t\t<Result Name=\"Perimeter\" Caption=\"",
-											Resources.Périmètre,
-											"\" Unit=\"",
-											(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-											(groupStats != null) ? string.Concat(new object[]
-											{
-												"\" Value=\"",
-												Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.Perimeter, false, true, true)),
-												"\" RawValue=\"",
-												groupStats.Perimeter
-											}) : "",
-											"\" TotalValue=\"",
-											Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.Perimeter, false, true, true)),
-											"\" TotalRawValue=\"",
-											groupStats2.Perimeter,
-											"\"/>",
-											Environment.NewLine
-										});
-										if (flag2)
-										{
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"PerimeterPlusSubstractions\" Caption=\"",
-												Resources.Périmètre_déductions,
-												"\" Unit=\"",
-												(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.PerimeterPlusDeduction, false, true, true)),
-													"\" RawValue=\"",
-													groupStats.PerimeterPlusDeduction
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.PerimeterPlusDeduction, false, true, true)),
-												"\" TotalRawValue=\"",
-												groupStats2.PerimeterPlusDeduction,
-												"\"/>",
-												Environment.NewLine
-											});
-											obj2 = text;
-											text = string.Concat(new object[]
-											{
-												obj2,
-												indent,
-												"\t\t\t\t\t<Result Name=\"SubstractionsCount\" Caption=\"",
-												Resources.Nombre_de_déductions,
-												"\" Unit=\"",
-												Resources.unité_,
-												(groupStats != null) ? string.Concat(new object[]
-												{
-													"\" Value=\"",
-													Utilities.EscapeString(this.drawArea.ToUnitString(groupStats.DeductionsCount)),
-													"\" RawValue=\"",
-													groupStats.DeductionsCount
-												}) : "",
-												"\" TotalValue=\"",
-												Utilities.EscapeString(this.drawArea.ToUnitString(groupStats2.DeductionsCount)),
-												"\" TotalRawValue=\"",
-												groupStats2.DeductionsCount,
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-									}
-									else
-									{
-										results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num4, (unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²", 0.0, 0.0, -1));
-									}
-								}
-							}
-							else
-							{
-								double num5 = (systemType == unitSystem) ? ((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter) : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromMetersToFeet((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter) : UnitScale.FromFeetToMeters((groupStats != null) ? groupStats.Perimeter : groupStats2.Perimeter));
-								if (results == null)
-								{
-									if (!this.ExportEstimatingItems)
-									{
-										object obj2 = text;
-										text = string.Concat(new object[]
-										{
-											obj2,
-											indent,
-											"\t\t\t\t\t<Result Name=\"Length\" Caption=\"",
-											Resources.Longueur,
-											"\" Unit=\"",
-											(systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-											(groupStats != null || flag) ? string.Concat(new object[]
-											{
-												"\" Value=\"",
-												Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats.Perimeter, false, true, true)),
-												"\" RawValue=\"",
-												groupStats.Perimeter
-											}) : "",
-											"\" TotalValue=\"",
-											Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStats2.Perimeter, false, true, true)),
-											"\" TotalRawValue=\"",
-											groupStats2.Perimeter,
-											this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStats != null) ? num5 : num5, null, ref num, ref num2, "", 0.0),
-											"\"/>",
-											Environment.NewLine
-										});
-									}
-									else
-									{
-										object obj2 = text;
-										text = string.Concat(new object[]
-										{
-											obj2,
-											indent,
-											"\t\t\t\t\t<Result Name=\"Length\" Caption=\"",
-											Resources.Longueur,
-											"\" Unit=\"",
-											(unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi : "m",
-											(groupStats != null || flag) ? string.Concat(new object[]
-											{
-												"\" Value=\"",
-												Utilities.EscapeString(unitScale2.ToLengthStringFromUnitSystem(groupStats.Perimeter, false, true, true)),
-												"\" RawValue=\"",
-												groupStats.Perimeter
-											}) : "",
-											"\" TotalValue=\"",
-											Utilities.EscapeString(unitScale2.ToLengthStringFromUnitSystem(groupStats2.Perimeter, false, true, true)),
-											"\" TotalRawValue=\"",
-											groupStats2.Perimeter,
-											this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale2, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStats != null) ? num5 : num5, null, ref num, ref num2, "", 0.0),
-											"\"/>",
-											Environment.NewLine
-										});
-									}
-								}
-								else
-								{
-									results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num5, (unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi : "m", 0.0, 0.0, -1));
-								}
-							}
-						}
-						if (results == null)
-						{
-							text = text + indent + "\t\t\t\t</Results>" + Environment.NewLine;
-							text = text + indent + "\t\t\t</Extension>" + Environment.NewLine;
-						}
-						DrawObjectGroup group = groupObject.Group;
-						Presets presets = new Presets();
-						if (group != null)
-						{
-							foreach (object obj3 in group.Presets.Collection)
-							{
-								Preset preset = (Preset)obj3;
-								Preset preset2 = preset.Clone(true);
-								presets.Add(preset2);
-							}
-							foreach (object obj4 in group.Presets.Collection)
-							{
-								Preset preset3 = (Preset)obj4;
-								if (results == null)
-								{
-									text3 = text;
-									text = string.Concat(new string[]
-									{
-										text3,
-										indent,
-										"\t\t\t<Extension Name=\"",
-										Utilities.EscapeString(preset3.DisplayName),
-										"\">",
-										Environment.NewLine
-									});
-								}
-								if (i == 0)
-								{
-									string text4 = "";
-									int num6 = 0;
-									foreach (object obj5 in preset3.Choices.Collection)
-									{
-										PresetChoice presetChoice = (PresetChoice)obj5;
-										ExtensionChoice extensionChoice = this.extensionSupport.FindChoice(preset3.CategoryName, preset3.ExtensionName, presetChoice.ChoiceName);
-										if (extensionChoice != null && (!extensionChoice.Hidden || includeHiddenValues))
-										{
-											ExtensionChoiceElement extensionChoiceElement = extensionChoice.FindElement(presetChoice.ChoiceElementName);
-											if (extensionChoiceElement != null && results == null)
-											{
-												text3 = text4;
-												text4 = string.Concat(new string[]
-												{
-													text3,
-													indent,
-													"\t\t\t\t\t<Field Name=\"Choice",
-													(num6 + 1).ToString(),
-													"\" Caption=\"",
-													presetChoice.ChoiceCaption,
-													"\" Value=\"",
-													Utilities.EscapeString(extensionChoiceElement.Caption),
-													"\" RawValue=\"",
-													Utilities.EscapeString(extensionChoiceElement.Caption),
-													"\"/>",
-													Environment.NewLine
-												});
-											}
-										}
-										num6++;
-									}
-									num6 = 0;
-									foreach (object obj6 in preset3.Fields.Collection)
-									{
-										PresetField presetField = (PresetField)obj6;
-										double value = Utilities.ConvertToDouble(presetField.Value.ToString(), -1);
-										string s2 = value.ToString();
-										string s3 = value.ToString();
-										string text5 = string.Empty;
-										ExtensionField.ExtensionFieldTypeEnum fieldType = presetField.FieldType;
-										if (fieldType != ExtensionField.ExtensionFieldTypeEnum.FieldTypeDimension)
-										{
-											if (fieldType == ExtensionField.ExtensionFieldTypeEnum.FieldTypeCurrency)
-											{
-												s2 = this.drawArea.ToCurrency(value);
-												s3 = value.ToString();
-												text5 = Utilities.GetCurrencySymbol();
-											}
-										}
-										else
-										{
-											if (preset3.ScaleSystemType != unitScale.ScaleSystemType)
-											{
-												value = ((unitScale.ScaleSystemType == UnitScale.UnitSystem.imperial) ? UnitScale.FromMetersToFeet(value) : UnitScale.FromFeetToMeters(value));
-											}
-											s2 = unitScale.ToLengthStringFromUnitSystem(value, false, false, true);
-											s3 = unitScale.ToLengthFromUnitSystem(value).ToString();
-											text5 = ((systemType == UnitScale.UnitSystem.imperial) ? Resources.pi : "m");
-										}
-										if (results == null)
-										{
-											text3 = text4;
-											text4 = string.Concat(new string[]
-											{
-												text3,
-												indent,
-												"\t\t\t\t\t<Field Name=\"Field",
-												(num6 + 1).ToString(),
-												"\" Caption=\"",
-												Utilities.EscapeString(presetField.Caption),
-												"\" Unit=\"",
-												text5,
-												"\" Value=\"",
-												Utilities.EscapeString(s2),
-												"\" RawValue=\"",
-												Utilities.EscapeString(s3),
-												"\"/>",
-												Environment.NewLine
-											});
-										}
-										num6++;
-									}
-									if (results == null && text4.Trim() != "")
-									{
-										text = text + indent + "\t\t\t\t<Fields>" + Environment.NewLine;
-										text += text4;
-										text = text + indent + "\t\t\t\t</Fields>" + Environment.NewLine;
-									}
-								}
-								if (results == null)
-								{
-									text = text + indent + "\t\t\t\t<Results>" + Environment.NewLine;
-								}
-								Variables variables = new Variables();
-								for (int k = (plan != null || layerName != "") ? 2 : 1; k > 0; k--)
-								{
-									Preset preset4 = (k == 2) ? presets.FindById(preset3.ID) : preset3;
-									preset4 = ((preset4 == null) ? preset3 : preset4);
-									this.extensionSupport.QueryPresetResults(preset4, (k == 2) ? groupStats : groupStats2, unitScale);
-									foreach (object obj7 in preset4.Results.Collection)
-									{
-										PresetResult presetResult = (PresetResult)obj7;
-										if (presetResult.ConditionMet)
-										{
-											unitSystem = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, preset3.ID, presetResult.Name, systemType, -1);
-											unitScale2 = new UnitScale(1f, unitSystem, precision, false);
-											double num7 = Utilities.ConvertToDouble(presetResult.Result.ToString(), -1);
-											string text6 = string.Empty;
-											string text7 = string.Empty;
-											string text8 = string.Empty;
-											double defaultCostEach = 0.0;
-											DBEstimatingItem dbestimatingItem = null;
-											if (presetResult.ItemID != -1)
-											{
-												dbestimatingItem = this.project.DBManagement.GetEstimatingItem(presetResult.ItemID);
-											}
-											bool flag5 = false;
-											if (dbestimatingItem != null)
-											{
-												flag5 = dbestimatingItem.MatchResultType(presetResult.ResultType);
-											}
-											if (flag5)
-											{
-												UnitScale unitScale3 = new UnitScale(1f, (dbestimatingItem.PurchaseUnit == "m" || dbestimatingItem.PurchaseUnit == "m²" || dbestimatingItem.PurchaseUnit == "m³") ? UnitScale.UnitSystem.metric : UnitScale.UnitSystem.imperial, precision, false);
-												unitSystem = unitScale3.ScaleSystemType;
-												switch (presetResult.ResultType)
-												{
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromMetersToFeet(num7) : UnitScale.FromFeetToMeters(num7)));
-													text6 = unitScale3.ToLengthStringFromUnitSystem(num7, false, true, true);
-													text7 = unitScale3.ToLengthFromUnitSystem(num7).ToString();
-													text8 = dbestimatingItem.PurchaseUnit;
-													break;
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromSquareMetersToSquareFeet(num7) : UnitScale.FromSquareFeetToSquareMeters(num7)));
-													text6 = unitScale3.ToAreaStringFromUnitSystem(num7, true);
-													text7 = unitScale3.ToAreaFromUnitSystem(num7).ToString();
-													text8 = dbestimatingItem.PurchaseUnit;
-													break;
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromCubicMetersToCubicFeet(num7) : UnitScale.FromCubicFeetToCubicMeters(num7)));
-													text6 = unitScale3.ToCubicStringFromUnitSystem(num7, true);
-													text7 = unitScale3.ToCubicFromUnitSystem(num7).ToString();
-													text8 = dbestimatingItem.PurchaseUnit;
-													break;
-												default:
-													text6 = unitScale3.Round(num7).ToString();
-													text7 = text6.ToString();
-													text8 = dbestimatingItem.PurchaseUnit;
-													text6 += ((text8 != string.Empty) ? (" " + text8) : "");
-													break;
-												}
-											}
-											else
-											{
-												switch (presetResult.ResultType)
-												{
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromMetersToFeet(num7) : UnitScale.FromFeetToMeters(num7)));
-													text6 = unitScale2.ToLengthStringFromUnitSystem(num7, false, true, true);
-													text7 = unitScale2.ToLengthFromUnitSystem(num7).ToString();
-													text8 = ((unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi : "m");
-													break;
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromSquareMetersToSquareFeet(num7) : UnitScale.FromSquareFeetToSquareMeters(num7)));
-													text6 = unitScale2.ToAreaStringFromUnitSystem(num7, true);
-													text7 = unitScale2.ToAreaFromUnitSystem(num7).ToString();
-													text8 = ((unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi_2 : "m²");
-													break;
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
-													num7 = ((systemType == unitSystem) ? num7 : ((unitSystem == UnitScale.UnitSystem.imperial) ? UnitScale.FromCubicMetersToCubicFeet(num7) : UnitScale.FromCubicFeetToCubicMeters(num7)));
-													text6 = unitScale2.ToCubicStringFromUnitSystem(num7, true);
-													text7 = unitScale2.ToCubicFromUnitSystem(num7).ToString();
-													text8 = ((unitSystem == UnitScale.UnitSystem.imperial) ? Resources.pi_3 : "m³");
-													break;
-												case ExtensionResult.ExtensionResultTypeEnum.ResultTypeCurrency:
-													text6 = this.drawArea.ToCurrency(num7);
-													defaultCostEach = Utilities.ConvertToDouble(num7, -1);
-													text7 = "1";
-													text8 = Resources.chaque;
-													break;
-												default:
-													text6 = unitScale2.Round(num7).ToString();
-													text7 = text6.ToString();
-													text8 = presetResult.Unit.ToLower();
-													text6 += ((text8 != string.Empty) ? (" " + text8) : "");
-													break;
-												}
-											}
-											if (presetResult.IsEstimatingItem || !this.ExportEstimatingItems)
-											{
-												string text9 = (dbestimatingItem != null) ? dbestimatingItem.Description : presetResult.Caption;
-												int num8 = (dbestimatingItem != null) ? dbestimatingItem.SectionID : presetResult.SectionID;
-												int num9 = (dbestimatingItem != null) ? dbestimatingItem.SubSectionID : presetResult.SubSectionID;
-												string s4 = (dbestimatingItem != null) ? dbestimatingItem.BidCode : "";
-												DBEstimatingItem.EstimatingItemType estimatingItemType = (dbestimatingItem != null) ? dbestimatingItem.ItemType : DBEstimatingItem.EstimatingItemType.MaterialItem;
-												if (results == null)
-												{
-													Variable variable2 = variables.Find(presetResult.Name);
-													if (variable2 != null)
-													{
-														Variable variable3 = variable2;
-														variable3.Tag += ((k == 2) ? string.Concat(new string[]
-														{
-															" Value=\"",
-															Utilities.EscapeString(text6),
-															"\" RawValue=\"",
-															text7,
-															this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, preset3.ID, presetResult.Name, presetResult.Name, text9, Utilities.ConvertToDouble(text7, -1), presetResult, ref num, ref num2, text8, defaultCostEach),
-															"\""
-														}) : string.Concat(new object[]
-														{
-															" TotalValue=\"",
-															Utilities.EscapeString(text6),
-															"\" TotalRawValue=\"",
-															text7,
-															(groupStats == null) ? this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, preset3.ID, presetResult.Name, presetResult.Name, text9, Utilities.ConvertToDouble(text7, -1), presetResult, ref num, ref num2, text8, defaultCostEach) : "",
-															"\" SectionID=\"",
-															num8,
-															"\" SubSectionID=\"",
-															num9,
-															"\" BidCode=\"",
-															Utilities.EscapeString(s4),
-															"\" ItemType=\"",
-															(int)estimatingItemType,
-															"\""
-														}));
-													}
-													else
-													{
-														variable2 = new Variable(presetResult.Name, string.Concat(new string[]
-														{
-															indent,
-															"\t\t\t\t\t<Result Name=\"",
-															presetResult.Name,
-															"\" Caption=\"",
-															Utilities.EscapeString(text9),
-															"\" Unit=\"",
-															text8,
-															"\""
-														}), (k == 2) ? string.Concat(new string[]
-														{
-															" Value=\"",
-															Utilities.EscapeString(text6),
-															"\" RawValue=\"",
-															text7,
-															this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, preset3.ID, presetResult.Name, presetResult.Name, text9, Utilities.ConvertToDouble(text7, -1), presetResult, ref num, ref num2, text8, defaultCostEach),
-															"\""
-														}) : string.Concat(new object[]
-														{
-															" TotalValue=\"",
-															Utilities.EscapeString(text6),
-															"\" TotalRawValue=\"",
-															text7,
-															(groupStats == null) ? this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, preset3.ID, presetResult.Name, presetResult.Name, text9, Utilities.ConvertToDouble(text7, -1), presetResult, ref num, ref num2, text8, defaultCostEach) : "",
-															"\" SectionID=\"",
-															num8,
-															"\" SubSectionID=\"",
-															num9,
-															"\" BidCode=\"",
-															Utilities.EscapeString(s4),
-															"\" ItemType=\"",
-															(int)estimatingItemType,
-															"\""
-														}));
-														variables.Add(variable2);
-													}
-												}
-												else
-												{
-													resultID++;
-													if (presetResult.IsEstimatingItem)
-													{
-														results.Add(new EstimatingItem(resultID, resultParentID, groupObject.GroupID, preset3.ID, presetResult.Name, groupObject.ObjectType, text9, Utilities.ConvertToDouble(text7, -1), (text8 != string.Empty) ? text8 : presetResult.Unit, 0.0, 0.0, -1));
-													}
-												}
-											}
-										}
-									}
-								}
-								foreach (object obj8 in variables.Collection)
-								{
-									Variable variable4 = (Variable)obj8;
-									if (results == null)
-									{
-										text3 = text;
-										text = string.Concat(new string[]
-										{
-											text3,
-											variable4.Value.ToString(),
-											variable4.Tag.ToString(),
-											"/>",
-											Environment.NewLine
-										});
-									}
-								}
-								variables.Clear();
-								variables = null;
-								if (results == null)
-								{
-									text = text + indent + "\t\t\t\t</Results>" + Environment.NewLine;
-									text = text + indent + "\t\t\t</Extension>" + Environment.NewLine;
-								}
-							}
-						}
-						if (results == null)
-						{
-							if (group.EstimatingItems.Count > 0)
-							{
-								text3 = text;
-								text = string.Concat(new string[]
-								{
-									text3,
-									indent,
-									"\t\t\t<Extension Name=\"",
-									Utilities.EscapeString(Resources.Items_d_estimation),
-									"\">",
-									Environment.NewLine
-								});
-								text = text + indent + "\t\t\t\t<Results>" + Environment.NewLine;
-								Variables variables2 = new Variables();
-								for (int l = (plan != null || layerName != "") ? 2 : 1; l > 0; l--)
-								{
-									foreach (CEstimatingItem cestimatingItem in group.EstimatingItems.Collection)
-									{
-										if (cestimatingItem.Formula != "")
-										{
-											DBEstimatingItem estimatingItem = this.project.DBManagement.GetEstimatingItem(Utilities.ConvertToInt(cestimatingItem.ItemID));
-											UnitScale.UnitSystem unitSystem2 = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, cestimatingItem.InternalKey, cestimatingItem.ItemID, systemType, Utilities.ConvertToInt(cestimatingItem.ItemID));
-											DBEstimatingItem.UnitMeasureType unitMeasureType = (estimatingItem != null) ? estimatingItem.UnitMeasure : cestimatingItem.UnitMeasure;
-											double num10 = (estimatingItem != null) ? estimatingItem.CoverageRate : cestimatingItem.CoverageRate;
-											if (unitMeasureType == DBEstimatingItem.UnitMeasureType.m || unitMeasureType == DBEstimatingItem.UnitMeasureType.sq_m || unitMeasureType == DBEstimatingItem.UnitMeasureType.cu_m || cestimatingItem.Unit.ToUpper() == "M" || cestimatingItem.Unit.ToUpper() == "M²" || cestimatingItem.Unit.ToUpper() == "M³")
-											{
-												unitSystem2 = UnitScale.UnitSystem.metric;
-											}
-											else if (unitMeasureType == DBEstimatingItem.UnitMeasureType.lin_ft || unitMeasureType == DBEstimatingItem.UnitMeasureType.sq_ft || unitMeasureType == DBEstimatingItem.UnitMeasureType.cu_yd || cestimatingItem.Unit.ToUpper() == Resources.pi.ToUpper() || cestimatingItem.Unit.ToUpper() == Resources.pi_2.ToUpper() || cestimatingItem.Unit.ToUpper() == Resources.pi_3.ToUpper() || cestimatingItem.Unit.ToUpper() == Resources.v_3.ToUpper())
-											{
-												unitSystem2 = UnitScale.UnitSystem.imperial;
-											}
-											GroupStats groupStats3 = null;
-											if (plan != null)
-											{
-												groupStats3 = GroupUtilities.ComputeGroupStats(plan, groupObject, unitSystem2, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-											}
-											else if (layerName != "")
-											{
-												groupStats3 = GroupUtilities.ComputeGroupStats(this.project, layerName, groupObject, this.filter, unitSystem2, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-											}
-											GroupStats groupStats4 = GroupUtilities.ComputeGroupStats(this.project, groupObject, this.filter, unitSystem2, list.Count == 1, (list.Count > 1) ? list[i] : string.Empty);
-											foreach (object obj9 in groupObject.Group.Presets.Collection)
-											{
-												Preset preset5 = (Preset)obj9;
-												UnitScale unitScale4 = new UnitScale(1f, unitSystem2, precision, false);
-												this.project.ExtensionsSupport.QueryPresetResults(preset5, groupStats4, unitScale4);
-											}
-											double num11 = 0.0;
-											if (FormulaUtilities.Compute(cestimatingItem.Formula, (l == 2) ? presets : groupObject.Group.Presets, (l == 2) ? groupStats3 : groupStats4, cestimatingItem.ResultSystemType(unitSystem2), ref num11))
-											{
-												num11 = ((num10 == 0.0) ? num11 : Math.Ceiling(num11 / num10));
-												string text10 = unitScale.Round(num11).ToString();
-												string text11 = text10.ToString();
-												string text12 = cestimatingItem.Unit.ToLower();
-												double defaultCostEach2 = 0.0;
-												int sectionID = cestimatingItem.SectionID;
-												int subSectionID = cestimatingItem.SubSectionID;
-												string bidCode = cestimatingItem.BidCode;
-												DBEstimatingItem.EstimatingItemType itemType = cestimatingItem.ItemType;
-												text10 = text10 + " " + text12;
-												Variable variable5 = variables2.Find(cestimatingItem.InternalKey);
-												if (variable5 != null)
-												{
-													Variable variable6 = variable5;
-													variable6.Tag += ((l == 2) ? string.Concat(new string[]
-													{
-														" Value=\"",
-														Utilities.EscapeString(text10),
-														"\" RawValue=\"",
-														text11,
-														this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, cestimatingItem.InternalKey, cestimatingItem.ItemID, "", Utilities.EscapeString(cestimatingItem.Description), Utilities.ConvertToDouble(text11, -1), null, ref num, ref num2, text12, defaultCostEach2),
-														"\""
-													}) : string.Concat(new object[]
-													{
-														" TotalValue=\"",
-														Utilities.EscapeString(text10),
-														"\" TotalRawValue=\"",
-														text11,
-														(groupStats == null) ? this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, cestimatingItem.InternalKey, cestimatingItem.ItemID, "", cestimatingItem.Description, Utilities.ConvertToDouble(text11, -1), null, ref num, ref num2, text12, defaultCostEach2) : "",
-														"\" SectionID=\"",
-														sectionID,
-														"\" SubSectionID=\"",
-														subSectionID,
-														"\" BidCode=\"",
-														Utilities.EscapeString(bidCode),
-														"\" ItemType=\"",
-														(int)itemType,
-														"\""
-													}));
-												}
-												else
-												{
-													variable5 = new Variable(cestimatingItem.InternalKey, string.Concat(new string[]
-													{
-														indent,
-														"\t\t\t\t\t<Result Name=\"",
-														cestimatingItem.InternalKey,
-														"\" Caption=\"",
-														Utilities.EscapeString(cestimatingItem.Description),
-														"\" Unit=\"",
-														text12,
-														"\""
-													}), (l == 2) ? string.Concat(new string[]
-													{
-														" Value=\"",
-														Utilities.EscapeString(text10),
-														"\" RawValue=\"",
-														text11,
-														this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, cestimatingItem.InternalKey, cestimatingItem.ItemID, "", cestimatingItem.Description, Utilities.ConvertToDouble(text11, -1), null, ref num, ref num2, text12, defaultCostEach2),
-														"\""
-													}) : string.Concat(new object[]
-													{
-														" TotalValue=\"",
-														Utilities.EscapeString(text10),
-														"\" TotalRawValue=\"",
-														text11,
-														(groupStats == null) ? this.BuildXMLEstimatingItemResults(groupObject, (groupStats == null) ? groupStats2 : groupStats, unitScale, cestimatingItem.InternalKey, cestimatingItem.ItemID, "", cestimatingItem.Description, Utilities.ConvertToDouble(text11, -1), null, ref num, ref num2, text12, defaultCostEach2) : "",
-														"\" SectionID=\"",
-														sectionID,
-														"\" SubSectionID=\"",
-														subSectionID,
-														"\" BidCode=\"",
-														Utilities.EscapeString(bidCode),
-														"\" ItemType=\"",
-														(int)itemType,
-														"\""
-													}));
-													variables2.Add(variable5);
-												}
-											}
-										}
-									}
-								}
-								foreach (object obj10 in variables2.Collection)
-								{
-									Variable variable7 = (Variable)obj10;
-									if (results == null)
-									{
-										text3 = text;
-										text = string.Concat(new string[]
-										{
-											text3,
-											variable7.Value.ToString(),
-											variable7.Tag.ToString(),
-											"/>",
-											Environment.NewLine
-										});
-									}
-								}
-								variables2.Clear();
-								variables2 = null;
-								text = text + indent + "\t\t\t\t</Results>" + Environment.NewLine;
-								text = text + indent + "\t\t\t</Extension>" + Environment.NewLine;
-							}
-							text = text + indent + "\t\t</Extensions>" + Environment.NewLine;
-							if (this.ExportToCOffice && i == 0)
-							{
-								string text13;
-								if (plan == null && !flag)
-								{
-									text13 = Resources.TOUS_LES_PLANS[0].ToString() + Resources.TOUS_LES_PLANS.Substring(1, Resources.TOUS_LES_PLANS.Length - 1).ToLower();
-								}
-								else if (flag)
-								{
-									text13 = layerName;
-								}
-								else
-								{
-									text13 = plan.Name;
-								}
-								text = text + indent + "\t\t<COffice>" + Environment.NewLine;
-								if (groupObject.Group != null)
-								{
-									foreach (CEstimatingItem cestimatingItem2 in groupObject.Group.COfficeProducts.Collection)
-									{
-										double num12 = 0.0;
-										FormulaUtilities.Compute(cestimatingItem2.Formula, groupObject.Group.Presets, (plan == null && !flag) ? groupStats2 : groupStats, cestimatingItem2.ResultSystemType(UnitScale.DefaultUnitSystem()), ref num12);
-										text = text + indent + "\t\t\t<CEstimatingItem ";
-										text = text + "Page=\"" + text13 + "\" ";
-										text = text + "DigitizerItem=\"" + groupObject.Name + "\" ";
-										text = text + "ItemID=\"" + cestimatingItem2.ItemID + "\" ";
-										text = text + "Description=\"" + Utilities.EscapeString(cestimatingItem2.Description) + "\" ";
-										object obj2 = text;
-										text = string.Concat(new object[]
-										{
-											obj2,
-											"Cost=\"",
-											cestimatingItem2.Value,
-											"\" "
-										});
-										text = text + "Unit=\"" + Utilities.EscapeString(cestimatingItem2.Unit) + "\" ";
-										text = text + "Formula=\"" + Utilities.EscapeString(cestimatingItem2.Formula) + "\" ";
-										obj2 = text;
-										text = string.Concat(new object[]
-										{
-											obj2,
-											"Result=\"",
-											num12,
-											"\""
-										});
-										text = text + "/>" + Environment.NewLine;
-										if (this.CEstimatingItems != null)
-										{
-											CEstimatingItem cestimatingItem3 = new CEstimatingItem(cestimatingItem2.ItemID.Replace(',', '.'), cestimatingItem2.Description, 0.0, cestimatingItem2.Unit, cestimatingItem2.ItemType, cestimatingItem2.UnitMeasure, cestimatingItem2.CoverageValue, cestimatingItem2.CoverageUnit, cestimatingItem2.SectionID, cestimatingItem2.SubSectionID, cestimatingItem2.BidCode, "");
-											cestimatingItem3.Tag = new Variable(text13, groupObject.Name, num12.ToString().Replace(',', '.'));
-											this.CEstimatingItems.Add(cestimatingItem3);
-										}
-									}
-								}
-								text = text + indent + "\t\t</COffice>" + Environment.NewLine;
-							}
-							if (reportSummaries != null)
-							{
-								double num13 = (num2 > 0.0) ? ((num2 - num) / num2) : 0.0;
-								object obj2 = text;
-								text = string.Concat(new object[]
-								{
-									obj2,
-									indent,
-									"\t\t<Summary CostTotalSubTotal=\"",
-									string.Format("{0:C}", num),
-									"\" RawCostTotalSubTotal=\"",
-									num,
-									"\" PriceTotalSubTotal=\"",
-									string.Format("{0:C}", num2),
-									"\" RawPriceTotalSubTotal=\"",
-									num2,
-									"\" MarginSubTotal=\"",
-									string.Format("{0:0.00%}", num13),
-									"\" RawMarginSubTotal=\"",
-									num13,
-									"\"/>",
-									Environment.NewLine
-								});
-								reportSummaries.Add(new ReportSummary(groupObject.Name.ToString() + ((i == 0) ? "" : "*"), num, num2, plan, groupObject, groupObject.GroupID, layerName));
-							}
-							text = text + indent + "\t</Object>" + Environment.NewLine;
-						}
-						presets.Clear();
-						presets = null;
-					}
-				}
-			}
-			return text;
-		}
-
-		private string BuildXMLObjectSummaries(List<ReportSummary> reportSummaries, string indent, bool isPlanSummaries = false)
-		{
-			bool taxOnTax = Settings.Default.TaxOnTax;
-			string tax1Label = Settings.Default.Tax1Label;
-			string tax2Label = Settings.Default.Tax2Label;
-			double tax1Rate = Settings.Default.Tax1Rate;
-			double tax2Rate = Settings.Default.Tax2Rate;
-			double num = 0.0;
-			double num2 = 0.0;
-			string text = "";
-			foreach (ReportSummary reportSummary in reportSummaries)
-			{
-				if (reportSummary.Caption.IndexOf('*') == -1)
-				{
-					num += reportSummary.CostSubTotal;
-					num2 += reportSummary.PriceSubTotal;
-				}
-			}
-			if (!isPlanSummaries)
-			{
-				text = text + indent + "\t<Summaries>" + Environment.NewLine;
-			}
-			foreach (ReportSummary reportSummary2 in reportSummaries)
-			{
-				if (reportSummary2.Caption.IndexOf('*') == -1)
-				{
-					double costSubTotal = reportSummary2.CostSubTotal;
-					double priceSubTotal = reportSummary2.PriceSubTotal;
-					double num3 = (priceSubTotal > 0.0) ? ((priceSubTotal - costSubTotal) / priceSubTotal) : 0.0;
-					double num4 = (num2 > 0.0) ? (priceSubTotal / num2) : 0.0;
-					string text2 = num4.ToString() + ";";
-					DrawObject groupObject = reportSummary2.GroupObject;
-					if (groupObject != null)
-					{
-						text2 = text2 + groupObject.Color.ToArgb() + ";";
-					}
-					object obj = text;
-					text = string.Concat(new object[]
-					{
-						obj,
-						indent,
-						"\t\t<",
-						(!isPlanSummaries) ? "Summary" : "PlanSummary",
-						" Name=\"",
-						Utilities.EscapeString(reportSummary2.Caption),
-						"\" CostTotalSubTotal=\"",
-						string.Format("{0:C}", costSubTotal),
-						"\" RawCostTotalSubTotal=\"",
-						costSubTotal,
-						"\" PriceTotalSubTotal=\"",
-						string.Format("{0:C}", priceSubTotal),
-						"\" RawPriceTotalSubTotal=\"",
-						priceSubTotal,
-						"\" MarginSubTotal=\"",
-						string.Format("{0:0.00%}", num3),
-						"\" RawMarginSubTotal=\"",
-						num3,
-						"\" TotalBreakdown=\"",
-						string.Format("{0:0.00%}", num4),
-						"\" RawTotalBreakdown=\"",
-						num4,
-						"\" TotalBreakdownTag=\"",
-						text2,
-						"\"/>",
-						Environment.NewLine
-					});
-				}
-			}
-			string text3 = tax1Label + " (" + string.Format("{0:0.#####%}", tax1Rate) + ") :";
-			string text4 = tax2Label + " (" + string.Format("{0:0.#####%}", tax2Rate) + ") :";
-			double num5 = num2 * tax1Rate;
-			num5 = Math.Round(num5, 2);
-			double num6 = taxOnTax ? ((num5 + num2) * tax2Rate) : (num2 * tax2Rate);
-			num6 = Math.Round(num6, 2);
-			double num7 = num2 + num5 + num6;
-			num7 = Math.Round(num7, 2);
-			double num8 = (num2 > 0.0) ? ((num2 - num) / num2) : 0.0;
-			object obj2 = text;
-			text = string.Concat(new object[]
-			{
-				obj2,
-				indent,
-				"\t\t<",
-				(!isPlanSummaries) ? "Total" : "PlanTotal",
-				" CostTotal=\"",
-				string.Format("{0:C}", num),
-				"\" RawCostTotal=\"",
-				num,
-				"\" PriceTotal=\"",
-				string.Format("{0:C}", num2),
-				"\" RawPriceTotal=\"",
-				num2,
-				"\" MarginTotal=\"",
-				string.Format("{0:0.00%}", num8),
-				"\" RawMarginTotal=\"",
-				num8,
-				"\" Taxe1Rate=\"",
-				string.Format("{0:0.00%}", tax1Rate),
-				"\" RawTaxe1Rate=\"",
-				tax1Rate,
-				"\" Taxe2Rate=\"",
-				string.Format("{0:0.00%}", tax2Rate),
-				"\" RawTaxe2Rate=\"",
-				tax2Rate,
-				"\" Taxe1Caption=\"",
-				text3,
-				"\" Taxe2Caption=\"",
-				text4,
-				"\" Taxe1Total=\"",
-				string.Format("{0:C}", num5),
-				"\" RawTaxe1Total=\"",
-				num5,
-				"\" Taxe2Total=\"",
-				string.Format("{0:C}", num6),
-				"\" RawTaxe2Total=\"",
-				num6,
-				"\" TotalAfterTaxes=\"",
-				string.Format("{0:C}", num7),
-				"\" RawTotalAfterTaxes=\"",
-				num7,
-				"\"/>",
-				Environment.NewLine
-			});
-			if (!isPlanSummaries)
-			{
-				text = text + indent + "\t</Summaries>" + Environment.NewLine;
-			}
-			return text;
-		}
-
-		private string BuildXMLLayerSummaries(List<ReportSummary> reportTotalSummaries, List<ReportSummary> reportSummaries, ref double costTotalTotal, ref double priceTotalTotal)
-		{
-			string text = "\t\t\t<LayerSummaries Name=\"" + Utilities.EscapeString(reportSummaries[0].LayerName) + "\">" + Environment.NewLine;
-			text += this.BuildXMLObjectSummaries(reportSummaries, "\t\t", true);
-			ReportSummary reportSummary;
-			foreach (ReportSummary reportSummary3 in reportSummaries)
-			{
-				reportSummary = reportSummary3;
-				if (reportSummary.Caption.IndexOf('*') == -1)
-				{
-					ReportSummary reportSummary2 = reportTotalSummaries.Find((ReportSummary x) => x.GroupID == reportSummary.GroupID);
-					if (reportSummary2 == null)
-					{
-						reportTotalSummaries.Add(new ReportSummary(reportSummary.Caption, reportSummary.CostSubTotal, reportSummary.PriceSubTotal, reportSummary.Plan, reportSummary.GroupObject, reportSummary.GroupID, reportSummary.LayerName));
-					}
-					else
-					{
-						reportSummary2.CostSubTotal += reportSummary.CostSubTotal;
-						reportSummary2.PriceSubTotal += reportSummary.PriceSubTotal;
-					}
-					costTotalTotal += reportSummary.CostSubTotal;
-					priceTotalTotal += reportSummary.PriceSubTotal;
-				}
-			}
-			text = text + "\t\t\t</LayerSummaries>" + Environment.NewLine;
-			return text;
-		}
-
-		private string BuildXMLLayersSummaries(List<List<ReportSummary>> reportAllSummaries)
-		{
-			string text = "";
-			double num = 0.0;
-			double num2 = 0.0;
-			if (reportAllSummaries.Count > 0)
-			{
-				List<ReportSummary> list = new List<ReportSummary>();
-				text = text + "\t<PlansSummaries>" + Environment.NewLine;
-				text = text + "\t\t<PlanSummaries Name=\"\">" + Environment.NewLine;
-				foreach (List<ReportSummary> list2 in reportAllSummaries)
-				{
-					if (list2.Count > 0)
-					{
-						string text2 = text;
-						text = string.Concat(new string[]
-						{
-							text2,
-							"\t\t\t<LayerSummaries Name=\"",
-							Utilities.EscapeString(list2[0].LayerName),
-							"\">",
-							Environment.NewLine
-						});
-						text += this.BuildXMLObjectSummaries(list2, "\t\t", true);
-						ReportSummary reportSummary;
-						foreach (ReportSummary reportSummary3 in list2)
-						{
-							reportSummary = reportSummary3;
-							if (reportSummary.Caption.IndexOf('*') == -1)
-							{
-								ReportSummary reportSummary2 = list.Find((ReportSummary x) => x.LayerName == reportSummary.LayerName);
-								if (reportSummary2 == null)
-								{
-									list.Add(new ReportSummary(reportSummary.LayerName, reportSummary.CostSubTotal, reportSummary.PriceSubTotal, null, null, -1, reportSummary.LayerName));
-								}
-								else
-								{
-									reportSummary2.CostSubTotal += reportSummary.CostSubTotal;
-									reportSummary2.PriceSubTotal += reportSummary.PriceSubTotal;
-								}
-								num += reportSummary.CostSubTotal;
-								num2 += reportSummary.PriceSubTotal;
-							}
-						}
-						text = text + "\t\t\t</LayerSummaries>" + Environment.NewLine;
-					}
-				}
-				double num3 = (num2 > 0.0) ? ((num2 - num) / num2) : 0.0;
-				object obj = text;
-				text = string.Concat(new object[]
-				{
-					obj,
-					"\t\t\t<Total CostTotal=\"",
-					string.Format("{0:C}", num),
-					"\" RawCostTotal=\"",
-					num,
-					"\" PriceTotal=\"",
-					string.Format("{0:C}", num2),
-					"\" RawPriceTotal=\"",
-					num2,
-					"\" MarginTotal=\"",
-					string.Format("{0:0.00%}", num3),
-					"\" RawMarginTotal=\"",
-					num3,
-					"\"/>",
-					Environment.NewLine
-				});
-				num = 0.0;
-				num2 = 0.0;
-				text = text + "\t\t</PlanSummaries>" + Environment.NewLine;
-				text = text + "\t</PlansSummaries>" + Environment.NewLine;
-				list.Sort(new ReportModule.SummarySorter());
-				text += this.BuildXMLSummaries(list, "");
-				list.Clear();
-				list = null;
-			}
-			return text;
-		}
-
-		private string BuildXMLPlansSummaries(List<List<ReportSummary>> reportAllSummaries)
-		{
-			string text = "";
-			double num = 0.0;
-			double num2 = 0.0;
-			Plan plan = null;
-			if (reportAllSummaries.Count > 0)
-			{
-				bool flag = false;
-				string a = "";
-				List<ReportSummary> list = new List<ReportSummary>();
-				List<ReportSummary> list2 = new List<ReportSummary>();
-				text = text + "\t<PlansSummaries>" + Environment.NewLine;
-				foreach (List<ReportSummary> list3 in reportAllSummaries)
-				{
-					if (list3.Count > 0)
-					{
-						if (a != list3[0].Plan.Name)
-						{
-							if (flag)
-							{
-								double num3 = (num2 - num) / num2;
-								object obj = text;
-								text = string.Concat(new object[]
-								{
-									obj,
-									"\t\t\t<Total CostTotal=\"",
-									string.Format("{0:C}", num),
-									"\" RawCostTotal=\"",
-									num,
-									"\" PriceTotal=\"",
-									string.Format("{0:C}", num2),
-									"\" RawPriceTotal=\"",
-									num2,
-									"\" MarginTotal=\"",
-									string.Format("{0:0.00%}", num3),
-									"\" RawMarginTotal=\"",
-									num3,
-									"\"/>",
-									Environment.NewLine
-								});
-								list.Add(new ReportSummary(plan.Name, num, num2, plan, null, -1, ""));
-								num = 0.0;
-								num2 = 0.0;
-								text = text + "\t\t</PlanSummaries>" + Environment.NewLine;
-							}
-							string text2 = text;
-							text = string.Concat(new string[]
-							{
-								text2,
-								"\t\t<PlanSummaries Name=\"",
-								Utilities.EscapeString(list3[0].Plan.Name),
-								"\">",
-								Environment.NewLine
-							});
-							plan = list3[0].Plan;
-							flag = true;
-						}
-						text += this.BuildXMLLayerSummaries(list2, list3, ref num, ref num2);
-						if (a != list3[0].Plan.Name)
-						{
-							a = list3[0].Plan.Name;
-						}
-					}
-				}
-				if (flag)
-				{
-					double num3 = (num2 > 0.0) ? ((num2 - num) / num2) : 0.0;
-					object obj2 = text;
-					text = string.Concat(new object[]
-					{
-						obj2,
-						"\t\t\t<Total CostTotal=\"",
-						string.Format("{0:C}", num),
-						"\" RawCostTotal=\"",
-						num,
-						"\" PriceTotal=\"",
-						string.Format("{0:C}", num2),
-						"\" RawPriceTotal=\"",
-						num2,
-						"\" MarginTotal=\"",
-						string.Format("{0:0.00%}", num3),
-						"\" RawMarginTotal=\"",
-						num3,
-						"\"/>",
-						Environment.NewLine
-					});
-					list.Add(new ReportSummary(plan.Name, num, num2, plan, null, -1, ""));
-					num = 0.0;
-					num2 = 0.0;
-					text = text + "\t\t</PlanSummaries>" + Environment.NewLine;
-					flag = false;
-				}
-				text = text + "\t</PlansSummaries>" + Environment.NewLine;
-				list.Sort(new ReportModule.SummarySorter());
-				text += this.BuildXMLSummaries(list, "");
-				list.Clear();
-				list = null;
-				list2.Clear();
-				list2 = null;
-			}
-			return text;
-		}
-
-		private string BuildXMLSummaries(List<ReportSummary> reportSummaries, string indent)
-		{
-			bool taxOnTax = Settings.Default.TaxOnTax;
-			string tax1Label = Settings.Default.Tax1Label;
-			string tax2Label = Settings.Default.Tax2Label;
-			double tax1Rate = Settings.Default.Tax1Rate;
-			double tax2Rate = Settings.Default.Tax2Rate;
-			double num = 0.0;
-			double num2 = 0.0;
-			string text = "";
-			foreach (ReportSummary reportSummary in reportSummaries)
-			{
-				num += reportSummary.CostSubTotal;
-				num2 += reportSummary.PriceSubTotal;
-			}
-			text = text + indent + "\t<Summaries>" + Environment.NewLine;
-			int num3 = 11;
-			foreach (ReportSummary reportSummary2 in reportSummaries)
-			{
-				double costSubTotal = reportSummary2.CostSubTotal;
-				double priceSubTotal = reportSummary2.PriceSubTotal;
-				double num4 = (priceSubTotal > 0.0) ? ((priceSubTotal - costSubTotal) / priceSubTotal) : 0.0;
-				double num5 = (num2 > 0.0) ? (priceSubTotal / num2) : 0.0;
-				string text2 = num5.ToString() + ";";
-				text2 = text2 + Utilities.GetBasicColor(++num3).ToArgb() + ";";
-				if (num3 == 15)
-				{
-					num3 = 0;
-				}
-				object obj = text;
-				text = string.Concat(new object[]
-				{
-					obj,
-					indent,
-					"\t\t<Summary Name=\"",
-					Utilities.EscapeString(reportSummary2.Caption),
-					"\" CostTotalSubTotal=\"",
-					string.Format("{0:C}", costSubTotal),
-					"\" RawCostTotalSubTotal=\"",
-					costSubTotal,
-					"\" PriceTotalSubTotal=\"",
-					string.Format("{0:C}", priceSubTotal),
-					"\" RawPriceTotalSubTotal=\"",
-					priceSubTotal,
-					"\" MarginSubTotal=\"",
-					string.Format("{0:0.00%}", num4),
-					"\" RawMarginSubTotal=\"",
-					num4,
-					"\" TotalBreakdown=\"",
-					string.Format("{0:0.00%}", num5),
-					"\" RawTotalBreakdown=\"",
-					num5,
-					"\" TotalBreakdownTag=\"",
-					text2,
-					"\"/>",
-					Environment.NewLine
-				});
-			}
-			string text3 = tax1Label + " (" + string.Format("{0:0.#####%}", tax1Rate) + ") :";
-			string text4 = tax2Label + " (" + string.Format("{0:0.#####%}", tax2Rate) + ") :";
-			double num6 = num2 * tax1Rate;
-			num6 = Math.Round(num6, 2);
-			double num7 = taxOnTax ? ((num6 + num2) * tax2Rate) : (num2 * tax2Rate);
-			num7 = Math.Round(num7, 2);
-			double num8 = num2 + num6 + num7;
-			num8 = Math.Round(num8, 2);
-			double num9 = (num2 > 0.0) ? ((num2 - num) / num2) : 0.0;
-			object obj2 = text;
-			text = string.Concat(new object[]
-			{
-				obj2,
-				indent,
-				"\t\t<Total CostTotal=\"",
-				string.Format("{0:C}", num),
-				"\" RawCostTotal=\"",
-				num,
-				"\" PriceTotal=\"",
-				string.Format("{0:C}", num2),
-				"\" RawPriceTotal=\"",
-				num2,
-				"\" MarginTotal=\"",
-				string.Format("{0:0.00%}", num9),
-				"\" RawMarginTotal=\"",
-				num9,
-				"\" Taxe1Rate=\"",
-				string.Format("{0:0.00%}", tax1Rate),
-				"\" RawTaxe1Rate=\"",
-				tax1Rate,
-				"\" Taxe2Rate=\"",
-				string.Format("{0:0.00%}", tax2Rate),
-				"\" RawTaxe2Rate=\"",
-				tax2Rate,
-				"\" Taxe1Caption=\"",
-				text3,
-				"\" Taxe2Caption=\"",
-				text4,
-				"\" Taxe1Total=\"",
-				string.Format("{0:C}", num6),
-				"\" RawTaxe1Total=\"",
-				num6,
-				"\" Taxe2Total=\"",
-				string.Format("{0:C}", num7),
-				"\" RawTaxe2Total=\"",
-				num7,
-				"\" TotalAfterTaxes=\"",
-				string.Format("{0:C}", num8),
-				"\" RawTotalAfterTaxes=\"",
-				num8,
-				"\"/>",
-				Environment.NewLine
-			});
-			text = text + indent + "\t</Summaries>" + Environment.NewLine;
-			return text;
-		}
-
-		private string BuildXMLObjects(List<Variable> groups, List<ReportSummary> reportSummaries, Plan plan, string layerName, Variables plans, bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
-		{
-			int num = 0;
-			int num2 = 0;
-			string text = "";
-			string text2 = "";
-			for (int i = 0; i < groups.Count; i++)
-			{
-				text += this.BuildXMLObject((DrawObject)groups[i].Tag, plan, layerName, plans, reportSummaries, ref text2, ref num, ref num2, includeHiddenValues, exportForExcel, results);
-			}
-			return text;
-		}
-
-		private string BuildXMLOrderByObjects(bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
-		{
-			List<Variable> list = new List<Variable>();
-			List<ReportSummary> list2 = new List<ReportSummary>();
-			Variables variables = new Variables();
-			foreach (object obj in this.project.Plans.Collection)
-			{
-				Plan plan = (Plan)obj;
-				foreach (object obj2 in plan.Layers.Collection)
-				{
-					Layer layer = (Layer)obj2;
-					DrawObject layerObject;
-					foreach (object obj3 in layer.DrawingObjects.Collection)
-					{
-						layerObject = (DrawObject)obj3;
-						if (layerObject.IsPartOfGroup() && !layerObject.IsDeduction())
-						{
-							bool flag;
-							if (this.project.Report.SelectedReportType == ReportTypeEnum.QuoteReport)
-							{
-								flag = this.filter.QueryFilter(plan.Name, "", -1, false);
-								if (!flag)
-								{
-									flag = this.filter.QueryFilter(plan.Name, layer.Name, -1, false);
-								}
-								if (!flag)
-								{
-									flag = this.filter.QueryFilter(plan.Name, layer.Name, layerObject.GroupID, false);
-								}
-							}
-							else
-							{
-								flag = this.filter.QueryFilter("", "", layerObject.GroupID, false);
-								if (!flag)
-								{
-									flag = this.filter.QueryFilter(plan.Name, layerObject.GroupID);
-								}
-							}
-							if (!flag)
-							{
-								if (list.Find((Variable x) => Utilities.ConvertToInt(x.Value) == layerObject.GroupID) == null)
-								{
-									list.Add(new Variable(layerObject.Name, layerObject.GroupID, layerObject));
-								}
-								bool flag2 = false;
-								foreach (object obj4 in variables.Collection)
-								{
-									Variable variable = (Variable)obj4;
-									if (variable.Name == layerObject.GroupID.ToString() && variable.Value.ToString() == plan.Name)
-									{
-										flag2 = true;
-										break;
-									}
-								}
-								if (!flag2)
-								{
-									variables.Add(new Variable(layerObject.GroupID.ToString(), plan.Name));
-								}
-							}
-						}
-					}
-				}
-			}
-			string text = "\t<Objects>" + Environment.NewLine;
-			list.Sort(new ReportModule.GroupSorter());
-			text += this.BuildXMLObjects(list, list2, null, "", variables, includeHiddenValues, exportForExcel, results);
-			text = text + "\t</Objects>" + Environment.NewLine;
-			this.ReportSummaries = this.BuildXMLObjectSummaries(list2, "", false);
-			text += this.ReportSummaries;
-			list.Clear();
-			list = null;
-			list2.Clear();
-			list2 = null;
-			variables.Clear();
-			variables = null;
-			if (results == null)
-			{
-				return text;
-			}
-			return string.Empty;
-		}
-
-		private string BuildXMLOrderByLayers(bool includeHiddenValues = false, bool exportForExcel = false)
-		{
-			string text = "";
-			string text2 = "";
-			List<Variable> list = new List<Variable>();
-			List<List<ReportSummary>> list2 = new List<List<ReportSummary>>();
-			foreach (object obj in this.project.Plans.Collection)
-			{
-				Plan plan = (Plan)obj;
-				if (!this.filter.QueryFilter(plan.Name, "", -1, false))
-				{
-					Layer layer;
-					foreach (object obj2 in plan.Layers.Collection)
-					{
-						layer = (Layer)obj2;
-						if (!this.filter.QueryFilter(plan.Name, layer.Name, -1, false))
-						{
-							DrawObject layerObject;
-							foreach (object obj3 in layer.DrawingObjects.Collection)
-							{
-								layerObject = (DrawObject)obj3;
-								if (layerObject.IsPartOfGroup() && !layerObject.IsDeduction() && !this.filter.QueryFilter(plan.Name, layer.Name, layerObject.GroupID, false))
-								{
-									Variable variable = list.Find((Variable x) => x.Name == layer.Name);
-									if (variable == null)
-									{
-										List<Variable> value = new List<Variable>();
-										variable = new Variable(layer.Name, value);
-										list.Add(variable);
-									}
-									if (variable != null)
-									{
-										List<Variable> list3 = (List<Variable>)variable.Value;
-										if (list3.Find((Variable x) => Utilities.ConvertToInt(x.Value) == layerObject.GroupID) == null)
-										{
-											list3.Add(new Variable(layerObject.Name, layerObject.GroupID, layerObject));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			text = text + "\t<Plans>" + Environment.NewLine;
-			list.Sort(new ReportModule.LayerSorter());
-			foreach (Variable variable2 in list)
-			{
-				List<Variable> list4 = (List<Variable>)variable2.Value;
-				list4.Sort(new ReportModule.GroupSorter());
-				List<ReportSummary> list5 = new List<ReportSummary>();
-				string text3 = this.BuildXMLObjects(list4, list5, null, variable2.Name, null, includeHiddenValues, exportForExcel, null);
-				if (text3.Trim() != "")
-				{
-					string text4 = text2;
-					text2 = string.Concat(new string[]
-					{
-						text4,
-						"\t\t\t\t<Layer Name=\"",
-						Utilities.EscapeString(variable2.Name),
-						"\">",
-						Environment.NewLine
-					});
-					text2 += text3;
-					text2 = text2 + "\t\t\t\t</Layer>" + Environment.NewLine;
-					list2.Add(list5);
-				}
-				else
-				{
-					list5.Clear();
-				}
-			}
-			if (text2.Trim() != "")
-			{
-				text = text + "\t\t<Plan Name=\"\">" + Environment.NewLine;
-				text = text + "\t\t\t<Objects>" + Environment.NewLine;
-				text += text2;
-				text = text + "\t\t\t</Objects>" + Environment.NewLine;
-				text = text + "\t\t</Plan>" + Environment.NewLine;
-			}
-			text = text + "\t</Plans>" + Environment.NewLine;
-			this.ReportSummaries = this.BuildXMLLayersSummaries(list2);
-			text += this.ReportSummaries;
-			foreach (List<ReportSummary> list6 in list2)
-			{
-				list6.Clear();
-			}
-			list2.Clear();
-			list2 = null;
-			return text;
-		}
-
-		private string BuildXMLOrderByPlans(bool includeHiddenValues = false, bool exportForExcel = false)
-		{
-			string text = "";
-			List<List<ReportSummary>> list = new List<List<ReportSummary>>();
-			text = text + "\t<Plans>" + Environment.NewLine;
-			foreach (object obj in this.project.Plans.Collection)
-			{
-				Plan plan = (Plan)obj;
-				List<Variable> list2 = new List<Variable>();
-				string text2 = "";
-				if (!this.filter.QueryFilter(plan.Name, "", -1, false))
-				{
-					foreach (object obj2 in plan.Layers.Collection)
-					{
-						Layer layer = (Layer)obj2;
-						if (!this.filter.QueryFilter(plan.Name, layer.Name, -1, false))
-						{
-							DrawObject layerObject;
-							foreach (object obj3 in layer.DrawingObjects.Collection)
-							{
-								layerObject = (DrawObject)obj3;
-								if (layerObject.IsPartOfGroup() && !layerObject.IsDeduction() && !this.filter.QueryFilter(plan.Name, layer.Name, layerObject.GroupID, false))
-								{
-									if (list2.Find((Variable x) => Utilities.ConvertToInt(x.Value) == layerObject.GroupID) == null)
-									{
-										list2.Add(new Variable(layerObject.Name, layerObject.GroupID, layerObject));
-									}
-								}
-							}
-						}
-						list2.Sort(new ReportModule.GroupSorter());
-						List<ReportSummary> list3 = new List<ReportSummary>();
-						string text3 = this.BuildXMLObjects(list2, list3, plan, layer.Name, null, includeHiddenValues, exportForExcel, null);
-						if (text3.Trim() != "")
-						{
-							bool flag = true;
-							if (flag)
-							{
-								string text4 = text2;
-								text2 = string.Concat(new string[]
-								{
-									text4,
-									"\t\t\t\t<Layer Name=\"",
-									Utilities.EscapeString(layer.Name),
-									"\">",
-									Environment.NewLine
-								});
-							}
-							text2 += text3;
-							if (flag)
-							{
-								text2 = text2 + "\t\t\t\t</Layer>" + Environment.NewLine;
-							}
-							list.Add(list3);
-						}
-						else
-						{
-							list3.Clear();
-						}
-						list2.Clear();
-					}
-					if (text2.Trim() != "")
-					{
-						string text5 = text;
-						text = string.Concat(new string[]
-						{
-							text5,
-							"\t\t<Plan Name=\"",
-							Utilities.EscapeString(plan.Name),
-							"\">",
-							Environment.NewLine
-						});
-						text = text + "\t\t\t<Objects>" + Environment.NewLine;
-						text += text2;
-						text = text + "\t\t\t</Objects>" + Environment.NewLine;
-						text = text + "\t\t</Plan>" + Environment.NewLine;
-					}
-				}
-				list2 = null;
-			}
-			text = text + "\t</Plans>" + Environment.NewLine;
-			this.ReportSummaries = this.BuildXMLPlansSummaries(list);
-			text += this.ReportSummaries;
-			foreach (List<ReportSummary> list4 in list)
-			{
-				list4.Clear();
-			}
-			list.Clear();
-			list = null;
-			return text;
-		}
-
-		private string BuildXML(Report.ReportOrderEnum order, bool includeHiddenValues = false, bool exportForExcel = false)
-		{
-			string text = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + Environment.NewLine;
-			string text2 = text;
-			text = string.Concat(new string[]
-			{
-				text2,
-				"<Report Title=\"",
-				Utilities.EscapeString(this.project.Name),
-				"\" Date=\"",
-				Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()),
-				"\">",
-				Environment.NewLine
-			});
-			if (this.project.Report.ShowProjectInfo)
-			{
-				text += this.BuildXMLProjectInfo();
-			}
-			switch (order)
-			{
-			case Report.ReportOrderEnum.ReportOrderByObjects:
-				text += this.BuildXMLOrderByObjects(includeHiddenValues, exportForExcel, null);
-				break;
-			case Report.ReportOrderEnum.ReportOrderByPlans:
-				if (this.project.Report.ReportSortBy == Report.ReportSortByEnum.ReportSortByPlans)
-				{
-					text += this.BuildXMLOrderByPlans(includeHiddenValues, exportForExcel);
-				}
-				else
-				{
-					text += this.BuildXMLOrderByLayers(includeHiddenValues, exportForExcel);
-				}
-				break;
-			}
-			return text + "</Report>";
-		}
-
-		private string BuildXSLOrderByObjects()
-		{
-			return Utilities.ReadToString(Path.Combine(Utilities.GetInstallReportsFolder(), Utilities.GetCurrentValidUICulture() + "\\sort_by_objects.xsl"));
-		}
-
-		private string BuildXSLOrderByPlans()
-		{
-			return Utilities.ReadToString(Path.Combine(Utilities.GetInstallReportsFolder(), Utilities.GetCurrentValidUICulture() + "\\sort_by_plans.xsl"));
-		}
-
-		private string BuildXSL(Report.ReportOrderEnum order)
-		{
-			string result = "";
-			switch (order)
-			{
-			case Report.ReportOrderEnum.ReportOrderByObjects:
-				result = this.BuildXSLOrderByObjects();
-				break;
-			case Report.ReportOrderEnum.ReportOrderByPlans:
-				result = this.BuildXSLOrderByPlans();
-				break;
-			}
-			return result;
-		}
-
-		private string MakeHTML(string xml, string xsl, bool useAbsolutePath)
-		{
-			string result;
-			try
-			{
-				this.IESetupHeaderFooter(Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()));
-				StringReader stringReader = new StringReader(xml);
-				XPathDocument input = new XPathDocument(stringReader);
-				StringReader stringReader2 = new StringReader(xsl);
-				XmlTextReader xmlTextReader = new XmlTextReader(stringReader2);
-				XslCompiledTransform xslCompiledTransform = new XslCompiledTransform();
-				xslCompiledTransform.Load(xmlTextReader, null, null);
-				XsltArgumentList xsltArgumentList = new XsltArgumentList();
-				xsltArgumentList.AddParam("title", "", this.project.Name);
-				xsltArgumentList.AddParam("app_path", "", Utilities.GetInstallFolder());
-				string text = Path.Combine(Utilities.GetInstallReportsFolder(), string.Concat(new string[]
-				{
-					"css\\",
-					Utilities.GetCurrentValidUICulture(),
-					"\\",
-					Settings.Default.ReportTheme,
-					".css"
-				}));
-				string destinationFileName = Path.Combine(Utilities.GetReportsFolder(), "css\\style.css");
-				if (!useAbsolutePath)
-				{
-					Utilities.FileCopy(text, destinationFileName);
-				}
-				xsltArgumentList.AddParam("css_path", "", useAbsolutePath ? text : "css\\style.css");
-				xsltArgumentList.AddParam("images_path", "", useAbsolutePath ? Path.Combine(Utilities.GetInstallReportsFolder(), "images") : "images");
-				ReportModule.UTF8StringWriter utf8StringWriter = new ReportModule.UTF8StringWriter();
-				xslCompiledTransform.Transform(input, xsltArgumentList, utf8StringWriter);
-				string text2 = utf8StringWriter.ToString();
-				stringReader.Close();
-				stringReader2.Close();
-				xmlTextReader.Close();
-				utf8StringWriter.Close();
-				result = text2;
-			}
-			catch (Exception exception)
-			{
-				Utilities.DisplaySystemError(exception);
-				result = "";
-			}
-			return result;
-		}
-
-		private string BuildHTML(Report.ReportOrderEnum order, bool useAbsolutePath)
-		{
-			string xml = this.BuildXML(order, false, false);
-			string xsl = this.BuildXSL(order);
-			return this.MakeHTML(xml, xsl, useAbsolutePath);
-		}
-
-		private bool BuildXLS(Report.ReportOrderEnum order, Report.ReportSortByEnum sortBy, bool exportEstimating, string fileName)
-		{
-			string xml = this.BuildXML(order, false, true);
-			ReportModule.ExportToXLS exportToXLS = new ReportModule.ExportToXLS(order, sortBy, exportEstimating);
-			return exportToXLS.Export(xml, fileName);
-		}
-
-		public bool Enabled
-		{
-			get
-			{
-				return this.enabled;
-			}
-			set
-			{
-				this.enabled = value;
-				if (!this.enabled)
-				{
-					this.Clear();
-				}
-			}
-		}
-
-		public void Clear()
-		{
-			string htmlDocument = this.FormatHtmlString("");
-			this.LoadHtmlDocument(htmlDocument);
-		}
-
-		private void LoadFilter()
-		{
-			if (!this.project.Report.ApplyFilter)
-			{
-				this.filter.Clear();
-				return;
-			}
-			if (this.project.Report.SelectedReportType == ReportTypeEnum.QuoteReport)
-			{
-				this.filter.LoadFromString(this.project.Report.OrderByPlansFilter, Report.ReportOrderEnum.ReportOrderByPlans);
-				return;
-			}
-			this.filter.LoadFromString((this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByPlans) ? this.project.Report.OrderByPlansFilter : this.project.Report.OrderByObjectsFilter, this.project.Report.Order);
-		}
-
-		public string ExportToXML(bool exportEstimatingItems, bool exportToMemory = false)
-		{
-			this.LoadFilter();
-			this.ExportEstimatingItems = exportEstimatingItems;
-			this.ExportReportToMemory = exportToMemory;
-			this.ReportSummaries = "";
-			string text = this.BuildXML(this.project.Report.Order, false, false);
-			if (exportToMemory)
-			{
-				string text2 = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + Environment.NewLine;
-				string text3 = text2;
-				text2 = string.Concat(new string[]
-				{
-					text3,
-					"<Report Title=\"",
-					Utilities.EscapeString(this.project.Name),
-					"\" Date=\"",
-					Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()),
-					"\">",
-					Environment.NewLine
-				});
-				text2 += this.ReportSummaries;
-				text2 = text2 + "</Report>" + Environment.NewLine;
-				this.ReportSummaries = text2;
-				return text;
-			}
-			string text4 = Path.GetFileNameWithoutExtension(this.project.FileName);
-			text4 = text4 + "-" + ((this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByObjects) ? Resources.par_objets : Resources.par_plans) + ".xml";
-			text4 = Path.Combine(Utilities.GetReportsFolder(), text4.Replace(' ', '-'));
-			Utilities.SaveStringToFile(text4, text);
-			Utilities.OpenDocument(text4);
-			return string.Empty;
-		}
-
-		public void ExportToExcel(string fileName, bool exportEstimating)
-		{
-			this.LoadFilter();
-			if (this.BuildXLS(this.project.Report.Order, this.project.Report.ReportSortBy, exportEstimating, fileName))
-			{
-				Utilities.OpenDocument(fileName);
-			}
-		}
-
-		public void ExportObjectToList(DrawObject groupObject, List<EstimatingItem> results)
-		{
-			int num = 0;
-			int num2 = 0;
-			string text = "";
-			this.BuildXMLObject(groupObject, null, "", null, null, ref text, ref num, ref num2, true, false, results);
-		}
-
-		public void ExportToList(List<EstimatingItem> results)
-		{
-			this.BuildXMLOrderByObjects(true, false, results);
-		}
-
-		private string RenameInFilter(string filter, string objectType, string oldName, string newName, string planName = "")
-		{
-			string text = Filter.Rename(filter, objectType, oldName, newName, planName);
-			Console.WriteLine("Old filter = " + filter);
-			Console.WriteLine("New filter = " + text);
-			return text;
-		}
-
-		public void RenamePlan(Plan plan)
-		{
-			if (plan.PrevName == plan.Name)
-			{
-				return;
-			}
-			Console.WriteLine("OrderByPlansFilter");
-			this.project.Report.OrderByPlansFilter = this.RenameInFilter(this.project.Report.OrderByPlansFilter, "#PLAN", plan.PrevName, plan.Name, "");
-			Console.WriteLine("OrderByObjectsFilter");
-			this.project.Report.OrderByObjectsFilter = this.RenameInFilter(this.project.Report.OrderByObjectsFilter, "#PLAN", plan.PrevName, plan.Name, "");
-		}
-
-		public void RenameLayer(Plan plan, Layer layer)
-		{
-			if (layer.PrevName == layer.Name)
-			{
-				return;
-			}
-			Console.WriteLine("OrderByPlansFilter");
-			this.project.Report.OrderByPlansFilter = this.RenameInFilter(this.project.Report.OrderByPlansFilter, "#LAYER", layer.PrevName, layer.Name, plan.Name);
-		}
-
-		public void CleanUpFilters()
-		{
-			Console.WriteLine("ReportModule.CleanUpFilters");
-			using (ReportEditForm reportEditForm = new ReportEditForm(this.project, this.drawArea))
-			{
-				reportEditForm.CleanUpFilters();
-			}
-		}
-
-		private void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
-		{
-			HtmlDocument document = this.webBrowser.Document;
-		}
-
-		private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-		{
-			if (this.webBrowser.Document != null)
-			{
-				bool flag = this.enabled;
-			}
-		}
-
-		private bool enabled;
-
-		private Project project;
-
-		private DrawingArea drawArea;
-
-		private WebBrowser webBrowser;
-
-		private ExtensionsSupport extensionSupport;
-
-		private Filter filter;
-
-		private object registerHeaderOriginalValue = "";
-
-		private object registerFooterOriginalValue = "";
-
-		private object registerPrintBackgroundOriginalValue = "";
-
-		private bool exportToCOffice;
-
-		private CEstimatingItems estimatingItems;
-
-		[CompilerGenerated]
-		private bool <ExportReportToMemory>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <SortByLayers>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <ExportEstimatingItems>k__BackingField;
-
-		[CompilerGenerated]
-		private string <ReportSummaries>k__BackingField;
-
-		private class GroupSummarySorter : IComparer<ReportSummary>
-		{
-			public int Compare(ReportSummary x, ReportSummary y)
-			{
-				int result;
-				try
-				{
-					DrawObject groupObject = x.GroupObject;
-					DrawObject groupObject2 = y.GroupObject;
-					if (groupObject.ObjectType != groupObject2.ObjectType)
-					{
-						result = StringLogicalComparer.Compare(groupObject.ObjectSortOrder.ToString(), groupObject2.ObjectSortOrder.ToString());
-					}
-					else
-					{
-						result = StringLogicalComparer.Compare(groupObject.Name, groupObject2.Name);
-					}
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = -1;
-				}
-				return result;
-			}
-
-			public GroupSummarySorter()
-			{
-			}
-		}
-
-		private class SummarySorter : IComparer<ReportSummary>
-		{
-			public int Compare(ReportSummary x, ReportSummary y)
-			{
-				int result;
-				try
-				{
-					string caption = x.Caption;
-					string caption2 = y.Caption;
-					result = StringLogicalComparer.Compare(caption, caption2);
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = -1;
-				}
-				return result;
-			}
-
-			public SummarySorter()
-			{
-			}
-		}
-
-		private class LayerSorter : IComparer<Variable>
-		{
-			public int Compare(Variable x, Variable y)
-			{
-				int result;
-				try
-				{
-					string name = x.Name;
-					string name2 = y.Name;
-					result = StringLogicalComparer.Compare(name, name2);
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = -1;
-				}
-				return result;
-			}
-
-			public LayerSorter()
-			{
-			}
-		}
-
-		private class GroupSorter : IComparer<Variable>
-		{
-			public int Compare(Variable x, Variable y)
-			{
-				int result;
-				try
-				{
-					DrawObject drawObject = x.Tag as DrawObject;
-					DrawObject drawObject2 = y.Tag as DrawObject;
-					if (drawObject.ObjectType != drawObject2.ObjectType)
-					{
-						result = StringLogicalComparer.Compare(drawObject.ObjectSortOrder.ToString(), drawObject2.ObjectSortOrder.ToString());
-					}
-					else
-					{
-						result = StringLogicalComparer.Compare(drawObject.Name, drawObject2.Name);
-					}
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = -1;
-				}
-				return result;
-			}
-
-			public GroupSorter()
-			{
-			}
-		}
-
-		private class UTF8StringWriter : StringWriter
-		{
-			public UTF8StringWriter()
-			{
-			}
-
-			public UTF8StringWriter(IFormatProvider formatProvider) : base(formatProvider)
-			{
-			}
-
-			public UTF8StringWriter(StringBuilder sb) : base(sb)
-			{
-			}
-
-			public UTF8StringWriter(StringBuilder sb, IFormatProvider formatProvider) : base(sb, formatProvider)
-			{
-			}
-
-			public override Encoding Encoding
-			{
-				get
-				{
-					return Encoding.UTF8;
-				}
-			}
-		}
-
-		private class ExportToXLS
-		{
-			public ExportToXLS(Report.ReportOrderEnum order, Report.ReportSortByEnum sortBy, bool exportEstimating)
-			{
-				this.order = order;
-				this.sortBy = sortBy;
-				this.exportEstimating = exportEstimating;
-			}
-
-			private string GetStringAttribute(XmlNode node, string attributeName)
-			{
-				string result;
-				try
-				{
-					result = node.Attributes.GetNamedItem(attributeName).Value;
-				}
-				catch
-				{
-					result = "";
-				}
-				return result;
-			}
-
-			private double GetDoubleAttribute(XmlNode node, string attributeName)
-			{
-				double result;
-				try
-				{
-					string text = node.Attributes.GetNamedItem(attributeName).Value;
-					string newValue = Utilities.NumberDecimalSeparator();
-					text = text.Replace(",", newValue).Replace(".", newValue);
-					decimal value = decimal.Parse(text);
-					result = (double)value;
-				}
-				catch (Exception)
-				{
-					result = 0.0;
-				}
-				return result;
-			}
-
-			private IRow AppendRow(short rowHeight = -1)
-			{
-				IRow row = this.sheet.CreateRow((this.sheet.PhysicalNumberOfRows == 0) ? 0 : (this.sheet.LastRowNum + 1));
-				if (rowHeight != -1)
-				{
-					row.HeightInPoints = (float)rowHeight;
-				}
-				return row;
-			}
-
-			private IFont GetFont(short boldWeight, short color, short fontHeightInPoints, string name, bool italic, bool strikeout, short typeOffset, byte underline)
-			{
-				short fontHeight = fontHeightInPoints * 20;
-				IFont font = this.workbook.FindFont(boldWeight, color, fontHeight, name, italic, strikeout, typeOffset, underline);
-				if (font != null)
-				{
-					return font;
-				}
-				font = this.workbook.CreateFont();
-				font.Boldweight = boldWeight;
-				font.Color = color;
-				font.FontHeight = fontHeight;
-				font.FontName = name;
-				font.IsItalic = italic;
-				font.IsStrikeout = strikeout;
-				font.TypeOffset = typeOffset;
-				font.Underline = underline;
-				return font;
-			}
-
-			private ICell InsertCell(object value, IRow row, int cellIndex, CellType cellType, ICellStyle cellStyle)
-			{
-				ICell cell = row.CreateCell(cellIndex, cellType);
-				cell.CellStyle = cellStyle;
-				if (cellType == CellType.NUMERIC)
-				{
-					cell.SetCellValue(Utilities.ConvertToDouble(value, -1));
-				}
-				else
-				{
-					cell.SetCellValue(value.ToString());
-				}
-				return cell;
-			}
-
-			private void OutputConsolidatedExtensions()
-			{
-				string a = string.Empty;
-				if (this.parserPresets.Count > 0)
-				{
-					this.parserPresets.Collection.Sort(new ReportModule.ExportToXLS.PresetSorter());
-					foreach (object obj in this.parserPresets.Collection)
-					{
-						Preset preset = (Preset)obj;
-						if (a != preset.ExtensionName + preset.Tag)
-						{
-							IRow row = this.AppendRow(26);
-							this.InsertCell(Utilities.GetFields(preset.ExtensionName, ';').GetValue(0).ToString().Trim(), row, 0, CellType.STRING, this.extensionNameCellStyle);
-						}
-						if (a != preset.ExtensionName + preset.Tag)
-						{
-							this.parserResultRowHeader = this.AppendRow(-1);
-						}
-						this.parserResultRowData = this.AppendRow(16);
-						this.InsertCell(preset.CategoryName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
-						this.parserResultColumnIndex = 1;
-						foreach (object obj2 in preset.Results.Collection)
-						{
-							PresetResult presetResult = (PresetResult)obj2;
-							if (a != preset.ExtensionName + preset.Tag)
-							{
-								this.InsertCell(presetResult.Caption, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
-							}
-							bool flag = this.sheet.Equals(this.formattedSheetConsolidated);
-							string unit = presetResult.Unit;
-							if (!flag)
-							{
-								if (!Utilities.IsNumber(unit.ToString()))
-								{
-									this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-								}
-								else
-								{
-									this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC, Utilities.IsInteger(unit) ? this.integerCellStyle : this.decimalCellStyle);
-								}
-							}
-							else
-							{
-								this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-							}
-							this.parserResultColumnIndex++;
-						}
-						a = preset.ExtensionName + preset.Tag;
-					}
-					this.parserPresets.Clear();
-				}
-			}
-
-			private void OutputReportSubTotal(string caption)
-			{
-				if (this.reportTotalSummaries.Count == 0)
-				{
-					return;
-				}
-				IRow row = this.AppendRow(10);
-				row = this.AppendRow(14);
-				string text = "";
-				string text2 = "";
-				foreach (ReportSummary reportSummary in this.reportTotalSummaries)
-				{
-					text = text + ((text == "") ? "" : " + ") + string.Format("E{0}", reportSummary.CostSubTotal + 1.0);
-					text2 = text2 + ((text2 == "") ? "" : " + ") + string.Format("G{0}", reportSummary.CostSubTotal + 1.0);
-				}
-				this.InsertCell(Resources.Sous_totaux_, row, 3, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-				ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell.SetCellFormula(text);
-				ICell cell2 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell2.SetCellFormula(text2);
-				ICell cell3 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-				cell3.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
-				this.reportTotalTotalSummaries.Add(new ReportSummary(caption, (double)row.RowNum, 0.0, null, null, -1, ""));
-			}
-
-			private void OutputReportTotals()
-			{
-				if (this.reportTotalTotalSummaries.Count == 0)
-				{
-					return;
-				}
-				IRow row = this.AppendRow(20);
-				row = this.AppendRow(28);
-				this.InsertCell(Resources.SOMMAIRE_DES_TOTAUX, row, 0, CellType.STRING, this.planNameCellStyle);
-				row = this.AppendRow(14);
-				this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
-				this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
-				this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
-				this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
-				this.parserEstimatingRowStartIndex = row.RowNum + 1;
-				this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
-				this.parserEstimatingRowStartIndex++;
-				foreach (ReportSummary reportSummary in this.reportTotalTotalSummaries)
-				{
-					row = this.AppendRow(14);
-					this.InsertCell(reportSummary.Caption, row, 0, CellType.STRING, this.estimatingItemCellStyle);
-					ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-					cell.SetCellFormula(string.Format("E{0}", reportSummary.CostSubTotal + 1.0));
-					ICell cell2 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-					cell2.SetCellFormula(string.Format("G{0}", reportSummary.CostSubTotal + 1.0));
-					ICell cell3 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-					cell3.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
-					this.parserEstimatingRowEndIndex++;
-				}
-				row = this.AppendRow(14);
-				ICell cell4 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell4.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-				ICell cell5 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell5.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-				ICell cell6 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-				cell6.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell4.RowIndex + 1));
-				bool taxOnTax = Settings.Default.TaxOnTax;
-				string tax1Label = Settings.Default.Tax1Label;
-				string tax2Label = Settings.Default.Tax2Label;
-				double tax1Rate = Settings.Default.Tax1Rate;
-				double tax2Rate = Settings.Default.Tax2Rate;
-				string value = tax1Label + " (" + string.Format("{0:0.#####%}", tax1Rate) + ") :";
-				string value2 = tax2Label + " (" + string.Format("{0:0.#####%}", tax2Rate) + ") :";
-				row = this.AppendRow(20);
-				row = this.AppendRow(14);
-				this.InsertCell(value, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-				ICell cell7 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell7.SetCellFormula(string.Format("G{0}*" + tax1Rate, cell4.RowIndex + 1));
-				row = this.AppendRow(14);
-				this.InsertCell(value2, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-				ICell cell8 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				if (taxOnTax)
-				{
-					cell8.SetCellFormula(string.Format("(G{0}+G{1})*" + tax2Rate, cell4.RowIndex + 1, cell7.RowIndex + 1));
-				}
-				else
-				{
-					cell8.SetCellFormula(string.Format("G{0}*" + tax2Rate, cell4.RowIndex + 1));
-				}
-				row = this.AppendRow(10);
-				row = this.AppendRow(14);
-				this.InsertCell(Resources.GRAND_TOTAL_, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-				ICell cell9 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-				cell9.SetCellFormula(string.Format("G{0}+G{1}+G{2}", cell4.RowIndex + 1, cell7.RowIndex + 1, cell8.RowIndex + 1));
-			}
-
-			private void ParseNode(XmlNode node)
-			{
-				string a3;
-				if (this.sheet.Equals(this.estimatingSheet))
-				{
-					string a;
-					if ((a = node.Name.ToUpper()) != null)
-					{
-						if (!(a == "PLAN"))
-						{
-							if (!(a == "LAYER"))
-							{
-								if (!(a == "OBJECT"))
-								{
-									if (!(a == "COMMENT"))
-									{
-										if (a == "RESULT")
-										{
-											if (this.parserEstimatingResultCount == 0)
-											{
-												IRow row = this.AppendRow(14);
-												this.parserEstimatingRowStartIndex = row.RowNum + 1;
-												this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
-												this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Quantité, row, 1, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Unité, row, 2, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Coûtant, row, 3, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Prix, row, 5, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
-												this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
-											}
-											string stringAttribute = this.GetStringAttribute(node, "EstimatingCaption");
-											if (stringAttribute != string.Empty)
-											{
-												IRow row = this.AppendRow(14);
-												this.InsertCell(stringAttribute, row, 0, CellType.STRING, this.estimatingItemCellStyle);
-												ICell cell = this.InsertCell(this.GetStringAttribute(node, "Quantity"), row, 1, CellType.NUMERIC, this.estimatingEditableQuantityCellStyle);
-												this.InsertCell(this.GetStringAttribute(node, "EstimatingUnit"), row, 2, CellType.STRING, this.estimatingItemResultCellStyle);
-												this.InsertCell(this.GetDoubleAttribute(node, "RawCostEach"), row, 3, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
-												ICell cell2 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-												cell2.SetCellFormula(string.Format("B{0}*D{0}", cell.RowIndex + 1));
-												ICell cell3 = this.InsertCell(this.GetDoubleAttribute(node, "RawPriceEach"), row, 5, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
-												ICell cell4 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-												cell4.SetCellFormula(string.Format("B{0}*F{0}", cell.RowIndex + 1));
-												ICell cell5 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-												cell5.SetCellFormula(string.Format("(F{0}-D{0})/D{0}", cell3.RowIndex + 1));
-												this.parserEstimatingRowEndIndex++;
-											}
-											this.parserEstimatingResultCount++;
-											return;
-										}
-										if (!(a == "SUMMARY"))
-										{
-											return;
-										}
-										if (this.parserEstimatingRowStartIndex > 0)
-										{
-											IRow row = this.AppendRow(14);
-											ICell cell6 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-											cell6.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-											ICell cell7 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-											cell7.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-											ICell cell8 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-											cell8.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell6.RowIndex + 1));
-											if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-											{
-												this.reportTotalTotalSummaries.Add(new ReportSummary(this.reportTotalCaption, (double)row.RowNum, 0.0, null, null, -1, ""));
-											}
-											else
-											{
-												this.reportTotalSummaries.Add(new ReportSummary("", (double)row.RowNum, 0.0, null, null, -1, ""));
-											}
-											this.parserEstimatingRowStartIndex = 0;
-										}
-										this.parserExtensionCount++;
-										return;
-									}
-									else if (node.ParentNode.Name.ToUpper() != "PROJECT")
-									{
-										string text = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
-										if (text != string.Empty)
-										{
-											IRow row = this.AppendRow(-1);
-											this.InsertCell(text, row, 0, CellType.STRING, this.commentCellStyle);
-											return;
-										}
-									}
-								}
-								else
-								{
-									this.parserExtensionCount = 0;
-									this.parserEstimatingResultCount = 0;
-									this.parserObjectName = this.GetStringAttribute(node, "Name");
-									string stringAttribute2 = this.GetStringAttribute(node, "Type");
-									this.parserObjectTypeHasChanged = (stringAttribute2 != this.parserObjectType);
-									this.parserObjectType = stringAttribute2;
-									this.parserObjectRow = this.AppendRow(26);
-									this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-									if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-									{
-										this.reportTotalCaption = this.parserObjectName;
-										return;
-									}
-								}
-							}
-							else
-							{
-								IRow row;
-								if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
-								{
-									this.OutputReportSubTotal(this.parserLayerName);
-									this.reportTotalSummaries.Clear();
-									if (this.parserLayerName != string.Empty)
-									{
-										row = this.AppendRow(10);
-									}
-								}
-								this.parserObjectType = string.Empty;
-								this.parserObjectTypeCount = 0;
-								this.parserLayerName = this.GetStringAttribute(node, "Name");
-								row = this.AppendRow(28);
-								this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
-								if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
-								{
-									this.reportTotalCaption = this.parserLayerName;
-									return;
-								}
-							}
-						}
-						else if (node.HasChildNodes && node.FirstChild.HasChildNodes)
-						{
-							if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-							{
-								this.OutputReportSubTotal(this.parserPlanName);
-								this.reportTotalSummaries.Clear();
-								if (this.parserPlanName != string.Empty)
-								{
-									IRow row = this.AppendRow(10);
-								}
-							}
-							this.parserObjectType = string.Empty;
-							this.parserObjectTypeCount = 0;
-							this.parserPlanName = this.GetStringAttribute(node, "Name");
-							if (this.parserPlanName != string.Empty)
-							{
-								IRow row = this.AppendRow(28);
-								this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
-								if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-								{
-									this.reportTotalCaption = this.parserPlanName;
-									return;
-								}
-							}
-						}
-					}
-				}
-				else if (!this.sheet.Equals(this.formattedSheetShort) && !this.sheet.Equals(this.rawSheetShort))
-				{
-					bool flag = this.sheet.Equals(this.formattedSheetConsolidated) || this.sheet.Equals(this.rawSheetConsolidated);
-					string key;
-					switch (key = node.Name.ToUpper())
-					{
-					case "PLAN":
-						if (flag && this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-						{
-							this.OutputConsolidatedExtensions();
-						}
-						if (node.HasChildNodes && node.FirstChild.HasChildNodes)
-						{
-							if (this.parserPlanName != "")
-							{
-								IRow row = this.AppendRow(10);
-							}
-							this.parserObjectType = string.Empty;
-							this.parserObjectTypeCount = 0;
-							this.parserPlanName = this.GetStringAttribute(node, "Name");
-							if (this.parserPlanName != "")
-							{
-								IRow row = this.AppendRow(28);
-								this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
-								return;
-							}
-						}
-						break;
-					case "LAYER":
-					{
-						IRow row;
-						if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
-						{
-							this.OutputConsolidatedExtensions();
-							if (this.parserLayerName != "")
-							{
-								row = this.AppendRow(10);
-							}
-						}
-						this.parserObjectType = string.Empty;
-						this.parserObjectTypeCount = 0;
-						this.parserLayerName = this.GetStringAttribute(node, "Name");
-						row = this.AppendRow(28);
-						this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
-						return;
-					}
-					case "OBJECTS":
-						if (flag && this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-						{
-							this.OutputConsolidatedExtensions();
-							return;
-						}
-						break;
-					case "OBJECT":
-					{
-						this.parserExtensionCount = 0;
-						this.parserObjectName = this.GetStringAttribute(node, "Name");
-						string stringAttribute3 = this.GetStringAttribute(node, "Type");
-						this.parserObjectTypeHasChanged = (stringAttribute3 != this.parserObjectType);
-						this.parserObjectType = stringAttribute3;
-						if (!flag)
-						{
-							this.parserObjectRow = this.AppendRow(26);
-							this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-							return;
-						}
-						break;
-					}
-					case "COMMENT":
-						if (!flag && node.ParentNode.Name.ToUpper() != "PROJECT")
-						{
-							string text2 = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
-							if (text2 != string.Empty)
-							{
-								IRow row = this.AppendRow(-1);
-								this.InsertCell(text2, row, 0, CellType.STRING, this.commentCellStyle);
-								return;
-							}
-						}
-						break;
-					case "EXTENSION":
-						this.parserExtensionCount++;
-						if (!flag)
-						{
-							if (this.parserExtensionCount > 1)
-							{
-								IRow row = this.AppendRow(20);
-								this.InsertCell(this.GetStringAttribute(node, "Name"), row, 0, CellType.STRING, this.extensionNameCellStyle);
-								return;
-							}
-						}
-						else if (this.parserExtensionCount > 1)
-						{
-							int num2 = 0;
-							string a2;
-							if ((a2 = this.parserObjectType.ToUpper()) != null)
-							{
-								if (!(a2 == "AREA"))
-								{
-									if (!(a2 == "PERIMETER"))
-									{
-										if (!(a2 == "LINE"))
-										{
-											if (a2 == "COUNTER")
-											{
-												num2 = 4;
-											}
-										}
-										else
-										{
-											num2 = 3;
-										}
-									}
-									else
-									{
-										num2 = 2;
-									}
-								}
-								else
-								{
-									num2 = 1;
-								}
-							}
-							this.parserPreset = new Preset(Guid.NewGuid().ToString(), this.GetStringAttribute(node, "Name"), this.parserObjectName, this.GetStringAttribute(node, "Name") + ";" + num2.ToString(), UnitScale.UnitSystem.undefined);
-							this.parserPresets.Add(this.parserPreset);
-							return;
-						}
-						break;
-					case "FIELDS":
-					case "RESULTS":
-						if (!flag)
-						{
-							this.parserResultColumnIndex = 0;
-							this.parserResultRowHeader = this.AppendRow(-1);
-							this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS") ? -1 : 16);
-							return;
-						}
-						if (this.parserExtensionCount == 1)
-						{
-							this.parserResultColumnIndex = 1;
-							if (this.parserObjectTypeHasChanged)
-							{
-								if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-								{
-									if (this.sheet.PhysicalNumberOfRows > 0)
-									{
-										this.AppendRow(-1);
-									}
-								}
-								else if (this.parserObjectTypeCount > 0)
-								{
-									this.AppendRow(-1);
-								}
-								this.parserObjectTypeCount++;
-								this.parserResultRowHeader = this.AppendRow(-1);
-							}
-							this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS") ? -1 : 16);
-							this.InsertCell(this.parserObjectName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
-							return;
-						}
-						break;
-					case "FIELD":
-					case "RESULT":
-					{
-						if (!flag && this.parserResultColumnIndex == 7)
-						{
-							this.parserResultColumnIndex = 0;
-							this.parserResultRowHeader = this.AppendRow(-1);
-							this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELD") ? -1 : 16);
-						}
-						bool flag2 = this.sheet.Equals(this.formattedSheet) || this.sheet.Equals(this.formattedSheetConsolidated);
-						string text3 = this.GetStringAttribute(node, "Caption");
-						string text4 = (node.Name.ToUpper() == "FIELD") ? "Value" : ((this.order == Report.ReportOrderEnum.ReportOrderByObjects) ? "TotalValue" : "Value");
-						text4 = (flag2 ? text4 : ((text4 == "Value") ? "RawValue" : "TotalRawValue"));
-						if (!flag2)
-						{
-							string text5 = this.GetStringAttribute(node, "Unit");
-							text5 = ((text5 == Resources.unité_) ? "" : text5);
-							if (text5 != string.Empty)
-							{
-								text3 = text3 + " (" + text5 + ")";
-							}
-						}
-						if (!flag || this.parserExtensionCount == 1)
-						{
-							if (!flag || this.parserObjectTypeHasChanged)
-							{
-								this.InsertCell(text3, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
-							}
-							string stringAttribute4 = this.GetStringAttribute(node, text4);
-							if (!flag2)
-							{
-								if (!Utilities.IsNumber(stringAttribute4.ToString()))
-								{
-									this.InsertCell(stringAttribute4, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-								}
-								else
-								{
-									this.InsertCell(stringAttribute4, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC, Utilities.IsInteger(stringAttribute4.ToString()) ? this.integerCellStyle : this.decimalCellStyle);
-								}
-							}
-							else
-							{
-								this.InsertCell(stringAttribute4, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-							}
-						}
-						else if (flag)
-						{
-							PresetResult presetResult = new PresetResult(this.GetStringAttribute(node, "Name"), text3, this.GetStringAttribute(node, text4), "", "", ExtensionResult.ExtensionResultTypeEnum.ResultTypeUnit, false, true, -1, -1, -1);
-							this.parserPreset.Results.Add(presetResult);
-							if (!flag2)
-							{
-								Preset preset = this.parserPreset;
-								preset.Tag = preset.Tag + text3 + ";";
-							}
-						}
-						this.parserResultColumnIndex++;
-						return;
-					}
-
-						return;
-					}
-				}
-				else if ((a3 = node.Name.ToUpper()) != null)
-				{
-					if (!(a3 == "PLAN"))
-					{
-						if (a3 == "LAYER")
-						{
-							IRow row;
-							if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers && this.parserLayerName != "")
-							{
-								row = this.AppendRow(10);
-							}
-							this.parserObjectType = string.Empty;
-							this.parserObjectTypeCount = 0;
-							this.parserLayerName = this.GetStringAttribute(node, "Name");
-							row = this.AppendRow(28);
-							this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
-							return;
-						}
-						if (a3 == "OBJECT")
-						{
-							this.parserExtensionCount = 0;
-							this.parserObjectName = this.GetStringAttribute(node, "Name");
-							this.parserObjectType = this.GetStringAttribute(node, "Type");
-							this.parserObjectRow = this.AppendRow(-1);
-							this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-							return;
-						}
-						if (a3 == "EXTENSION")
-						{
-							this.parserExtensionCount++;
-							return;
-						}
-						if (!(a3 == "RESULT"))
-						{
-							return;
-						}
-						if (this.parserExtensionCount == 1)
-						{
-							bool flag3 = false;
-							string stringAttribute5 = this.GetStringAttribute(node, "Name");
-							string a4;
-							if ((a4 = this.parserObjectType.ToUpper()) != null)
-							{
-								if (!(a4 == "AREA"))
-								{
-									if (!(a4 == "PERIMETER"))
-									{
-										if (!(a4 == "LINE"))
-										{
-											if (a4 == "COUNTER")
-											{
-												flag3 = (stringAttribute5 == "Count");
-											}
-										}
-										else
-										{
-											flag3 = (stringAttribute5 == "Length");
-										}
-									}
-									else
-									{
-										flag3 = (stringAttribute5 == "PerimeterMinusOpenings");
-									}
-								}
-								else
-								{
-									flag3 = (stringAttribute5 == "AreaMinusSubstractions");
-								}
-							}
-							if (flag3)
-							{
-								bool flag4 = this.sheet.Equals(this.formattedSheetShort);
-								string text6 = (node.Name.ToUpper() == "FIELD") ? "Value" : ((this.order == Report.ReportOrderEnum.ReportOrderByObjects) ? "TotalValue" : "Value");
-								text6 = (flag4 ? text6 : ((text6 == "Value") ? "RawValue" : "TotalRawValue"));
-								string stringAttribute6 = this.GetStringAttribute(node, text6);
-								if (!flag4)
-								{
-									this.InsertCell(stringAttribute6, this.parserObjectRow, 1, CellType.NUMERIC, Utilities.IsInteger(stringAttribute6.ToString()) ? this.integerCellStyle : this.decimalCellStyle);
-								}
-								else
-								{
-									this.InsertCell(stringAttribute6, this.parserObjectRow, 1, CellType.STRING, this.resultCellStyle);
-								}
-								if (!flag4)
-								{
-									string text7 = this.GetStringAttribute(node, "Unit");
-									text7 = ((text7 == Resources.unité_) ? "" : text7);
-									this.InsertCell(text7, this.parserObjectRow, 2, CellType.STRING, this.columnHeaderCellStyle);
-								}
-							}
-						}
-					}
-					else if (node.HasChildNodes && node.FirstChild.HasChildNodes)
-					{
-						if (this.parserPlanName != "")
-						{
-							IRow row = this.AppendRow(10);
-						}
-						this.parserPlanName = this.GetStringAttribute(node, "Name");
-						if (this.parserPlanName != "")
-						{
-							IRow row = this.AppendRow(28);
-							this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
-							return;
-						}
-					}
-				}
-			}
-
-			private void ParseTree(XmlNode node)
-			{
-				if (node != null)
-				{
-					this.ParseNode(node);
-				}
-				if (node.HasChildNodes)
-				{
-					for (node = node.FirstChild; node != null; node = node.NextSibling)
-					{
-						this.ParseTree(node);
-					}
-				}
-			}
-
-			private void InsertSignature()
-			{
-				IRow row = this.AppendRow(-1);
-				row = this.AppendRow(-1);
-				row = this.AppendRow(-1);
-				row = this.AppendRow(-1);
-				this.InsertCell(Utilities.Ce_rapport_a_été_généré_grâce_à_Quoter_Plan, row, 0, CellType.STRING, this.defaultCellStyle);
-			}
-
-			private void GenerateSheet(ISheet sheetToGenerate, XmlNode root)
-			{
-				this.parserObjectRow = null;
-				this.parserResultRowHeader = null;
-				this.parserResultRowData = null;
-				this.parserExtensionCount = 0;
-				this.parserResultColumnIndex = 0;
-				this.parserPlanName = string.Empty;
-				this.parserLayerName = string.Empty;
-				this.parserObjectName = string.Empty;
-				this.parserObjectType = string.Empty;
-				this.parserObjectTypeHasChanged = false;
-				this.parserObjectTypeCount = 0;
-				this.parserExtensionName = string.Empty;
-				this.parserPreset = null;
-				this.parserPresets.Clear();
-				this.reportTotalSummaries.Clear();
-				this.reportTotalTotalSummaries.Clear();
-				this.sheet = sheetToGenerate;
-				this.ParseTree(root);
-				if (this.sheet != this.estimatingSheet)
-				{
-					this.OutputConsolidatedExtensions();
-				}
-				else
-				{
-					if (this.order == Report.ReportOrderEnum.ReportOrderByPlans)
-					{
-						this.OutputReportSubTotal((this.sortBy == Report.ReportSortByEnum.ReportSortByPlans) ? this.parserPlanName : this.parserLayerName);
-					}
-					this.OutputReportTotals();
-				}
-				this.InsertSignature();
-			}
-
-			private bool GenerateXLSFromXML(string xml)
-			{
-				bool result;
-				try
-				{
-					XmlDocument xmlDocument = new XmlDocument();
-					xmlDocument.LoadXml(xml);
-					if (this.exportEstimating)
-					{
-						this.GenerateSheet(this.estimatingSheet, xmlDocument.DocumentElement);
-					}
-					else
-					{
-						if (Settings.Default.ExportToExcelType != 1)
-						{
-							this.GenerateSheet(this.rawSheet, xmlDocument.DocumentElement);
-						}
-						if (Settings.Default.ExportToExcelType != 0)
-						{
-							this.GenerateSheet(this.formattedSheet, xmlDocument.DocumentElement);
-						}
-						if (Settings.Default.ExportToExcelType != 1)
-						{
-							this.GenerateSheet(this.rawSheetShort, xmlDocument.DocumentElement);
-						}
-						if (Settings.Default.ExportToExcelType != 0)
-						{
-							this.GenerateSheet(this.formattedSheetShort, xmlDocument.DocumentElement);
-						}
-						if (Settings.Default.ExportToExcelType != 1)
-						{
-							this.GenerateSheet(this.rawSheetConsolidated, xmlDocument.DocumentElement);
-						}
-						if (Settings.Default.ExportToExcelType != 0)
-						{
-							this.GenerateSheet(this.formattedSheetConsolidated, xmlDocument.DocumentElement);
-						}
-					}
-					result = true;
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = false;
-				}
-				return result;
-			}
-
-			private void CreateWorkbook()
-			{
-				this.workbook = new HSSFWorkbook();
-				string text = NumberFormatInfo.CurrentInfo.CurrencySymbol;
-				text = text + "#,##0.00_);(" + text + "#,##0.00)";
-				DocumentSummaryInformation documentSummaryInformation = PropertySetFactory.CreateDocumentSummaryInformation();
-				this.workbook.DocumentSummaryInformation = documentSummaryInformation;
-				SummaryInformation summaryInformation = PropertySetFactory.CreateSummaryInformation();
-				this.workbook.SummaryInformation = summaryInformation;
-				IDataFormat dataFormat = this.workbook.CreateDataFormat();
-				this.integerCellStyle = this.workbook.CreateCellStyle();
-				this.integerCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.RIGHT;
-				this.integerCellStyle.WrapText = false;
-				this.integerCellStyle.DataFormat = dataFormat.GetFormat("0");
-				this.integerCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
-				IDataFormat dataFormat2 = this.workbook.CreateDataFormat();
-				this.decimalCellStyle = this.workbook.CreateCellStyle();
-				this.decimalCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.RIGHT;
-				this.decimalCellStyle.WrapText = false;
-				this.decimalCellStyle.DataFormat = dataFormat2.GetFormat("0.00");
-				this.decimalCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
-				this.resultCellStyle = this.workbook.CreateCellStyle();
-				this.resultCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.RIGHT;
-				this.resultCellStyle.WrapText = false;
-				this.resultCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
-				this.planNameCellStyle = this.workbook.CreateCellStyle();
-				this.planNameCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.planNameCellStyle.WrapText = false;
-				this.planNameCellStyle.SetFont(this.GetFont(700, 0, 13, "Calibri", false, false, 0, 0));
-				this.layerNameCellStyle = this.workbook.CreateCellStyle();
-				this.layerNameCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.layerNameCellStyle.WrapText = false;
-				this.layerNameCellStyle.SetFont(this.GetFont(700, 0, 12, "Calibri", false, false, 0, 0));
-				this.objectNameCellStyle = this.workbook.CreateCellStyle();
-				this.objectNameCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.objectNameCellStyle.WrapText = false;
-				this.objectNameCellStyle.SetFont(this.GetFont(700, 0, 11, "Calibri", false, false, 0, 0));
-				this.extensionNameCellStyle = this.workbook.CreateCellStyle();
-				this.extensionNameCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.extensionNameCellStyle.WrapText = false;
-				this.extensionNameCellStyle.SetFont(this.GetFont(700, 0, 11, "Calibri", true, false, 0, 1));
-				this.columnHeaderCellStyle = this.workbook.CreateCellStyle();
-				this.columnHeaderCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.RIGHT;
-				this.columnHeaderCellStyle.WrapText = true;
-				this.columnHeaderCellStyle.SetFont(this.GetFont(700, 0, 11, "Calibri", true, false, 0, 0));
-				this.commentCellStyle = this.workbook.CreateCellStyle();
-				this.commentCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.commentCellStyle.WrapText = false;
-				this.commentCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.defaultCellStyle = this.workbook.CreateCellStyle();
-				this.defaultCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.defaultCellStyle.WrapText = false;
-				this.defaultCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
-				this.estimatingItemCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingItemCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingItemCellStyle.WrapText = false;
-				this.estimatingItemCellStyle.SetFont(this.GetFont(700, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingItemResultCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingItemResultCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingItemResultCellStyle.WrapText = false;
-				this.estimatingItemResultCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingItemPriceCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingItemPriceCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingItemPriceCellStyle.WrapText = false;
-				this.estimatingItemPriceCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingItemPriceCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(text);
-				this.estimatingEditableQuantityCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingEditableQuantityCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingEditableQuantityCellStyle.WrapText = false;
-				this.estimatingEditableQuantityCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingEditableQuantityCellStyle.FillForegroundColor = HSSFColor.YELLOW.index;
-				this.estimatingEditableQuantityCellStyle.FillPattern = FillPatternType.SOLID_FOREGROUND;
-				this.estimatingEditableQuantityCellStyle.IsLocked = false;
-				this.estimatingEditablePriceCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingEditablePriceCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingEditablePriceCellStyle.WrapText = false;
-				this.estimatingEditablePriceCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingEditablePriceCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(text);
-				this.estimatingEditablePriceCellStyle.FillForegroundColor = HSSFColor.YELLOW.index;
-				this.estimatingEditablePriceCellStyle.FillPattern = FillPatternType.SOLID_FOREGROUND;
-				this.estimatingEditablePriceCellStyle.IsLocked = false;
-				this.estimatingItemTotalCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingItemTotalCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingItemTotalCellStyle.WrapText = false;
-				this.estimatingItemTotalCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingItemTotalCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(text);
-				this.estimatingItemMarginCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingItemMarginCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.LEFT;
-				this.estimatingItemMarginCellStyle.WrapText = false;
-				this.estimatingItemMarginCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
-				this.estimatingItemMarginCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat("0.00%");
-				this.estimatingSubTotalCaptionCellStyle = this.workbook.CreateCellStyle();
-				this.estimatingSubTotalCaptionCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.RIGHT;
-				this.estimatingSubTotalCaptionCellStyle.WrapText = false;
-				this.estimatingSubTotalCaptionCellStyle.SetFont(this.GetFont(700, 0, 10, "Calibri", false, false, 0, 0));
-				if (this.exportEstimating)
-				{
-					this.estimatingSheet = this.workbook.CreateSheet(Resources.Rapport_d_estimation);
-					this.estimatingSheet.DefaultColumnWidth = 14;
-					this.estimatingSheet.SetColumnWidth(0, 6585);
-					this.estimatingSheet.SetColumnWidth(2, 2233);
-					return;
-				}
-				if (Settings.Default.ExportToExcelType != 1)
-				{
-					this.rawSheetConsolidated = this.workbook.CreateSheet(Resources.Données_brutes_consolidées);
-					this.rawSheetConsolidated.DefaultColumnWidth = 14;
-					this.rawSheetConsolidated.SetColumnWidth(0, 5305);
-				}
-				if (Settings.Default.ExportToExcelType != 0)
-				{
-					this.formattedSheetConsolidated = this.workbook.CreateSheet(Resources.Données_formatées_consolidées);
-					this.formattedSheetConsolidated.DefaultColumnWidth = 15;
-					this.formattedSheetConsolidated.SetColumnWidth(0, 5305);
-				}
-				if (Settings.Default.ExportToExcelType != 1)
-				{
-					this.rawSheet = this.workbook.CreateSheet(Resources.Données_brutes);
-					this.rawSheet.DefaultColumnWidth = 14;
-				}
-				if (Settings.Default.ExportToExcelType != 0)
-				{
-					this.formattedSheet = this.workbook.CreateSheet(Resources.Données_formatées);
-					this.formattedSheet.DefaultColumnWidth = 15;
-				}
-				if (Settings.Default.ExportToExcelType != 1)
-				{
-					this.rawSheetShort = this.workbook.CreateSheet(Resources.Données_brutes_résumé);
-					this.rawSheetShort.DefaultColumnWidth = 14;
-					this.rawSheetShort.SetColumnWidth(0, 6585);
-					this.rawSheetShort.SetColumnWidth(2, 1465);
-				}
-				if (Settings.Default.ExportToExcelType != 0)
-				{
-					this.formattedSheetShort = this.workbook.CreateSheet(Resources.Données_formatées_résumé);
-					this.formattedSheetShort.DefaultColumnWidth = 15;
-					this.formattedSheetShort.SetColumnWidth(0, 6585);
-				}
-			}
-
-			private void SaveWorkbook(string fileName)
-			{
-				try
-				{
-					IL_00:
-					using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
-					{
-						this.workbook.SetActiveSheet(0);
-						this.workbook.Write(fileStream);
-						fileStream.Close();
-					}
-				}
-				catch (Exception ex)
-				{
-					if (ex.Message.IndexOf("process") != -1)
-					{
-						string fichier_utilisé_par_un_autre_processus = Resources.Fichier_utilisé_par_un_autre_processus;
-						string veuillez_fermer_votre_tableur_Excel = Resources.Veuillez_fermer_votre_tableur_Excel;
-						if (Utilities.DisplayWarningQuestionRetryCancel(fichier_utilisé_par_un_autre_processus, veuillez_fermer_votre_tableur_Excel) != DialogResult.Cancel)
-						{
-							goto IL_00;
-						}
-					}
-					else
-					{
-						Utilities.DisplaySystemError(ex);
-					}
-				}
-			}
-
-			public bool Export(string xml, string fileName)
-			{
-				bool result;
-				try
-				{
-					this.CreateWorkbook();
-					this.GenerateXLSFromXML(xml);
-					this.SaveWorkbook(fileName);
-					result = true;
-				}
-				catch (Exception exception)
-				{
-					Utilities.DisplaySystemError(exception);
-					result = false;
-				}
-				return result;
-			}
-
-			private HSSFWorkbook workbook;
-
-			private ISheet formattedSheet;
-
-			private ISheet rawSheet;
-
-			private ISheet formattedSheetShort;
-
-			private ISheet rawSheetShort;
-
-			private ISheet formattedSheetConsolidated;
-
-			private ISheet rawSheetConsolidated;
-
-			private ISheet sheet;
-
-			private ISheet estimatingSheet;
-
-			private ICellStyle integerCellStyle;
-
-			private ICellStyle decimalCellStyle;
-
-			private ICellStyle resultCellStyle;
-
-			private ICellStyle planNameCellStyle;
-
-			private ICellStyle layerNameCellStyle;
-
-			private ICellStyle objectNameCellStyle;
-
-			private ICellStyle extensionNameCellStyle;
-
-			private ICellStyle columnHeaderCellStyle;
-
-			private ICellStyle commentCellStyle;
-
-			private ICellStyle defaultCellStyle;
-
-			private ICellStyle estimatingItemCellStyle;
-
-			private ICellStyle estimatingItemResultCellStyle;
-
-			private ICellStyle estimatingItemPriceCellStyle;
-
-			private ICellStyle estimatingEditableQuantityCellStyle;
-
-			private ICellStyle estimatingEditablePriceCellStyle;
-
-			private ICellStyle estimatingItemTotalCellStyle;
-
-			private ICellStyle estimatingItemMarginCellStyle;
-
-			private ICellStyle estimatingSubTotalCaptionCellStyle;
-
-			private Report.ReportOrderEnum order;
-
-			private Report.ReportSortByEnum sortBy;
-
-			private bool exportEstimating;
-
-			private IRow parserObjectRow;
-
-			private IRow parserResultRowHeader;
-
-			private IRow parserResultRowData;
-
-			private int parserExtensionCount;
-
-			private int parserResultColumnIndex;
-
-			private int parserEstimatingResultCount;
-
-			private int parserEstimatingRowStartIndex;
-
-			private int parserEstimatingRowEndIndex;
-
-			private string parserPlanName = string.Empty;
-
-			private string parserLayerName = string.Empty;
-
-			private string parserObjectName = string.Empty;
-
-			private string parserObjectType = string.Empty;
-
-			private bool parserObjectTypeHasChanged;
-
-			private int parserObjectTypeCount;
-
-			private string parserExtensionName = string.Empty;
-
-			private Preset parserPreset;
-
-			private Presets parserPresets = new Presets();
-
-			private string reportTotalCaption = string.Empty;
-
-			private List<ReportSummary> reportTotalSummaries = new List<ReportSummary>();
-
-			private List<ReportSummary> reportTotalTotalSummaries = new List<ReportSummary>();
-
-			private class PresetSorter : IComparer
-			{
-				public int Compare(object x, object y)
-				{
-					int result;
-					try
-					{
-						Preset preset = x as Preset;
-						Preset preset2 = y as Preset;
-						result = StringLogicalComparer.Compare(preset.ExtensionName + (string)preset.Tag + preset.CategoryName, preset2.ExtensionName + (string)preset2.Tag + preset2.CategoryName);
-					}
-					catch (Exception)
-					{
-						result = -1;
-					}
-					return result;
-				}
-
-				public PresetSorter()
-				{
-				}
-			}
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClass2
-		{
-			public <>c__DisplayClass2()
-			{
-			}
-
-			public bool <BuildXMLLayerSummaries>b__0(ReportSummary x)
-			{
-				return x.GroupID == this.reportSummary.GroupID;
-			}
-
-			public ReportSummary reportSummary;
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClass6
-		{
-			public <>c__DisplayClass6()
-			{
-			}
-
-			public bool <BuildXMLLayersSummaries>b__4(ReportSummary x)
-			{
-				return x.LayerName == this.reportSummary.LayerName;
-			}
-
-			public ReportSummary reportSummary;
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClassa
-		{
-			public <>c__DisplayClassa()
-			{
-			}
-
-			public bool <BuildXMLOrderByObjects>b__8(Variable x)
-			{
-				return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
-			}
-
-			public DrawObject layerObject;
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClassf
-		{
-			public <>c__DisplayClassf()
-			{
-			}
-
-			public bool <BuildXMLOrderByLayers>b__c(Variable x)
-			{
-				return x.Name == this.layer.Name;
-			}
-
-			public Layer layer;
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClass12
-		{
-			public <>c__DisplayClass12()
-			{
-			}
-
-			public bool <BuildXMLOrderByLayers>b__d(Variable x)
-			{
-				return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
-			}
-
-			public ReportModule.<>c__DisplayClassf CS$<>8__locals10;
-
-			public DrawObject layerObject;
-		}
-
-		[CompilerGenerated]
-		private sealed class <>c__DisplayClass16
-		{
-			public <>c__DisplayClass16()
-			{
-			}
-
-			public bool <BuildXMLOrderByPlans>b__14(Variable x)
-			{
-				return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
-			}
-
-			public DrawObject layerObject;
-		}
-	}
+    public class ReportModule
+    {
+        private bool enabled;
+
+        private Project project;
+
+        private DrawingArea drawArea;
+
+        private WebBrowser webBrowser;
+
+        private ExtensionsSupport extensionSupport;
+
+        private Filter filter;
+
+        private object registerHeaderOriginalValue = "";
+
+        private object registerFooterOriginalValue = "";
+
+        private object registerPrintBackgroundOriginalValue = "";
+
+        private bool exportToCOffice;
+
+        private CEstimatingItems estimatingItems;
+
+        public CEstimatingItems CEstimatingItems
+        {
+            get
+            {
+                return this.estimatingItems;
+            }
+            set
+            {
+                this.estimatingItems = value;
+            }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return this.enabled;
+            }
+            set
+            {
+                this.enabled = value;
+                if (!this.enabled)
+                {
+                    this.Clear();
+                }
+            }
+        }
+
+        public bool ExportEstimatingItems
+        {
+            get;
+            set;
+        }
+
+        public bool ExportReportToMemory
+        {
+            get;
+            set;
+        }
+
+        public bool ExportToCOffice
+        {
+            get
+            {
+                return this.exportToCOffice;
+            }
+            set
+            {
+                this.exportToCOffice = value;
+            }
+        }
+
+        public string ReportSummaries
+        {
+            get;
+            set;
+        }
+
+        public bool SortByLayers
+        {
+            get;
+            set;
+        }
+
+        public ReportModule(Project project, DrawingArea drawArea, ExtensionsSupport extensionSupport)
+        {
+            this.project = project;
+            this.drawArea = drawArea;
+            this.extensionSupport = extensionSupport;
+            this.filter = new Filter();
+            this.enabled = true;
+            this.InitializeWebBrowser();
+            this.LoadResources();
+        }
+
+        private string BuildHTML(Report.ReportOrderEnum order, bool useAbsolutePath)
+        {
+            string str = this.BuildXML(order, false, false);
+            return this.MakeHTML(str, this.BuildXSL(order), useAbsolutePath);
+        }
+
+        private bool BuildXLS(Report.ReportOrderEnum order, Report.ReportSortByEnum sortBy, bool exportEstimating, string fileName)
+        {
+            string str = this.BuildXML(order, false, true);
+            return (new ReportModule.ExportToXLS(order, sortBy, exportEstimating)).Export(str, fileName);
+        }
+
+        private string BuildXML(Report.ReportOrderEnum order, bool includeHiddenValues = false, bool exportForExcel = false)
+        {
+            string str = string.Concat("<?xml version=\"1.0\" encoding=\"utf-8\" ?>", Environment.NewLine);
+            string str1 = str;
+            string[] strArrays = new string[] { str1, "<Report Title=\"", Utilities.EscapeString(this.project.Name), "\" Date=\"", Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()), "\">", Environment.NewLine };
+            str = string.Concat(strArrays);
+            if (this.project.Report.ShowProjectInfo)
+            {
+                str = string.Concat(str, this.BuildXMLProjectInfo());
+            }
+            switch (order)
+            {
+                case Report.ReportOrderEnum.ReportOrderByObjects:
+                    {
+                        str = string.Concat(str, this.BuildXMLOrderByObjects(includeHiddenValues, exportForExcel, null));
+                        break;
+                    }
+                case Report.ReportOrderEnum.ReportOrderByPlans:
+                    {
+                        if (this.project.Report.ReportSortBy != Report.ReportSortByEnum.ReportSortByPlans)
+                        {
+                            str = string.Concat(str, this.BuildXMLOrderByLayers(includeHiddenValues, exportForExcel));
+                            break;
+                        }
+                        else
+                        {
+                            str = string.Concat(str, this.BuildXMLOrderByPlans(includeHiddenValues, exportForExcel));
+                            break;
+                        }
+                    }
+            }
+            str = string.Concat(str, "</Report>");
+            return str;
+        }
+
+        private string BuildXMLEstimatingItemResults(DrawObject groupObject, GroupStats groupStats, UnitScale reportUnitScale, string extensionID, string resultID, string resultName, string estimatingCaption, double quantity, PresetResult presetResult, ref double costTotalSubTotal, ref double priceTotalSubTotal, string defaultUnit = "", double defaultCostEach = 0)
+        {
+            bool deductionsCount = false;
+            EstimatingItemPrice estimatingItemPrice = null;
+            string str = defaultUnit;
+            string str1 = "";
+            quantity = reportUnitScale.Round(quantity);
+            if (presetResult != null || !(resultName != ""))
+            {
+                if (presetResult == null)
+                {
+                    str1 = string.Concat("\" ItemID=\"", resultID);
+                }
+                else if (presetResult.ItemID != -1)
+                {
+                    str1 = string.Concat("\" ItemID=\"", presetResult.ItemID);
+                }
+                deductionsCount = true;
+            }
+            else
+            {
+                string objectType = groupObject.ObjectType;
+                string str2 = objectType;
+                if (objectType != null)
+                {
+                    if (str2 == "Line")
+                    {
+                        str = (reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                        deductionsCount = true;
+                    }
+                    else if (str2 == "Counter")
+                    {
+                        str = Resources.unité_;
+                        deductionsCount = true;
+                    }
+                    else if (str2 == "Area")
+                    {
+                        str = (reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                        string str3 = resultName;
+                        string str4 = str3;
+                        if (str3 != null)
+                        {
+                            if (str4 == "Area")
+                            {
+                                deductionsCount = groupStats.DeductionsCount == 0;
+                            }
+                            else if (str4 == "AreaMinusDeduction")
+                            {
+                                deductionsCount = groupStats.DeductionsCount > 0;
+                            }
+                        }
+                    }
+                    else if (str2 == "Perimeter")
+                    {
+                        str = (reportUnitScale.CurrentSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                        string str5 = resultName;
+                        string str6 = str5;
+                        if (str5 != null)
+                        {
+                            if (str6 == "Length")
+                            {
+                                deductionsCount = (groupStats.DeductionPerimeter != 0 ? false : groupStats.DropLength == 0);
+                            }
+                            else if (str6 == "PerimeterMinusOpening")
+                            {
+                                deductionsCount = (groupStats.DeductionPerimeter <= 0 ? false : groupStats.DropLength == 0);
+                            }
+                            else if (str6 == "NetLength")
+                            {
+                                deductionsCount = groupStats.DropLength > 0;
+                            }
+                        }
+                    }
+                }
+            }
+            double num = 0;
+            double costEach = defaultCostEach;
+            double num1 = 0;
+            double num2 = 0;
+            double num3 = 0;
+            if (deductionsCount)
+            {
+                estimatingItemPrice = this.project.EstimatingItems.QueryEstimatingItemPrice(groupObject.GroupID, extensionID, resultID);
+                if (estimatingItemPrice != null)
+                {
+                    if (costEach == 0)
+                    {
+                        costEach = estimatingItemPrice.CostEach;
+                    }
+                    num = Math.Round(costEach * (1 + estimatingItemPrice.MarkupEach / 100), 2);
+                    num1 = Math.Round(quantity * costEach, 2);
+                    num2 = Math.Round(quantity * num, 2);
+                    num3 = (num > 0 ? (num - costEach) / num : 0);
+                    costTotalSubTotal += num1;
+                    priceTotalSubTotal += num2;
+                }
+            }
+            if (estimatingItemPrice == null)
+            {
+                return "";
+            }
+            object[] objArray = new object[] { "\" EstimatingItem=\"", true, (estimatingCaption != "" ? string.Concat("\" EstimatingCaption=\"", Utilities.EscapeString(estimatingCaption)) : ""), str1, "\" Quantity=\"", quantity, "\" EstimatingUnit=\"", str, "\" CostEach=\"", string.Format("{0:C}", costEach), "\" RawCostEach=\"", costEach, "\" MarkupEach=\"", string.Format("{0:C}", estimatingItemPrice.MarkupEach), "\" RawMarkupEach=\"", estimatingItemPrice.MarkupEach, "\" CostTotal=\"", string.Format("{0:C}", num1), "\" RawCostTotal=\"", num1, "\" PriceEach=\"", string.Format("{0:C}", num), "\" RawPriceEach=\"", num, "\" PriceTotal=\"", string.Format("{0:C}", num2), "\" RawPriceTotal=\"", num2, "\" Margin=\"", string.Format("{0:0.00%}", num3), "\" RawMargin=\"", num3 };
+            return string.Concat(objArray);
+        }
+
+        private string BuildXMLLayersSummaries(List<List<ReportSummary>> reportAllSummaries)
+        {
+            string str = "";
+            double costSubTotal = 0;
+            double priceSubTotal = 0;
+            double num = 0;
+            if (reportAllSummaries.Count > 0)
+            {
+                List<ReportSummary> reportSummaries = new List<ReportSummary>();
+                str = string.Concat(str, "\t<PlansSummaries>", Environment.NewLine);
+                str = string.Concat(str, "\t\t<PlanSummaries Name=\"\">", Environment.NewLine);
+                foreach (List<ReportSummary> reportAllSummary in reportAllSummaries)
+                {
+                    if (reportAllSummary.Count <= 0)
+                    {
+                        continue;
+                    }
+                    string str1 = str;
+                    string[] strArrays = new string[] { str1, "\t\t\t<LayerSummaries Name=\"", Utilities.EscapeString(reportAllSummary[0].LayerName), "\">", Environment.NewLine };
+                    str = string.Concat(strArrays);
+                    str = string.Concat(str, this.BuildXMLObjectSummaries(reportAllSummary, "\t\t", true));
+                    foreach (ReportSummary reportSummary in reportAllSummary)
+                    {
+                        if (reportSummary.Caption.IndexOf('*') != -1)
+                        {
+                            continue;
+                        }
+                        ReportSummary reportSummary1 = reportSummaries.Find((ReportSummary x) => x.LayerName == reportSummary.LayerName);
+                        if (reportSummary1 != null)
+                        {
+                            ReportSummary costSubTotal1 = reportSummary1;
+                            costSubTotal1.CostSubTotal = costSubTotal1.CostSubTotal + reportSummary.CostSubTotal;
+                            ReportSummary priceSubTotal1 = reportSummary1;
+                            priceSubTotal1.PriceSubTotal = priceSubTotal1.PriceSubTotal + reportSummary.PriceSubTotal;
+                        }
+                        else
+                        {
+                            reportSummaries.Add(new ReportSummary(reportSummary.LayerName, reportSummary.CostSubTotal, reportSummary.PriceSubTotal, null, null, -1, reportSummary.LayerName));
+                        }
+                        costSubTotal += reportSummary.CostSubTotal;
+                        priceSubTotal += reportSummary.PriceSubTotal;
+                    }
+                    str = string.Concat(str, "\t\t\t</LayerSummaries>", Environment.NewLine);
+                }
+                num = (priceSubTotal > 0 ? (priceSubTotal - costSubTotal) / priceSubTotal : 0);
+                object obj = str;
+                object[] objArray = new object[] { obj, "\t\t\t<Total CostTotal=\"", string.Format("{0:C}", costSubTotal), "\" RawCostTotal=\"", costSubTotal, "\" PriceTotal=\"", string.Format("{0:C}", priceSubTotal), "\" RawPriceTotal=\"", priceSubTotal, "\" MarginTotal=\"", string.Format("{0:0.00%}", num), "\" RawMarginTotal=\"", num, "\"/>", Environment.NewLine };
+                str = string.Concat(objArray);
+                costSubTotal = 0;
+                priceSubTotal = 0;
+                str = string.Concat(str, "\t\t</PlanSummaries>", Environment.NewLine);
+                str = string.Concat(str, "\t</PlansSummaries>", Environment.NewLine);
+                reportSummaries.Sort(new ReportModule.SummarySorter());
+                str = string.Concat(str, this.BuildXMLSummaries(reportSummaries, ""));
+                reportSummaries.Clear();
+                reportSummaries = null;
+            }
+            return str;
+        }
+
+        private string BuildXMLLayerSummaries(List<ReportSummary> reportTotalSummaries, List<ReportSummary> reportSummaries, ref double costTotalTotal, ref double priceTotalTotal)
+        {
+            string str = string.Concat("\t\t\t<LayerSummaries Name=\"", Utilities.EscapeString(reportSummaries[0].LayerName), "\">", Environment.NewLine);
+            str = string.Concat(str, this.BuildXMLObjectSummaries(reportSummaries, "\t\t", true));
+            foreach (ReportSummary reportSummary in reportSummaries)
+            {
+                if (reportSummary.Caption.IndexOf('*') != -1)
+                {
+                    continue;
+                }
+                ReportSummary reportSummary1 = reportTotalSummaries.Find((ReportSummary x) => x.GroupID == reportSummary.GroupID);
+                if (reportSummary1 != null)
+                {
+                    ReportSummary costSubTotal = reportSummary1;
+                    costSubTotal.CostSubTotal = costSubTotal.CostSubTotal + reportSummary.CostSubTotal;
+                    ReportSummary priceSubTotal = reportSummary1;
+                    priceSubTotal.PriceSubTotal = priceSubTotal.PriceSubTotal + reportSummary.PriceSubTotal;
+                }
+                else
+                {
+                    reportTotalSummaries.Add(new ReportSummary(reportSummary.Caption, reportSummary.CostSubTotal, reportSummary.PriceSubTotal, reportSummary.Plan, reportSummary.GroupObject, reportSummary.GroupID, reportSummary.LayerName));
+                }
+                costTotalTotal += reportSummary.CostSubTotal;
+                priceTotalTotal += reportSummary.PriceSubTotal;
+            }
+            str = string.Concat(str, "\t\t\t</LayerSummaries>", Environment.NewLine);
+            return str;
+        }
+
+        private string BuildXMLObject(DrawObject groupObject, Plan plan, string layerName, Variables plans, List<ReportSummary> reportSummaries, ref string indent, ref int resultID, ref int resultParentID, bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
+        {
+            int num;
+            object obj;
+            object[] objectType;
+            object[] objArray;
+            string[] str;
+            object obj1;
+            object obj2;
+            double num1;
+            object obj3;
+            object obj4;
+            double num2;
+            double num3;
+            double num4;
+            double num5;
+            double num6;
+            double num7;
+            object obj5;
+            object obj6;
+            double num8;
+            object obj7;
+            object obj8;
+            object obj9;
+            object obj10;
+            object obj11;
+            object obj12;
+            object obj13;
+            double num9;
+            object obj14;
+            object obj15;
+            object obj16;
+            object obj17;
+            object obj18;
+            object obj19;
+            object obj20;
+            object obj21;
+            object obj22;
+            object obj23;
+            object obj24;
+            object obj25;
+            string str1;
+            string str2 = "";
+            bool flag = (plan != null ? false : layerName != "");
+            double num10 = 0;
+            double num11 = 0;
+            if (plan == null)
+            {
+                indent = (this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByPlans ? "\t\t\t\t" : "\t");
+            }
+            else
+            {
+                indent = (true ? "\t\t\t\t" : "\t\t\t");
+            }
+            if (groupObject != null && (groupObject.Visible || this.project.Report.ShowInvisibleObjects))
+            {
+                string empty = string.Empty;
+                if (plans != null)
+                {
+                    foreach (Variable collection in plans.Collection)
+                    {
+                        if (collection.Name != groupObject.GroupID.ToString())
+                        {
+                            continue;
+                        }
+                        empty = string.Concat(empty, (empty == "" ? "" : ", "), Utilities.EscapeString(collection.Value.ToString()));
+                    }
+                }
+                List<string> strs = null;
+                if (exportForExcel)
+                {
+                    strs = new List<string>()
+                    {
+                        string.Empty
+                    };
+                }
+                else
+                {
+                    strs = (plan == null ? GroupUtilities.GetObjectLabels(this.project, groupObject, this.filter) : GroupUtilities.GetObjectLabels(plan, groupObject));
+                }
+                for (int i = 0; i < strs.Count; i++)
+                {
+                    if (!false)
+                    {
+                        if (results == null)
+                        {
+                            obj = str2;
+                            objectType = new object[] { obj, indent, "\t<Object Name=\"", null, null, null, null, null, null, null, null, null, null };
+                            object[] objArray1 = objectType;
+                            string name = groupObject.Name;
+                            if (i > 0)
+                            {
+                                str1 = string.Concat(" - (", Utilities.EscapeString(strs[i]), ")");
+                            }
+                            else
+                            {
+                                str1 = (strs.Count == 1 ? string.Empty : string.Empty);
+                            }
+                            objArray1[3] = Utilities.EscapeString(string.Concat(name, str1));
+                            objectType[4] = (empty == "" ? "" : string.Concat("\" Plans=\"", empty));
+                            objectType[5] = "\" Type=\"";
+                            objectType[6] = groupObject.ObjectType;
+                            objectType[7] = "\" Color=\"";
+                            objectType[8] = groupObject.Color.ToArgb();
+                            objectType[9] = "\" IsLabel=\"";
+                            objectType[10] = i > 0;
+                            objectType[11] = "\">";
+                            objectType[12] = Environment.NewLine;
+                            str2 = string.Concat(objectType);
+                        }
+                        if (this.project.Report.ShowComments && groupObject.Comment != string.Empty)
+                        {
+                            string comment = groupObject.Comment;
+                            char[] chrArray = new char[] { '\r', '\n' };
+                            string[] fields = Utilities.GetFields(comment, chrArray);
+                            if (fields.GetUpperBound(0) >= 0)
+                            {
+                                str2 = string.Concat(str2, "\t\t\t<Comment>");
+                                string[] strArrays = fields;
+                                for (int j = 0; j < (int)strArrays.Length; j++)
+                                {
+                                    string str3 = strArrays[j];
+                                    str2 = string.Concat(str2, Utilities.EscapeString(str3), "&#xD;");
+                                }
+                                str2 = string.Concat(str2, "</Comment>", Environment.NewLine);
+                            }
+                        }
+                        if (results == null)
+                        {
+                            str2 = string.Concat(str2, indent, "\t\t<Extensions>", Environment.NewLine);
+                        }
+                        if (results == null)
+                        {
+                            obj = str2;
+                            objectType = new object[] { obj, indent, "\t\t\t<Extension Name=\"", Resources.Résultats, "\" BaseExtension=\"", true, "\">", Environment.NewLine };
+                            str2 = string.Concat(objectType);
+                            str2 = string.Concat(str2, indent, "\t\t\t\t<Results>", Environment.NewLine);
+                        }
+                        num10 = 0;
+                        num11 = 0;
+                        UnitScale.UnitSystem systemType = this.project.Report.SystemType;
+                        UnitScale.UnitPrecision precision = this.project.Report.Precision;
+                        UnitScale unitScale = new UnitScale(1f, systemType, precision, false);
+                        UnitScale.UnitSystem scaleSystemType = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, "", groupObject.ObjectType, systemType, -1);
+                        UnitScale unitScale1 = new UnitScale(1f, scaleSystemType, precision, false);
+                        GroupStats groupStat = null;
+                        if (plan != null)
+                        {
+                            groupStat = GroupUtilities.ComputeGroupStats(plan, groupObject, systemType, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                        }
+                        else if (layerName != "")
+                        {
+                            groupStat = GroupUtilities.ComputeGroupStats(this.project, layerName, groupObject, this.filter, systemType, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                        }
+                        GroupStats groupStat1 = GroupUtilities.ComputeGroupStats(this.project, groupObject, this.filter, systemType, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                        bool flag1 = (groupStat1.DeductionsCount > 0 ? true : exportForExcel);
+                        bool flag2 = (groupStat1.DropLength > 0 ? true : exportForExcel);
+                        bool flag3 = (groupStat1.DeductionPerimeter > 0 ? true : exportForExcel);
+                        resultID++;
+                        resultParentID = resultID;
+                        string objectType1 = groupObject.ObjectType;
+                        string str4 = objectType1;
+                        if (objectType1 != null)
+                        {
+                            if (str4 == "Line")
+                            {
+                                if (systemType == scaleSystemType)
+                                {
+                                    num7 = (groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter);
+                                }
+                                else
+                                {
+                                    num7 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromMetersToFeet((groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter)) : UnitScale.FromFeetToMeters((groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter)));
+                                }
+                                double num12 = num7;
+                                if (results != null)
+                                {
+                                    results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num12, (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m"), 0, 0, -1));
+                                }
+                                else if (this.ExportEstimatingItems)
+                                {
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Length\" Caption=\"", Resources.Longueur, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                    objectType[5] = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                    object[] objArray2 = objectType;
+                                    if (groupStat != null || flag)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale1.ToLengthStringFromUnitSystem(groupStat.Perimeter, false, true, true)), "\" RawValue=\"", groupStat.Perimeter };
+                                        obj5 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj5 = "";
+                                    }
+                                    objArray2[6] = obj5;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(unitScale1.ToLengthStringFromUnitSystem(groupStat1.Perimeter, false, true, true));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.Perimeter;
+                                    objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStat != null ? num12 : num12), null, ref num10, ref num11, "", 0);
+                                    objectType[12] = "\"/>";
+                                    objectType[13] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                }
+                                else
+                                {
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Length\" Caption=\"", Resources.Longueur, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                    objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                    object[] objArray3 = objectType;
+                                    if (groupStat != null || flag)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.Perimeter, false, true, true)), "\" RawValue=\"", groupStat.Perimeter };
+                                        obj6 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj6 = "";
+                                    }
+                                    objArray3[6] = obj6;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.Perimeter, false, true, true));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.Perimeter;
+                                    objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStat != null ? num12 : num12), null, ref num10, ref num11, "", 0);
+                                    objectType[12] = "\"/>";
+                                    objectType[13] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                }
+                            }
+                            else if (str4 == "Area")
+                            {
+                                if (systemType == scaleSystemType)
+                                {
+                                    num8 = (groupStat != null ? groupStat.AreaMinusDeduction : groupStat1.AreaMinusDeduction);
+                                }
+                                else
+                                {
+                                    num8 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromSquareMetersToSquareFeet((groupStat != null ? groupStat.AreaMinusDeduction : groupStat1.AreaMinusDeduction)) : UnitScale.FromSquareFeetToSquareMeters((groupStat != null ? groupStat.AreaMinusDeduction : groupStat1.AreaMinusDeduction)));
+                                }
+                                double num13 = num8;
+                                if (results != null)
+                                {
+                                    results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num13, (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²"), 0, 0, -1));
+                                }
+                                else
+                                {
+                                    if (this.ExportEstimatingItems)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Area\" Caption=\"", Resources.Surface, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                                        object[] objArray4 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale1.ToAreaStringFromUnitSystem(groupStat.Area, true)), "\" RawValue=\"", groupStat.Area };
+                                            obj7 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj7 = "";
+                                        }
+                                        objArray4[6] = obj7;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale1.ToAreaStringFromUnitSystem(groupStat1.Area, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.Area;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Area", Resources.Surface, (groupStat != null ? num13 : num13), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    else
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Area\" Caption=\"", Resources.Surface, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                                        object[] objArray5 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat.Area, true)), "\" RawValue=\"", groupStat.Area };
+                                            obj13 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj13 = "";
+                                        }
+                                        objArray5[6] = obj13;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat1.Area, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.Area;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Area", Resources.Surface, (groupStat != null ? num13 : num13), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    if (flag1)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Substractions\" Caption=\"", Resources.Déduction, "\" Unit=\"", null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                                        object[] objArray6 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat.DeductionArea, true)), "\" RawValue=\"", groupStat.DeductionArea };
+                                            obj11 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj11 = "";
+                                        }
+                                        objArray6[6] = obj11;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat1.DeductionArea, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DeductionArea;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"AreaMinusSubstractions\" Caption=\"", Resources.Surface_déductions, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                                        object[] objArray7 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat.AreaMinusDeduction, true)), "\" RawValue=\"", groupStat.AreaMinusDeduction };
+                                            obj12 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj12 = "";
+                                        }
+                                        objArray7[6] = obj12;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToAreaStringFromUnitSystem(groupStat1.AreaMinusDeduction, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.AreaMinusDeduction;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, "", groupObject.ObjectType, "AreaMinusDeduction", Resources.Surface, (groupStat != null ? groupStat.AreaMinusDeduction : groupStat1.AreaMinusDeduction), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Perimeter\" Caption=\"", Resources.Périmètre, "\" Unit=\"", null, null, null, null, null, null, null, null };
+                                    objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                    object[] objArray8 = objectType;
+                                    if (groupStat != null)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.Perimeter, false, true, true)), "\" RawValue=\"", groupStat.Perimeter };
+                                        obj8 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj8 = "";
+                                    }
+                                    objArray8[6] = obj8;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.Perimeter, false, true, true));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.Perimeter;
+                                    objectType[11] = "\"/>";
+                                    objectType[12] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                    if (flag1)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"PerimeterPlusSubstractions\" Caption=\"", Resources.Périmètre_déductions, "\" Unit=\"", null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray9 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.PerimeterPlusDeduction, false, true, true)), "\" RawValue=\"", groupStat.PerimeterPlusDeduction };
+                                            obj9 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj9 = "";
+                                        }
+                                        objArray9[6] = obj9;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.PerimeterPlusDeduction, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.PerimeterPlusDeduction;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"SubstractionsCount\" Caption=\"", Resources.Nombre_de_déductions, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                        object[] objArray10 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.DeductionsCount)), "\" RawValue=\"", groupStat.DeductionsCount };
+                                            obj10 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj10 = "";
+                                        }
+                                        objArray10[6] = obj10;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.DeductionsCount));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DeductionsCount;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                }
+                            }
+                            else if (str4 == "Perimeter")
+                            {
+                                if (systemType == scaleSystemType)
+                                {
+                                    num9 = (groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter);
+                                }
+                                else
+                                {
+                                    num9 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromMetersToFeet((groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter)) : UnitScale.FromFeetToMeters((groupStat != null ? groupStat.Perimeter : groupStat1.Perimeter)));
+                                }
+                                double num14 = num9;
+                                if (results != null)
+                                {
+                                    results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, num14, (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m"), 0, 0, -1));
+                                }
+                                else
+                                {
+                                    if (this.ExportEstimatingItems)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Length\" Caption=\"", Resources.Longueur, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray11 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale1.ToLengthStringFromUnitSystem(groupStat.Perimeter, false, true, true)), "\" RawValue=\"", groupStat.Perimeter };
+                                            obj14 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj14 = "";
+                                        }
+                                        objArray11[6] = obj14;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale1.ToLengthStringFromUnitSystem(groupStat1.Perimeter, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.Perimeter;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStat != null ? num14 : num14), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    else
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Length\" Caption=\"", Resources.Longueur, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray12 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.Perimeter, false, true, true)), "\" RawValue=\"", groupStat.Perimeter };
+                                            obj24 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj24 = "";
+                                        }
+                                        objArray12[6] = obj24;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.Perimeter, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.Perimeter;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale1, "", groupObject.ObjectType, "Length", Resources.Longueur, (groupStat != null ? num14 : num14), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    if (flag3)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Openings\" Caption=\"", Resources.Longueur_des_ouvertures, "\" Unit=\"", null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray13 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.DeductionPerimeter, false, true, true)), "\" RawValue=\"", groupStat.DeductionPerimeter };
+                                            obj22 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj22 = "";
+                                        }
+                                        objArray13[6] = obj22;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.DeductionPerimeter, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DeductionPerimeter;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"PerimeterMinusOpenings\" Caption=\"", Resources.Longueur_sans_ouvertures, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray14 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.PerimeterMinusOpening, false, true, true)), "\" RawValue=\"", groupStat.PerimeterMinusOpening };
+                                            obj23 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj23 = "";
+                                        }
+                                        objArray14[6] = obj23;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.PerimeterMinusOpening, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.PerimeterMinusOpening;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, "", groupObject.ObjectType, "PerimeterMinusOpening", Resources.Longueur, (groupStat != null ? groupStat.PerimeterMinusOpening : groupStat1.PerimeterMinusOpening), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    if (flag2)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"DropLength\" Caption=\"", Resources.Drop_length, "\" Unit=\"", null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray15 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.DropLength, false, true, true)), "\" RawValue=\"", groupStat.DropLength };
+                                            obj19 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj19 = "";
+                                        }
+                                        objArray15[6] = obj19;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.DropLength, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DropLength;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"NetLength\" Caption=\"", Resources.Longueur_nette, "\" Unit=\"", null, null, null, null, null, null, null, null, null };
+                                        objectType[5] = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        object[] objArray16 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat.NetLength, false, true, true)), "\" RawValue=\"", groupStat.NetLength };
+                                            obj20 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj20 = "";
+                                        }
+                                        objArray16[6] = obj20;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(unitScale.ToLengthStringFromUnitSystem(groupStat1.NetLength, false, true, true));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.NetLength;
+                                        objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, "", groupObject.ObjectType, "NetLength", Resources.Longueur, (groupStat != null ? groupStat.NetLength : groupStat1.NetLength), null, ref num10, ref num11, "", 0);
+                                        objectType[12] = "\"/>";
+                                        objectType[13] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"DropsCount\" Caption=\"", Resources.Drops_count, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                        object[] objArray17 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.DropsCount)), "\" RawValue=\"", groupStat.DropsCount };
+                                            obj21 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj21 = "";
+                                        }
+                                        objArray17[6] = obj21;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.DropsCount));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DropsCount;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    if (flag1)
+                                    {
+                                        obj = str2;
+                                        objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"OpeningsCount\" Caption=\"", Resources.Nombre_d_ouvertures, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                        object[] objArray18 = objectType;
+                                        if (groupStat != null)
+                                        {
+                                            objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.DeductionsCount)), "\" RawValue=\"", groupStat.DeductionsCount };
+                                            obj18 = string.Concat(objArray);
+                                        }
+                                        else
+                                        {
+                                            obj18 = "";
+                                        }
+                                        objArray18[6] = obj18;
+                                        objectType[7] = "\" TotalValue=\"";
+                                        objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.DeductionsCount));
+                                        objectType[9] = "\" TotalRawValue=\"";
+                                        objectType[10] = groupStat1.DeductionsCount;
+                                        objectType[11] = "\"/>";
+                                        objectType[12] = Environment.NewLine;
+                                        str2 = string.Concat(objectType);
+                                    }
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"CornersCount\" Caption=\"", Resources.Nombre_de_coins, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                    object[] objArray19 = objectType;
+                                    if (groupStat != null)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.CornersCount)), "\" RawValue=\"", groupStat.CornersCount };
+                                        obj15 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj15 = "";
+                                    }
+                                    objArray19[6] = obj15;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.CornersCount));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.CornersCount;
+                                    objectType[11] = "\"/>";
+                                    objectType[12] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"EndsCount\" Caption=\"", Resources.Nombre_de_bouts, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                    object[] objArray20 = objectType;
+                                    if (groupStat != null)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.EndsCount)), "\" RawValue=\"", groupStat.EndsCount };
+                                        obj16 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj16 = "";
+                                    }
+                                    objArray20[6] = obj16;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.EndsCount));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.EndsCount;
+                                    objectType[11] = "\"/>";
+                                    objectType[12] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"SegmentsCount\" Caption=\"", Resources.Nombre_de_segments, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null };
+                                    object[] objArray21 = objectType;
+                                    if (groupStat != null)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.SegmentsCount)), "\" RawValue=\"", groupStat.SegmentsCount };
+                                        obj17 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj17 = "";
+                                    }
+                                    objArray21[6] = obj17;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.SegmentsCount));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.SegmentsCount;
+                                    objectType[11] = "\"/>";
+                                    objectType[12] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                }
+                            }
+                            else if (str4 == "Counter")
+                            {
+                                if (results != null)
+                                {
+                                    results.Add(new EstimatingItem(resultID, 0, groupObject.GroupID, "", groupObject.ObjectType, groupObject.ObjectType, groupObject.Name, (double)groupStat1.GroupCount, Resources.unité_, 0, 0, -1));
+                                }
+                                else
+                                {
+                                    obj = str2;
+                                    objectType = new object[] { obj, indent, "\t\t\t\t\t<Result Name=\"Count\" Caption=\"", Resources.Nombre_d_objets, "\" Unit=\"", Resources.unité_, null, null, null, null, null, null, null, null };
+                                    object[] objArray22 = objectType;
+                                    if (groupStat != null)
+                                    {
+                                        objArray = new object[] { "\" Value=\"", Utilities.EscapeString(this.drawArea.ToUnitString(groupStat.GroupCount)), "\" RawValue=\"", groupStat.GroupCount };
+                                        obj25 = string.Concat(objArray);
+                                    }
+                                    else
+                                    {
+                                        obj25 = "";
+                                    }
+                                    objArray22[6] = obj25;
+                                    objectType[7] = "\" TotalValue=\"";
+                                    objectType[8] = Utilities.EscapeString(this.drawArea.ToUnitString(groupStat1.GroupCount));
+                                    objectType[9] = "\" TotalRawValue=\"";
+                                    objectType[10] = groupStat1.GroupCount;
+                                    objectType[11] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, "", groupObject.ObjectType, "Count", Resources.Nombre_d_objets, (double)((groupStat != null ? groupStat.GroupCount : groupStat1.GroupCount)), null, ref num10, ref num11, "", 0);
+                                    objectType[12] = "\"/>";
+                                    objectType[13] = Environment.NewLine;
+                                    str2 = string.Concat(objectType);
+                                }
+                            }
+                        }
+                        if (results == null)
+                        {
+                            str2 = string.Concat(str2, indent, "\t\t\t\t</Results>", Environment.NewLine);
+                            str2 = string.Concat(str2, indent, "\t\t\t</Extension>", Environment.NewLine);
+                        }
+                        DrawObjectGroup group = groupObject.Group;
+                        Presets preset = new Presets();
+                        if (group != null)
+                        {
+                            foreach (Preset collection1 in group.Presets.Collection)
+                            {
+                                preset.Add(collection1.Clone(true));
+                            }
+                            foreach (Preset preset1 in group.Presets.Collection)
+                            {
+                                if (results == null)
+                                {
+                                    str4 = str2;
+                                    str = new string[] { str4, indent, "\t\t\t<Extension Name=\"", Utilities.EscapeString(preset1.DisplayName), "\">", Environment.NewLine };
+                                    str2 = string.Concat(str);
+                                }
+                                if (i == 0)
+                                {
+                                    string str5 = "";
+                                    int num15 = 0;
+                                    foreach (PresetChoice presetChoice in preset1.Choices.Collection)
+                                    {
+                                        ExtensionChoice extensionChoice = this.extensionSupport.FindChoice(preset1.CategoryName, preset1.ExtensionName, presetChoice.ChoiceName);
+                                        if (extensionChoice != null && (!extensionChoice.Hidden || includeHiddenValues))
+                                        {
+                                            ExtensionChoiceElement extensionChoiceElement = extensionChoice.FindElement(presetChoice.ChoiceElementName);
+                                            if (extensionChoiceElement != null && results == null)
+                                            {
+                                                str4 = str5;
+                                                str = new string[] { str4, indent, "\t\t\t\t\t<Field Name=\"Choice", null, null, null, null, null, null, null, null, null };
+                                                num = num15 + 1;
+                                                str[3] = num.ToString();
+                                                str[4] = "\" Caption=\"";
+                                                str[5] = presetChoice.ChoiceCaption;
+                                                str[6] = "\" Value=\"";
+                                                str[7] = Utilities.EscapeString(extensionChoiceElement.Caption);
+                                                str[8] = "\" RawValue=\"";
+                                                str[9] = Utilities.EscapeString(extensionChoiceElement.Caption);
+                                                str[10] = "\"/>";
+                                                str[11] = Environment.NewLine;
+                                                str5 = string.Concat(str);
+                                            }
+                                        }
+                                        num15++;
+                                    }
+                                    num15 = 0;
+                                    foreach (PresetField presetField in preset1.Fields.Collection)
+                                    {
+                                        double num16 = Utilities.ConvertToDouble(presetField.Value.ToString(), -1);
+                                        string lengthStringFromUnitSystem = num16.ToString();
+                                        string str6 = num16.ToString();
+                                        string currencySymbol = string.Empty;
+                                        ExtensionField.ExtensionFieldTypeEnum fieldType = presetField.FieldType;
+                                        if (fieldType == ExtensionField.ExtensionFieldTypeEnum.FieldTypeDimension)
+                                        {
+                                            if (preset1.ScaleSystemType != unitScale.ScaleSystemType)
+                                            {
+                                                num16 = (unitScale.ScaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromMetersToFeet(num16) : UnitScale.FromFeetToMeters(num16));
+                                            }
+                                            lengthStringFromUnitSystem = unitScale.ToLengthStringFromUnitSystem(num16, false, false, true);
+                                            str6 = unitScale.ToLengthFromUnitSystem(num16).ToString();
+                                            currencySymbol = (systemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                        }
+                                        else if (fieldType == ExtensionField.ExtensionFieldTypeEnum.FieldTypeCurrency)
+                                        {
+                                            lengthStringFromUnitSystem = this.drawArea.ToCurrency(num16);
+                                            str6 = num16.ToString();
+                                            currencySymbol = Utilities.GetCurrencySymbol();
+                                        }
+                                        if (results == null)
+                                        {
+                                            str4 = str5;
+                                            str = new string[14];
+                                            str[0] = str4;
+                                            str[1] = indent;
+                                            str[2] = "\t\t\t\t\t<Field Name=\"Field";
+                                            num = num15 + 1;
+                                            str[3] = num.ToString();
+                                            str[4] = "\" Caption=\"";
+                                            str[5] = Utilities.EscapeString(presetField.Caption);
+                                            str[6] = "\" Unit=\"";
+                                            str[7] = currencySymbol;
+                                            str[8] = "\" Value=\"";
+                                            str[9] = Utilities.EscapeString(lengthStringFromUnitSystem);
+                                            str[10] = "\" RawValue=\"";
+                                            str[11] = Utilities.EscapeString(str6);
+                                            str[12] = "\"/>";
+                                            str[13] = Environment.NewLine;
+                                            str5 = string.Concat(str);
+                                        }
+                                        num15++;
+                                    }
+                                    if (results == null && str5.Trim() != "")
+                                    {
+                                        str2 = string.Concat(str2, indent, "\t\t\t\t<Fields>", Environment.NewLine);
+                                        str2 = string.Concat(str2, str5);
+                                        str2 = string.Concat(str2, indent, "\t\t\t\t</Fields>", Environment.NewLine);
+                                    }
+                                }
+                                if (results == null)
+                                {
+                                    str2 = string.Concat(str2, indent, "\t\t\t\t<Results>", Environment.NewLine);
+                                }
+                                Variables variable = new Variables();
+                                for (int k = (plan != null || layerName != "" ? 2 : 1); k > 0; k--)
+                                {
+                                    Preset preset2 = (k == 2 ? preset.FindById(preset1.ID) : preset1);
+                                    preset2 = (preset2 == null ? preset1 : preset2);
+                                    this.extensionSupport.QueryPresetResults(preset2, (k == 2 ? groupStat : groupStat1), unitScale);
+                                    foreach (PresetResult presetResult in preset2.Results.Collection)
+                                    {
+                                        if (!presetResult.ConditionMet)
+                                        {
+                                            continue;
+                                        }
+                                        scaleSystemType = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, preset1.ID, presetResult.Name, systemType, -1);
+                                        unitScale1 = new UnitScale(1f, scaleSystemType, precision, false);
+                                        double result = presetResult.Result;
+                                        double num17 = Utilities.ConvertToDouble(result.ToString(), -1);
+                                        string areaStringFromUnitSystem = string.Empty;
+                                        string empty1 = string.Empty;
+                                        string lower = string.Empty;
+                                        double num18 = 0;
+                                        DBEstimatingItem estimatingItem = null;
+                                        if (presetResult.ItemID != -1)
+                                        {
+                                            estimatingItem = this.project.DBManagement.GetEstimatingItem(presetResult.ItemID);
+                                        }
+                                        bool flag4 = false;
+                                        if (estimatingItem != null)
+                                        {
+                                            flag4 = estimatingItem.MatchResultType(presetResult.ResultType);
+                                        }
+                                        if (!flag4)
+                                        {
+                                            switch (presetResult.ResultType)
+                                            {
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num1 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num1 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromMetersToFeet(num17) : UnitScale.FromFeetToMeters(num17));
+                                                        }
+                                                        num17 = num1;
+                                                        areaStringFromUnitSystem = unitScale1.ToLengthStringFromUnitSystem(num17, false, true, true);
+                                                        empty1 = unitScale1.ToLengthFromUnitSystem(num17).ToString();
+                                                        lower = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi : "m");
+                                                        break;
+                                                    }
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num2 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num2 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromSquareMetersToSquareFeet(num17) : UnitScale.FromSquareFeetToSquareMeters(num17));
+                                                        }
+                                                        num17 = num2;
+                                                        areaStringFromUnitSystem = unitScale1.ToAreaStringFromUnitSystem(num17, true);
+                                                        empty1 = unitScale1.ToAreaFromUnitSystem(num17).ToString();
+                                                        lower = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi_2 : "m²");
+                                                        break;
+                                                    }
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num3 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num3 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromCubicMetersToCubicFeet(num17) : UnitScale.FromCubicFeetToCubicMeters(num17));
+                                                        }
+                                                        num17 = num3;
+                                                        areaStringFromUnitSystem = unitScale1.ToCubicStringFromUnitSystem(num17, true);
+                                                        empty1 = unitScale1.ToCubicFromUnitSystem(num17).ToString();
+                                                        lower = (scaleSystemType == UnitScale.UnitSystem.imperial ? Resources.pi_3 : "m³");
+                                                        break;
+                                                    }
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeCurrency:
+                                                    {
+                                                        areaStringFromUnitSystem = this.drawArea.ToCurrency(num17);
+                                                        num18 = Utilities.ConvertToDouble(num17, -1);
+                                                        empty1 = "1";
+                                                        lower = Resources.chaque;
+                                                        break;
+                                                    }
+                                                default:
+                                                    {
+                                                        areaStringFromUnitSystem = unitScale1.Round(num17).ToString();
+                                                        empty1 = areaStringFromUnitSystem.ToString();
+                                                        lower = presetResult.Unit.ToLower();
+                                                        areaStringFromUnitSystem = string.Concat(areaStringFromUnitSystem, (lower != string.Empty ? string.Concat(" ", lower) : ""));
+                                                        break;
+                                                    }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            UnitScale unitScale2 = new UnitScale(1f, (estimatingItem.PurchaseUnit == "m" || estimatingItem.PurchaseUnit == "m²" || estimatingItem.PurchaseUnit == "m³" ? UnitScale.UnitSystem.metric : UnitScale.UnitSystem.imperial), precision, false);
+                                            scaleSystemType = unitScale2.ScaleSystemType;
+                                            switch (presetResult.ResultType)
+                                            {
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeLength:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num4 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num4 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromMetersToFeet(num17) : UnitScale.FromFeetToMeters(num17));
+                                                        }
+                                                        num17 = num4;
+                                                        areaStringFromUnitSystem = unitScale2.ToLengthStringFromUnitSystem(num17, false, true, true);
+                                                        empty1 = unitScale2.ToLengthFromUnitSystem(num17).ToString();
+                                                        lower = estimatingItem.PurchaseUnit;
+                                                        break;
+                                                    }
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeArea:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num5 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num5 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromSquareMetersToSquareFeet(num17) : UnitScale.FromSquareFeetToSquareMeters(num17));
+                                                        }
+                                                        num17 = num5;
+                                                        areaStringFromUnitSystem = unitScale2.ToAreaStringFromUnitSystem(num17, true);
+                                                        empty1 = unitScale2.ToAreaFromUnitSystem(num17).ToString();
+                                                        lower = estimatingItem.PurchaseUnit;
+                                                        break;
+                                                    }
+                                                case ExtensionResult.ExtensionResultTypeEnum.ResultTypeVolume:
+                                                    {
+                                                        if (systemType == scaleSystemType)
+                                                        {
+                                                            num6 = num17;
+                                                        }
+                                                        else
+                                                        {
+                                                            num6 = (scaleSystemType == UnitScale.UnitSystem.imperial ? UnitScale.FromCubicMetersToCubicFeet(num17) : UnitScale.FromCubicFeetToCubicMeters(num17));
+                                                        }
+                                                        num17 = num6;
+                                                        areaStringFromUnitSystem = unitScale2.ToCubicStringFromUnitSystem(num17, true);
+                                                        empty1 = unitScale2.ToCubicFromUnitSystem(num17).ToString();
+                                                        lower = estimatingItem.PurchaseUnit;
+                                                        break;
+                                                    }
+                                                default:
+                                                    {
+                                                        areaStringFromUnitSystem = unitScale2.Round(num17).ToString();
+                                                        empty1 = areaStringFromUnitSystem.ToString();
+                                                        lower = estimatingItem.PurchaseUnit;
+                                                        areaStringFromUnitSystem = string.Concat(areaStringFromUnitSystem, (lower != string.Empty ? string.Concat(" ", lower) : ""));
+                                                        break;
+                                                    }
+                                            }
+                                        }
+                                        if (!presetResult.IsEstimatingItem && this.ExportEstimatingItems)
+                                        {
+                                            continue;
+                                        }
+                                        string str7 = (estimatingItem != null ? estimatingItem.Description : presetResult.Caption);
+                                        int num19 = (estimatingItem != null ? estimatingItem.SectionID : presetResult.SectionID);
+                                        int num20 = (estimatingItem != null ? estimatingItem.SubSectionID : presetResult.SubSectionID);
+                                        string str8 = (estimatingItem != null ? estimatingItem.BidCode : "");
+                                        DBEstimatingItem.EstimatingItemType estimatingItemType = (estimatingItem != null ? estimatingItem.ItemType : DBEstimatingItem.EstimatingItemType.MaterialItem);
+                                        if (results != null)
+                                        {
+                                            resultID++;
+                                            if (!presetResult.IsEstimatingItem)
+                                            {
+                                                continue;
+                                            }
+                                            results.Add(new EstimatingItem(resultID, resultParentID, groupObject.GroupID, preset1.ID, presetResult.Name, groupObject.ObjectType, str7, Utilities.ConvertToDouble(empty1, -1), (lower != string.Empty ? lower : presetResult.Unit), 0, 0, -1));
+                                        }
+                                        else
+                                        {
+                                            Variable variable1 = variable.Find(presetResult.Name);
+                                            if (variable1 == null)
+                                            {
+                                                string name1 = presetResult.Name;
+                                                str = new string[] { indent, "\t\t\t\t\t<Result Name=\"", presetResult.Name, "\" Caption=\"", Utilities.EscapeString(str7), "\" Unit=\"", lower, "\"" };
+                                                string str9 = string.Concat(str);
+                                                if (k == 2)
+                                                {
+                                                    str = new string[] { " Value=\"", Utilities.EscapeString(areaStringFromUnitSystem), "\" RawValue=\"", empty1, null, null };
+                                                    str[4] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, preset1.ID, presetResult.Name, presetResult.Name, str7, Utilities.ConvertToDouble(empty1, -1), presetResult, ref num10, ref num11, lower, num18);
+                                                    str[5] = "\"";
+                                                    obj3 = string.Concat(str);
+                                                }
+                                                else
+                                                {
+                                                    objectType = new object[] { " TotalValue=\"", Utilities.EscapeString(areaStringFromUnitSystem), "\" TotalRawValue=\"", empty1, null, null, null, null, null, null, null, null, null, null };
+                                                    objectType[4] = (groupStat == null ? this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, preset1.ID, presetResult.Name, presetResult.Name, str7, Utilities.ConvertToDouble(empty1, -1), presetResult, ref num10, ref num11, lower, num18) : "");
+                                                    objectType[5] = "\" SectionID=\"";
+                                                    objectType[6] = num19;
+                                                    objectType[7] = "\" SubSectionID=\"";
+                                                    objectType[8] = num20;
+                                                    objectType[9] = "\" BidCode=\"";
+                                                    objectType[10] = Utilities.EscapeString(str8);
+                                                    objectType[11] = "\" ItemType=\"";
+                                                    objectType[12] = (int)estimatingItemType;
+                                                    objectType[13] = "\"";
+                                                    obj3 = string.Concat(objectType);
+                                                }
+                                                variable1 = new Variable(name1, str9, obj3);
+                                                variable.Add(variable1);
+                                            }
+                                            else
+                                            {
+                                                Variable variable2 = variable1;
+                                                object tag = variable2.Tag;
+                                                if (k == 2)
+                                                {
+                                                    str = new string[] { " Value=\"", Utilities.EscapeString(areaStringFromUnitSystem), "\" RawValue=\"", empty1, null, null };
+                                                    str[4] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, preset1.ID, presetResult.Name, presetResult.Name, str7, Utilities.ConvertToDouble(empty1, -1), presetResult, ref num10, ref num11, lower, num18);
+                                                    str[5] = "\"";
+                                                    obj4 = string.Concat(str);
+                                                }
+                                                else
+                                                {
+                                                    objectType = new object[] { " TotalValue=\"", Utilities.EscapeString(areaStringFromUnitSystem), "\" TotalRawValue=\"", empty1, null, null, null, null, null, null, null, null, null, null };
+                                                    objectType[4] = (groupStat == null ? this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, preset1.ID, presetResult.Name, presetResult.Name, str7, Utilities.ConvertToDouble(empty1, -1), presetResult, ref num10, ref num11, lower, num18) : "");
+                                                    objectType[5] = "\" SectionID=\"";
+                                                    objectType[6] = num19;
+                                                    objectType[7] = "\" SubSectionID=\"";
+                                                    objectType[8] = num20;
+                                                    objectType[9] = "\" BidCode=\"";
+                                                    objectType[10] = Utilities.EscapeString(str8);
+                                                    objectType[11] = "\" ItemType=\"";
+                                                    objectType[12] = (int)estimatingItemType;
+                                                    objectType[13] = "\"";
+                                                    obj4 = string.Concat(objectType);
+                                                }
+                                                variable2.Tag = string.Concat(tag, obj4);
+                                            }
+                                        }
+                                    }
+                                }
+                                foreach (Variable collection2 in variable.Collection)
+                                {
+                                    if (results != null)
+                                    {
+                                        continue;
+                                    }
+                                    str4 = str2;
+                                    str = new string[] { str4, collection2.Value.ToString(), collection2.Tag.ToString(), "/>", Environment.NewLine };
+                                    str2 = string.Concat(str);
+                                }
+                                variable.Clear();
+                                variable = null;
+                                if (results != null)
+                                {
+                                    continue;
+                                }
+                                str2 = string.Concat(str2, indent, "\t\t\t\t</Results>", Environment.NewLine);
+                                str2 = string.Concat(str2, indent, "\t\t\t</Extension>", Environment.NewLine);
+                            }
+                        }
+                        if (results == null)
+                        {
+                            if (group.EstimatingItems.Count > 0)
+                            {
+                                str4 = str2;
+                                str = new string[] { str4, indent, "\t\t\t<Extension Name=\"", Utilities.EscapeString(Resources.Items_d_estimation), "\">", Environment.NewLine };
+                                str2 = string.Concat(str);
+                                str2 = string.Concat(str2, indent, "\t\t\t\t<Results>", Environment.NewLine);
+                                Variables variable3 = new Variables();
+                                for (int l = (plan != null || layerName != "" ? 2 : 1); l > 0; l--)
+                                {
+                                    foreach (CEstimatingItem cEstimatingItem in group.EstimatingItems.Collection)
+                                    {
+                                        if (cEstimatingItem.Formula == "")
+                                        {
+                                            continue;
+                                        }
+                                        DBEstimatingItem dBEstimatingItem = this.project.DBManagement.GetEstimatingItem(Utilities.ConvertToInt(cEstimatingItem.ItemID));
+                                        UnitScale.UnitSystem unitSystem = this.project.EstimatingItems.QueryEstimatingItemSystemType(groupObject.GroupID, cEstimatingItem.InternalKey, cEstimatingItem.ItemID, systemType, Utilities.ConvertToInt(cEstimatingItem.ItemID));
+                                        DBEstimatingItem.UnitMeasureType unitMeasureType = (dBEstimatingItem != null ? dBEstimatingItem.UnitMeasure : cEstimatingItem.UnitMeasure);
+                                        double num21 = (dBEstimatingItem != null ? dBEstimatingItem.CoverageRate : cEstimatingItem.CoverageRate);
+                                        if (unitMeasureType == DBEstimatingItem.UnitMeasureType.m || unitMeasureType == DBEstimatingItem.UnitMeasureType.sq_m || unitMeasureType == DBEstimatingItem.UnitMeasureType.cu_m || cEstimatingItem.Unit.ToUpper() == "M" || cEstimatingItem.Unit.ToUpper() == "M²" || cEstimatingItem.Unit.ToUpper() == "M³")
+                                        {
+                                            unitSystem = UnitScale.UnitSystem.metric;
+                                        }
+                                        else if (unitMeasureType == DBEstimatingItem.UnitMeasureType.lin_ft || unitMeasureType == DBEstimatingItem.UnitMeasureType.sq_ft || unitMeasureType == DBEstimatingItem.UnitMeasureType.cu_yd || cEstimatingItem.Unit.ToUpper() == Resources.pi.ToUpper() || cEstimatingItem.Unit.ToUpper() == Resources.pi_2.ToUpper() || cEstimatingItem.Unit.ToUpper() == Resources.pi_3.ToUpper() || cEstimatingItem.Unit.ToUpper() == Resources.v_3.ToUpper())
+                                        {
+                                            unitSystem = UnitScale.UnitSystem.imperial;
+                                        }
+                                        GroupStats groupStat2 = null;
+                                        if (plan != null)
+                                        {
+                                            groupStat2 = GroupUtilities.ComputeGroupStats(plan, groupObject, unitSystem, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                                        }
+                                        else if (layerName != "")
+                                        {
+                                            groupStat2 = GroupUtilities.ComputeGroupStats(this.project, layerName, groupObject, this.filter, unitSystem, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                                        }
+                                        GroupStats groupStat3 = GroupUtilities.ComputeGroupStats(this.project, groupObject, this.filter, unitSystem, strs.Count == 1, (strs.Count > 1 ? strs[i] : string.Empty));
+                                        foreach (Preset collection3 in groupObject.Group.Presets.Collection)
+                                        {
+                                            UnitScale unitScale3 = new UnitScale(1f, unitSystem, precision, false);
+                                            this.project.ExtensionsSupport.QueryPresetResults(collection3, groupStat3, unitScale3);
+                                        }
+                                        double num22 = 0;
+                                        if (!FormulaUtilities.Compute(cEstimatingItem.Formula, (l == 2 ? preset : groupObject.Group.Presets), (l == 2 ? groupStat2 : groupStat3), cEstimatingItem.ResultSystemType(unitSystem), ref num22))
+                                        {
+                                            continue;
+                                        }
+                                        num22 = (num21 == 0 ? num22 : Math.Ceiling(num22 / num21));
+                                        string str10 = unitScale.Round(num22).ToString();
+                                        string str11 = str10.ToString();
+                                        string lower1 = cEstimatingItem.Unit.ToLower();
+                                        double num23 = 0;
+                                        int sectionID = cEstimatingItem.SectionID;
+                                        int subSectionID = cEstimatingItem.SubSectionID;
+                                        string bidCode = cEstimatingItem.BidCode;
+                                        DBEstimatingItem.EstimatingItemType itemType = cEstimatingItem.ItemType;
+                                        str10 = string.Concat(str10, " ", lower1);
+                                        Variable variable4 = variable3.Find(cEstimatingItem.InternalKey);
+                                        if (variable4 == null)
+                                        {
+                                            string internalKey = cEstimatingItem.InternalKey;
+                                            str = new string[] { indent, "\t\t\t\t\t<Result Name=\"", cEstimatingItem.InternalKey, "\" Caption=\"", Utilities.EscapeString(cEstimatingItem.Description), "\" Unit=\"", lower1, "\"" };
+                                            string str12 = string.Concat(str);
+                                            if (l == 2)
+                                            {
+                                                str = new string[] { " Value=\"", Utilities.EscapeString(str10), "\" RawValue=\"", str11, null, null };
+                                                str[4] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, cEstimatingItem.InternalKey, cEstimatingItem.ItemID, "", cEstimatingItem.Description, Utilities.ConvertToDouble(str11, -1), null, ref num10, ref num11, lower1, num23);
+                                                str[5] = "\"";
+                                                obj1 = string.Concat(str);
+                                            }
+                                            else
+                                            {
+                                                objectType = new object[] { " TotalValue=\"", Utilities.EscapeString(str10), "\" TotalRawValue=\"", str11, null, null, null, null, null, null, null, null, null, null };
+                                                objectType[4] = (groupStat == null ? this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, cEstimatingItem.InternalKey, cEstimatingItem.ItemID, "", cEstimatingItem.Description, Utilities.ConvertToDouble(str11, -1), null, ref num10, ref num11, lower1, num23) : "");
+                                                objectType[5] = "\" SectionID=\"";
+                                                objectType[6] = sectionID;
+                                                objectType[7] = "\" SubSectionID=\"";
+                                                objectType[8] = subSectionID;
+                                                objectType[9] = "\" BidCode=\"";
+                                                objectType[10] = Utilities.EscapeString(bidCode);
+                                                objectType[11] = "\" ItemType=\"";
+                                                objectType[12] = (int)itemType;
+                                                objectType[13] = "\"";
+                                                obj1 = string.Concat(objectType);
+                                            }
+                                            variable4 = new Variable(internalKey, str12, obj1);
+                                            variable3.Add(variable4);
+                                        }
+                                        else
+                                        {
+                                            Variable variable5 = variable4;
+                                            object tag1 = variable5.Tag;
+                                            if (l == 2)
+                                            {
+                                                str = new string[] { " Value=\"", Utilities.EscapeString(str10), "\" RawValue=\"", str11, null, null };
+                                                str[4] = this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, cEstimatingItem.InternalKey, cEstimatingItem.ItemID, "", Utilities.EscapeString(cEstimatingItem.Description), Utilities.ConvertToDouble(str11, -1), null, ref num10, ref num11, lower1, num23);
+                                                str[5] = "\"";
+                                                obj2 = string.Concat(str);
+                                            }
+                                            else
+                                            {
+                                                objectType = new object[] { " TotalValue=\"", Utilities.EscapeString(str10), "\" TotalRawValue=\"", str11, null, null, null, null, null, null, null, null, null, null };
+                                                objectType[4] = (groupStat == null ? this.BuildXMLEstimatingItemResults(groupObject, (groupStat == null ? groupStat1 : groupStat), unitScale, cEstimatingItem.InternalKey, cEstimatingItem.ItemID, "", cEstimatingItem.Description, Utilities.ConvertToDouble(str11, -1), null, ref num10, ref num11, lower1, num23) : "");
+                                                objectType[5] = "\" SectionID=\"";
+                                                objectType[6] = sectionID;
+                                                objectType[7] = "\" SubSectionID=\"";
+                                                objectType[8] = subSectionID;
+                                                objectType[9] = "\" BidCode=\"";
+                                                objectType[10] = Utilities.EscapeString(bidCode);
+                                                objectType[11] = "\" ItemType=\"";
+                                                objectType[12] = (int)itemType;
+                                                objectType[13] = "\"";
+                                                obj2 = string.Concat(objectType);
+                                            }
+                                            variable5.Tag = string.Concat(tag1, obj2);
+                                        }
+                                    }
+                                }
+                                foreach (Variable collection4 in variable3.Collection)
+                                {
+                                    if (results != null)
+                                    {
+                                        continue;
+                                    }
+                                    str4 = str2;
+                                    str = new string[] { str4, collection4.Value.ToString(), collection4.Tag.ToString(), "/>", Environment.NewLine };
+                                    str2 = string.Concat(str);
+                                }
+                                variable3.Clear();
+                                variable3 = null;
+                                str2 = string.Concat(str2, indent, "\t\t\t\t</Results>", Environment.NewLine);
+                                str2 = string.Concat(str2, indent, "\t\t\t</Extension>", Environment.NewLine);
+                            }
+                            str2 = string.Concat(str2, indent, "\t\t</Extensions>", Environment.NewLine);
+                            if (this.ExportToCOffice && i == 0)
+                            {
+                                string str13 = "";
+                                if (plan != null || flag)
+                                {
+                                    str13 = (!flag ? plan.Name : layerName);
+                                }
+                                else
+                                {
+                                    char tOUSLESPLANS = Resources.TOUS_LES_PLANS[0];
+                                    str13 = string.Concat(tOUSLESPLANS.ToString(), Resources.TOUS_LES_PLANS.Substring(1, Resources.TOUS_LES_PLANS.Length - 1).ToLower());
+                                }
+                                str2 = string.Concat(str2, indent, "\t\t<COffice>", Environment.NewLine);
+                                if (groupObject.Group != null)
+                                {
+                                    foreach (CEstimatingItem cEstimatingItem1 in groupObject.Group.COfficeProducts.Collection)
+                                    {
+                                        double num24 = 0;
+                                        FormulaUtilities.Compute(cEstimatingItem1.Formula, groupObject.Group.Presets, (plan != null || flag ? groupStat : groupStat1), cEstimatingItem1.ResultSystemType(UnitScale.DefaultUnitSystem()), ref num24);
+                                        str2 = string.Concat(str2, indent, "\t\t\t<CEstimatingItem ");
+                                        str2 = string.Concat(str2, "Page=\"", str13, "\" ");
+                                        str2 = string.Concat(str2, "DigitizerItem=\"", groupObject.Name, "\" ");
+                                        str2 = string.Concat(str2, "ItemID=\"", cEstimatingItem1.ItemID, "\" ");
+                                        str2 = string.Concat(str2, "Description=\"", Utilities.EscapeString(cEstimatingItem1.Description), "\" ");
+                                        obj = str2;
+                                        objectType = new object[] { obj, "Cost=\"", cEstimatingItem1.Value, "\" " };
+                                        str2 = string.Concat(objectType);
+                                        str2 = string.Concat(str2, "Unit=\"", Utilities.EscapeString(cEstimatingItem1.Unit), "\" ");
+                                        str2 = string.Concat(str2, "Formula=\"", Utilities.EscapeString(cEstimatingItem1.Formula), "\" ");
+                                        obj = str2;
+                                        objectType = new object[] { obj, "Result=\"", num24, "\"" };
+                                        str2 = string.Concat(objectType);
+                                        str2 = string.Concat(str2, "/>", Environment.NewLine);
+                                        if (this.CEstimatingItems == null)
+                                        {
+                                            continue;
+                                        }
+                                        CEstimatingItem cEstimatingItem2 = new CEstimatingItem(cEstimatingItem1.ItemID.Replace(',', '.'), cEstimatingItem1.Description, 0, cEstimatingItem1.Unit, cEstimatingItem1.ItemType, cEstimatingItem1.UnitMeasure, cEstimatingItem1.CoverageValue, cEstimatingItem1.CoverageUnit, cEstimatingItem1.SectionID, cEstimatingItem1.SubSectionID, cEstimatingItem1.BidCode, "")
+                                        {
+                                            Tag = new Variable(str13, groupObject.Name, num24.ToString().Replace(',', '.'))
+                                        };
+                                        this.CEstimatingItems.Add(cEstimatingItem2);
+                                    }
+                                }
+                                str2 = string.Concat(str2, indent, "\t\t</COffice>", Environment.NewLine);
+                            }
+                            if (reportSummaries != null)
+                            {
+                                double num25 = (num11 > 0 ? (num11 - num10) / num11 : 0);
+                                obj = str2;
+                                objectType = new object[] { obj, indent, "\t\t<Summary CostTotalSubTotal=\"", string.Format("{0:C}", num10), "\" RawCostTotalSubTotal=\"", num10, "\" PriceTotalSubTotal=\"", string.Format("{0:C}", num11), "\" RawPriceTotalSubTotal=\"", num11, "\" MarginSubTotal=\"", string.Format("{0:0.00%}", num25), "\" RawMarginSubTotal=\"", num25, "\"/>", Environment.NewLine };
+                                str2 = string.Concat(objectType);
+                                reportSummaries.Add(new ReportSummary(string.Concat(groupObject.Name.ToString(), (i == 0 ? "" : "*")), num10, num11, plan, groupObject, groupObject.GroupID, layerName));
+                            }
+                            str2 = string.Concat(str2, indent, "\t</Object>", Environment.NewLine);
+                        }
+                        preset.Clear();
+                        preset = null;
+                    }
+                }
+            }
+            return str2;
+        }
+
+        private string BuildXMLObjects(List<Variable> groups, List<ReportSummary> reportSummaries, Plan plan, string layerName, Variables plans, bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
+        {
+            int num = 0;
+            int num1 = 0;
+            string str = "";
+            string str1 = "";
+            for (int i = 0; i < groups.Count; i++)
+            {
+                str = string.Concat(str, this.BuildXMLObject((DrawObject)groups[i].Tag, plan, layerName, plans, reportSummaries, ref str1, ref num, ref num1, includeHiddenValues, exportForExcel, results));
+            }
+            return str;
+        }
+
+        private string BuildXMLObjectSummaries(List<ReportSummary> reportSummaries, string indent, bool isPlanSummaries = false)
+        {
+            bool taxOnTax = Settings.Default.TaxOnTax;
+            string tax1Label = Settings.Default.Tax1Label;
+            string tax2Label = Settings.Default.Tax2Label;
+            double tax1Rate = Settings.Default.Tax1Rate;
+            double tax2Rate = Settings.Default.Tax2Rate;
+            double costSubTotal = 0;
+            double priceSubTotal = 0;
+            string str = "";
+            foreach (ReportSummary reportSummary in reportSummaries)
+            {
+                if (reportSummary.Caption.IndexOf('*') != -1)
+                {
+                    continue;
+                }
+                costSubTotal += reportSummary.CostSubTotal;
+                priceSubTotal += reportSummary.PriceSubTotal;
+            }
+            if (!isPlanSummaries)
+            {
+                str = string.Concat(str, indent, "\t<Summaries>", Environment.NewLine);
+            }
+            foreach (ReportSummary reportSummary1 in reportSummaries)
+            {
+                if (reportSummary1.Caption.IndexOf('*') != -1)
+                {
+                    continue;
+                }
+                double num = reportSummary1.CostSubTotal;
+                double priceSubTotal1 = reportSummary1.PriceSubTotal;
+                double num1 = (priceSubTotal1 > 0 ? (priceSubTotal1 - num) / priceSubTotal1 : 0);
+                double num2 = (priceSubTotal > 0 ? priceSubTotal1 / priceSubTotal : 0);
+                string str1 = string.Concat(num2.ToString(), ";");
+                DrawObject groupObject = reportSummary1.GroupObject;
+                if (groupObject != null)
+                {
+                    Color color = groupObject.Color;
+                    str1 = string.Concat(str1, color.ToArgb(), ";");
+                }
+                object obj = str;
+                object[] objArray = new object[] { obj, indent, "\t\t<", (!isPlanSummaries ? "Summary" : "PlanSummary"), " Name=\"", Utilities.EscapeString(reportSummary1.Caption), "\" CostTotalSubTotal=\"", string.Format("{0:C}", num), "\" RawCostTotalSubTotal=\"", num, "\" PriceTotalSubTotal=\"", string.Format("{0:C}", priceSubTotal1), "\" RawPriceTotalSubTotal=\"", priceSubTotal1, "\" MarginSubTotal=\"", string.Format("{0:0.00%}", num1), "\" RawMarginSubTotal=\"", num1, "\" TotalBreakdown=\"", string.Format("{0:0.00%}", num2), "\" RawTotalBreakdown=\"", num2, "\" TotalBreakdownTag=\"", str1, "\"/>", Environment.NewLine };
+                str = string.Concat(objArray);
+            }
+            string str2 = string.Concat(tax1Label, " (", string.Format("{0:0.#####%}", tax1Rate), ") :");
+            string str3 = string.Concat(tax2Label, " (", string.Format("{0:0.#####%}", tax2Rate), ") :");
+            double num3 = priceSubTotal * tax1Rate;
+            num3 = Math.Round(num3, 2);
+            double num4 = (taxOnTax ? (num3 + priceSubTotal) * tax2Rate : priceSubTotal * tax2Rate);
+            num4 = Math.Round(num4, 2);
+            double num5 = priceSubTotal + num3 + num4;
+            num5 = Math.Round(num5, 2);
+            double num6 = (priceSubTotal > 0 ? (priceSubTotal - costSubTotal) / priceSubTotal : 0);
+            object obj1 = str;
+            object[] objArray1 = new object[] { obj1, indent, "\t\t<", (!isPlanSummaries ? "Total" : "PlanTotal"), " CostTotal=\"", string.Format("{0:C}", costSubTotal), "\" RawCostTotal=\"", costSubTotal, "\" PriceTotal=\"", string.Format("{0:C}", priceSubTotal), "\" RawPriceTotal=\"", priceSubTotal, "\" MarginTotal=\"", string.Format("{0:0.00%}", num6), "\" RawMarginTotal=\"", num6, "\" Taxe1Rate=\"", string.Format("{0:0.00%}", tax1Rate), "\" RawTaxe1Rate=\"", tax1Rate, "\" Taxe2Rate=\"", string.Format("{0:0.00%}", tax2Rate), "\" RawTaxe2Rate=\"", tax2Rate, "\" Taxe1Caption=\"", str2, "\" Taxe2Caption=\"", str3, "\" Taxe1Total=\"", string.Format("{0:C}", num3), "\" RawTaxe1Total=\"", num3, "\" Taxe2Total=\"", string.Format("{0:C}", num4), "\" RawTaxe2Total=\"", num4, "\" TotalAfterTaxes=\"", string.Format("{0:C}", num5), "\" RawTotalAfterTaxes=\"", num5, "\"/>", Environment.NewLine };
+            str = string.Concat(objArray1);
+            if (!isPlanSummaries)
+            {
+                str = string.Concat(str, indent, "\t</Summaries>", Environment.NewLine);
+            }
+            return str;
+        }
+
+        private string BuildXMLOrderByLayers(bool includeHiddenValues = false, bool exportForExcel = false)
+        {
+            string str = "";
+            string str1 = "";
+            List<Variable> variables = new List<Variable>();
+            List<List<ReportSummary>> lists = new List<List<ReportSummary>>();
+            foreach (Plan collection in this.project.Plans.Collection)
+            {
+                if (this.filter.QueryFilter(collection.Name, "", -1, false))
+                {
+                    continue;
+                }
+                foreach (Layer layer in collection.Layers.Collection)
+                {
+                    if (this.filter.QueryFilter(collection.Name, layer.Name, -1, false))
+                    {
+                        continue;
+                    }
+                    foreach (DrawObject drawObject in layer.DrawingObjects.Collection)
+                    {
+                        if (!drawObject.IsPartOfGroup() || drawObject.IsDeduction() || this.filter.QueryFilter(collection.Name, layer.Name, drawObject.GroupID, false))
+                        {
+                            continue;
+                        }
+                        Variable variable = variables.Find((Variable x) => x.Name == layer.Name);
+                        if (variable == null)
+                        {
+                            List<Variable> variables1 = new List<Variable>();
+                            variable = new Variable(layer.Name, variables1);
+                            variables.Add(variable);
+                        }
+                        if (variable == null)
+                        {
+                            continue;
+                        }
+                        List<Variable> value = (List<Variable>)variable.Value;
+                        if (value.Find((Variable x) => Utilities.ConvertToInt(x.Value) == drawObject.GroupID) != null)
+                        {
+                            continue;
+                        }
+                        value.Add(new Variable(drawObject.Name, (object)drawObject.GroupID, drawObject));
+                    }
+                }
+            }
+            str = string.Concat(str, "\t<Plans>", Environment.NewLine);
+            variables.Sort(new ReportModule.LayerSorter());
+            foreach (Variable variable1 in variables)
+            {
+                List<Variable> value1 = (List<Variable>)variable1.Value;
+                value1.Sort(new ReportModule.GroupSorter());
+                List<ReportSummary> reportSummaries = new List<ReportSummary>();
+                string str2 = this.BuildXMLObjects(value1, reportSummaries, null, variable1.Name, null, includeHiddenValues, exportForExcel, null);
+                if (str2.Trim() == "")
+                {
+                    reportSummaries.Clear();
+                    reportSummaries = null;
+                }
+                else
+                {
+                    string str3 = str1;
+                    string[] strArrays = new string[] { str3, "\t\t\t\t<Layer Name=\"", Utilities.EscapeString(variable1.Name), "\">", Environment.NewLine };
+                    str1 = string.Concat(strArrays);
+                    str1 = string.Concat(str1, str2);
+                    str1 = string.Concat(str1, "\t\t\t\t</Layer>", Environment.NewLine);
+                    lists.Add(reportSummaries);
+                }
+            }
+            if (str1.Trim() != "")
+            {
+                str = string.Concat(str, "\t\t<Plan Name=\"\">", Environment.NewLine);
+                str = string.Concat(str, "\t\t\t<Objects>", Environment.NewLine);
+                str = string.Concat(str, str1);
+                str = string.Concat(str, "\t\t\t</Objects>", Environment.NewLine);
+                str = string.Concat(str, "\t\t</Plan>", Environment.NewLine);
+            }
+            str = string.Concat(str, "\t</Plans>", Environment.NewLine);
+            this.ReportSummaries = this.BuildXMLLayersSummaries(lists);
+            str = string.Concat(str, this.ReportSummaries);
+            foreach (List<ReportSummary> list in lists)
+            {
+                list.Clear();
+            }
+            lists.Clear();
+            lists = null;
+            return str;
+        }
+
+        private string BuildXMLOrderByObjects(bool includeHiddenValues = false, bool exportForExcel = false, List<EstimatingItem> results = null)
+        {
+            string str = "";
+            List<Variable> variables = new List<Variable>();
+            List<ReportSummary> reportSummaries = new List<ReportSummary>();
+            Variables variable = new Variables();
+            foreach (Plan collection in this.project.Plans.Collection)
+            {
+                foreach (Layer layer in collection.Layers.Collection)
+                {
+                    foreach (DrawObject drawObject in layer.DrawingObjects.Collection)
+                    {
+                        if (!drawObject.IsPartOfGroup() || drawObject.IsDeduction())
+                        {
+                            continue;
+                        }
+                        bool flag = false;
+                        if (this.project.Report.SelectedReportType != ReportTypeEnum.QuoteReport)
+                        {
+                            flag = this.filter.QueryFilter("", "", drawObject.GroupID, false);
+                            if (!flag)
+                            {
+                                flag = this.filter.QueryFilter(collection.Name, drawObject.GroupID);
+                            }
+                        }
+                        else
+                        {
+                            flag = this.filter.QueryFilter(collection.Name, "", -1, false);
+                            if (!flag)
+                            {
+                                flag = this.filter.QueryFilter(collection.Name, layer.Name, -1, false);
+                            }
+                            if (!flag)
+                            {
+                                flag = this.filter.QueryFilter(collection.Name, layer.Name, drawObject.GroupID, false);
+                            }
+                        }
+                        if (flag)
+                        {
+                            continue;
+                        }
+                        if (variables.Find((Variable x) => Utilities.ConvertToInt(x.Value) == drawObject.GroupID) == null)
+                        {
+                            variables.Add(new Variable(drawObject.Name, (object)drawObject.GroupID, drawObject));
+                        }
+                        bool flag1 = false;
+                        foreach (Variable collection1 in variable.Collection)
+                        {
+                            if (!(collection1.Name == drawObject.GroupID.ToString()) || !(collection1.Value.ToString() == collection.Name))
+                            {
+                                continue;
+                            }
+                            flag1 = true;
+                            break;
+                        }
+                        if (flag1)
+                        {
+                            continue;
+                        }
+                        int groupID = drawObject.GroupID;
+                        variable.Add(new Variable(groupID.ToString(), collection.Name));
+                    }
+                }
+            }
+            str = string.Concat("\t<Objects>", Environment.NewLine);
+            variables.Sort(new ReportModule.GroupSorter());
+            str = string.Concat(str, this.BuildXMLObjects(variables, reportSummaries, null, "", variable, includeHiddenValues, exportForExcel, results));
+            str = string.Concat(str, "\t</Objects>", Environment.NewLine);
+            this.ReportSummaries = this.BuildXMLObjectSummaries(reportSummaries, "", false);
+            str = string.Concat(str, this.ReportSummaries);
+            variables.Clear();
+            variables = null;
+            reportSummaries.Clear();
+            reportSummaries = null;
+            variable.Clear();
+            variable = null;
+            if (results == null)
+            {
+                return str;
+            }
+            return string.Empty;
+        }
+
+        private string BuildXMLOrderByPlans(bool includeHiddenValues = false, bool exportForExcel = false)
+        {
+            string str = "";
+            List<List<ReportSummary>> lists = new List<List<ReportSummary>>();
+            str = string.Concat(str, "\t<Plans>", Environment.NewLine);
+            foreach (Plan collection in this.project.Plans.Collection)
+            {
+                List<Variable> variables = new List<Variable>();
+                string str1 = "";
+                if (!this.filter.QueryFilter(collection.Name, "", -1, false))
+                {
+                    foreach (Layer layer in collection.Layers.Collection)
+                    {
+                        if (!this.filter.QueryFilter(collection.Name, layer.Name, -1, false))
+                        {
+                            foreach (DrawObject drawObject in layer.DrawingObjects.Collection)
+                            {
+                                if (!drawObject.IsPartOfGroup() || drawObject.IsDeduction() || this.filter.QueryFilter(collection.Name, layer.Name, drawObject.GroupID, false))
+                                {
+                                    continue;
+                                }
+                                if (variables.Find((Variable x) => Utilities.ConvertToInt(x.Value) == drawObject.GroupID) != null)
+                                {
+                                    continue;
+                                }
+                                variables.Add(new Variable(drawObject.Name, (object)drawObject.GroupID, drawObject));
+                            }
+                        }
+                        variables.Sort(new ReportModule.GroupSorter());
+                        List<ReportSummary> reportSummaries = new List<ReportSummary>();
+                        string str2 = this.BuildXMLObjects(variables, reportSummaries, collection, layer.Name, null, includeHiddenValues, exportForExcel, null);
+                        if (str2.Trim() == "")
+                        {
+                            reportSummaries.Clear();
+                            reportSummaries = null;
+                        }
+                        else
+                        {
+                            bool flag = true;
+                            if (flag)
+                            {
+                                string str3 = str1;
+                                string[] strArrays = new string[] { str3, "\t\t\t\t<Layer Name=\"", Utilities.EscapeString(layer.Name), "\">", Environment.NewLine };
+                                str1 = string.Concat(strArrays);
+                            }
+                            str1 = string.Concat(str1, str2);
+                            if (flag)
+                            {
+                                str1 = string.Concat(str1, "\t\t\t\t</Layer>", Environment.NewLine);
+                            }
+                            lists.Add(reportSummaries);
+                        }
+                        variables.Clear();
+                    }
+                    if (str1.Trim() != "")
+                    {
+                        string str4 = str;
+                        string[] strArrays1 = new string[] { str4, "\t\t<Plan Name=\"", Utilities.EscapeString(collection.Name), "\">", Environment.NewLine };
+                        str = string.Concat(strArrays1);
+                        str = string.Concat(str, "\t\t\t<Objects>", Environment.NewLine);
+                        str = string.Concat(str, str1);
+                        str = string.Concat(str, "\t\t\t</Objects>", Environment.NewLine);
+                        str = string.Concat(str, "\t\t</Plan>", Environment.NewLine);
+                    }
+                }
+                variables = null;
+            }
+            str = string.Concat(str, "\t</Plans>", Environment.NewLine);
+            this.ReportSummaries = this.BuildXMLPlansSummaries(lists);
+            str = string.Concat(str, this.ReportSummaries);
+            foreach (List<ReportSummary> list in lists)
+            {
+                list.Clear();
+            }
+            lists.Clear();
+            lists = null;
+            return str;
+        }
+
+        private string BuildXMLPlansSummaries(List<List<ReportSummary>> reportAllSummaries)
+        {
+            string str = "";
+            double num = 0;
+            double num1 = 0;
+            double num2 = 0;
+            Plan plan = null;
+            if (reportAllSummaries.Count > 0)
+            {
+                bool flag = false;
+                string name = "";
+                List<ReportSummary> reportSummaries = new List<ReportSummary>();
+                List<ReportSummary> reportSummaries1 = new List<ReportSummary>();
+                str = string.Concat(str, "\t<PlansSummaries>", Environment.NewLine);
+                foreach (List<ReportSummary> reportAllSummary in reportAllSummaries)
+                {
+                    if (reportAllSummary.Count <= 0)
+                    {
+                        continue;
+                    }
+                    if (name != reportAllSummary[0].Plan.Name)
+                    {
+                        if (flag)
+                        {
+                            num2 = (num1 - num) / num1;
+                            object obj = str;
+                            object[] objArray = new object[] { obj, "\t\t\t<Total CostTotal=\"", string.Format("{0:C}", num), "\" RawCostTotal=\"", num, "\" PriceTotal=\"", string.Format("{0:C}", num1), "\" RawPriceTotal=\"", num1, "\" MarginTotal=\"", string.Format("{0:0.00%}", num2), "\" RawMarginTotal=\"", num2, "\"/>", Environment.NewLine };
+                            str = string.Concat(objArray);
+                            reportSummaries.Add(new ReportSummary(plan.Name, num, num1, plan, null, -1, ""));
+                            num = 0;
+                            num1 = 0;
+                            str = string.Concat(str, "\t\t</PlanSummaries>", Environment.NewLine);
+                        }
+                        string str1 = str;
+                        string[] strArrays = new string[] { str1, "\t\t<PlanSummaries Name=\"", Utilities.EscapeString(reportAllSummary[0].Plan.Name), "\">", Environment.NewLine };
+                        str = string.Concat(strArrays);
+                        plan = reportAllSummary[0].Plan;
+                        flag = true;
+                    }
+                    str = string.Concat(str, this.BuildXMLLayerSummaries(reportSummaries1, reportAllSummary, ref num, ref num1));
+                    if (name == reportAllSummary[0].Plan.Name)
+                    {
+                        continue;
+                    }
+                    name = reportAllSummary[0].Plan.Name;
+                }
+                if (flag)
+                {
+                    num2 = (num1 > 0 ? (num1 - num) / num1 : 0);
+                    object obj1 = str;
+                    object[] objArray1 = new object[] { obj1, "\t\t\t<Total CostTotal=\"", string.Format("{0:C}", num), "\" RawCostTotal=\"", num, "\" PriceTotal=\"", string.Format("{0:C}", num1), "\" RawPriceTotal=\"", num1, "\" MarginTotal=\"", string.Format("{0:0.00%}", num2), "\" RawMarginTotal=\"", num2, "\"/>", Environment.NewLine };
+                    str = string.Concat(objArray1);
+                    reportSummaries.Add(new ReportSummary(plan.Name, num, num1, plan, null, -1, ""));
+                    num = 0;
+                    num1 = 0;
+                    str = string.Concat(str, "\t\t</PlanSummaries>", Environment.NewLine);
+                    flag = false;
+                }
+                str = string.Concat(str, "\t</PlansSummaries>", Environment.NewLine);
+                reportSummaries.Sort(new ReportModule.SummarySorter());
+                str = string.Concat(str, this.BuildXMLSummaries(reportSummaries, ""));
+                reportSummaries.Clear();
+                reportSummaries = null;
+                reportSummaries1.Clear();
+                reportSummaries1 = null;
+            }
+            return str;
+        }
+
+        private string BuildXMLProjectInfo()
+        {
+            string str = "";
+            string str1 = str;
+            string[] strArrays = new string[] { str1, "\t<Project Name=\"", Utilities.EscapeString(this.project.Name), "\">", Environment.NewLine };
+            str = string.Concat(strArrays);
+            string str2 = str;
+            string[] strArrays1 = new string[] { str2, "\t\t<ContactName>", Utilities.EscapeString(this.project.ContactName), "</ContactName>", Environment.NewLine };
+            str = string.Concat(strArrays1);
+            string description = this.project.Description;
+            char[] chrArray = new char[] { '\r', '\n' };
+            string[] fields = Utilities.GetFields(description, chrArray);
+            if (fields.GetUpperBound(0) >= 0)
+            {
+                str = string.Concat(str, "\t\t<Description>");
+                string[] strArrays2 = fields;
+                for (int i = 0; i < (int)strArrays2.Length; i++)
+                {
+                    string str3 = strArrays2[i];
+                    str = string.Concat(str, Utilities.EscapeString(str3), "&#xD;");
+                }
+                str = string.Concat(str, "</Description>", Environment.NewLine);
+            }
+            string contactInfo = this.project.ContactInfo;
+            char[] chrArray1 = new char[] { '\r', '\n' };
+            fields = Utilities.GetFields(contactInfo, chrArray1);
+            if (fields.GetUpperBound(0) >= 0)
+            {
+                str = string.Concat(str, "\t\t<ContactInfo>");
+                string[] strArrays3 = fields;
+                for (int j = 0; j < (int)strArrays3.Length; j++)
+                {
+                    string str4 = strArrays3[j];
+                    str = string.Concat(str, Utilities.EscapeString(str4), "&#xD;");
+                }
+                str = string.Concat(str, "</ContactInfo>", Environment.NewLine);
+            }
+            string comment = this.project.Comment;
+            char[] chrArray2 = new char[] { '\r', '\n' };
+            fields = Utilities.GetFields(comment, chrArray2);
+            if (fields.GetUpperBound(0) >= 0)
+            {
+                str = string.Concat(str, "\t\t<Comment>");
+                string[] strArrays4 = fields;
+                for (int k = 0; k < (int)strArrays4.Length; k++)
+                {
+                    string str5 = strArrays4[k];
+                    str = string.Concat(str, Utilities.EscapeString(str5), "&#xD;");
+                }
+                str = string.Concat(str, "</Comment>", Environment.NewLine);
+            }
+            str = string.Concat(str, "\t</Project>", Environment.NewLine);
+            return str;
+        }
+
+        private string BuildXMLSummaries(List<ReportSummary> reportSummaries, string indent)
+        {
+            bool taxOnTax = Settings.Default.TaxOnTax;
+            string tax1Label = Settings.Default.Tax1Label;
+            string tax2Label = Settings.Default.Tax2Label;
+            double tax1Rate = Settings.Default.Tax1Rate;
+            double tax2Rate = Settings.Default.Tax2Rate;
+            double costSubTotal = 0;
+            double priceSubTotal = 0;
+            string str = "";
+            foreach (ReportSummary reportSummary in reportSummaries)
+            {
+                costSubTotal += reportSummary.CostSubTotal;
+                priceSubTotal += reportSummary.PriceSubTotal;
+            }
+            str = string.Concat(str, indent, "\t<Summaries>", Environment.NewLine);
+            int num = 11;
+            foreach (ReportSummary reportSummary1 in reportSummaries)
+            {
+                double costSubTotal1 = reportSummary1.CostSubTotal;
+                double priceSubTotal1 = reportSummary1.PriceSubTotal;
+                double num1 = (priceSubTotal1 > 0 ? (priceSubTotal1 - costSubTotal1) / priceSubTotal1 : 0);
+                double num2 = (priceSubTotal > 0 ? priceSubTotal1 / priceSubTotal : 0);
+                string str1 = string.Concat(num2.ToString(), ";");
+                int num3 = num + 1;
+                num = num3;
+                Color basicColor = Utilities.GetBasicColor(num3);
+                str1 = string.Concat(str1, basicColor.ToArgb(), ";");
+                if (num == 15)
+                {
+                    num = 0;
+                }
+                object obj = str;
+                object[] objArray = new object[] { obj, indent, "\t\t<Summary Name=\"", Utilities.EscapeString(reportSummary1.Caption), "\" CostTotalSubTotal=\"", string.Format("{0:C}", costSubTotal1), "\" RawCostTotalSubTotal=\"", costSubTotal1, "\" PriceTotalSubTotal=\"", string.Format("{0:C}", priceSubTotal1), "\" RawPriceTotalSubTotal=\"", priceSubTotal1, "\" MarginSubTotal=\"", string.Format("{0:0.00%}", num1), "\" RawMarginSubTotal=\"", num1, "\" TotalBreakdown=\"", string.Format("{0:0.00%}", num2), "\" RawTotalBreakdown=\"", num2, "\" TotalBreakdownTag=\"", str1, "\"/>", Environment.NewLine };
+                str = string.Concat(objArray);
+            }
+            string str2 = string.Concat(tax1Label, " (", string.Format("{0:0.#####%}", tax1Rate), ") :");
+            string str3 = string.Concat(tax2Label, " (", string.Format("{0:0.#####%}", tax2Rate), ") :");
+            double num4 = priceSubTotal * tax1Rate;
+            num4 = Math.Round(num4, 2);
+            double num5 = (taxOnTax ? (num4 + priceSubTotal) * tax2Rate : priceSubTotal * tax2Rate);
+            num5 = Math.Round(num5, 2);
+            double num6 = priceSubTotal + num4 + num5;
+            num6 = Math.Round(num6, 2);
+            double num7 = (priceSubTotal > 0 ? (priceSubTotal - costSubTotal) / priceSubTotal : 0);
+            object obj1 = str;
+            object[] objArray1 = new object[] { obj1, indent, "\t\t<Total CostTotal=\"", string.Format("{0:C}", costSubTotal), "\" RawCostTotal=\"", costSubTotal, "\" PriceTotal=\"", string.Format("{0:C}", priceSubTotal), "\" RawPriceTotal=\"", priceSubTotal, "\" MarginTotal=\"", string.Format("{0:0.00%}", num7), "\" RawMarginTotal=\"", num7, "\" Taxe1Rate=\"", string.Format("{0:0.00%}", tax1Rate), "\" RawTaxe1Rate=\"", tax1Rate, "\" Taxe2Rate=\"", string.Format("{0:0.00%}", tax2Rate), "\" RawTaxe2Rate=\"", tax2Rate, "\" Taxe1Caption=\"", str2, "\" Taxe2Caption=\"", str3, "\" Taxe1Total=\"", string.Format("{0:C}", num4), "\" RawTaxe1Total=\"", num4, "\" Taxe2Total=\"", string.Format("{0:C}", num5), "\" RawTaxe2Total=\"", num5, "\" TotalAfterTaxes=\"", string.Format("{0:C}", num6), "\" RawTotalAfterTaxes=\"", num6, "\"/>", Environment.NewLine };
+            str = string.Concat(objArray1);
+            str = string.Concat(str, indent, "\t</Summaries>", Environment.NewLine);
+            return str;
+        }
+
+        private string BuildXSL(Report.ReportOrderEnum order)
+        {
+            string str = "";
+            switch (order)
+            {
+                case Report.ReportOrderEnum.ReportOrderByObjects:
+                    {
+                        str = this.BuildXSLOrderByObjects();
+                        break;
+                    }
+                case Report.ReportOrderEnum.ReportOrderByPlans:
+                    {
+                        str = this.BuildXSLOrderByPlans();
+                        break;
+                    }
+            }
+            return str;
+        }
+
+        private string BuildXSLOrderByObjects()
+        {
+            string str = Utilities.ReadToString(Path.Combine(Utilities.GetInstallReportsFolder(), string.Concat(Utilities.GetCurrentValidUICulture(), "\\sort_by_objects.xsl")));
+            return str;
+        }
+
+        private string BuildXSLOrderByPlans()
+        {
+            string str = Utilities.ReadToString(Path.Combine(Utilities.GetInstallReportsFolder(), string.Concat(Utilities.GetCurrentValidUICulture(), "\\sort_by_plans.xsl")));
+            return str;
+        }
+
+        public void CleanUpFilters()
+        {
+            Console.WriteLine("ReportModule.CleanUpFilters");
+            using (ReportEditForm reportEditForm = new ReportEditForm(this.project, this.drawArea))
+            {
+                reportEditForm.CleanUpFilters();
+            }
+        }
+
+        public void Clear()
+        {
+            this.LoadHtmlDocument(this.FormatHtmlString(""));
+        }
+
+        public void ExportObjectToList(DrawObject groupObject, List<EstimatingItem> results)
+        {
+            int num = 0;
+            int num1 = 0;
+            string str = "";
+            this.BuildXMLObject(groupObject, null, "", null, null, ref str, ref num, ref num1, true, false, results);
+        }
+
+        public void ExportToExcel(string fileName, bool exportEstimating)
+        {
+            this.LoadFilter();
+            string str = fileName;
+            if (this.BuildXLS(this.project.Report.Order, this.project.Report.ReportSortBy, exportEstimating, str))
+            {
+                Utilities.OpenDocument(str);
+            }
+        }
+
+        public void ExportToList(List<EstimatingItem> results)
+        {
+            this.BuildXMLOrderByObjects(true, false, results);
+        }
+
+        public string ExportToXML(bool exportEstimatingItems, bool exportToMemory = false)
+        {
+            this.LoadFilter();
+            this.ExportEstimatingItems = exportEstimatingItems;
+            this.ExportReportToMemory = exportToMemory;
+            this.ReportSummaries = "";
+            string str = this.BuildXML(this.project.Report.Order, false, false);
+            if (!exportToMemory)
+            {
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(this.project.FileName);
+                fileNameWithoutExtension = string.Concat(fileNameWithoutExtension, "-", (this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByObjects ? Resources.par_objets : Resources.par_plans), ".xml");
+                fileNameWithoutExtension = Path.Combine(Utilities.GetReportsFolder(), fileNameWithoutExtension.Replace(' ', '-'));
+                Utilities.SaveStringToFile(fileNameWithoutExtension, str);
+                Utilities.OpenDocument(fileNameWithoutExtension);
+                return string.Empty;
+            }
+            string str1 = string.Concat("<?xml version=\"1.0\" encoding=\"utf-8\" ?>", Environment.NewLine);
+            string[] strArrays = new string[] { str1, "<Report Title=\"", Utilities.EscapeString(this.project.Name), "\" Date=\"", Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()), "\">", Environment.NewLine };
+            string str2 = string.Concat(strArrays);
+            str2 = string.Concat(str2, this.ReportSummaries);
+            str2 = string.Concat(str2, "</Report>", Environment.NewLine);
+            this.ReportSummaries = str2;
+            return str;
+        }
+
+        private string FormatHtmlString(string text)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("<head>");
+            stringBuilder.AppendLine("<title>Title</title>");
+            stringBuilder.AppendLine("<meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\"/>");
+            stringBuilder.AppendLine("</head>");
+            stringBuilder.AppendLine("<body>");
+            stringBuilder.AppendLine(text);
+            stringBuilder.AppendLine("</body>");
+            stringBuilder.AppendLine("</html>");
+            return stringBuilder.ToString();
+        }
+
+        public void IERestoreRegistry()
+        {
+            try
+            {
+                bool flag = true;
+                string str = "header";
+                string str1 = "footer";
+                string str2 = "Print_Background";
+                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", flag);
+                registryKey.SetValue(str, this.registerHeaderOriginalValue);
+                registryKey.SetValue(str1, this.registerFooterOriginalValue);
+                registryKey.SetValue(str2, this.registerPrintBackgroundOriginalValue);
+                registryKey.Close();
+            }
+            catch
+            {
+            }
+        }
+
+        private void IESetupHeaderFooter(string dateString)
+        {
+            try
+            {
+                bool flag = true;
+                string str = "header";
+                string str1 = "footer";
+                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", flag);
+                registryKey.SetValue(str, Resources.Page_x_de_n);
+                registryKey.SetValue(str1, string.Concat(Utilities.Ce_rapport_a_été_généré_grâce_à_Quoter_Plan, dateString));
+                registryKey.Close();
+            }
+            catch
+            {
+            }
+        }
+
+        private void IESetupRegistry()
+        {
+            try
+            {
+                bool flag = true;
+                string str = "header";
+                string str1 = "footer";
+                string str2 = "Print_Background";
+                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\PageSetup", flag);
+                this.registerHeaderOriginalValue = registryKey.GetValue(str, "");
+                registryKey.SetValue(str, "");
+                this.registerFooterOriginalValue = registryKey.GetValue(str1, "");
+                registryKey.SetValue(str1, "");
+                this.registerPrintBackgroundOriginalValue = registryKey.GetValue(str2, "");
+                registryKey.SetValue(str2, "yes");
+                registryKey.Close();
+            }
+            catch
+            {
+            }
+        }
+
+        private void InitializeWebBrowser()
+        {
+        }
+
+        private void LoadFilter()
+        {
+            if (!this.project.Report.ApplyFilter)
+            {
+                this.filter.Clear();
+                return;
+            }
+            if (this.project.Report.SelectedReportType == ReportTypeEnum.QuoteReport)
+            {
+                this.filter.LoadFromString(this.project.Report.OrderByPlansFilter, Report.ReportOrderEnum.ReportOrderByPlans);
+                return;
+            }
+            this.filter.LoadFromString((this.project.Report.Order == Report.ReportOrderEnum.ReportOrderByPlans ? this.project.Report.OrderByPlansFilter : this.project.Report.OrderByObjectsFilter), this.project.Report.Order);
+        }
+
+        private void LoadHtmlDocument(string htmlDocument)
+        {
+            if (this.webBrowser.Document == null)
+            {
+                this.webBrowser.Navigate("about:blank");
+            }
+            else
+            {
+                this.webBrowser.Document.OpenNew(true);
+            }
+            while (this.webBrowser.Document == null && this.webBrowser.Document.Body == null)
+            {
+                Application.DoEvents();
+            }
+            this.webBrowser.DocumentText = htmlDocument;
+        }
+
+        private void LoadResources()
+        {
+        }
+
+        private string MakeHTML(string xml, string xsl, bool useAbsolutePath)
+        {
+            string str;
+            try
+            {
+                this.IESetupHeaderFooter(Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()));
+                StringReader stringReader = new StringReader(xml);
+                XPathDocument xPathDocument = new XPathDocument(stringReader);
+                StringReader stringReader1 = new StringReader(xsl);
+                XmlTextReader xmlTextReader = new XmlTextReader(stringReader1);
+                XslCompiledTransform xslCompiledTransform = new XslCompiledTransform();
+                xslCompiledTransform.Load(xmlTextReader, null, null);
+                XsltArgumentList xsltArgumentList = new XsltArgumentList();
+                xsltArgumentList.AddParam("title", "", this.project.Name);
+                xsltArgumentList.AddParam("app_path", "", Utilities.GetInstallFolder());
+                string installReportsFolder = Utilities.GetInstallReportsFolder();
+                string[] currentValidUICulture = new string[] { "css\\", Utilities.GetCurrentValidUICulture(), "\\", Settings.Default.ReportTheme, ".css" };
+                string str1 = Path.Combine(installReportsFolder, string.Concat(currentValidUICulture));
+                string str2 = Path.Combine(Utilities.GetReportsFolder(), "css\\style.css");
+                if (!useAbsolutePath)
+                {
+                    Utilities.FileCopy(str1, str2);
+                }
+                xsltArgumentList.AddParam("css_path", "", (useAbsolutePath ? str1 : "css\\style.css"));
+                xsltArgumentList.AddParam("images_path", "", (useAbsolutePath ? Path.Combine(Utilities.GetInstallReportsFolder(), "images") : "images"));
+                ReportModule.UTF8StringWriter uTF8StringWriter = new ReportModule.UTF8StringWriter();
+                xslCompiledTransform.Transform(xPathDocument, xsltArgumentList, uTF8StringWriter);
+                string str3 = uTF8StringWriter.ToString();
+                stringReader.Close();
+                stringReader1.Close();
+                xmlTextReader.Close();
+                uTF8StringWriter.Close();
+                str = str3;
+            }
+            catch (Exception exception)
+            {
+                Utilities.DisplaySystemError(exception);
+                str = "";
+            }
+            return str;
+        }
+
+        private string RenameInFilter(string filter, string objectType, string oldName, string newName, string planName = "")
+        {
+            string str = Filter.Rename(filter, objectType, oldName, newName, planName);
+            Console.WriteLine(string.Concat("Old filter = ", filter));
+            Console.WriteLine(string.Concat("New filter = ", str));
+            return str;
+        }
+
+        public void RenameLayer(Plan plan, Layer layer)
+        {
+            if (layer.PrevName == layer.Name)
+            {
+                return;
+            }
+            Console.WriteLine("OrderByPlansFilter");
+            this.project.Report.OrderByPlansFilter = this.RenameInFilter(this.project.Report.OrderByPlansFilter, "#LAYER", layer.PrevName, layer.Name, plan.Name);
+        }
+
+        public void RenamePlan(Plan plan)
+        {
+            if (plan.PrevName == plan.Name)
+            {
+                return;
+            }
+            Console.WriteLine("OrderByPlansFilter");
+            this.project.Report.OrderByPlansFilter = this.RenameInFilter(this.project.Report.OrderByPlansFilter, "#PLAN", plan.PrevName, plan.Name, "");
+            Console.WriteLine("OrderByObjectsFilter");
+            this.project.Report.OrderByObjectsFilter = this.RenameInFilter(this.project.Report.OrderByObjectsFilter, "#PLAN", plan.PrevName, plan.Name, "");
+        }
+
+        private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            if (this.webBrowser.Document != null)
+            {
+                bool flag = this.enabled;
+            }
+        }
+
+        private void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            HtmlDocument document = this.webBrowser.Document;
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClass12
+        private sealed class u003cu003ec__DisplayClass12
+        {
+            // CS$<>8__locals10
+            public ReportModule.u003cu003ec__DisplayClassf CSu0024u003cu003e8__locals10;
+
+            public DrawObject layerObject;
+
+            public u003cu003ec__DisplayClass12()
+            {
+            }
+
+            // <BuildXMLOrderByLayers>b__d
+            public bool u003cBuildXMLOrderByLayersu003eb__d(Variable x)
+            {
+                return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
+            }
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClass16
+        private sealed class u003cu003ec__DisplayClass16
+        {
+            public DrawObject layerObject;
+
+            public u003cu003ec__DisplayClass16()
+            {
+            }
+
+            // <BuildXMLOrderByPlans>b__14
+            public bool u003cBuildXMLOrderByPlansu003eb__14(Variable x)
+            {
+                return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
+            }
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClass2
+        private sealed class u003cu003ec__DisplayClass2
+        {
+            public ReportSummary reportSummary;
+
+            public u003cu003ec__DisplayClass2()
+            {
+            }
+
+            // <BuildXMLLayerSummaries>b__0
+            public bool u003cBuildXMLLayerSummariesu003eb__0(ReportSummary x)
+            {
+                return x.GroupID == this.reportSummary.GroupID;
+            }
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClass6
+        private sealed class u003cu003ec__DisplayClass6
+        {
+            public ReportSummary reportSummary;
+
+            public u003cu003ec__DisplayClass6()
+            {
+            }
+
+            // <BuildXMLLayersSummaries>b__4
+            public bool u003cBuildXMLLayersSummariesu003eb__4(ReportSummary x)
+            {
+                return x.LayerName == this.reportSummary.LayerName;
+            }
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClassa
+        private sealed class u003cu003ec__DisplayClassa
+        {
+            public DrawObject layerObject;
+
+            public u003cu003ec__DisplayClassa()
+            {
+            }
+
+            // <BuildXMLOrderByObjects>b__8
+            public bool u003cBuildXMLOrderByObjectsu003eb__8(Variable x)
+            {
+                return Utilities.ConvertToInt(x.Value) == this.layerObject.GroupID;
+            }
+        }
+
+        [CompilerGenerated]
+        // <>c__DisplayClassf
+        private sealed class u003cu003ec__DisplayClassf
+        {
+            public Layer layer;
+
+            public u003cu003ec__DisplayClassf()
+            {
+            }
+
+            // <BuildXMLOrderByLayers>b__c
+            public bool u003cBuildXMLOrderByLayersu003eb__c(Variable x)
+            {
+                return x.Name == this.layer.Name;
+            }
+        }
+
+        private class ExportToXLS
+        {
+            private HSSFWorkbook workbook;
+
+            private ISheet formattedSheet;
+
+            private ISheet rawSheet;
+
+            private ISheet formattedSheetShort;
+
+            private ISheet rawSheetShort;
+
+            private ISheet formattedSheetConsolidated;
+
+            private ISheet rawSheetConsolidated;
+
+            private ISheet sheet;
+
+            private ISheet estimatingSheet;
+
+            private ICellStyle integerCellStyle;
+
+            private ICellStyle decimalCellStyle;
+
+            private ICellStyle resultCellStyle;
+
+            private ICellStyle planNameCellStyle;
+
+            private ICellStyle layerNameCellStyle;
+
+            private ICellStyle objectNameCellStyle;
+
+            private ICellStyle extensionNameCellStyle;
+
+            private ICellStyle columnHeaderCellStyle;
+
+            private ICellStyle commentCellStyle;
+
+            private ICellStyle defaultCellStyle;
+
+            private ICellStyle estimatingItemCellStyle;
+
+            private ICellStyle estimatingItemResultCellStyle;
+
+            private ICellStyle estimatingItemPriceCellStyle;
+
+            private ICellStyle estimatingEditableQuantityCellStyle;
+
+            private ICellStyle estimatingEditablePriceCellStyle;
+
+            private ICellStyle estimatingItemTotalCellStyle;
+
+            private ICellStyle estimatingItemMarginCellStyle;
+
+            private ICellStyle estimatingSubTotalCaptionCellStyle;
+
+            private Report.ReportOrderEnum order;
+
+            private Report.ReportSortByEnum sortBy;
+
+            private bool exportEstimating;
+
+            private IRow parserObjectRow;
+
+            private IRow parserResultRowHeader;
+
+            private IRow parserResultRowData;
+
+            private int parserExtensionCount;
+
+            private int parserResultColumnIndex;
+
+            private int parserEstimatingResultCount;
+
+            private int parserEstimatingRowStartIndex;
+
+            private int parserEstimatingRowEndIndex;
+
+            private string parserPlanName = string.Empty;
+
+            private string parserLayerName = string.Empty;
+
+            private string parserObjectName = string.Empty;
+
+            private string parserObjectType = string.Empty;
+
+            private bool parserObjectTypeHasChanged;
+
+            private int parserObjectTypeCount;
+
+            private string parserExtensionName = string.Empty;
+
+            private Preset parserPreset;
+
+            private Presets parserPresets = new Presets();
+
+            private string reportTotalCaption = string.Empty;
+
+            private List<ReportSummary> reportTotalSummaries = new List<ReportSummary>();
+
+            private List<ReportSummary> reportTotalTotalSummaries = new List<ReportSummary>();
+
+            public ExportToXLS(Report.ReportOrderEnum order, Report.ReportSortByEnum sortBy, bool exportEstimating)
+            {
+                this.order = order;
+                this.sortBy = sortBy;
+                this.exportEstimating = exportEstimating;
+            }
+
+            private IRow AppendRow(short rowHeight = -1)
+            {
+                IRow row = this.sheet.CreateRow((this.sheet.PhysicalNumberOfRows == 0 ? 0 : this.sheet.LastRowNum + 1));
+                if (rowHeight != -1)
+                {
+                    row.HeightInPoints = (float)rowHeight;
+                }
+                return row;
+            }
+
+            private void CreateWorkbook()
+            {
+                this.workbook = new HSSFWorkbook();
+                string currencySymbol = NumberFormatInfo.CurrentInfo.CurrencySymbol;
+                currencySymbol = string.Concat(currencySymbol, "#,##0.00_);(", currencySymbol, "#,##0.00)");
+                DocumentSummaryInformation documentSummaryInformation = PropertySetFactory.CreateDocumentSummaryInformation();
+                this.workbook.DocumentSummaryInformation = documentSummaryInformation;
+                SummaryInformation summaryInformation = PropertySetFactory.CreateSummaryInformation();
+                this.workbook.SummaryInformation = summaryInformation;
+                IDataFormat dataFormat = this.workbook.CreateDataFormat();
+                this.integerCellStyle = this.workbook.CreateCellStyle();
+                this.integerCellStyle.Alignment = HorizontalAlignment.RIGHT;
+                this.integerCellStyle.WrapText = false;
+                this.integerCellStyle.DataFormat = dataFormat.GetFormat("0");
+                this.integerCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
+                IDataFormat dataFormat1 = this.workbook.CreateDataFormat();
+                this.decimalCellStyle = this.workbook.CreateCellStyle();
+                this.decimalCellStyle.Alignment = HorizontalAlignment.RIGHT;
+                this.decimalCellStyle.WrapText = false;
+                this.decimalCellStyle.DataFormat = dataFormat1.GetFormat("0.00");
+                this.decimalCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
+                this.resultCellStyle = this.workbook.CreateCellStyle();
+                this.resultCellStyle.Alignment = HorizontalAlignment.RIGHT;
+                this.resultCellStyle.WrapText = false;
+                this.resultCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
+                this.planNameCellStyle = this.workbook.CreateCellStyle();
+                this.planNameCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.planNameCellStyle.WrapText = false;
+                this.planNameCellStyle.SetFont(this.GetFont(0x2bc, 0, 13, "Calibri", false, false, 0, 0));
+                this.layerNameCellStyle = this.workbook.CreateCellStyle();
+                this.layerNameCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.layerNameCellStyle.WrapText = false;
+                this.layerNameCellStyle.SetFont(this.GetFont(0x2bc, 0, 12, "Calibri", false, false, 0, 0));
+                this.objectNameCellStyle = this.workbook.CreateCellStyle();
+                this.objectNameCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.objectNameCellStyle.WrapText = false;
+                this.objectNameCellStyle.SetFont(this.GetFont(0x2bc, 0, 11, "Calibri", false, false, 0, 0));
+                this.extensionNameCellStyle = this.workbook.CreateCellStyle();
+                this.extensionNameCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.extensionNameCellStyle.WrapText = false;
+                this.extensionNameCellStyle.SetFont(this.GetFont(0x2bc, 0, 11, "Calibri", true, false, 0, 1));
+                this.columnHeaderCellStyle = this.workbook.CreateCellStyle();
+                this.columnHeaderCellStyle.Alignment = HorizontalAlignment.RIGHT;
+                this.columnHeaderCellStyle.WrapText = true;
+                this.columnHeaderCellStyle.SetFont(this.GetFont(0x2bc, 0, 11, "Calibri", true, false, 0, 0));
+                this.commentCellStyle = this.workbook.CreateCellStyle();
+                this.commentCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.commentCellStyle.WrapText = false;
+                this.commentCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.defaultCellStyle = this.workbook.CreateCellStyle();
+                this.defaultCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.defaultCellStyle.WrapText = false;
+                this.defaultCellStyle.SetFont(this.GetFont(0, 0, 11, "Calibri", false, false, 0, 0));
+                this.estimatingItemCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingItemCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingItemCellStyle.WrapText = false;
+                this.estimatingItemCellStyle.SetFont(this.GetFont(0x2bc, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingItemResultCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingItemResultCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingItemResultCellStyle.WrapText = false;
+                this.estimatingItemResultCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingItemPriceCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingItemPriceCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingItemPriceCellStyle.WrapText = false;
+                this.estimatingItemPriceCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingItemPriceCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(currencySymbol);
+                this.estimatingEditableQuantityCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingEditableQuantityCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingEditableQuantityCellStyle.WrapText = false;
+                this.estimatingEditableQuantityCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingEditableQuantityCellStyle.FillForegroundColor = HSSFColor.YELLOW.index;
+                this.estimatingEditableQuantityCellStyle.FillPattern = FillPatternType.SOLID_FOREGROUND;
+                this.estimatingEditableQuantityCellStyle.IsLocked = false;
+                this.estimatingEditablePriceCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingEditablePriceCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingEditablePriceCellStyle.WrapText = false;
+                this.estimatingEditablePriceCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingEditablePriceCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(currencySymbol);
+                this.estimatingEditablePriceCellStyle.FillForegroundColor = HSSFColor.YELLOW.index;
+                this.estimatingEditablePriceCellStyle.FillPattern = FillPatternType.SOLID_FOREGROUND;
+                this.estimatingEditablePriceCellStyle.IsLocked = false;
+                this.estimatingItemTotalCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingItemTotalCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingItemTotalCellStyle.WrapText = false;
+                this.estimatingItemTotalCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingItemTotalCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat(currencySymbol);
+                this.estimatingItemMarginCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingItemMarginCellStyle.Alignment = HorizontalAlignment.LEFT;
+                this.estimatingItemMarginCellStyle.WrapText = false;
+                this.estimatingItemMarginCellStyle.SetFont(this.GetFont(0, 0, 10, "Calibri", false, false, 0, 0));
+                this.estimatingItemMarginCellStyle.DataFormat = this.workbook.CreateDataFormat().GetFormat("0.00%");
+                this.estimatingSubTotalCaptionCellStyle = this.workbook.CreateCellStyle();
+                this.estimatingSubTotalCaptionCellStyle.Alignment = HorizontalAlignment.RIGHT;
+                this.estimatingSubTotalCaptionCellStyle.WrapText = false;
+                this.estimatingSubTotalCaptionCellStyle.SetFont(this.GetFont(0x2bc, 0, 10, "Calibri", false, false, 0, 0));
+                if (this.exportEstimating)
+                {
+                    this.estimatingSheet = this.workbook.CreateSheet(Resources.Rapport_d_estimation);
+                    this.estimatingSheet.DefaultColumnWidth = 14;
+                    this.estimatingSheet.SetColumnWidth(0, 0x19b9);
+                    this.estimatingSheet.SetColumnWidth(2, 0x8b9);
+                    return;
+                }
+                if (Settings.Default.ExportToExcelType != 1)
+                {
+                    this.rawSheetConsolidated = this.workbook.CreateSheet(Resources.Données_brutes_consolidées);
+                    this.rawSheetConsolidated.DefaultColumnWidth = 14;
+                    this.rawSheetConsolidated.SetColumnWidth(0, 0x14b9);
+                }
+                if (Settings.Default.ExportToExcelType != 0)
+                {
+                    this.formattedSheetConsolidated = this.workbook.CreateSheet(Resources.Données_formatées_consolidées);
+                    this.formattedSheetConsolidated.DefaultColumnWidth = 15;
+                    this.formattedSheetConsolidated.SetColumnWidth(0, 0x14b9);
+                }
+                if (Settings.Default.ExportToExcelType != 1)
+                {
+                    this.rawSheet = this.workbook.CreateSheet(Resources.Données_brutes);
+                    this.rawSheet.DefaultColumnWidth = 14;
+                }
+                if (Settings.Default.ExportToExcelType != 0)
+                {
+                    this.formattedSheet = this.workbook.CreateSheet(Resources.Données_formatées);
+                    this.formattedSheet.DefaultColumnWidth = 15;
+                }
+                if (Settings.Default.ExportToExcelType != 1)
+                {
+                    this.rawSheetShort = this.workbook.CreateSheet(Resources.Données_brutes_résumé);
+                    this.rawSheetShort.DefaultColumnWidth = 14;
+                    this.rawSheetShort.SetColumnWidth(0, 0x19b9);
+                    this.rawSheetShort.SetColumnWidth(2, 0x5b9);
+                }
+                if (Settings.Default.ExportToExcelType != 0)
+                {
+                    this.formattedSheetShort = this.workbook.CreateSheet(Resources.Données_formatées_résumé);
+                    this.formattedSheetShort.DefaultColumnWidth = 15;
+                    this.formattedSheetShort.SetColumnWidth(0, 0x19b9);
+                }
+            }
+
+            public bool Export(string xml, string fileName)
+            {
+                bool flag;
+                try
+                {
+                    this.CreateWorkbook();
+                    this.GenerateXLSFromXML(xml);
+                    this.SaveWorkbook(fileName);
+                    flag = true;
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    flag = false;
+                }
+                return flag;
+            }
+
+            private void GenerateSheet(ISheet sheetToGenerate, XmlNode root)
+            {
+                this.parserObjectRow = null;
+                this.parserResultRowHeader = null;
+                this.parserResultRowData = null;
+                this.parserExtensionCount = 0;
+                this.parserResultColumnIndex = 0;
+                this.parserPlanName = string.Empty;
+                this.parserLayerName = string.Empty;
+                this.parserObjectName = string.Empty;
+                this.parserObjectType = string.Empty;
+                this.parserObjectTypeHasChanged = false;
+                this.parserObjectTypeCount = 0;
+                this.parserExtensionName = string.Empty;
+                this.parserPreset = null;
+                this.parserPresets.Clear();
+                this.reportTotalSummaries.Clear();
+                this.reportTotalTotalSummaries.Clear();
+                this.sheet = sheetToGenerate;
+                this.ParseTree(root);
+                if (this.sheet == this.estimatingSheet)
+                {
+                    if (this.order == Report.ReportOrderEnum.ReportOrderByPlans)
+                    {
+                        this.OutputReportSubTotal((this.sortBy == Report.ReportSortByEnum.ReportSortByPlans ? this.parserPlanName : this.parserLayerName));
+                    }
+                    this.OutputReportTotals();
+                }
+                else
+                {
+                    this.OutputConsolidatedExtensions();
+                }
+                this.InsertSignature();
+            }
+
+            private bool GenerateXLSFromXML(string xml)
+            {
+                bool flag;
+                try
+                {
+                    XmlDocument xmlDocument = new XmlDocument();
+                    xmlDocument.LoadXml(xml);
+                    if (!this.exportEstimating)
+                    {
+                        if (Settings.Default.ExportToExcelType != 1)
+                        {
+                            this.GenerateSheet(this.rawSheet, xmlDocument.DocumentElement);
+                        }
+                        if (Settings.Default.ExportToExcelType != 0)
+                        {
+                            this.GenerateSheet(this.formattedSheet, xmlDocument.DocumentElement);
+                        }
+                        if (Settings.Default.ExportToExcelType != 1)
+                        {
+                            this.GenerateSheet(this.rawSheetShort, xmlDocument.DocumentElement);
+                        }
+                        if (Settings.Default.ExportToExcelType != 0)
+                        {
+                            this.GenerateSheet(this.formattedSheetShort, xmlDocument.DocumentElement);
+                        }
+                        if (Settings.Default.ExportToExcelType != 1)
+                        {
+                            this.GenerateSheet(this.rawSheetConsolidated, xmlDocument.DocumentElement);
+                        }
+                        if (Settings.Default.ExportToExcelType != 0)
+                        {
+                            this.GenerateSheet(this.formattedSheetConsolidated, xmlDocument.DocumentElement);
+                        }
+                    }
+                    else
+                    {
+                        this.GenerateSheet(this.estimatingSheet, xmlDocument.DocumentElement);
+                    }
+                    flag = true;
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    flag = false;
+                }
+                return flag;
+            }
+
+            private double GetDoubleAttribute(XmlNode node, string attributeName)
+            {
+                double num;
+                try
+                {
+                    string value = node.Attributes.GetNamedItem(attributeName).Value;
+                    string str = Utilities.NumberDecimalSeparator();
+                    value = value.Replace(",", str).Replace(".", str);
+                    num = (double)((double)decimal.Parse(value));
+                }
+                catch (Exception exception)
+                {
+                    num = 0;
+                }
+                return num;
+            }
+
+            private IFont GetFont(short boldWeight, short color, short fontHeightInPoints, string name, bool italic, bool strikeout, short typeOffset, byte underline)
+            {
+                short num = (short)(fontHeightInPoints * 20);
+                IFont font = this.workbook.FindFont(boldWeight, color, num, name, italic, strikeout, typeOffset, underline);
+                if (font != null)
+                {
+                    return font;
+                }
+                font = this.workbook.CreateFont();
+                font.Boldweight = boldWeight;
+                font.Color = color;
+                font.FontHeight = num;
+                font.FontName = name;
+                font.IsItalic = italic;
+                font.IsStrikeout = strikeout;
+                font.TypeOffset = typeOffset;
+                font.Underline = underline;
+                return font;
+            }
+
+            private string GetStringAttribute(XmlNode node, string attributeName)
+            {
+                string value;
+                try
+                {
+                    value = node.Attributes.GetNamedItem(attributeName).Value;
+                }
+                catch
+                {
+                    value = "";
+                }
+                return value;
+            }
+
+            private ICell InsertCell(object value, IRow row, int cellIndex, CellType cellType, ICellStyle cellStyle)
+            {
+                ICell cell = row.CreateCell(cellIndex, cellType);
+                cell.CellStyle = cellStyle;
+                if (cellType != CellType.NUMERIC)
+                {
+                    cell.SetCellValue(value.ToString());
+                }
+                else
+                {
+                    cell.SetCellValue(Utilities.ConvertToDouble(value, -1));
+                }
+                return cell;
+            }
+
+            private void InsertSignature()
+            {
+                IRow row = null;
+                row = this.AppendRow(-1);
+                row = this.AppendRow(-1);
+                row = this.AppendRow(-1);
+                row = this.AppendRow(-1);
+                this.InsertCell(Utilities.Ce_rapport_a_été_généré_grâce_à_Quoter_Plan, row, 0, CellType.STRING, this.defaultCellStyle);
+            }
+
+            private void OutputConsolidatedExtensions()
+            {
+                IRow row = null;
+                string empty = string.Empty;
+                if (this.parserPresets.Count > 0)
+                {
+                    this.parserPresets.Collection.Sort(new ReportModule.ExportToXLS.PresetSorter());
+                    foreach (Preset collection in this.parserPresets.Collection)
+                    {
+                        if (empty != string.Concat(collection.ExtensionName, collection.Tag))
+                        {
+                            row = this.AppendRow(26);
+                            this.InsertCell(Utilities.GetFields(collection.ExtensionName, ';').GetValue(0).ToString().Trim(), row, 0, CellType.STRING, this.extensionNameCellStyle);
+                        }
+                        if (empty != string.Concat(collection.ExtensionName, collection.Tag))
+                        {
+                            this.parserResultRowHeader = this.AppendRow(-1);
+                        }
+                        this.parserResultRowData = this.AppendRow(16);
+                        this.InsertCell(collection.CategoryName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
+                        this.parserResultColumnIndex = 1;
+                        foreach (PresetResult presetResult in collection.Results.Collection)
+                        {
+                            if (empty != string.Concat(collection.ExtensionName, collection.Tag))
+                            {
+                                this.InsertCell(presetResult.Caption, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
+                            }
+                            bool flag = this.sheet.Equals(this.formattedSheetConsolidated);
+                            string unit = presetResult.Unit;
+                            if (flag)
+                            {
+                                this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
+                            }
+                            else if (Utilities.IsNumber(unit.ToString()))
+                            {
+                                this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC, (Utilities.IsInteger(unit) ? this.integerCellStyle : this.decimalCellStyle));
+                            }
+                            else
+                            {
+                                this.InsertCell(unit, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
+                            }
+                            this.parserResultColumnIndex++;
+                        }
+                        empty = string.Concat(collection.ExtensionName, collection.Tag);
+                    }
+                    this.parserPresets.Clear();
+                }
+            }
+
+            private void OutputReportSubTotal(string caption)
+            {
+                if (this.reportTotalSummaries.Count == 0)
+                {
+                    return;
+                }
+                IRow row = this.AppendRow(10);
+                row = this.AppendRow(14);
+                string str = "";
+                string str1 = "";
+                foreach (ReportSummary reportTotalSummary in this.reportTotalSummaries)
+                {
+                    str = string.Concat(str, (str == "" ? "" : " + "), string.Format("E{0}", reportTotalSummary.CostSubTotal + 1));
+                    str1 = string.Concat(str1, (str1 == "" ? "" : " + "), string.Format("G{0}", reportTotalSummary.CostSubTotal + 1));
+                }
+                this.InsertCell(Resources.Sous_totaux_, row, 3, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+                ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell.SetCellFormula(str);
+                ICell cell1 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell1.SetCellFormula(str1);
+                ICell cell2 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                cell2.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
+                this.reportTotalTotalSummaries.Add(new ReportSummary(caption, (double)row.RowNum, 0, null, null, -1, ""));
+            }
+
+            private void OutputReportTotals()
+            {
+                if (this.reportTotalTotalSummaries.Count == 0)
+                {
+                    return;
+                }
+                IRow row = this.AppendRow(20);
+                row = this.AppendRow(28);
+                this.InsertCell(Resources.SOMMAIRE_DES_TOTAUX, row, 0, CellType.STRING, this.planNameCellStyle);
+                row = this.AppendRow(14);
+                this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
+                this.parserEstimatingRowStartIndex = row.RowNum + 1;
+                this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
+                this.parserEstimatingRowStartIndex++;
+                foreach (ReportSummary reportTotalTotalSummary in this.reportTotalTotalSummaries)
+                {
+                    row = this.AppendRow(14);
+                    this.InsertCell(reportTotalTotalSummary.Caption, row, 0, CellType.STRING, this.estimatingItemCellStyle);
+                    ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                    cell.SetCellFormula(string.Format("E{0}", reportTotalTotalSummary.CostSubTotal + 1));
+                    ICell cell1 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                    cell1.SetCellFormula(string.Format("G{0}", reportTotalTotalSummary.CostSubTotal + 1));
+                    ICell cell2 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                    cell2.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
+                    this.parserEstimatingRowEndIndex++;
+                }
+                row = this.AppendRow(14);
+                ICell cell3 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell3.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+                ICell cell4 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell4.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+                ICell cell5 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                cell5.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell3.RowIndex + 1));
+                bool taxOnTax = Settings.Default.TaxOnTax;
+                string tax1Label = Settings.Default.Tax1Label;
+                string tax2Label = Settings.Default.Tax2Label;
+                double tax1Rate = Settings.Default.Tax1Rate;
+                double tax2Rate = Settings.Default.Tax2Rate;
+                string str = string.Concat(tax1Label, " (", string.Format("{0:0.#####%}", tax1Rate), ") :");
+                string str1 = string.Concat(tax2Label, " (", string.Format("{0:0.#####%}", tax2Rate), ") :");
+                row = this.AppendRow(20);
+                row = this.AppendRow(14);
+                this.InsertCell(str, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+                ICell cell6 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell6.SetCellFormula(string.Format(string.Concat("G{0}*", tax1Rate), cell3.RowIndex + 1));
+                row = this.AppendRow(14);
+                this.InsertCell(str1, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+                ICell cell7 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                if (!taxOnTax)
+                {
+                    cell7.SetCellFormula(string.Format(string.Concat("G{0}*", tax2Rate), cell3.RowIndex + 1));
+                }
+                else
+                {
+                    cell7.SetCellFormula(string.Format(string.Concat("(G{0}+G{1})*", tax2Rate), cell3.RowIndex + 1, cell6.RowIndex + 1));
+                }
+                row = this.AppendRow(10);
+                row = this.AppendRow(14);
+                this.InsertCell(Resources.GRAND_TOTAL_, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+                ICell cell8 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                cell8.SetCellFormula(string.Format("G{0}+G{1}+G{2}", cell3.RowIndex + 1, cell6.RowIndex + 1, cell7.RowIndex + 1));
+            }
+
+            private void ParseNode(XmlNode node)
+            {
+                string str;
+                string str1;
+                string str2;
+                string str3;
+                IRow row = null;
+                if (this.sheet.Equals(this.estimatingSheet))
+                {
+                    string upper = node.Name.ToUpper();
+                    string str4 = upper;
+                    if (upper != null)
+                    {
+                        if (str4 == "PLAN")
+                        {
+                            if (node.HasChildNodes && node.FirstChild.HasChildNodes)
+                            {
+                                if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
+                                {
+                                    this.OutputReportSubTotal(this.parserPlanName);
+                                    this.reportTotalSummaries.Clear();
+                                    if (this.parserPlanName != string.Empty)
+                                    {
+                                        row = this.AppendRow(10);
+                                    }
+                                }
+                                this.parserObjectType = string.Empty;
+                                this.parserObjectTypeCount = 0;
+                                this.parserPlanName = this.GetStringAttribute(node, "Name");
+                                if (this.parserPlanName != string.Empty)
+                                {
+                                    row = this.AppendRow(28);
+                                    this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                    if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
+                                    {
+                                        this.reportTotalCaption = this.parserPlanName;
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        else if (str4 == "LAYER")
+                        {
+                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                            {
+                                this.OutputReportSubTotal(this.parserLayerName);
+                                this.reportTotalSummaries.Clear();
+                                if (this.parserLayerName != string.Empty)
+                                {
+                                    row = this.AppendRow(10);
+                                }
+                            }
+                            this.parserObjectType = string.Empty;
+                            this.parserObjectTypeCount = 0;
+                            this.parserLayerName = this.GetStringAttribute(node, "Name");
+                            row = this.AppendRow(28);
+                            this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
+                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                            {
+                                this.reportTotalCaption = this.parserLayerName;
+                                return;
+                            }
+                        }
+                        else if (str4 == "OBJECT")
+                        {
+                            this.parserExtensionCount = 0;
+                            this.parserEstimatingResultCount = 0;
+                            this.parserObjectName = this.GetStringAttribute(node, "Name");
+                            string stringAttribute = this.GetStringAttribute(node, "Type");
+                            this.parserObjectTypeHasChanged = stringAttribute != this.parserObjectType;
+                            this.parserObjectType = stringAttribute;
+                            this.parserObjectRow = this.AppendRow(26);
+                            this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
+                            if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
+                            {
+                                this.reportTotalCaption = this.parserObjectName;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            if (str4 != "COMMENT")
+                            {
+                                if (str4 != "RESULT")
+                                {
+                                    if (str4 != "SUMMARY")
+                                    {
+                                        return;
+                                    }
+                                    if (this.parserEstimatingRowStartIndex > 0)
+                                    {
+                                        row = this.AppendRow(14);
+                                        ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                                        cell.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+                                        ICell cell1 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                                        cell1.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+                                        ICell cell2 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                                        cell2.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
+                                        if (this.order != Report.ReportOrderEnum.ReportOrderByObjects)
+                                        {
+                                            this.reportTotalSummaries.Add(new ReportSummary("", (double)row.RowNum, 0, null, null, -1, ""));
+                                        }
+                                        else
+                                        {
+                                            this.reportTotalTotalSummaries.Add(new ReportSummary(this.reportTotalCaption, (double)row.RowNum, 0, null, null, -1, ""));
+                                        }
+                                        this.parserEstimatingRowStartIndex = 0;
+                                    }
+                                    this.parserExtensionCount++;
+                                    return;
+                                }
+                                if (this.parserEstimatingResultCount == 0)
+                                {
+                                    row = this.AppendRow(14);
+                                    this.parserEstimatingRowStartIndex = row.RowNum + 1;
+                                    this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
+                                    this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Quantité, row, 1, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Unité, row, 2, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Coûtant, row, 3, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Prix, row, 5, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
+                                    this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
+                                }
+                                string stringAttribute1 = this.GetStringAttribute(node, "EstimatingCaption");
+                                if (stringAttribute1 != string.Empty)
+                                {
+                                    row = this.AppendRow(14);
+                                    this.InsertCell(stringAttribute1, row, 0, CellType.STRING, this.estimatingItemCellStyle);
+                                    ICell cell3 = this.InsertCell(this.GetStringAttribute(node, "Quantity"), row, 1, CellType.NUMERIC, this.estimatingEditableQuantityCellStyle);
+                                    this.InsertCell(this.GetStringAttribute(node, "EstimatingUnit"), row, 2, CellType.STRING, this.estimatingItemResultCellStyle);
+                                    this.InsertCell(this.GetDoubleAttribute(node, "RawCostEach"), row, 3, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
+                                    ICell cell4 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                                    cell4.SetCellFormula(string.Format("B{0}*D{0}", cell3.RowIndex + 1));
+                                    ICell cell5 = this.InsertCell(this.GetDoubleAttribute(node, "RawPriceEach"), row, 5, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
+                                    ICell cell6 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                                    cell6.SetCellFormula(string.Format("B{0}*F{0}", cell3.RowIndex + 1));
+                                    ICell cell7 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                                    cell7.SetCellFormula(string.Format("(F{0}-D{0})/D{0}", cell5.RowIndex + 1));
+                                    this.parserEstimatingRowEndIndex++;
+                                }
+                                this.parserEstimatingResultCount++;
+                                return;
+                            }
+                            if (node.ParentNode.Name.ToUpper() != "PROJECT")
+                            {
+                                string str5 = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
+                                if (str5 != string.Empty)
+                                {
+                                    row = this.AppendRow(-1);
+                                    this.InsertCell(str5, row, 0, CellType.STRING, this.commentCellStyle);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if ((this.sheet.Equals(this.formattedSheetShort) ? true : this.sheet.Equals(this.rawSheetShort)))
+                {
+                    string upper1 = node.Name.ToUpper();
+                    string str6 = upper1;
+                    if (upper1 != null)
+                    {
+                        if (str6 != "PLAN")
+                        {
+                            if (str6 == "LAYER")
+                            {
+                                if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers && this.parserLayerName != "")
+                                {
+                                    row = this.AppendRow(10);
+                                }
+                                this.parserObjectType = string.Empty;
+                                this.parserObjectTypeCount = 0;
+                                this.parserLayerName = this.GetStringAttribute(node, "Name");
+                                row = this.AppendRow(28);
+                                this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                return;
+                            }
+                            if (str6 == "OBJECT")
+                            {
+                                this.parserExtensionCount = 0;
+                                this.parserObjectName = this.GetStringAttribute(node, "Name");
+                                this.parserObjectType = this.GetStringAttribute(node, "Type");
+                                this.parserObjectRow = this.AppendRow(-1);
+                                this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
+                                return;
+                            }
+                            if (str6 == "EXTENSION")
+                            {
+                                this.parserExtensionCount++;
+                                return;
+                            }
+                            if (str6 != "RESULT")
+                            {
+                                return;
+                            }
+                            if (this.parserExtensionCount == 1)
+                            {
+                                bool flag = false;
+                                string stringAttribute2 = this.GetStringAttribute(node, "Name");
+                                string upper2 = this.parserObjectType.ToUpper();
+                                string str7 = upper2;
+                                if (upper2 != null)
+                                {
+                                    if (str7 == "AREA")
+                                    {
+                                        flag = stringAttribute2 == "AreaMinusSubstractions";
+                                    }
+                                    else if (str7 == "PERIMETER")
+                                    {
+                                        flag = stringAttribute2 == "PerimeterMinusOpenings";
+                                    }
+                                    else if (str7 == "LINE")
+                                    {
+                                        flag = stringAttribute2 == "Length";
+                                    }
+                                    else if (str7 == "COUNTER")
+                                    {
+                                        flag = stringAttribute2 == "Count";
+                                    }
+                                }
+                                if (flag)
+                                {
+                                    bool flag1 = this.sheet.Equals(this.formattedSheetShort);
+                                    if (node.Name.ToUpper() == "FIELD")
+                                    {
+                                        str = "Value";
+                                    }
+                                    else
+                                    {
+                                        str = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
+                                    }
+                                    string str8 = str;
+                                    if (flag1)
+                                    {
+                                        str1 = str8;
+                                    }
+                                    else
+                                    {
+                                        str1 = (str8 == "Value" ? "RawValue" : "TotalRawValue");
+                                    }
+                                    str8 = str1;
+                                    string stringAttribute3 = this.GetStringAttribute(node, str8);
+                                    if (flag1)
+                                    {
+                                        this.InsertCell(stringAttribute3, this.parserObjectRow, 1, CellType.STRING, this.resultCellStyle);
+                                    }
+                                    else
+                                    {
+                                        this.InsertCell(stringAttribute3, this.parserObjectRow, 1, CellType.NUMERIC, (Utilities.IsInteger(stringAttribute3.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
+                                    }
+                                    if (!flag1)
+                                    {
+                                        string stringAttribute4 = this.GetStringAttribute(node, "Unit");
+                                        stringAttribute4 = (stringAttribute4 == Resources.unité_ ? "" : stringAttribute4);
+                                        this.InsertCell(stringAttribute4, this.parserObjectRow, 2, CellType.STRING, this.columnHeaderCellStyle);
+                                    }
+                                }
+                            }
+                        }
+                        else if (node.HasChildNodes && node.FirstChild.HasChildNodes)
+                        {
+                            if (this.parserPlanName != "")
+                            {
+                                row = this.AppendRow(10);
+                            }
+                            this.parserPlanName = this.GetStringAttribute(node, "Name");
+                            if (this.parserPlanName != "")
+                            {
+                                row = this.AppendRow(28);
+                                this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                return;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    bool flag2 = (this.sheet.Equals(this.formattedSheetConsolidated) ? true : this.sheet.Equals(this.rawSheetConsolidated));
+                    string upper3 = node.Name.ToUpper();
+                    string str9 = upper3;
+                    if (upper3 != null)
+                    {
+                        switch (str9)
+                        {
+                            case "PLAN":
+                                {
+                                    if (flag2 && this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
+                                    {
+                                        this.OutputConsolidatedExtensions();
+                                    }
+                                    if (!node.HasChildNodes || !node.FirstChild.HasChildNodes)
+                                    {
+                                        break;
+                                    }
+                                    if (this.parserPlanName != "")
+                                    {
+                                        row = this.AppendRow(10);
+                                    }
+                                    this.parserObjectType = string.Empty;
+                                    this.parserObjectTypeCount = 0;
+                                    this.parserPlanName = this.GetStringAttribute(node, "Name");
+                                    if (this.parserPlanName == "")
+                                    {
+                                        break;
+                                    }
+                                    row = this.AppendRow(28);
+                                    this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                    return;
+                                }
+                            case "LAYER":
+                                {
+                                    if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                                    {
+                                        this.OutputConsolidatedExtensions();
+                                        if (this.parserLayerName != "")
+                                        {
+                                            row = this.AppendRow(10);
+                                        }
+                                    }
+                                    this.parserObjectType = string.Empty;
+                                    this.parserObjectTypeCount = 0;
+                                    this.parserLayerName = this.GetStringAttribute(node, "Name");
+                                    row = this.AppendRow(28);
+                                    this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                    return;
+                                }
+                            case "OBJECTS":
+                                {
+                                    if (!flag2 || this.order != Report.ReportOrderEnum.ReportOrderByObjects)
+                                    {
+                                        break;
+                                    }
+                                    this.OutputConsolidatedExtensions();
+                                    return;
+                                }
+                            case "OBJECT":
+                                {
+                                    this.parserExtensionCount = 0;
+                                    this.parserObjectName = this.GetStringAttribute(node, "Name");
+                                    string stringAttribute5 = this.GetStringAttribute(node, "Type");
+                                    this.parserObjectTypeHasChanged = stringAttribute5 != this.parserObjectType;
+                                    this.parserObjectType = stringAttribute5;
+                                    if (flag2)
+                                    {
+                                        break;
+                                    }
+                                    this.parserObjectRow = this.AppendRow(26);
+                                    this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
+                                    return;
+                                }
+                            case "COMMENT":
+                                {
+                                    if (flag2 || !(node.ParentNode.Name.ToUpper() != "PROJECT"))
+                                    {
+                                        break;
+                                    }
+                                    string str10 = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
+                                    if (str10 == string.Empty)
+                                    {
+                                        break;
+                                    }
+                                    row = this.AppendRow(-1);
+                                    this.InsertCell(str10, row, 0, CellType.STRING, this.commentCellStyle);
+                                    return;
+                                }
+                            case "EXTENSION":
+                                {
+                                    this.parserExtensionCount++;
+                                    if (flag2)
+                                    {
+                                        if (this.parserExtensionCount <= 1)
+                                        {
+                                            break;
+                                        }
+                                        int num = 0;
+                                        string upper4 = this.parserObjectType.ToUpper();
+                                        string str11 = upper4;
+                                        if (upper4 != null)
+                                        {
+                                            if (str11 == "AREA")
+                                            {
+                                                num = 1;
+                                            }
+                                            else if (str11 == "PERIMETER")
+                                            {
+                                                num = 2;
+                                            }
+                                            else if (str11 == "LINE")
+                                            {
+                                                num = 3;
+                                            }
+                                            else if (str11 == "COUNTER")
+                                            {
+                                                num = 4;
+                                            }
+                                        }
+                                        Guid guid = Guid.NewGuid();
+                                        this.parserPreset = new Preset(guid.ToString(), this.GetStringAttribute(node, "Name"), this.parserObjectName, string.Concat(this.GetStringAttribute(node, "Name"), ";", num.ToString()), UnitScale.UnitSystem.undefined);
+                                        this.parserPresets.Add(this.parserPreset);
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        if (this.parserExtensionCount <= 1)
+                                        {
+                                            break;
+                                        }
+                                        row = this.AppendRow(20);
+                                        this.InsertCell(this.GetStringAttribute(node, "Name"), row, 0, CellType.STRING, this.extensionNameCellStyle);
+                                        return;
+                                    }
+                                }
+                            case "FIELDS":
+                            case "RESULTS":
+                                {
+                                    if (!flag2)
+                                    {
+                                        this.parserResultColumnIndex = 0;
+                                        this.parserResultRowHeader = this.AppendRow(-1);
+                                        this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS" ? -1 : 16));
+                                        return;
+                                    }
+                                    if (this.parserExtensionCount != 1)
+                                    {
+                                        break;
+                                    }
+                                    this.parserResultColumnIndex = 1;
+                                    if (this.parserObjectTypeHasChanged)
+                                    {
+                                        if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
+                                        {
+                                            if (this.sheet.PhysicalNumberOfRows > 0)
+                                            {
+                                                this.AppendRow(-1);
+                                            }
+                                        }
+                                        else if (this.parserObjectTypeCount > 0)
+                                        {
+                                            this.AppendRow(-1);
+                                        }
+                                        this.parserObjectTypeCount++;
+                                        this.parserResultRowHeader = this.AppendRow(-1);
+                                    }
+                                    this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS" ? -1 : 16));
+                                    this.InsertCell(this.parserObjectName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
+                                    return;
+                                }
+                            case "FIELD":
+                            case "RESULT":
+                                {
+                                    if (!flag2 && this.parserResultColumnIndex == 7)
+                                    {
+                                        this.parserResultColumnIndex = 0;
+                                        this.parserResultRowHeader = this.AppendRow(-1);
+                                        this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELD" ? -1 : 16));
+                                    }
+                                    bool flag3 = (this.sheet.Equals(this.formattedSheet) ? true : this.sheet.Equals(this.formattedSheetConsolidated));
+                                    string stringAttribute6 = this.GetStringAttribute(node, "Caption");
+                                    if (node.Name.ToUpper() == "FIELD")
+                                    {
+                                        str2 = "Value";
+                                    }
+                                    else
+                                    {
+                                        str2 = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
+                                    }
+                                    string str12 = str2;
+                                    if (flag3)
+                                    {
+                                        str3 = str12;
+                                    }
+                                    else
+                                    {
+                                        str3 = (str12 == "Value" ? "RawValue" : "TotalRawValue");
+                                    }
+                                    str12 = str3;
+                                    if (!flag3)
+                                    {
+                                        string stringAttribute7 = this.GetStringAttribute(node, "Unit");
+                                        stringAttribute7 = (stringAttribute7 == Resources.unité_ ? "" : stringAttribute7);
+                                        if (stringAttribute7 != string.Empty)
+                                        {
+                                            stringAttribute6 = string.Concat(stringAttribute6, " (", stringAttribute7, ")");
+                                        }
+                                    }
+                                    if (!flag2 || this.parserExtensionCount == 1)
+                                    {
+                                        if (!flag2 || this.parserObjectTypeHasChanged)
+                                        {
+                                            this.InsertCell(stringAttribute6, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
+                                        }
+                                        string stringAttribute8 = this.GetStringAttribute(node, str12);
+                                        if (flag3)
+                                        {
+                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
+                                        }
+                                        else if (Utilities.IsNumber(stringAttribute8.ToString()))
+                                        {
+                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC, (Utilities.IsInteger(stringAttribute8.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
+                                        }
+                                        else
+                                        {
+                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
+                                        }
+                                    }
+                                    else if (flag2)
+                                    {
+                                        PresetResult presetResult = new PresetResult(this.GetStringAttribute(node, "Name"), stringAttribute6, this.GetStringAttribute(node, str12), "", "", ExtensionResult.ExtensionResultTypeEnum.ResultTypeUnit, false, true, -1, -1, -1);
+                                        this.parserPreset.Results.Add(presetResult);
+                                        if (!flag3)
+                                        {
+                                            Preset preset = this.parserPreset;
+                                            preset.Tag = string.Concat(preset.Tag, stringAttribute6, ";");
+                                        }
+                                    }
+                                    this.parserResultColumnIndex++;
+                                    return;
+                                }
+                            default:
+                                {
+                                    return;
+                                }
+                        }
+                    }
+                }
+            }
+
+            private void ParseTree(XmlNode node)
+            {
+                if (node != null)
+                {
+                    this.ParseNode(node);
+                }
+                if (node.HasChildNodes)
+                {
+                    node = node.FirstChild;
+                    while (node != null)
+                    {
+                        this.ParseTree(node);
+                        node = node.NextSibling;
+                    }
+                }
+            }
+
+            private void SaveWorkbook(string fileName)
+            {
+                while (true)
+                {
+                    try
+                    {
+                        using (FileStream fileStream = new FileStream(fileName, FileMode.Create))
+                        {
+                            this.workbook.SetActiveSheet(0);
+                            this.workbook.Write(fileStream);
+                            fileStream.Close();
+                        }
+                        break;
+                    }
+                    catch (Exception exception1)
+                    {
+                        Exception exception = exception1;
+                        if (exception.Message.IndexOf("process") == -1)
+                        {
+                            Utilities.DisplaySystemError(exception);
+                            break;
+                        }
+                        else if (Utilities.DisplayWarningQuestionRetryCancel(Resources.Fichier_utilisé_par_un_autre_processus, Resources.Veuillez_fermer_votre_tableur_Excel) == DialogResult.Cancel)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            private class PresetSorter : IComparer
+            {
+                public PresetSorter()
+                {
+                }
+
+                public int Compare(object x, object y)
+                {
+                    int num;
+                    try
+                    {
+                        Preset preset = x as Preset;
+                        Preset preset1 = y as Preset;
+                        num = StringLogicalComparer.Compare(string.Concat(preset.ExtensionName, (string)preset.Tag, preset.CategoryName), string.Concat(preset1.ExtensionName, (string)preset1.Tag, preset1.CategoryName));
+                    }
+                    catch (Exception exception)
+                    {
+                        num = -1;
+                    }
+                    return num;
+                }
+            }
+        }
+
+        private class GroupSorter : IComparer<Variable>
+        {
+            public GroupSorter()
+            {
+            }
+
+            public int Compare(Variable x, Variable y)
+            {
+                int num;
+                try
+                {
+                    DrawObject tag = x.Tag as DrawObject;
+                    DrawObject drawObject = y.Tag as DrawObject;
+                    if (tag.ObjectType == drawObject.ObjectType)
+                    {
+                        num = StringLogicalComparer.Compare(tag.Name, drawObject.Name);
+                    }
+                    else
+                    {
+                        string str = tag.ObjectSortOrder.ToString();
+                        int objectSortOrder = drawObject.ObjectSortOrder;
+                        num = StringLogicalComparer.Compare(str, objectSortOrder.ToString());
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    num = -1;
+                }
+                return num;
+            }
+        }
+
+        private class GroupSummarySorter : IComparer<ReportSummary>
+        {
+            public GroupSummarySorter()
+            {
+            }
+
+            public int Compare(ReportSummary x, ReportSummary y)
+            {
+                int num;
+                try
+                {
+                    DrawObject groupObject = x.GroupObject;
+                    DrawObject drawObject = y.GroupObject;
+                    if (groupObject.ObjectType == drawObject.ObjectType)
+                    {
+                        num = StringLogicalComparer.Compare(groupObject.Name, drawObject.Name);
+                    }
+                    else
+                    {
+                        string str = groupObject.ObjectSortOrder.ToString();
+                        int objectSortOrder = drawObject.ObjectSortOrder;
+                        num = StringLogicalComparer.Compare(str, objectSortOrder.ToString());
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    num = -1;
+                }
+                return num;
+            }
+        }
+
+        private class LayerSorter : IComparer<Variable>
+        {
+            public LayerSorter()
+            {
+            }
+
+            public int Compare(Variable x, Variable y)
+            {
+                int num;
+                try
+                {
+                    num = StringLogicalComparer.Compare(x.Name, y.Name);
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    num = -1;
+                }
+                return num;
+            }
+        }
+
+        private class SummarySorter : IComparer<ReportSummary>
+        {
+            public SummarySorter()
+            {
+            }
+
+            public int Compare(ReportSummary x, ReportSummary y)
+            {
+                int num;
+                try
+                {
+                    num = StringLogicalComparer.Compare(x.Caption, y.Caption);
+                }
+                catch (Exception exception)
+                {
+                    Utilities.DisplaySystemError(exception);
+                    num = -1;
+                }
+                return num;
+            }
+        }
+
+        private class UTF8StringWriter : StringWriter
+        {
+            public override Encoding Encoding
+            {
+                get
+                {
+                    return Encoding.UTF8;
+                }
+            }
+
+            public UTF8StringWriter()
+            {
+            }
+
+            public UTF8StringWriter(IFormatProvider formatProvider) : base(formatProvider)
+            {
+            }
+
+            public UTF8StringWriter(StringBuilder sb) : base(sb)
+            {
+            }
+
+            public UTF8StringWriter(StringBuilder sb, IFormatProvider formatProvider) : base(sb, formatProvider)
+            {
+            }
+        }
+    }
 }

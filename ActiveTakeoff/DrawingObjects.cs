@@ -3,627 +3,669 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace QuoterPlan
 {
-	public class DrawingObjects
-	{
-		public bool Dirty
-		{
-			get
-			{
-				if (!this.dirty)
-				{
-					foreach (object obj in this.objectList)
-					{
-						DrawObject drawObject = (DrawObject)obj;
-						if (drawObject.Dirty)
-						{
-							this.dirty = true;
-							break;
-						}
-					}
-				}
-				return this.dirty;
-			}
-			set
-			{
-				foreach (object obj in this.objectList)
-				{
-					DrawObject drawObject = (DrawObject)obj;
-					drawObject.Dirty = false;
-				}
-				this.dirty = false;
-			}
-		}
+    public class DrawingObjects
+    {
+        private bool dirty;
 
-		public IEnumerable<DrawObject> Selection
-		{
-			get
-			{
-				foreach (object obj in this.objectList)
-				{
-					DrawObject o = (DrawObject)obj;
-					if (o.Selected)
-					{
-						yield return o;
-					}
-				}
-				yield break;
-			}
-		}
+        private ArrayList objectList;
 
-		public ArrayList Collection
-		{
-			get
-			{
-				return this.objectList;
-			}
-		}
+        public ArrayList Collection
+        {
+            get
+            {
+                return this.objectList;
+            }
+        }
 
-		public DrawingObjects()
-		{
-			this.objectList = new ArrayList();
-		}
+        public int Count
+        {
+            get
+            {
+                return this.objectList.Count;
+            }
+        }
 
-		public void Draw(object sender, Graphics g, int offsetX, int offsetY, bool layerVisible, bool printToScreen, MainForm.ImageQualityEnum imageQuality)
-		{
-			int num = 0;
-			bool flag = sender.GetType().Name == "MainControl";
-			for (int i = this.objectList.Count - 1; i >= 0; i--)
-			{
-				DrawObject drawObject = (DrawObject)this.objectList[i];
-				if ((layerVisible || drawObject.ObjectType == "Legend") && drawObject.Visible)
-				{
-					bool flag2 = true;
-					if (flag)
-					{
-						flag2 = drawObject.IntersectsWith(Rectangle.Round(g.ClipBounds), offsetX, offsetY);
-					}
-					if (flag2)
-					{
-						if (!flag && (drawObject.ObjectType == "Counter" || drawObject.ObjectType == "Legend") && printToScreen)
-						{
-							drawObject.SuspendContentDrawing = true;
-						}
-						drawObject.Draw(g, offsetX, offsetY, printToScreen, imageQuality);
-						if (drawObject.Selected && printToScreen && flag)
-						{
-							drawObject.DrawTracker(g, offsetX, offsetY);
-						}
-						num++;
-						if (!flag && (drawObject.ObjectType == "Counter" || drawObject.ObjectType == "Legend") && printToScreen)
-						{
-							drawObject.SuspendContentDrawing = false;
-						}
-					}
-				}
-			}
-		}
+        public bool Dirty
+        {
+            get
+            {
+                if (!this.dirty)
+                {
+                    foreach (DrawObject drawObject in this.objectList)
+                    {
+                        if (!drawObject.Dirty)
+                        {
+                            continue;
+                        }
+                        this.dirty = true;
+                        break;
+                    }
+                }
+                return this.dirty;
+            }
+            set
+            {
+                foreach (DrawObject drawObject in this.objectList)
+                {
+                    drawObject.Dirty = false;
+                }
+                this.dirty = false;
+            }
+        }
 
-		public void DrawText(object sender, Graphics g, int offsetX, int offsetY, bool printToScreen, MainForm.ImageQualityEnum imageQuality, float defaultFontSize = 12f)
-		{
-			for (int i = this.objectList.Count - 1; i >= 0; i--)
-			{
-				DrawObject drawObject = (DrawObject)this.objectList[i];
-				if (drawObject.TextDirty || !printToScreen)
-				{
-					drawObject.DrawText(g, offsetX, offsetY, printToScreen, imageQuality, defaultFontSize);
-				}
-			}
-		}
+        public DrawObject this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.objectList.Count)
+                {
+                    return null;
+                }
+                return (DrawObject)this.objectList[index];
+            }
+        }
 
-		public bool Clear()
-		{
-			bool flag = this.objectList.Count > 0;
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.ObjectType == "Area" || drawObject.ObjectType == "Perimeter")
-				{
-					DrawPolyLine drawPolyLine = (DrawPolyLine)drawObject;
-					drawPolyLine.DeductionArray.Clear();
-				}
-				drawObject.ID = -1;
-			}
-			this.objectList.Clear();
-			if (flag)
-			{
-				this.dirty = false;
-			}
-			return flag;
-		}
+        public IEnumerable<DrawObject> Selection
+        {
+            get
+            {
+                foreach (DrawObject drawObject in this.objectList)
+                {
+                    if (!drawObject.Selected)
+                    {
+                        continue;
+                    }
+                    yield return drawObject;
+                }
+            }
+        }
 
-		public int Count
-		{
-			get
-			{
-				return this.objectList.Count;
-			}
-		}
+        public int SelectionCount
+        {
+            get
+            {
+                int num = 0;
+                foreach (DrawObject drawObject in this.objectList)
+                {
+                    if (!drawObject.Selected)
+                    {
+                        continue;
+                    }
+                    num++;
+                }
+                return num;
+            }
+        }
 
-		public DrawObject this[int index]
-		{
-			get
-			{
-				if (index < 0 || index >= this.objectList.Count)
-				{
-					return null;
-				}
-				return (DrawObject)this.objectList[index];
-			}
-		}
+        public DrawingObjects()
+        {
+            this.objectList = new ArrayList();
+        }
 
-		public int SelectionCount
-		{
-			get
-			{
-				int num = 0;
-				foreach (object obj in this.objectList)
-				{
-					DrawObject drawObject = (DrawObject)obj;
-					if (drawObject.Selected)
-					{
-						num++;
-					}
-				}
-				return num;
-			}
-		}
+        public void Add(DrawObject obj)
+        {
+            this.objectList.Add(obj);
+        }
 
-		public DrawObject GetSelectedObject(int index)
-		{
-			int num = -1;
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.Selected)
-				{
-					num++;
-					if (num == index)
-					{
-						return drawObject;
-					}
-				}
-			}
-			return null;
-		}
+        private void ApplyProperties()
+        {
+        }
 
-		public void Insert(DrawObject obj, int index)
-		{
-			this.objectList.Insert(index, obj);
-		}
+        public bool AutoAdjust(Bitmap image, DrawPolyLine.AutoAdjustType autoAdjustType)
+        {
+            bool flag = false;
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (!drawObject.Selected || !drawObject.AutoAdjust(image, autoAdjustType))
+                {
+                    continue;
+                }
+                flag = true;
+            }
+            this.dirty = (this.dirty ? this.dirty : flag);
+            return flag;
+        }
 
-		public void Add(DrawObject obj)
-		{
-			this.objectList.Add(obj);
-		}
+        public bool Clear()
+        {
+            bool count = this.objectList.Count > 0;
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (drawObject.ObjectType == "Area" || drawObject.ObjectType == "Perimeter")
+                {
+                    ((DrawPolyLine)drawObject).DeductionArray.Clear();
+                }
+                drawObject.ID = -1;
+            }
+            this.objectList.Clear();
+            if (count)
+            {
+                this.dirty = false;
+            }
+            return count;
+        }
 
-		public DrawObject GetObjectByID(int objectID)
-		{
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.ID == objectID)
-				{
-					return drawObject;
-				}
-			}
-			return null;
-		}
+        private void DeductionCleanUp(DrawObject drawObject)
+        {
+            if (drawObject.ObjectType != "Area" && drawObject.ObjectType != "Perimeter" && drawObject.ObjectType != "Line")
+            {
+                return;
+            }
+            if (drawObject.ObjectType == "Area" || drawObject.ObjectType == "Perimeter")
+            {
+                DrawPolyLine drawPolyLine = (DrawPolyLine)drawObject;
+                if (drawPolyLine.DeductionParentID == -1)
+                {
+                    for (int i = drawPolyLine.DeductionArray.Count - 1; i >= 0; i--)
+                    {
+                        ((DrawObject)drawPolyLine.DeductionArray[i]).ID = -1;
+                        drawPolyLine.DeductionArray.RemoveAt(i);
+                    }
+                    return;
+                }
+                DrawPolyLine objectByID = (DrawPolyLine)this.GetObjectByID(drawPolyLine.DeductionParentID);
+                if (objectByID != null)
+                {
+                    objectByID.DeleteDeduction(drawPolyLine);
+                    return;
+                }
+            }
+            else
+            {
+                DrawLine drawLine = (DrawLine)drawObject;
+                if (drawLine.DeductionParentID != -1)
+                {
+                    DrawPolyLine objectByID1 = (DrawPolyLine)this.GetObjectByID(drawLine.DeductionParentID);
+                    if (objectByID1 != null)
+                    {
+                        objectByID1.DeleteDeduction(drawLine);
+                    }
+                }
+            }
+        }
 
-		public void SelectInRectangle(Rectangle rectangle, int offsetX, int offsetY)
-		{
-			this.UnselectAll();
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.Visible && drawObject.IntersectsWith(rectangle, offsetX, offsetY))
-				{
-					drawObject.Selected = true;
-				}
-			}
-		}
+        public bool Delete(DrawObject drawObject)
+        {
+            bool flag = false;
+            this.DeductionCleanUp(drawObject);
+            for (int i = this.objectList.Count - 1; i >= 0; i--)
+            {
+                DrawObject item = (DrawObject)this.objectList[i];
+                bool objectByID = (item.ID == drawObject.ID ? true : item.ID == -1);
+                if (!objectByID && item.IsDeduction())
+                {
+                    objectByID = this.GetObjectByID(item.DeductionParentID) == null;
+                }
+                if (objectByID)
+                {
+                    item.ID = -1;
+                    this.objectList.RemoveAt(i);
+                    flag = true;
+                }
+            }
+            if (flag)
+            {
+                this.dirty = true;
+            }
+            return flag;
+        }
 
-		public void MoveSelected(int deltaX, int deltaY)
-		{
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.Selected)
-				{
-					drawObject.Move(deltaX, deltaY);
-				}
-			}
-		}
+        public bool DeleteSelection()
+        {
+            bool flag = false;
+            for (int i = this.objectList.Count - 1; i >= 0; i--)
+            {
+                DrawObject item = (DrawObject)this.objectList[i];
+                if (item.Selected && (item.ObjectType == "Area" || item.ObjectType == "Perimeter"))
+                {
+                    this.DeductionCleanUp(item);
+                    flag = true;
+                }
+            }
+            for (int j = this.objectList.Count - 1; j >= 0; j--)
+            {
+                DrawObject drawObject = (DrawObject)this.objectList[j];
+                if (drawObject.ObjectType != "Legend")
+                {
+                    bool objectByID = (drawObject.Selected ? true : drawObject.ID == -1);
+                    if (!objectByID && drawObject.IsDeduction())
+                    {
+                        objectByID = this.GetObjectByID(drawObject.DeductionParentID) == null;
+                    }
+                    if (objectByID)
+                    {
+                        drawObject.ID = -1;
+                        this.objectList.RemoveAt(j);
+                        flag = true;
+                    }
+                }
+            }
+            if (flag)
+            {
+                this.dirty = true;
+            }
+            return flag;
+        }
 
-		public void SelectGroup(int groupID)
-		{
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.GroupID == groupID && drawObject.Visible)
-				{
-					drawObject.Selected = true;
-				}
-			}
-		}
+        public void Draw(object sender, Graphics g, int offsetX, int offsetY, bool layerVisible, bool printToScreen, MainForm.ImageQualityEnum imageQuality)
+        {
+            int num = 0;
+            bool name = sender.GetType().Name == "MainControl";
+            for (int i = this.objectList.Count - 1; i >= 0; i--)
+            {
+                DrawObject item = (DrawObject)this.objectList[i];
+                if ((layerVisible || item.ObjectType == "Legend") && item.Visible)
+                {
+                    bool flag = true;
+                    if (name)
+                    {
+                        flag = item.IntersectsWith(Rectangle.Round(g.ClipBounds), offsetX, offsetY);
+                    }
+                    if (flag)
+                    {
+                        if (!name && (item.ObjectType == "Counter" || item.ObjectType == "Legend") && printToScreen)
+                        {
+                            item.SuspendContentDrawing = true;
+                        }
+                        item.Draw(g, offsetX, offsetY, printToScreen, imageQuality);
+                        if (item.Selected && printToScreen && name)
+                        {
+                            item.DrawTracker(g, offsetX, offsetY);
+                        }
+                        num++;
+                        if (!name && (item.ObjectType == "Counter" || item.ObjectType == "Legend") && printToScreen)
+                        {
+                            item.SuspendContentDrawing = false;
+                        }
+                    }
+                }
+            }
+        }
 
-		public void UnselectAll()
-		{
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				drawObject.Selected = false;
-			}
-		}
+        public void DrawText(object sender, Graphics g, int offsetX, int offsetY, bool printToScreen, MainForm.ImageQualityEnum imageQuality, float defaultFontSize = 12f)
+        {
+            for (int i = this.objectList.Count - 1; i >= 0; i--)
+            {
+                DrawObject item = (DrawObject)this.objectList[i];
+                if (item.TextDirty || !printToScreen)
+                {
+                    item.DrawText(g, offsetX, offsetY, printToScreen, imageQuality, defaultFontSize);
+                }
+            }
+        }
 
-		public void SelectAll()
-		{
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.Visible)
-				{
-					drawObject.Selected = true;
-				}
-			}
-		}
+        public DrawingObjects Duplicate()
+        {
+            DrawingObjects drawingObject = new DrawingObjects();
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                drawingObject.Add(drawObject.Clone());
+            }
+            return drawingObject;
+        }
 
-		private void DeductionCleanUp(DrawObject drawObject)
-		{
-			if (drawObject.ObjectType != "Area" && drawObject.ObjectType != "Perimeter" && drawObject.ObjectType != "Line")
-			{
-				return;
-			}
-			if (drawObject.ObjectType == "Area" || drawObject.ObjectType == "Perimeter")
-			{
-				DrawPolyLine drawPolyLine = (DrawPolyLine)drawObject;
-				if (drawPolyLine.DeductionParentID == -1)
-				{
-					for (int i = drawPolyLine.DeductionArray.Count - 1; i >= 0; i--)
-					{
-						((DrawObject)drawPolyLine.DeductionArray[i]).ID = -1;
-						drawPolyLine.DeductionArray.RemoveAt(i);
-					}
-					return;
-				}
-				DrawPolyLine drawPolyLine2 = (DrawPolyLine)this.GetObjectByID(drawPolyLine.DeductionParentID);
-				if (drawPolyLine2 != null)
-				{
-					drawPolyLine2.DeleteDeduction(drawPolyLine);
-					return;
-				}
-			}
-			else
-			{
-				DrawLine drawLine = (DrawLine)drawObject;
-				if (drawLine.DeductionParentID != -1)
-				{
-					DrawPolyLine drawPolyLine3 = (DrawPolyLine)this.GetObjectByID(drawLine.DeductionParentID);
-					if (drawPolyLine3 != null)
-					{
-						drawPolyLine3.DeleteDeduction(drawLine);
-					}
-				}
-			}
-		}
+        public DrawObject GetObjectByID(int objectID)
+        {
+            DrawObject drawObject;
+            IEnumerator enumerator = this.objectList.GetEnumerator();
+            try
+            {
+                while (enumerator.MoveNext())
+                {
+                    DrawObject current = (DrawObject)enumerator.Current;
+                    if (current.ID != objectID)
+                    {
+                        continue;
+                    }
+                    drawObject = current;
+                    return drawObject;
+                }
+                return null;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            return drawObject;
+        }
 
-		public bool Delete(DrawObject drawObject)
-		{
-			bool flag = false;
-			this.DeductionCleanUp(drawObject);
-			int count = this.objectList.Count;
-			for (int i = count - 1; i >= 0; i--)
-			{
-				DrawObject drawObject2 = (DrawObject)this.objectList[i];
-				bool flag2 = drawObject2.ID == drawObject.ID || drawObject2.ID == -1;
-				if (!flag2 && drawObject2.IsDeduction())
-				{
-					flag2 = (this.GetObjectByID(drawObject2.DeductionParentID) == null);
-				}
-				if (flag2)
-				{
-					drawObject2.ID = -1;
-					this.objectList.RemoveAt(i);
-					flag = true;
-				}
-			}
-			if (flag)
-			{
-				this.dirty = true;
-			}
-			return flag;
-		}
+        public DrawObject GetSelectedObject(int index)
+        {
+            DrawObject drawObject;
+            int num = -1;
+            IEnumerator enumerator = this.objectList.GetEnumerator();
+            try
+            {
+                while (enumerator.MoveNext())
+                {
+                    DrawObject current = (DrawObject)enumerator.Current;
+                    if (!current.Selected)
+                    {
+                        continue;
+                    }
+                    num++;
+                    if (num != index)
+                    {
+                        continue;
+                    }
+                    drawObject = current;
+                    return drawObject;
+                }
+                return null;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            return drawObject;
+        }
 
-		public bool AutoAdjust(Bitmap image, DrawPolyLine.AutoAdjustType autoAdjustType)
-		{
-			bool flag = false;
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				if (drawObject.Selected && drawObject.AutoAdjust(image, autoAdjustType))
-				{
-					flag = true;
-				}
-			}
-			this.dirty = (this.dirty ? this.dirty : flag);
-			return flag;
-		}
+        public void Insert(DrawObject obj, int index)
+        {
+            this.objectList.Insert(index, obj);
+        }
 
-		public bool DeleteSelection()
-		{
-			bool flag = false;
-			int count = this.objectList.Count;
-			for (int i = count - 1; i >= 0; i--)
-			{
-				DrawObject drawObject = (DrawObject)this.objectList[i];
-				if (drawObject.Selected && (drawObject.ObjectType == "Area" || drawObject.ObjectType == "Perimeter"))
-				{
-					this.DeductionCleanUp(drawObject);
-					flag = true;
-				}
-			}
-			count = this.objectList.Count;
-			for (int j = count - 1; j >= 0; j--)
-			{
-				DrawObject drawObject2 = (DrawObject)this.objectList[j];
-				if (drawObject2.ObjectType != "Legend")
-				{
-					bool flag2 = drawObject2.Selected || drawObject2.ID == -1;
-					if (!flag2 && drawObject2.IsDeduction())
-					{
-						flag2 = (this.GetObjectByID(drawObject2.DeductionParentID) == null);
-					}
-					if (flag2)
-					{
-						drawObject2.ID = -1;
-						this.objectList.RemoveAt(j);
-						flag = true;
-					}
-				}
-			}
-			if (flag)
-			{
-				this.dirty = true;
-			}
-			return flag;
-		}
+        public void MoveSelected(int deltaX, int deltaY)
+        {
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (!drawObject.Selected)
+                {
+                    continue;
+                }
+                drawObject.Move(deltaX, deltaY);
+            }
+        }
 
-		public void Replace(int index, DrawObject obj)
-		{
-			if (index >= 0 && index < this.objectList.Count)
-			{
-				this.objectList.RemoveAt(index);
-				this.objectList.Insert(index, obj);
-			}
-		}
+        public bool MoveSelectionToBack()
+        {
+            int i;
+            ArrayList arrayLists = new ArrayList();
+            int count = this.objectList.Count;
+            for (i = count - 1; i >= 0; i--)
+            {
+                if (((DrawObject)this.objectList[i]).Selected)
+                {
+                    arrayLists.Add(this.objectList[i]);
+                    this.objectList.RemoveAt(i);
+                }
+            }
+            count = arrayLists.Count;
+            for (i = count - 1; i >= 0; i--)
+            {
+                this.objectList.Add(arrayLists[i]);
+            }
+            if (count > 0)
+            {
+                this.dirty = true;
+            }
+            return count > 0;
+        }
 
-		public void RemoveAt(int index)
-		{
-			if (index >= 0 && index < this.objectList.Count)
-			{
-				this.objectList.RemoveAt(index);
-			}
-		}
+        public bool MoveSelectionToFront()
+        {
+            int i;
+            ArrayList arrayLists = new ArrayList();
+            int count = this.objectList.Count;
+            for (i = count - 1; i >= 0; i--)
+            {
+                if (((DrawObject)this.objectList[i]).Selected)
+                {
+                    arrayLists.Add(this.objectList[i]);
+                    this.objectList.RemoveAt(i);
+                }
+            }
+            count = arrayLists.Count;
+            for (i = 0; i < count; i++)
+            {
+                this.objectList.Insert(0, arrayLists[i]);
+            }
+            if (count > 0)
+            {
+                this.dirty = true;
+            }
+            return count > 0;
+        }
 
-		public bool MoveSelectionToFront()
-		{
-			ArrayList arrayList = new ArrayList();
-			int count = this.objectList.Count;
-			for (int i = count - 1; i >= 0; i--)
-			{
-				if (((DrawObject)this.objectList[i]).Selected)
-				{
-					arrayList.Add(this.objectList[i]);
-					this.objectList.RemoveAt(i);
-				}
-			}
-			count = arrayList.Count;
-			for (int i = 0; i < count; i++)
-			{
-				this.objectList.Insert(0, arrayList[i]);
-			}
-			if (count > 0)
-			{
-				this.dirty = true;
-			}
-			return count > 0;
-		}
+        public void RemoveAt(int index)
+        {
+            if (index >= 0 && index < this.objectList.Count)
+            {
+                this.objectList.RemoveAt(index);
+            }
+        }
 
-		public bool MoveSelectionToBack()
-		{
-			ArrayList arrayList = new ArrayList();
-			int count = this.objectList.Count;
-			for (int i = count - 1; i >= 0; i--)
-			{
-				if (((DrawObject)this.objectList[i]).Selected)
-				{
-					arrayList.Add(this.objectList[i]);
-					this.objectList.RemoveAt(i);
-				}
-			}
-			count = arrayList.Count;
-			for (int i = count - 1; i >= 0; i--)
-			{
-				this.objectList.Add(arrayList[i]);
-			}
-			if (count > 0)
-			{
-				this.dirty = true;
-			}
-			return count > 0;
-		}
+        public void Replace(int index, DrawObject obj)
+        {
+            if (index >= 0 && index < this.objectList.Count)
+            {
+                this.objectList.RemoveAt(index);
+                this.objectList.Insert(index, obj);
+            }
+        }
 
-		private void ApplyProperties()
-		{
-		}
+        public void SelectAll()
+        {
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (!drawObject.Visible)
+                {
+                    continue;
+                }
+                drawObject.Selected = true;
+            }
+        }
 
-		public bool ShowPropertiesDialog(IWin32Window parent)
-		{
-			return true;
-		}
+        public void SelectGroup(int groupID)
+        {
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (drawObject.GroupID != groupID || !drawObject.Visible)
+                {
+                    continue;
+                }
+                drawObject.Selected = true;
+            }
+        }
 
-		public DrawingObjects Duplicate()
-		{
-			DrawingObjects drawingObjects = new DrawingObjects();
-			foreach (object obj in this.objectList)
-			{
-				DrawObject drawObject = (DrawObject)obj;
-				DrawObject obj2 = drawObject.Clone();
-				drawingObjects.Add(obj2);
-			}
-			return drawingObjects;
-		}
+        public void SelectInRectangle(Rectangle rectangle, int offsetX, int offsetY)
+        {
+            this.UnselectAll();
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                if (!drawObject.Visible || !drawObject.IntersectsWith(rectangle, offsetX, offsetY))
+                {
+                    continue;
+                }
+                drawObject.Selected = true;
+            }
+        }
 
-		private bool dirty;
+        public bool ShowPropertiesDialog(IWin32Window parent)
+        {
+            return true;
+        }
 
-		private ArrayList objectList;
+        public void UnselectAll()
+        {
+            foreach (DrawObject drawObject in this.objectList)
+            {
+                drawObject.Selected = false;
+            }
+        }
 
-		[CompilerGenerated]
-		private sealed class <get_Selection>d__0 : IEnumerable<DrawObject>, IEnumerable, IEnumerator<DrawObject>, IEnumerator, IDisposable
-		{
-			[DebuggerHidden]
-			IEnumerator<DrawObject> IEnumerable<DrawObject>.GetEnumerator()
-			{
-				DrawingObjects.<get_Selection>d__0 <get_Selection>d__;
-				if (Thread.CurrentThread.ManagedThreadId == this.<>l__initialThreadId && this.<>1__state == -2)
-				{
-					this.<>1__state = 0;
-					<get_Selection>d__ = this;
-				}
-				else
-				{
-					<get_Selection>d__ = new DrawingObjects.<get_Selection>d__0(0);
-					<get_Selection>d__.<>4__this = this;
-				}
-				return <get_Selection>d__;
-			}
+        [CompilerGenerated]
+        // <get_Selection>d__0
+        private sealed class u003cget_Selectionu003ed__0 : IEnumerable<DrawObject>, IEnumerable, IEnumerator<DrawObject>, IEnumerator, IDisposable
+        {
+            // <>2__current
+            private DrawObject u003cu003e2__current;
 
-			[DebuggerHidden]
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return this.System.Collections.Generic.IEnumerable<QuoterPlan.DrawObject>.GetEnumerator();
-			}
+            // <>1__state
+            private int u003cu003e1__state;
 
-			bool IEnumerator.MoveNext()
-			{
-				bool result;
-				try
-				{
-					switch (this.<>1__state)
-					{
-					case 0:
-						this.<>1__state = -1;
-						enumerator = this.objectList.GetEnumerator();
-						this.<>1__state = 1;
-						break;
-					case 1:
-						goto IL_95;
-					case 2:
-						this.<>1__state = 1;
-						break;
-					default:
-						goto IL_95;
-					}
-					while (enumerator.MoveNext())
-					{
-						o = (DrawObject)enumerator.Current;
-						if (o.Selected)
-						{
-							this.<>2__current = o;
-							this.<>1__state = 2;
-							return true;
-						}
-					}
-					this.<>m__Finally4();
-					IL_95:
-					result = false;
-				}
-				catch
-				{
-					this.System.IDisposable.Dispose();
-					throw;
-				}
-				return result;
-			}
+            // <>l__initialThreadId
+            private int u003cu003el__initialThreadId;
 
-			DrawObject IEnumerator<DrawObject>.Current
-			{
-				[DebuggerHidden]
-				get
-				{
-					return this.<>2__current;
-				}
-			}
+            // <>4__this
+            public DrawingObjects u003cu003e4__this;
 
-			[DebuggerHidden]
-			void IEnumerator.Reset()
-			{
-				throw new NotSupportedException();
-			}
+            // <o>5__1
+            public DrawObject u003cou003e5__1;
 
-			void IDisposable.Dispose()
-			{
-				switch (this.<>1__state)
-				{
-				case 1:
-				case 2:
-					try
-					{
-					}
-					finally
-					{
-						this.<>m__Finally4();
-					}
-					return;
-				default:
-					return;
-				}
-			}
+            // <>7__wrap2
+            public IEnumerator u003cu003e7__wrap2;
 
-			object IEnumerator.Current
-			{
-				[DebuggerHidden]
-				get
-				{
-					return this.<>2__current;
-				}
-			}
+            // <>7__wrap3
+            public IDisposable u003cu003e7__wrap3;
 
-			[DebuggerHidden]
-			public <get_Selection>d__0(int <>1__state)
-			{
-				this.<>1__state = <>1__state;
-				this.<>l__initialThreadId = Thread.CurrentThread.ManagedThreadId;
-			}
+            DrawObject System.Collections.Generic.IEnumerator<QuoterPlan.DrawObject>.Current
+            {
+                [DebuggerHidden]
+                get
+                {
+                    return this.u003cu003e2__current;
+                }
+            }
 
-			private void <>m__Finally4()
-			{
-				this.<>1__state = -1;
-				disposable = (enumerator as IDisposable);
-				if (disposable != null)
-				{
-					disposable.Dispose();
-				}
-			}
+            object System.Collections.IEnumerator.Current
+            {
+                [DebuggerHidden]
+                get
+                {
+                    return this.u003cu003e2__current;
+                }
+            }
 
-			private DrawObject <>2__current;
+            [DebuggerHidden]
+            public u003cget_Selectionu003ed__0(int u003cu003e1__state)
+            {
+                this.u003cu003e1__state = u003cu003e1__state;
+                this.u003cu003el__initialThreadId = Thread.CurrentThread.ManagedThreadId;
+            }
 
-			private int <>1__state;
+            // <>m__Finally4
+            private void u003cu003em__Finally4()
+            {
+                this.u003cu003e1__state = -1;
+                this.u003cu003e7__wrap3 = this.u003cu003e7__wrap2 as IDisposable;
+                if (this.u003cu003e7__wrap3 != null)
+                {
+                    this.u003cu003e7__wrap3.Dispose();
+                }
+            }
 
-			private int <>l__initialThreadId;
+            bool MoveNext()
+            {
+                bool flag;
+                try
+                {
+                    switch (this.u003cu003e1__state)
+                    {
+                        case 0:
+                            {
+                                this.u003cu003e1__state = -1;
+                                this.u003cu003e7__wrap2 = this.u003cu003e4__this.objectList.GetEnumerator();
+                                this.u003cu003e1__state = 1;
+                                break;
+                            }
+                        case 2:
+                            {
+                                this.u003cu003e1__state = 1;
+                                break;
+                            }
+                        default:
+                            {
+                                goto Label0;
+                            }
+                    }
+                    while (this.u003cu003e7__wrap2.MoveNext())
+                    {
+                        this.u003cou003e5__1 = (DrawObject)this.u003cu003e7__wrap2.Current;
+                        if (!this.u003cou003e5__1.Selected)
+                        {
+                            continue;
+                        }
+                        this.u003cu003e2__current = this.u003cou003e5__1;
+                        this.u003cu003e1__state = 2;
+                        flag = true;
+                        return flag;
+                    }
+                    this.u003cu003em__Finally4();
+                Label0:
+                    flag = false;
+                }
+                return flag;
+            }
 
-			public DrawingObjects <>4__this;
+            [DebuggerHidden]
+            IEnumerator<DrawObject> System.Collections.Generic.IEnumerable<QuoterPlan.DrawObject>.GetEnumerator()
+            {
+                DrawingObjects.u003cget_Selectionu003ed__0 variable;
+                if (Thread.CurrentThread.ManagedThreadId != this.u003cu003el__initialThreadId || this.u003cu003e1__state != -2)
+                {
+                    variable = new DrawingObjects.u003cget_Selectionu003ed__0(0)
+                    {
+                        u003cu003e4__this = this.u003cu003e4__this
+                    };
+                }
+                else
+                {
+                    this.u003cu003e1__state = 0;
+                    variable = this;
+                }
+                return variable;
+            }
 
-			public DrawObject <o>5__1;
+            [DebuggerHidden]
+            IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return this.System.Collections.Generic.IEnumerable<QuoterPlan.DrawObject>.GetEnumerator();
+            }
 
-			public IEnumerator <>7__wrap2;
+            [DebuggerHidden]
+            void System.Collections.IEnumerator.Reset()
+            {
+                throw new NotSupportedException();
+            }
 
-			public IDisposable <>7__wrap3;
-		}
-	}
+            void System.IDisposable.Dispose()
+            {
+                switch (this.u003cu003e1__state)
+                {
+                    case 1:
+                    case 2:
+                        {
+                            try
+                            {
+                            }
+                            finally
+                            {
+                                this.u003cu003em__Finally4();
+                            }
+                            return;
+                        }
+                    default:
+                        {
+                            return;
+                        }
+                }
+            }
+        }
+    }
 }

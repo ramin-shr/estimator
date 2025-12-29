@@ -1,95 +1,110 @@
 ﻿using System;
 using System.Collections;
+using System.Reflection;
 
 namespace QuoterPlan
 {
-	public class Variables
-	{
-		public Variables()
-		{
-			this.variableList = new ArrayList();
-		}
+    public class Variables
+    {
+        private ArrayList variableList;
 
-		public Variable this[int index]
-		{
-			get
-			{
-				if (index < 0 || index >= this.variableList.Count)
-				{
-					return null;
-				}
-				return (Variable)this.variableList[index];
-			}
-		}
+        public ArrayList Collection
+        {
+            get
+            {
+                return this.variableList;
+            }
+        }
 
-		public ArrayList Collection
-		{
-			get
-			{
-				return this.variableList;
-			}
-		}
+        public int Count
+        {
+            get
+            {
+                return this.variableList.Count;
+            }
+        }
 
-		public int Add(Variable variable)
-		{
-			return this.variableList.Add(variable);
-		}
+        public Variable this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= this.variableList.Count)
+                {
+                    return null;
+                }
+                return (Variable)this.variableList[index];
+            }
+        }
 
-		public void Insert(int index, Variable variable)
-		{
-			this.variableList.Insert(index, variable);
-		}
+        public Variables()
+        {
+            this.variableList = new ArrayList();
+        }
 
-		public void Remove(Variable variable)
-		{
-			this.variableList.Remove(variable);
-		}
+        public int Add(Variable variable)
+        {
+            return this.variableList.Add(variable);
+        }
 
-		public void RemoveAt(int index)
-		{
-			this.variableList.RemoveAt(index);
-		}
+        public void Clear()
+        {
+            foreach (Variable variable in this.variableList)
+            {
+                variable.Clear();
+            }
+            this.variableList.Clear();
+        }
 
-		public int Count
-		{
-			get
-			{
-				return this.variableList.Count;
-			}
-		}
+        public void Dump()
+        {
+            foreach (Variable variable in this.variableList)
+            {
+                variable.Dump();
+            }
+        }
 
-		public void Clear()
-		{
-			foreach (object obj in this.variableList)
-			{
-				Variable variable = (Variable)obj;
-				variable.Clear();
-			}
-			this.variableList.Clear();
-		}
+        public Variable Find(string name)
+        {
+            Variable variable;
+            IEnumerator enumerator = this.variableList.GetEnumerator();
+            try
+            {
+                while (enumerator.MoveNext())
+                {
+                    Variable current = (Variable)enumerator.Current;
+                    if (current.Name != name)
+                    {
+                        continue;
+                    }
+                    variable = current;
+                    return variable;
+                }
+                return null;
+            }
+            finally
+            {
+                IDisposable disposable = enumerator as IDisposable;
+                if (disposable != null)
+                {
+                    disposable.Dispose();
+                }
+            }
+            return variable;
+        }
 
-		public Variable Find(string name)
-		{
-			foreach (object obj in this.variableList)
-			{
-				Variable variable = (Variable)obj;
-				if (variable.Name == name)
-				{
-					return variable;
-				}
-			}
-			return null;
-		}
+        public void Insert(int index, Variable variable)
+        {
+            this.variableList.Insert(index, variable);
+        }
 
-		public void Dump()
-		{
-			foreach (object obj in this.variableList)
-			{
-				Variable variable = (Variable)obj;
-				variable.Dump();
-			}
-		}
+        public void Remove(Variable variable)
+        {
+            this.variableList.Remove(variable);
+        }
 
-		private ArrayList variableList;
-	}
+        public void RemoveAt(int index)
+        {
+            this.variableList.RemoveAt(index);
+        }
+    }
 }

@@ -3,97 +3,53 @@ using System.Runtime.CompilerServices;
 
 namespace QuoterPlan
 {
-	public class ExtensionChoiceElement
-	{
-		public string Name
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Name>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<Name>k__BackingField = value;
-			}
-		}
+    public class ExtensionChoiceElement
+    {
+        public string Caption
+        {
+            get;
+            private set;
+        }
 
-		public string Caption
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Caption>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<Caption>k__BackingField = value;
-			}
-		}
+        public string Name
+        {
+            get;
+            private set;
+        }
 
-		public ExtensionChoice Parent
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Parent>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<Parent>k__BackingField = value;
-			}
-		}
+        public ExtensionChoice Parent
+        {
+            get;
+            private set;
+        }
 
-		public Variables Variables
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Variables>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<Variables>k__BackingField = value;
-			}
-		}
+        public Variables Variables
+        {
+            get;
+            private set;
+        }
 
-		public ExtensionChoiceElement(string name, string caption, ExtensionChoice parent)
-		{
-			this.Name = name;
-			this.Caption = caption;
-			this.Parent = parent;
-			this.Variables = new Variables();
-		}
+        public ExtensionChoiceElement(string name, string caption, ExtensionChoice parent)
+        {
+            this.Name = name;
+            this.Caption = caption;
+            this.Parent = parent;
+            this.Variables = new Variables();
+        }
 
-		public void Clear()
-		{
-			this.Name = "";
-			this.Caption = "";
-			this.Parent = null;
-			this.Variables.Clear();
-		}
+        public void Clear()
+        {
+            this.Name = "";
+            this.Caption = "";
+            this.Parent = null;
+            this.Variables.Clear();
+        }
 
-		public void Dump()
-		{
-			Console.WriteLine("Name = " + this.Name);
-			Console.WriteLine("Caption = " + this.Caption);
-			this.Variables.Dump();
-		}
-
-		[CompilerGenerated]
-		private string <Name>k__BackingField;
-
-		[CompilerGenerated]
-		private string <Caption>k__BackingField;
-
-		[CompilerGenerated]
-		private ExtensionChoice <Parent>k__BackingField;
-
-		[CompilerGenerated]
-		private Variables <Variables>k__BackingField;
-	}
+        public void Dump()
+        {
+            Console.WriteLine(string.Concat("Name = ", this.Name));
+            Console.WriteLine(string.Concat("Caption = ", this.Caption));
+            this.Variables.Dump();
+        }
+    }
 }

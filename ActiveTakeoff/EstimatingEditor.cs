@@ -1,512 +1,437 @@
-﻿using System;
+﻿using DevExpress.LookAndFeel;
+using DevExpress.Utils;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Container;
+using DevExpress.XtraEditors.Mask;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraTreeList;
+using DevExpress.XtraTreeList.Columns;
+using DevExpress.XtraTreeList.Nodes;
+using QuoterPlan.Properties;
+using QuoterPlanControls;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
-using DevExpress.LookAndFeel;
-using DevExpress.Utils;
-using DevExpress.XtraEditors;
-using DevExpress.XtraEditors.Mask;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraTreeList;
-using DevExpress.XtraTreeList.Nodes;
-using QuoterPlan.Properties;
-using QuoterPlanControls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace QuoterPlan
 {
-	public class EstimatingEditor
-	{
-		public event EventHandler OnEnable
-		{
-			add
-			{
-				EventHandler eventHandler = this.OnEnable;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnEnable, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-			remove
-			{
-				EventHandler eventHandler = this.OnEnable;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnEnable, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-		}
+    public class EstimatingEditor
+    {
+        private bool enabled;
 
-		public event EventHandler OnDisable
-		{
-			add
-			{
-				EventHandler eventHandler = this.OnDisable;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnDisable, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-			remove
-			{
-				EventHandler eventHandler = this.OnDisable;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnDisable, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-		}
+        private bool exitNow;
 
-		public event EventHandler OnModified
-		{
-			add
-			{
-				EventHandler eventHandler = this.OnModified;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Combine(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnModified, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-			remove
-			{
-				EventHandler eventHandler = this.OnModified;
-				EventHandler eventHandler2;
-				do
-				{
-					eventHandler2 = eventHandler;
-					EventHandler value2 = (EventHandler)Delegate.Remove(eventHandler2, value);
-					eventHandler = Interlocked.CompareExchange<EventHandler>(ref this.OnModified, value2, eventHandler2);
-				}
-				while (eventHandler != eventHandler2);
-			}
-		}
+        private Project project;
 
-		private TreeListNode HotTrackNode
-		{
-			get
-			{
-				return this.hotTrackNode;
-			}
-			set
-			{
-				if (this.hotTrackNode != value)
-				{
-					TreeListNode node = this.hotTrackNode;
-					this.hotTrackNode = value;
-					if (this.tree.ActiveEditor != null)
-					{
-						this.tree.PostEditor();
-					}
-					this.tree.RefreshNode(node);
-					this.tree.RefreshNode(this.hotTrackNode);
-				}
-			}
-		}
+        private TreeList tree;
 
-		private void LoadResources()
-		{
-		}
+        private MainControl mainControl;
 
-		private void InitializeTreeView()
-		{
-			this.titleFont = Utilities.GetDefaultFont(11f, FontStyle.Bold);
-			this.defaultFont = Utilities.GetDefaultFont(11f, FontStyle.Regular);
-			this.treeListViewState = new TreeListViewState(this.tree);
-			this.tree.DataSource = this.project.EstimatingItems.Collection;
-			this.tree.PopulateColumns();
-			RepositoryItemTextEdit repositoryItemTextEdit = new RepositoryItemTextEdit();
-			repositoryItemTextEdit.Click += delegate(object sender, EventArgs args)
-			{
-				TextEdit textEdit = sender as TextEdit;
-				if (textEdit != null)
-				{
-					textEdit.SelectAll();
-				}
-			};
-			this.tree.RepositoryItems.Add(repositoryItemTextEdit);
-			this.tree.Columns[0].Visible = false;
-			this.tree.Columns[1].Visible = false;
-			this.tree.Columns[2].Visible = false;
-			this.tree.Columns[3].Visible = false;
-			this.tree.Columns[4].Caption = Resources.Nom;
-			this.tree.Columns[4].OptionsColumn.ReadOnly = true;
-			this.tree.Columns[4].OptionsColumn.AllowEdit = false;
-			this.tree.Columns[4].OptionsColumn.AllowSort = false;
-			this.tree.Columns[5].Caption = Resources.Valeur;
-			this.tree.Columns[5].OptionsColumn.ReadOnly = true;
-			this.tree.Columns[5].OptionsColumn.AllowEdit = false;
-			this.tree.Columns[5].OptionsColumn.AllowSort = false;
-			this.tree.Columns[6].Caption = Resources.Unité;
-			this.tree.Columns[6].OptionsColumn.ReadOnly = true;
-			this.tree.Columns[6].OptionsColumn.AllowEdit = false;
-			this.tree.Columns[6].OptionsColumn.AllowSort = false;
-			this.tree.Columns[7].Caption = Resources.Coûtant;
-			this.tree.Columns[7].Format.FormatType = FormatType.Numeric;
-			this.tree.Columns[7].ColumnEdit = repositoryItemTextEdit;
-			this.tree.Columns[7].AppearanceCell.BackColor = Color.AliceBlue;
-			this.tree.Columns[7].OptionsColumn.AllowSort = false;
-			this.tree.Columns[8].Caption = Resources.Markup;
-			this.tree.Columns[8].Format.FormatType = FormatType.Numeric;
-			this.tree.Columns[8].ColumnEdit = repositoryItemTextEdit;
-			this.tree.Columns[8].AppearanceCell.BackColor = Color.AliceBlue;
-			this.tree.Columns[8].OptionsColumn.AllowSort = false;
-			this.tree.Columns[9].Caption = Resources.Prix;
-			this.tree.Columns[9].Format.FormatType = FormatType.Numeric;
-			this.tree.Columns[9].Format.FormatString = "c2";
-			this.tree.Columns[9].OptionsColumn.ReadOnly = true;
-			this.tree.Columns[9].OptionsColumn.AllowEdit = false;
-			this.tree.Columns[9].OptionsColumn.AllowSort = false;
-			this.tree.Columns[10].Caption = Resources.Total;
-			this.tree.Columns[10].Format.FormatType = FormatType.Numeric;
-			this.tree.Columns[10].Format.FormatString = "c2";
-			this.tree.Columns[10].OptionsColumn.ReadOnly = true;
-			this.tree.Columns[10].OptionsColumn.AllowEdit = false;
-			this.tree.Columns[10].OptionsColumn.AllowSort = false;
-			this.tree.Columns[11].Visible = false;
-			this.tree.Columns[12].Visible = false;
-			this.tree.LookAndFeel.Style = LookAndFeelStyle.Skin;
-			this.tree.LookAndFeel.SkinName = "Office 2010 Silver";
-			this.tree.LookAndFeel.UseDefaultLookAndFeel = false;
-			this.tree.OptionsMenu.EnableColumnMenu = false;
-			this.tree.CellValueChanged += this.tree_CellValueChanged;
-			this.tree.GetStateImage += this.tree_GetStateImage;
-			this.tree.NodeCellStyle += this.tree_NodeCellStyle;
-			this.tree.MouseMove += this.tree_MouseMove;
-			this.tree.MouseLeave += this.tree_MouseLeave;
-			this.tree.ShowingEditor += new CancelEventHandler(this.tree_ShowingEditor);
-			this.tree.ShownEditor += this.tree_ShownEditor;
-			RepositoryItemTextEdit repositoryItemTextEdit2 = new RepositoryItemTextEdit();
-			repositoryItemTextEdit2.Mask.MaskType = MaskType.Numeric;
-			repositoryItemTextEdit2.Mask.EditMask = "c2";
-			repositoryItemTextEdit2.Mask.UseMaskAsDisplayFormat = true;
-			repositoryItemTextEdit2.Click += delegate(object sender, EventArgs args)
-			{
-				TextEdit textEdit = sender as TextEdit;
-				if (textEdit != null)
-				{
-					textEdit.SelectAll();
-				}
-			};
-			this.tree.Columns[7].ColumnEdit = repositoryItemTextEdit2;
-			RepositoryItemTextEdit repositoryItemTextEdit3 = new RepositoryItemTextEdit();
-			repositoryItemTextEdit3.Mask.MaskType = MaskType.Numeric;
-			repositoryItemTextEdit3.Mask.EditMask = "P1";
-			repositoryItemTextEdit3.Mask.UseMaskAsDisplayFormat = true;
-			repositoryItemTextEdit3.Click += delegate(object sender, EventArgs args)
-			{
-				TextEdit textEdit = sender as TextEdit;
-				if (textEdit != null)
-				{
-					textEdit.SelectAll();
-				}
-			};
-			this.tree.Columns[8].ColumnEdit = repositoryItemTextEdit3;
-		}
+        private DrawingArea drawingArea;
 
-		public EstimatingEditor(Project project, DrawingArea drawingArea, TreeList tree, MainControl mainControl, ImageCollection imageCollection)
-		{
-			this.project = project;
-			this.drawingArea = drawingArea;
-			this.tree = tree;
-			this.mainControl = mainControl;
-			this.imageCollection = imageCollection;
-			this.enabled = true;
-			this.InitializeTreeView();
-			this.LoadResources();
-		}
+        private ImageCollection imageCollection;
 
-		private DrawObject CastNodeToObject(TreeListNode node)
-		{
-			DrawObject result;
-			try
-			{
-				result = this.drawingArea.FindObjectFromGroupID(this.project, (int)node.GetValue(0));
-			}
-			catch
-			{
-				result = null;
-			}
-			return result;
-		}
+        private Font titleFont;
 
-		public bool Enabled
-		{
-			get
-			{
-				return this.enabled;
-			}
-			set
-			{
-				this.enabled = value;
-				this.tree.Enabled = this.enabled;
-				if (!this.enabled)
-				{
-					if (this.OnDisable != null)
-					{
-						this.OnDisable(this, new EventArgs());
-						return;
-					}
-				}
-				else if (this.tree.Nodes.Count == 0)
-				{
-					if (this.OnDisable != null)
-					{
-						this.OnDisable(this, new EventArgs());
-						return;
-					}
-				}
-				else if (this.OnEnable != null)
-				{
-					this.OnEnable(this, new EventArgs());
-				}
-			}
-		}
+        private Font defaultFont;
 
-		public void SaveState()
-		{
-			this.treeListViewState.SaveState();
-		}
+        private TreeListViewState treeListViewState;
 
-		public void RestoreState()
-		{
-			this.treeListViewState.SaveState();
-		}
+        private TreeListNode hotTrackNode;
 
-		public void Rename(DrawObject groupObject)
-		{
-			this.project.EstimatingItems.Rename(groupObject);
-			this.tree.RefreshDataSource();
-		}
+        [CompilerGenerated]
+        // CS$<>9__CachedAnonymousMethodDelegate3
+        private static EventHandler CSu0024u003cu003e9__CachedAnonymousMethodDelegate3;
 
-		public void Refresh(DrawObject groupObject)
-		{
-			this.project.EstimatingItems.Refresh(groupObject);
-			this.tree.RefreshDataSource();
-		}
+        [CompilerGenerated]
+        // CS$<>9__CachedAnonymousMethodDelegate4
+        private static EventHandler CSu0024u003cu003e9__CachedAnonymousMethodDelegate4;
 
-		public void RefreshAll()
-		{
-			this.project.EstimatingItems.RefreshAll();
-			this.tree.RefreshDataSource();
-			this.tree.BestFitColumns();
-			this.tree.ExpandAll();
-			if (this.tree.Nodes.Count == 0)
-			{
-				if (this.OnDisable != null)
-				{
-					this.OnDisable(this, new EventArgs());
-					return;
-				}
-			}
-			else if (this.OnEnable != null)
-			{
-				this.OnEnable(this, new EventArgs());
-			}
-		}
+        [CompilerGenerated]
+        // CS$<>9__CachedAnonymousMethodDelegate5
+        private static EventHandler CSu0024u003cu003e9__CachedAnonymousMethodDelegate5;
 
-		public void Clear()
-		{
-			try
-			{
-				this.tree.ClearNodes();
-			}
-			catch (Exception exception)
-			{
-				Utilities.DisplaySystemError(exception);
-			}
-		}
+        public bool Enabled
+        {
+            get
+            {
+                return this.enabled;
+            }
+            set
+            {
+                this.enabled = value;
+                this.tree.Enabled = this.enabled;
+                if (!this.enabled)
+                {
+                    if (this.OnDisable != null)
+                    {
+                        this.OnDisable(this, new EventArgs());
+                        return;
+                    }
+                }
+                else if (this.tree.Nodes.Count == 0)
+                {
+                    if (this.OnDisable != null)
+                    {
+                        this.OnDisable(this, new EventArgs());
+                        return;
+                    }
+                }
+                else if (this.OnEnable != null)
+                {
+                    this.OnEnable(this, new EventArgs());
+                }
+            }
+        }
 
-		private void tree_CellValueChanged(object sender, CellValueChangedEventArgs e)
-		{
-			try
-			{
-				int groupID = Utilities.ConvertToInt(e.Node.GetValue(0));
-				string extensionID = e.Node.GetValue(1).ToString();
-				string resultID = e.Node.GetValue(2).ToString();
-				double num = Utilities.ConvertToDouble(e.Value, -1);
-				if (e.Column.FieldName == "CostEach")
-				{
-					this.project.EstimatingItems.SaveEstimatingItemCost(groupID, extensionID, resultID, num, this.drawingArea.ActivePlan.UnitScale.CurrentSystemType);
-				}
-				else if (e.Column.FieldName == "MarkupEach")
-				{
-					this.project.EstimatingItems.SaveEstimatingItemMarkup(groupID, extensionID, resultID, num);
-				}
-				Console.WriteLine("Value = " + e.Value);
-				if (this.OnModified != null)
-				{
-					this.OnModified(this, new EventArgs());
-				}
-			}
-			catch
-			{
-			}
-		}
+        private TreeListNode HotTrackNode
+        {
+            get
+            {
+                return this.hotTrackNode;
+            }
+            set
+            {
+                if (this.hotTrackNode != value)
+                {
+                    TreeListNode treeListNode = this.hotTrackNode;
+                    this.hotTrackNode = value;
+                    if (this.tree.ActiveEditor != null)
+                    {
+                        this.tree.PostEditor();
+                    }
+                    this.tree.RefreshNode(treeListNode);
+                    this.tree.RefreshNode(this.hotTrackNode);
+                }
+            }
+        }
 
-		private void tree_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
-		{
-			if (this.exitNow)
-			{
-				return;
-			}
-			bool flag = e.Node.Level == 0 && e.Column.Caption == Resources.Nom;
-			if (e.Column.Caption == Resources.Nom)
-			{
-				e.Appearance.ForeColor = Color.Black;
-			}
-			else
-			{
-				if (e.Column.Caption == Resources.Coûtant)
-				{
-					e.Appearance.ForeColor = Color.DarkSlateBlue;
-					try
-					{
-						e.Appearance.BackColor = ((e.Node.GetValue(11).ToString() == Utilities.GetCurrencySymbol()) ? Color.White : Color.AliceBlue);
-						goto IL_FA;
-					}
-					catch
-					{
-						goto IL_FA;
-					}
-				}
-				if (e.Column.Caption == Resources.Markup)
-				{
-					e.Appearance.ForeColor = Color.DarkSlateBlue;
-				}
-				else
-				{
-					e.Appearance.ForeColor = Color.DarkSlateGray;
-				}
-			}
-			IL_FA:
-			e.Appearance.Font = (flag ? this.titleFont : this.defaultFont);
-			if (e.Node == this.HotTrackNode || e.Node.Selected)
-			{
-				e.Appearance.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
-				e.Appearance.BackColor = Color.FromArgb(252, 229, 126);
-			}
-		}
+        public EstimatingEditor(Project project, DrawingArea drawingArea, TreeList tree, MainControl mainControl, ImageCollection imageCollection)
+        {
+            this.project = project;
+            this.drawingArea = drawingArea;
+            this.tree = tree;
+            this.mainControl = mainControl;
+            this.imageCollection = imageCollection;
+            this.enabled = true;
+            this.InitializeTreeView();
+            this.LoadResources();
+        }
 
-		private void tree_MouseMove(object sender, MouseEventArgs e)
-		{
-			TreeList treeList = sender as TreeList;
-			TreeListHitInfo treeListHitInfo = treeList.CalcHitInfo(new Point(e.X, e.Y));
-			this.HotTrackNode = ((treeListHitInfo.HitInfoType == HitInfoType.Cell) ? treeListHitInfo.Node : null);
-		}
+        [CompilerGenerated]
+        // <InitializeTreeView>b__0
+        private static void u003cInitializeTreeViewu003eb__0(object sender, EventArgs args)
+        {
+            TextEdit textEdit = sender as TextEdit;
+            if (textEdit != null)
+            {
+                textEdit.SelectAll();
+            }
+        }
 
-		private void tree_MouseLeave(object sender, EventArgs e)
-		{
-			this.HotTrackNode = null;
-		}
+        [CompilerGenerated]
+        // <InitializeTreeView>b__1
+        private static void u003cInitializeTreeViewu003eb__1(object sender, EventArgs args)
+        {
+            TextEdit textEdit = sender as TextEdit;
+            if (textEdit != null)
+            {
+                textEdit.SelectAll();
+            }
+        }
 
-		private void tree_GetStateImage(object sender, GetStateImageEventArgs e)
-		{
-		}
+        [CompilerGenerated]
+        // <InitializeTreeView>b__2
+        private static void u003cInitializeTreeViewu003eb__2(object sender, EventArgs args)
+        {
+            TextEdit textEdit = sender as TextEdit;
+            if (textEdit != null)
+            {
+                textEdit.SelectAll();
+            }
+        }
 
-		private void tree_ShowingEditor(object sender, CancelEventArgs e)
-		{
-		}
+        private DrawObject CastNodeToObject(TreeListNode node)
+        {
+            DrawObject drawObject;
+            try
+            {
+                drawObject = this.drawingArea.FindObjectFromGroupID(this.project, (int)node.GetValue(0));
+            }
+            catch
+            {
+                drawObject = null;
+            }
+            return drawObject;
+        }
 
-		private void tree_ShownEditor(object sender, EventArgs e)
-		{
-			try
-			{
-				if (this.tree.FocusedColumn.Caption == Resources.Coûtant && this.tree.FocusedNode.GetValue(11).ToString() == Utilities.GetCurrencySymbol())
-				{
-					this.tree.ActiveEditor.ReadOnly = true;
-				}
-			}
-			catch
-			{
-			}
-		}
+        public void Clear()
+        {
+            try
+            {
+                this.tree.ClearNodes();
+            }
+            catch (Exception exception)
+            {
+                Utilities.DisplaySystemError(exception);
+            }
+        }
 
-		[CompilerGenerated]
-		private static void <InitializeTreeView>b__0(object sender, EventArgs args)
-		{
-			TextEdit textEdit = sender as TextEdit;
-			if (textEdit != null)
-			{
-				textEdit.SelectAll();
-			}
-		}
+        private void InitializeTreeView()
+        {
+            this.titleFont = Utilities.GetDefaultFont(11f, FontStyle.Bold);
+            this.defaultFont = Utilities.GetDefaultFont(11f, FontStyle.Regular);
+            this.treeListViewState = new TreeListViewState(this.tree);
+            this.tree.DataSource = this.project.EstimatingItems.Collection;
+            this.tree.PopulateColumns();
+            RepositoryItemTextEdit repositoryItemTextEdit = new RepositoryItemTextEdit();
+            repositoryItemTextEdit.Click += new EventHandler((object sender, EventArgs args) => {
+                TextEdit textEdit = sender as TextEdit;
+                if (textEdit != null)
+                {
+                    textEdit.SelectAll();
+                }
+            });
+            this.tree.RepositoryItems.Add(repositoryItemTextEdit);
+            this.tree.Columns[0].Visible = false;
+            this.tree.Columns[1].Visible = false;
+            this.tree.Columns[2].Visible = false;
+            this.tree.Columns[3].Visible = false;
+            this.tree.Columns[4].Caption = Resources.Nom;
+            this.tree.Columns[4].OptionsColumn.ReadOnly = true;
+            this.tree.Columns[4].OptionsColumn.AllowEdit = false;
+            this.tree.Columns[4].OptionsColumn.AllowSort = false;
+            this.tree.Columns[5].Caption = Resources.Valeur;
+            this.tree.Columns[5].OptionsColumn.ReadOnly = true;
+            this.tree.Columns[5].OptionsColumn.AllowEdit = false;
+            this.tree.Columns[5].OptionsColumn.AllowSort = false;
+            this.tree.Columns[6].Caption = Resources.Unité;
+            this.tree.Columns[6].OptionsColumn.ReadOnly = true;
+            this.tree.Columns[6].OptionsColumn.AllowEdit = false;
+            this.tree.Columns[6].OptionsColumn.AllowSort = false;
+            this.tree.Columns[7].Caption = Resources.Coûtant;
+            this.tree.Columns[7].Format.FormatType = FormatType.Numeric;
+            this.tree.Columns[7].ColumnEdit = repositoryItemTextEdit;
+            this.tree.Columns[7].AppearanceCell.BackColor = Color.AliceBlue;
+            this.tree.Columns[7].OptionsColumn.AllowSort = false;
+            this.tree.Columns[8].Caption = Resources.Markup;
+            this.tree.Columns[8].Format.FormatType = FormatType.Numeric;
+            this.tree.Columns[8].ColumnEdit = repositoryItemTextEdit;
+            this.tree.Columns[8].AppearanceCell.BackColor = Color.AliceBlue;
+            this.tree.Columns[8].OptionsColumn.AllowSort = false;
+            this.tree.Columns[9].Caption = Resources.Prix;
+            this.tree.Columns[9].Format.FormatType = FormatType.Numeric;
+            this.tree.Columns[9].Format.FormatString = "c2";
+            this.tree.Columns[9].OptionsColumn.ReadOnly = true;
+            this.tree.Columns[9].OptionsColumn.AllowEdit = false;
+            this.tree.Columns[9].OptionsColumn.AllowSort = false;
+            this.tree.Columns[10].Caption = Resources.Total;
+            this.tree.Columns[10].Format.FormatType = FormatType.Numeric;
+            this.tree.Columns[10].Format.FormatString = "c2";
+            this.tree.Columns[10].OptionsColumn.ReadOnly = true;
+            this.tree.Columns[10].OptionsColumn.AllowEdit = false;
+            this.tree.Columns[10].OptionsColumn.AllowSort = false;
+            this.tree.Columns[11].Visible = false;
+            this.tree.Columns[12].Visible = false;
+            this.tree.LookAndFeel.Style = LookAndFeelStyle.Skin;
+            this.tree.LookAndFeel.SkinName = "Office 2010 Silver";
+            this.tree.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.tree.OptionsMenu.EnableColumnMenu = false;
+            this.tree.CellValueChanged += new CellValueChangedEventHandler(this.tree_CellValueChanged);
+            this.tree.GetStateImage += new GetStateImageEventHandler(this.tree_GetStateImage);
+            this.tree.NodeCellStyle += new GetCustomNodeCellStyleEventHandler(this.tree_NodeCellStyle);
+            this.tree.MouseMove += new MouseEventHandler(this.tree_MouseMove);
+            this.tree.MouseLeave += new EventHandler(this.tree_MouseLeave);
+            this.tree.ShowingEditor += new CancelEventHandler(this.tree_ShowingEditor);
+            this.tree.ShownEditor += new EventHandler(this.tree_ShownEditor);
+            RepositoryItemTextEdit repositoryItemTextEdit1 = new RepositoryItemTextEdit();
+            repositoryItemTextEdit1.Mask.MaskType = MaskType.Numeric;
+            repositoryItemTextEdit1.Mask.EditMask = "c2";
+            repositoryItemTextEdit1.Mask.UseMaskAsDisplayFormat = true;
+            repositoryItemTextEdit1.Click += new EventHandler((object sender, EventArgs args) => {
+                TextEdit textEdit = sender as TextEdit;
+                if (textEdit != null)
+                {
+                    textEdit.SelectAll();
+                }
+            });
+            this.tree.Columns[7].ColumnEdit = repositoryItemTextEdit1;
+            RepositoryItemTextEdit repositoryItemTextEdit2 = new RepositoryItemTextEdit();
+            repositoryItemTextEdit2.Mask.MaskType = MaskType.Numeric;
+            repositoryItemTextEdit2.Mask.EditMask = "P1";
+            repositoryItemTextEdit2.Mask.UseMaskAsDisplayFormat = true;
+            repositoryItemTextEdit2.Click += new EventHandler((object sender, EventArgs args) => {
+                TextEdit textEdit = sender as TextEdit;
+                if (textEdit != null)
+                {
+                    textEdit.SelectAll();
+                }
+            });
+            this.tree.Columns[8].ColumnEdit = repositoryItemTextEdit2;
+        }
 
-		[CompilerGenerated]
-		private static void <InitializeTreeView>b__1(object sender, EventArgs args)
-		{
-			TextEdit textEdit = sender as TextEdit;
-			if (textEdit != null)
-			{
-				textEdit.SelectAll();
-			}
-		}
+        private void LoadResources()
+        {
+        }
 
-		[CompilerGenerated]
-		private static void <InitializeTreeView>b__2(object sender, EventArgs args)
-		{
-			TextEdit textEdit = sender as TextEdit;
-			if (textEdit != null)
-			{
-				textEdit.SelectAll();
-			}
-		}
+        public void Refresh(DrawObject groupObject)
+        {
+            this.project.EstimatingItems.Refresh(groupObject);
+            this.tree.RefreshDataSource();
+        }
 
-		private bool enabled;
+        public void RefreshAll()
+        {
+            this.project.EstimatingItems.RefreshAll();
+            this.tree.RefreshDataSource();
+            this.tree.BestFitColumns();
+            this.tree.ExpandAll();
+            if (this.tree.Nodes.Count == 0)
+            {
+                if (this.OnDisable != null)
+                {
+                    this.OnDisable(this, new EventArgs());
+                    return;
+                }
+            }
+            else if (this.OnEnable != null)
+            {
+                this.OnEnable(this, new EventArgs());
+            }
+        }
 
-		private bool exitNow;
+        public void Rename(DrawObject groupObject)
+        {
+            this.project.EstimatingItems.Rename(groupObject);
+            this.tree.RefreshDataSource();
+        }
 
-		private Project project;
+        public void RestoreState()
+        {
+            this.treeListViewState.SaveState();
+        }
 
-		private TreeList tree;
+        public void SaveState()
+        {
+            this.treeListViewState.SaveState();
+        }
 
-		private MainControl mainControl;
+        private void tree_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            try
+            {
+                int num = Utilities.ConvertToInt(e.Node.GetValue(0));
+                string str = e.Node.GetValue(1).ToString();
+                string str1 = e.Node.GetValue(2).ToString();
+                double num1 = Utilities.ConvertToDouble(e.Value, -1);
+                if (e.Column.FieldName == "CostEach")
+                {
+                    this.project.EstimatingItems.SaveEstimatingItemCost(num, str, str1, num1, this.drawingArea.ActivePlan.UnitScale.CurrentSystemType);
+                }
+                else if (e.Column.FieldName == "MarkupEach")
+                {
+                    this.project.EstimatingItems.SaveEstimatingItemMarkup(num, str, str1, num1);
+                }
+                Console.WriteLine(string.Concat("Value = ", e.Value));
+                if (this.OnModified != null)
+                {
+                    this.OnModified(this, new EventArgs());
+                }
+            }
+            catch
+            {
+            }
+        }
 
-		private DrawingArea drawingArea;
+        private void tree_GetStateImage(object sender, GetStateImageEventArgs e)
+        {
+        }
 
-		private ImageCollection imageCollection;
+        private void tree_MouseLeave(object sender, EventArgs e)
+        {
+            this.HotTrackNode = null;
+        }
 
-		private Font titleFont;
+        private void tree_MouseMove(object sender, MouseEventArgs e)
+        {
+            TreeListNode node;
+            TreeList treeList = sender as TreeList;
+            TreeListHitInfo treeListHitInfo = treeList.CalcHitInfo(new Point(e.X, e.Y));
+            if (treeListHitInfo.HitInfoType == HitInfoType.Cell)
+            {
+                node = treeListHitInfo.Node;
+            }
+            else
+            {
+                node = null;
+            }
+            this.HotTrackNode = node;
+        }
 
-		private Font defaultFont;
+        private void tree_NodeCellStyle(object sender, GetCustomNodeCellStyleEventArgs e)
+        {
+            if (this.exitNow)
+            {
+                return;
+            }
+            bool flag = (e.Node.Level != 0 ? false : e.Column.Caption == Resources.Nom);
+            if (e.Column.Caption == Resources.Nom)
+            {
+                e.Appearance.ForeColor = Color.Black;
+            }
+            else if (e.Column.Caption == Resources.Coûtant)
+            {
+                e.Appearance.ForeColor = Color.DarkSlateBlue;
+                try
+                {
+                    e.Appearance.BackColor = (e.Node.GetValue(11).ToString() == Utilities.GetCurrencySymbol() ? Color.White : Color.AliceBlue);
+                }
+                catch
+                {
+                }
+            }
+            else if (e.Column.Caption != Resources.Markup)
+            {
+                e.Appearance.ForeColor = Color.DarkSlateGray;
+            }
+            else
+            {
+                e.Appearance.ForeColor = Color.DarkSlateBlue;
+            }
+            e.Appearance.Font = (flag ? this.titleFont : this.defaultFont);
+            if (e.Node == this.HotTrackNode || e.Node.Selected)
+            {
+                e.Appearance.ForeColor = Color.FromKnownColor(KnownColor.ControlText);
+                e.Appearance.BackColor = Color.FromArgb(252, 229, 126);
+            }
+        }
 
-		private TreeListViewState treeListViewState;
+        private void tree_ShowingEditor(object sender, CancelEventArgs e)
+        {
+        }
 
-		private EventHandler OnEnable;
+        private void tree_ShownEditor(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.tree.FocusedColumn.Caption == Resources.Coûtant && this.tree.FocusedNode.GetValue(11).ToString() == Utilities.GetCurrencySymbol())
+                {
+                    this.tree.ActiveEditor.ReadOnly = true;
+                }
+            }
+            catch
+            {
+            }
+        }
 
-		private EventHandler OnDisable;
+        public event EventHandler OnDisable;
 
-		private EventHandler OnModified;
+        public event EventHandler OnEnable;
 
-		private TreeListNode hotTrackNode;
-
-		[CompilerGenerated]
-		private static EventHandler CS$<>9__CachedAnonymousMethodDelegate3;
-
-		[CompilerGenerated]
-		private static EventHandler CS$<>9__CachedAnonymousMethodDelegate4;
-
-		[CompilerGenerated]
-		private static EventHandler CS$<>9__CachedAnonymousMethodDelegate5;
-	}
+        public event EventHandler OnModified;
+    }
 }

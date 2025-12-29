@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -7,672 +9,533 @@ using System.Xml;
 
 namespace QuoterPlan
 {
-	public class Template : BaseFileInfo
-	{
-		public bool Save(string fileName)
-		{
-			bool result;
-			try
-			{
-				using (FileStream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-				{
-					using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.UTF8))
-					{
-						this.SaveToStream(streamWriter);
-						streamWriter.Close();
-						base.FullFileName = fileName;
-					}
-					fileStream.Close();
-					result = true;
-				}
-			}
-			catch (Exception exception)
-			{
-				Utilities.DisplayFileSaveError(fileName, exception);
-				result = false;
-			}
-			return result;
-		}
+    public class Template : BaseFileInfo
+    {
+        public CEstimatingItems COfficeProducts
+        {
+            get;
+            set;
+        }
 
-		private void SaveToStream(StreamWriter sw)
-		{
-			sw.WriteLine("<?xml version=\"1.0\"?>");
-			sw.WriteLine("<Template" + (this.DeletionForbidden ? " DeletionForbidden=\"True\"" : string.Empty) + ">");
-			string objectType = this.DrawObject.ObjectType;
-			string text = "Name=\"" + Utilities.EscapeString(this.DrawObject.Name) + "\" ";
-			if (objectType == "Counter")
-			{
-				DrawCounter drawCounter = (DrawCounter)this.DrawObject;
-				text = text + "Text=\"" + Utilities.EscapeString(drawCounter.Text) + "\" ";
-			}
-			object obj = text;
-			text = string.Concat(new object[]
-			{
-				obj,
-				"Color=\"",
-				this.DrawObject.Color.ToArgb(),
-				"\" "
-			});
-			if (objectType == "Perimeter" || objectType == "Line")
-			{
-				object obj2 = text;
-				text = string.Concat(new object[]
-				{
-					obj2,
-					"PenWidth=\"",
-					this.DrawObject.PenWidth,
-					"\" "
-				});
-			}
-			if (objectType == "Counter" || objectType == "Area")
-			{
-				object obj3 = text;
-				text = string.Concat(new object[]
-				{
-					obj3,
-					"FillColor=\"",
-					this.DrawObject.FillColor.ToArgb(),
-					"\" "
-				});
-			}
-			if (objectType == "Area")
-			{
-				object obj4 = text;
-				text = string.Concat(new object[]
-				{
-					obj4,
-					"Pattern=\"",
-					(int)((DrawPolyLine)this.DrawObject).Pattern,
-					"\" "
-				});
-			}
-			if (objectType == "Counter")
-			{
-				object obj5 = text;
-				text = string.Concat(new object[]
-				{
-					obj5,
-					"Shape=\"",
-					(int)((DrawCounter)this.DrawObject).Shape,
-					"\" "
-				});
-				object obj6 = text;
-				text = string.Concat(new object[]
-				{
-					obj6,
-					"DefaultSize=\"",
-					((DrawCounter)this.DrawObject).DefaultSize,
-					"\" "
-				});
-			}
-			if (objectType == "Area" || objectType == "Perimeter" || objectType == "Line")
-			{
-				DrawLine drawLine = (DrawLine)this.DrawObject;
-				if (drawLine.SlopeFactor.InternalValue > 0.0)
-				{
-					object obj7 = text;
-					text = string.Concat(new object[]
-					{
-						obj7,
-						"Slope=\"",
-						drawLine.SlopeFactor.InternalValue,
-						"\" "
-					});
-					object obj8 = text;
-					text = string.Concat(new object[]
-					{
-						obj8,
-						"SlopeType=\"",
-						(int)drawLine.SlopeFactor.SlopeType,
-						"\" "
-					});
-					object obj9 = text;
-					text = string.Concat(new object[]
-					{
-						obj9,
-						"SlopeApply=\"",
-						(int)drawLine.SlopeFactor.SlopeApplyType,
-						"\" "
-					});
-					object obj10 = text;
-					text = string.Concat(new object[]
-					{
-						obj10,
-						"HipValley=\"",
-						(int)drawLine.SlopeFactor.HipValley,
-						"\" "
-					});
-				}
-			}
-			sw.WriteLine(string.Concat(new string[]
-			{
-				"\t<",
-				objectType,
-				" ",
-				text,
-				"/>"
-			}));
-			if (this.DrawObject.Comment != string.Empty)
-			{
-				sw.WriteLine("\t<Comment>" + Utilities.EscapeString(this.DrawObject.Comment.Replace("\n", "`").Replace("\r", "")) + "</Comment>");
-			}
-			foreach (object obj11 in this.Presets.Collection)
-			{
-				Preset preset = (Preset)obj11;
-				string text2 = "\t<Extension ";
-				text2 = text2 + "DisplayName=\"" + Utilities.EscapeString(preset.DisplayName) + "\" ";
-				text2 = text2 + "Name=\"" + Utilities.EscapeString(preset.ExtensionName) + "\" ";
-				text2 = text2 + "Category=\"" + Utilities.EscapeString(preset.CategoryName) + "\" ";
-				object obj12 = text2;
-				text2 = string.Concat(new object[]
-				{
-					obj12,
-					"ScaleType=\"",
-					(int)preset.ScaleSystemType,
-					"\""
-				});
-				text2 += ">";
-				sw.WriteLine(text2);
-				foreach (object obj13 in preset.Choices.Collection)
-				{
-					PresetChoice presetChoice = (PresetChoice)obj13;
-					sw.WriteLine(string.Concat(new string[]
-					{
-						"\t\t<Choice Name=\"",
-						Utilities.EscapeString(presetChoice.ChoiceName),
-						"\" Element=\"",
-						Utilities.EscapeString(presetChoice.ChoiceElementName),
-						"\"/>"
-					}));
-				}
-				foreach (object obj14 in preset.Fields.Collection)
-				{
-					PresetField presetField = (PresetField)obj14;
-					sw.WriteLine(string.Concat(new object[]
-					{
-						"\t\t<Field Name=\"",
-						Utilities.EscapeString(presetField.Name),
-						"\" Value=\"",
-						presetField.Value,
-						"\"/>"
-					}));
-				}
-				sw.WriteLine("\t</Extension>");
-			}
-			foreach (CEstimatingItem cestimatingItem in this.EstimatingItems.Collection)
-			{
-				string text3 = "\t<CEstimatingItem ";
-				text3 = text3 + "ItemID=\"" + cestimatingItem.ItemID + "\" ";
-				text3 = text3 + "Description=\"" + Utilities.EscapeString(cestimatingItem.Description) + "\" ";
-				text3 = text3 + "Unit=\"" + Utilities.EscapeString(cestimatingItem.Unit) + "\" ";
-				object obj15 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj15,
-					"ItemType=\"",
-					(int)cestimatingItem.ItemType,
-					"\" "
-				});
-				object obj16 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj16,
-					"UnitMeasure=\"",
-					(int)cestimatingItem.UnitMeasure,
-					"\" "
-				});
-				object obj17 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj17,
-					"CoverageValue=\"",
-					cestimatingItem.CoverageValue,
-					"\" "
-				});
-				object obj18 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj18,
-					"CoverageUnit=\"",
-					cestimatingItem.CoverageUnit,
-					"\" "
-				});
-				object obj19 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj19,
-					"SectionID=\"",
-					cestimatingItem.SectionID,
-					"\" "
-				});
-				object obj20 = text3;
-				text3 = string.Concat(new object[]
-				{
-					obj20,
-					"SubSectionID=\"",
-					cestimatingItem.SubSectionID,
-					"\" "
-				});
-				text3 = text3 + "BidCode=\"" + Utilities.EscapeString(cestimatingItem.BidCode) + "\" ";
-				text3 = text3 + "Formula=\"" + Utilities.EscapeString(cestimatingItem.Formula) + "\"";
-				text3 += "/>";
-				sw.WriteLine(text3);
-			}
-			foreach (CEstimatingItem cestimatingItem2 in this.COfficeProducts.Collection)
-			{
-				string text4 = "\t<COfficeProduct ";
-				text4 = text4 + "ItemID=\"" + cestimatingItem2.ItemID + "\" ";
-				text4 = text4 + "Description=\"" + Utilities.EscapeString(cestimatingItem2.Description) + "\" ";
-				object obj21 = text4;
-				text4 = string.Concat(new object[]
-				{
-					obj21,
-					"Cost=\"",
-					cestimatingItem2.Value,
-					"\" "
-				});
-				text4 = text4 + "Unit=\"" + Utilities.EscapeString(cestimatingItem2.Unit) + "\" ";
-				text4 = text4 + "Formula=\"" + Utilities.EscapeString(cestimatingItem2.Formula) + "\"";
-				text4 += "/>";
-				sw.WriteLine(text4);
-			}
-			sw.WriteLine("</Template>");
-		}
+        public bool CreatedFromObject
+        {
+            get;
+            set;
+        }
 
-		public bool Open(string fileName, ExtensionsSupport extensionSupport)
-		{
-			this.Clear();
-			base.FullFileName = fileName;
-			bool result;
-			try
-			{
-				using (XmlTextReader xmlTextReader = new XmlTextReader(fileName))
-				{
-					this.ReadFromStream(xmlTextReader, extensionSupport);
-					xmlTextReader.Close();
-					result = (this.DrawObject != null);
-				}
-			}
-			catch (Exception exception)
-			{
-				Utilities.DisplayFileOpenError(fileName, exception);
-				result = false;
-			}
-			return result;
-		}
+        public bool DeletionForbidden
+        {
+            get;
+            set;
+        }
 
-		private void ReadFromStream(XmlTextReader reader, ExtensionsSupport extensionSupport)
-		{
-			string text = "";
-			Utilities.NumberDecimalSeparator();
-			Preset preset = null;
-			while (reader.Read())
-			{
-				XmlNodeType nodeType = reader.NodeType;
-				switch (nodeType)
-				{
-				case XmlNodeType.Element:
-				{
-					text = reader.Name.ToUpper();
-					string key;
-					switch (key = text)
-					{
-					case "TEMPLATE":
-						this.SystemTemplate = Utilities.GetBoolAttribute(reader, "SystemTemplate", false);
-						this.DeletionForbidden = Utilities.GetBoolAttribute(reader, "DeletionForbidden", false);
-						break;
-					case "AREA":
-					{
-						string stringAttribute = Utilities.GetStringAttribute(reader, "Pattern", string.Empty);
-						HatchStylePickerCombo.HatchStylePickerEnum pattern = (HatchStylePickerCombo.HatchStylePickerEnum)((stringAttribute == string.Empty) ? -1 : Utilities.GetIntegerAttribute(reader, "Pattern", -1));
-						DrawPolyLine drawPolyLine = new DrawPolyLine
-						{
-							Name = Utilities.GetStringAttribute(reader, "Name", ""),
-							Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
-							FillColor = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "FillColor", "0")),
-							Pattern = pattern,
-							Filled = true
-						};
-						drawPolyLine.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0.0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), SlopeFactor.HipValleyEnum.hipValleyUnavailable);
-						this.DrawObject = drawPolyLine;
-						break;
-					}
-					case "PERIMETER":
-					{
-						DrawPolyLine drawPolyLine2 = new DrawPolyLine
-						{
-							Name = Utilities.GetStringAttribute(reader, "Name", ""),
-							Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
-							PenWidth = Utilities.GetIntegerAttribute(reader, "PenWidth", 4),
-							Filled = false
-						};
-						drawPolyLine2.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0.0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), (SlopeFactor.HipValleyEnum)Utilities.GetIntegerAttribute(reader, "HipValley", 0));
-						this.DrawObject = drawPolyLine2;
-						break;
-					}
-					case "COUNTER":
-					{
-						DrawCounter drawObject = new DrawCounter
-						{
-							Name = Utilities.GetStringAttribute(reader, "Name", ""),
-							Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
-							FillColor = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "FillColor", "0")),
-							Shape = (DrawCounter.CounterShapeTypeEnum)Utilities.GetIntegerAttribute(reader, "Shape", 0),
-							DefaultSize = Utilities.GetIntegerAttribute(reader, "DefaultSize", 80),
-							Text = Utilities.GetStringAttribute(reader, "Text", "")
-						};
-						this.DrawObject = drawObject;
-						break;
-					}
-					case "LINE":
-					{
-						DrawLine drawLine = new DrawLine
-						{
-							Name = Utilities.GetStringAttribute(reader, "Name", ""),
-							Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
-							PenWidth = Utilities.GetIntegerAttribute(reader, "PenWidth", 4)
-						};
-						drawLine.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0.0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), (SlopeFactor.HipValleyEnum)Utilities.GetIntegerAttribute(reader, "HipValley", 0));
-						this.DrawObject = drawLine;
-						break;
-					}
-					case "EXTENSION":
-					{
-						UnitScale.UnitSystem scaleSystemType;
-						if (this.SystemTemplate)
-						{
-							scaleSystemType = UnitScale.DefaultUnitSystem();
-						}
-						else
-						{
-							scaleSystemType = (UnitScale.UnitSystem)Utilities.GetIntegerAttribute(reader, "ScaleType", 2);
-						}
-						string stringAttribute2 = Utilities.GetStringAttribute(reader, "Name", "");
-						string text2 = Utilities.GetStringAttribute(reader, "DisplayName", "");
-						if (text2 == "")
-						{
-							ExtensionCategory extensionCategory = null;
-							Extension extension = extensionSupport.FindExtension(ref extensionCategory, stringAttribute2);
-							if (extension != null)
-							{
-								text2 = extension.Caption;
-							}
-						}
-						if (text2 == "")
-						{
-							text2 = stringAttribute2;
-						}
-						text2 = this.Presets.GetFreeDisplayName(text2, "");
-						preset = new Preset(Guid.NewGuid().ToString(), text2, Utilities.GetStringAttribute(reader, "Category", ""), stringAttribute2, scaleSystemType);
-						this.Presets.Add(preset);
-						break;
-					}
-					case "CESTIMATINGITEM":
-					{
-						CEstimatingItem cestimatingItem = new CEstimatingItem();
-						cestimatingItem.ItemID = Utilities.GetStringAttribute(reader, "ItemID", "");
-						if (cestimatingItem.ItemID != "")
-						{
-							cestimatingItem.Description = Utilities.GetStringAttribute(reader, "Description", "");
-							cestimatingItem.Value = -1.0;
-							cestimatingItem.Unit = Utilities.GetStringAttribute(reader, "Unit", "");
-							cestimatingItem.ItemType = (DBEstimatingItem.EstimatingItemType)Utilities.GetIntegerAttribute(reader, "ItemType", 0);
-							cestimatingItem.UnitMeasure = (DBEstimatingItem.UnitMeasureType)Utilities.GetIntegerAttribute(reader, "UnitMeasure", 0);
-							cestimatingItem.CoverageValue = Utilities.GetDoubleAttribute(reader, "CoverageValue", 0.0);
-							cestimatingItem.CoverageUnit = (double)Utilities.GetIntegerAttribute(reader, "CoverageUnit", 0);
-							cestimatingItem.SectionID = Utilities.GetIntegerAttribute(reader, "SectionID", 0);
-							cestimatingItem.SubSectionID = Utilities.GetIntegerAttribute(reader, "SubSectionID", 0);
-							cestimatingItem.BidCode = Utilities.GetStringAttribute(reader, "BidCode", "");
-							cestimatingItem.Formula = Utilities.GetStringAttribute(reader, "Formula", "");
-							cestimatingItem.Tag = cestimatingItem;
-							this.EstimatingItems.Add(cestimatingItem);
-						}
-						break;
-					}
-					case "COFFICEPRODUCT":
-					{
-						CEstimatingItem cestimatingItem2 = new CEstimatingItem();
-						cestimatingItem2.ItemID = Utilities.GetStringAttribute(reader, "ItemID", "");
-						if (cestimatingItem2.ItemID != "")
-						{
-							cestimatingItem2.Description = Utilities.GetStringAttribute(reader, "Description", "");
-							cestimatingItem2.Value = Utilities.GetDoubleAttribute(reader, "Cost", 0.0);
-							cestimatingItem2.Unit = Utilities.GetStringAttribute(reader, "Unit", "");
-							cestimatingItem2.Formula = Utilities.GetStringAttribute(reader, "Formula", "");
-							cestimatingItem2.Tag = cestimatingItem2;
-							this.COfficeProducts.Add(cestimatingItem2);
-						}
-						break;
-					}
-					case "CHOICE":
-						if (preset != null)
-						{
-							string stringAttribute3;
-							if (this.SystemTemplate)
-							{
-								if (UnitScale.DefaultUnitSystem() == UnitScale.UnitSystem.imperial)
-								{
-									stringAttribute3 = Utilities.GetStringAttribute(reader, "imperialElement", "");
-								}
-								else
-								{
-									stringAttribute3 = Utilities.GetStringAttribute(reader, "metricElement", "");
-								}
-							}
-							else
-							{
-								stringAttribute3 = Utilities.GetStringAttribute(reader, "Element", "");
-							}
-							preset.Choices.Add(new PresetChoice(Utilities.GetStringAttribute(reader, "Name", ""), stringAttribute3));
-						}
-						break;
-					case "FIELD":
-						if (preset != null)
-						{
-							object stringAttribute4;
-							if (this.SystemTemplate)
-							{
-								if (UnitScale.DefaultUnitSystem() == UnitScale.UnitSystem.imperial)
-								{
-									stringAttribute4 = Utilities.GetStringAttribute(reader, "imperialValue", "");
-								}
-								else
-								{
-									stringAttribute4 = Utilities.GetStringAttribute(reader, "metricValue", "");
-								}
-							}
-							else
-							{
-								stringAttribute4 = Utilities.GetStringAttribute(reader, "Value", "");
-							}
-							preset.Fields.Add(new PresetField(Utilities.GetStringAttribute(reader, "Name", ""), stringAttribute4));
-						}
-						break;
-					}
-					break;
-				}
-				case XmlNodeType.Attribute:
-					break;
-				case XmlNodeType.Text:
-				{
-					string a;
-					if ((a = text) != null && a == "COMMENT")
-					{
-						this.DrawObject.Comment = reader.Value.Trim().Replace("`", "\r\n");
-					}
-					break;
-				}
-				default:
-					if (nodeType == XmlNodeType.EndElement)
-					{
-						string a2;
-						if ((a2 = reader.Name.ToUpper()) != null && a2 == "EXTENSION")
-						{
-							preset = null;
-						}
-					}
-					break;
-				}
-			}
-		}
+        public DrawObject DrawObject
+        {
+            get;
+            set;
+        }
 
-		public string ID
-		{
-			get
-			{
-				return Path.GetFileNameWithoutExtension(base.FileName);
-			}
-		}
+        public CEstimatingItems EstimatingItems
+        {
+            get;
+            set;
+        }
 
-		public bool SystemTemplate
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<SystemTemplate>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<SystemTemplate>k__BackingField = value;
-			}
-		}
+        public string ID
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(base.FileName);
+            }
+        }
 
-		public bool DeletionForbidden
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<DeletionForbidden>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<DeletionForbidden>k__BackingField = value;
-			}
-		}
+        public Presets Presets
+        {
+            get;
+            private set;
+        }
 
-		public bool CreatedFromObject
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<CreatedFromObject>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<CreatedFromObject>k__BackingField = value;
-			}
-		}
+        public bool SystemTemplate
+        {
+            get;
+            set;
+        }
 
-		public DrawObject DrawObject
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<DrawObject>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<DrawObject>k__BackingField = value;
-			}
-		}
+        public Template()
+        {
+            this.Presets = new Presets();
+            this.EstimatingItems = new CEstimatingItems();
+            this.COfficeProducts = new CEstimatingItems();
+            this.SystemTemplate = false;
+        }
 
-		public Presets Presets
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<Presets>k__BackingField;
-			}
-			[CompilerGenerated]
-			private set
-			{
-				this.<Presets>k__BackingField = value;
-			}
-		}
+        public override void Clear()
+        {
+            base.Clear();
+            this.DrawObject = null;
+            this.Presets.Clear();
+            this.EstimatingItems.Clear();
+            this.COfficeProducts = new CEstimatingItems();
+            this.SystemTemplate = false;
+        }
 
-		public CEstimatingItems EstimatingItems
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<EstimatingItems>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<EstimatingItems>k__BackingField = value;
-			}
-		}
+        public override void Dump()
+        {
+            base.Dump();
+            if (this.DrawObject != null)
+            {
+                Console.WriteLine(string.Concat("Name = ", this.DrawObject.Name));
+                Console.WriteLine(string.Concat("Color = ", this.DrawObject.Color));
+                Console.WriteLine(string.Concat("PenType = ", this.DrawObject.PenType));
+            }
+            this.Presets.Dump();
+            this.EstimatingItems.Dump();
+            this.COfficeProducts.Dump();
+        }
 
-		public CEstimatingItems COfficeProducts
-		{
-			[CompilerGenerated]
-			get
-			{
-				return this.<COfficeProducts>k__BackingField;
-			}
-			[CompilerGenerated]
-			set
-			{
-				this.<COfficeProducts>k__BackingField = value;
-			}
-		}
+        public bool Open(string fileName, ExtensionsSupport extensionSupport)
+        {
+            bool drawObject;
+            this.Clear();
+            base.FullFileName = fileName;
+            try
+            {
+                using (XmlTextReader xmlTextReader = new XmlTextReader(fileName))
+                {
+                    this.ReadFromStream(xmlTextReader, extensionSupport);
+                    xmlTextReader.Close();
+                    drawObject = this.DrawObject != null;
+                }
+            }
+            catch (Exception exception)
+            {
+                Utilities.DisplayFileOpenError(fileName, exception);
+                drawObject = false;
+            }
+            return drawObject;
+        }
 
-		public Template()
-		{
-			this.Presets = new Presets();
-			this.EstimatingItems = new CEstimatingItems();
-			this.COfficeProducts = new CEstimatingItems();
-			this.SystemTemplate = false;
-		}
+        private void ReadFromStream(XmlTextReader reader, ExtensionsSupport extensionSupport)
+        {
+            string stringAttribute;
+            object obj;
+            int num;
+            HatchStylePickerCombo.HatchStylePickerEnum integerAttribute;
+            string upper = "";
+            Utilities.NumberDecimalSeparator();
+            Preset preset = null;
+        Label1:
+            while (reader.Read())
+            {
+                XmlNodeType nodeType = reader.NodeType;
+                switch (nodeType)
+                {
+                    case XmlNodeType.Element:
+                        {
+                            upper = reader.Name.ToUpper();
+                            string str = upper;
+                            string str1 = str;
+                            if (str == null)
+                            {
+                                continue;
+                            }
+                            if (u003cPrivateImplementationDetailsu003eu007bE0438CCFu002d7425u002d4F3Bu002dBA1Bu002d66DC2567D6E9u007d.u0024u0024method0x6000492u002d1 == null)
+                            {
+                                u003cPrivateImplementationDetailsu003eu007bE0438CCFu002d7425u002d4F3Bu002dBA1Bu002d66DC2567D6E9u007d.u0024u0024method0x6000492u002d1 = new Dictionary<string, int>(10)
+                            {
+                                { "TEMPLATE", 0 },
+                                { "AREA", 1 },
+                                { "PERIMETER", 2 },
+                                { "COUNTER", 3 },
+                                { "LINE", 4 },
+                                { "EXTENSION", 5 },
+                                { "CESTIMATINGITEM", 6 },
+                                { "COFFICEPRODUCT", 7 },
+                                { "CHOICE", 8 },
+                                { "FIELD", 9 }
+                            };
+                            }
+                            if (!u003cPrivateImplementationDetailsu003eu007bE0438CCFu002d7425u002d4F3Bu002dBA1Bu002d66DC2567D6E9u007d.u0024u0024method0x6000492u002d1.TryGetValue(str1, out num))
+                            {
+                                continue;
+                            }
+                            switch (num)
+                            {
+                                case 0:
+                                    {
+                                        this.SystemTemplate = Utilities.GetBoolAttribute(reader, "SystemTemplate", false);
+                                        this.DeletionForbidden = Utilities.GetBoolAttribute(reader, "DeletionForbidden", false);
+                                        continue;
+                                    }
+                                case 1:
+                                    {
+                                        if (Utilities.GetStringAttribute(reader, "Pattern", string.Empty) == string.Empty)
+                                        {
+                                            integerAttribute = HatchStylePickerCombo.HatchStylePickerEnum.Solid;
+                                        }
+                                        else
+                                        {
+                                            integerAttribute = (HatchStylePickerCombo.HatchStylePickerEnum)Utilities.GetIntegerAttribute(reader, "Pattern", -1);
+                                        }
+                                        HatchStylePickerCombo.HatchStylePickerEnum hatchStylePickerEnum = integerAttribute;
+                                        DrawPolyLine drawPolyLine = new DrawPolyLine()
+                                        {
+                                            Name = Utilities.GetStringAttribute(reader, "Name", ""),
+                                            Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
+                                            FillColor = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "FillColor", "0")),
+                                            Pattern = hatchStylePickerEnum,
+                                            Filled = true
+                                        };
+                                        DrawPolyLine drawPolyLine1 = drawPolyLine;
+                                        drawPolyLine1.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), SlopeFactor.HipValleyEnum.hipValleyUnavailable);
+                                        this.DrawObject = drawPolyLine1;
+                                        continue;
+                                    }
+                                case 2:
+                                    {
+                                        DrawPolyLine drawPolyLine2 = new DrawPolyLine()
+                                        {
+                                            Name = Utilities.GetStringAttribute(reader, "Name", ""),
+                                            Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
+                                            PenWidth = Utilities.GetIntegerAttribute(reader, "PenWidth", 4),
+                                            Filled = false
+                                        };
+                                        DrawPolyLine drawPolyLine3 = drawPolyLine2;
+                                        drawPolyLine3.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), (SlopeFactor.HipValleyEnum)Utilities.GetIntegerAttribute(reader, "HipValley", 0));
+                                        this.DrawObject = drawPolyLine3;
+                                        continue;
+                                    }
+                                case 3:
+                                    {
+                                        DrawCounter drawCounter = new DrawCounter()
+                                        {
+                                            Name = Utilities.GetStringAttribute(reader, "Name", ""),
+                                            Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
+                                            FillColor = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "FillColor", "0")),
+                                            Shape = (DrawCounter.CounterShapeTypeEnum)Utilities.GetIntegerAttribute(reader, "Shape", 0),
+                                            DefaultSize = Utilities.GetIntegerAttribute(reader, "DefaultSize", 80),
+                                            Text = Utilities.GetStringAttribute(reader, "Text", "")
+                                        };
+                                        this.DrawObject = drawCounter;
+                                        continue;
+                                    }
+                                case 4:
+                                    {
+                                        DrawLine drawLine = new DrawLine()
+                                        {
+                                            Name = Utilities.GetStringAttribute(reader, "Name", ""),
+                                            Color = ColorTranslator.FromHtml(Utilities.GetStringAttribute(reader, "Color", "0")),
+                                            PenWidth = Utilities.GetIntegerAttribute(reader, "PenWidth", 4)
+                                        };
+                                        DrawLine drawLine1 = drawLine;
+                                        drawLine1.SetSlopeFactor(Utilities.GetDoubleAttribute(reader, "Slope", 0), (SlopeFactor.SlopeTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeType", 0), (SlopeFactor.SlopeApplyTypeEnum)Utilities.GetIntegerAttribute(reader, "SlopeApply", 1), (SlopeFactor.HipValleyEnum)Utilities.GetIntegerAttribute(reader, "HipValley", 0));
+                                        this.DrawObject = drawLine1;
+                                        continue;
+                                    }
+                                case 5:
+                                    {
+                                        UnitScale.UnitSystem unitSystem = UnitScale.UnitSystem.undefined;
+                                        if (!this.SystemTemplate)
+                                        {
+                                            unitSystem = (UnitScale.UnitSystem)Utilities.GetIntegerAttribute(reader, "ScaleType", 2);
+                                        }
+                                        else
+                                        {
+                                            unitSystem = UnitScale.DefaultUnitSystem();
+                                        }
+                                        string stringAttribute1 = Utilities.GetStringAttribute(reader, "Name", "");
+                                        string caption = Utilities.GetStringAttribute(reader, "DisplayName", "");
+                                        if (caption == "")
+                                        {
+                                            ExtensionCategory extensionCategory = null;
+                                            Extension extension = extensionSupport.FindExtension(ref extensionCategory, stringAttribute1);
+                                            if (extension != null)
+                                            {
+                                                caption = extension.Caption;
+                                            }
+                                        }
+                                        if (caption == "")
+                                        {
+                                            caption = stringAttribute1;
+                                        }
+                                        caption = this.Presets.GetFreeDisplayName(caption, "");
+                                        Guid guid = Guid.NewGuid();
+                                        preset = new Preset(guid.ToString(), caption, Utilities.GetStringAttribute(reader, "Category", ""), stringAttribute1, unitSystem);
+                                        this.Presets.Add(preset);
+                                        continue;
+                                    }
+                                case 6:
+                                    {
+                                        CEstimatingItem cEstimatingItem = new CEstimatingItem()
+                                        {
+                                            ItemID = Utilities.GetStringAttribute(reader, "ItemID", "")
+                                        };
+                                        if (cEstimatingItem.ItemID == "")
+                                        {
+                                            continue;
+                                        }
+                                        cEstimatingItem.Description = Utilities.GetStringAttribute(reader, "Description", "");
+                                        cEstimatingItem.Value = -1;
+                                        cEstimatingItem.Unit = Utilities.GetStringAttribute(reader, "Unit", "");
+                                        cEstimatingItem.ItemType = (DBEstimatingItem.EstimatingItemType)Utilities.GetIntegerAttribute(reader, "ItemType", 0);
+                                        cEstimatingItem.UnitMeasure = (DBEstimatingItem.UnitMeasureType)Utilities.GetIntegerAttribute(reader, "UnitMeasure", 0);
+                                        cEstimatingItem.CoverageValue = Utilities.GetDoubleAttribute(reader, "CoverageValue", 0);
+                                        cEstimatingItem.CoverageUnit = (double)Utilities.GetIntegerAttribute(reader, "CoverageUnit", 0);
+                                        cEstimatingItem.SectionID = Utilities.GetIntegerAttribute(reader, "SectionID", 0);
+                                        cEstimatingItem.SubSectionID = Utilities.GetIntegerAttribute(reader, "SubSectionID", 0);
+                                        cEstimatingItem.BidCode = Utilities.GetStringAttribute(reader, "BidCode", "");
+                                        cEstimatingItem.Formula = Utilities.GetStringAttribute(reader, "Formula", "");
+                                        cEstimatingItem.Tag = cEstimatingItem;
+                                        this.EstimatingItems.Add(cEstimatingItem);
+                                        continue;
+                                    }
+                                case 7:
+                                    {
+                                        CEstimatingItem doubleAttribute = new CEstimatingItem()
+                                        {
+                                            ItemID = Utilities.GetStringAttribute(reader, "ItemID", "")
+                                        };
+                                        if (doubleAttribute.ItemID == "")
+                                        {
+                                            continue;
+                                        }
+                                        doubleAttribute.Description = Utilities.GetStringAttribute(reader, "Description", "");
+                                        doubleAttribute.Value = Utilities.GetDoubleAttribute(reader, "Cost", 0);
+                                        doubleAttribute.Unit = Utilities.GetStringAttribute(reader, "Unit", "");
+                                        doubleAttribute.Formula = Utilities.GetStringAttribute(reader, "Formula", "");
+                                        doubleAttribute.Tag = doubleAttribute;
+                                        this.COfficeProducts.Add(doubleAttribute);
+                                        continue;
+                                    }
+                                case 8:
+                                    {
+                                        if (preset == null)
+                                        {
+                                            continue;
+                                        }
+                                        if (!this.SystemTemplate)
+                                        {
+                                            stringAttribute = Utilities.GetStringAttribute(reader, "Element", "");
+                                        }
+                                        else
+                                        {
+                                            stringAttribute = (UnitScale.DefaultUnitSystem() != UnitScale.UnitSystem.imperial ? Utilities.GetStringAttribute(reader, "metricElement", "") : Utilities.GetStringAttribute(reader, "imperialElement", ""));
+                                        }
+                                        preset.Choices.Add(new PresetChoice(Utilities.GetStringAttribute(reader, "Name", ""), stringAttribute));
+                                        continue;
+                                    }
+                                case 9:
+                                    {
+                                        if (preset == null)
+                                        {
+                                            continue;
+                                        }
+                                        if (!this.SystemTemplate)
+                                        {
+                                            obj = Utilities.GetStringAttribute(reader, "Value", "");
+                                        }
+                                        else
+                                        {
+                                            obj = (UnitScale.DefaultUnitSystem() != UnitScale.UnitSystem.imperial ? Utilities.GetStringAttribute(reader, "metricValue", "") : Utilities.GetStringAttribute(reader, "imperialValue", ""));
+                                        }
+                                        preset.Fields.Add(new PresetField(Utilities.GetStringAttribute(reader, "Name", ""), obj));
+                                        continue;
+                                    }
+                                default:
+                                    {
+                                        continue;
+                                    }
+                            }
+                            break;
+                        }
+                    case XmlNodeType.Attribute:
+                        {
+                            continue;
+                        }
+                    case XmlNodeType.Text:
+                        {
+                            string str2 = upper;
+                            if (str2 == null || !(str2 == "COMMENT"))
+                            {
+                                continue;
+                            }
+                            this.DrawObject.Comment = reader.Value.Trim().Replace("`", "\r\n");
+                            continue;
+                        }
+                    default:
+                        {
+                            if (nodeType == XmlNodeType.EndElement)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                goto Label1;
+                            }
+                        }
+                }
+                string upper1 = reader.Name.ToUpper();
+                if (upper1 == null || !(upper1 == "EXTENSION"))
+                {
+                    continue;
+                }
+                preset = null;
+            }
+        }
 
-		public override void Clear()
-		{
-			base.Clear();
-			this.DrawObject = null;
-			this.Presets.Clear();
-			this.EstimatingItems.Clear();
-			this.COfficeProducts = new CEstimatingItems();
-			this.SystemTemplate = false;
-		}
+        public bool Save(string fileName)
+        {
+            bool flag;
+            try
+            {
+                using (FileStream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    using (StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.UTF8))
+                    {
+                        this.SaveToStream(streamWriter);
+                        streamWriter.Close();
+                        base.FullFileName = fileName;
+                    }
+                    fileStream.Close();
+                    flag = true;
+                }
+            }
+            catch (Exception exception)
+            {
+                Utilities.DisplayFileSaveError(fileName, exception);
+                flag = false;
+            }
+            return flag;
+        }
 
-		public override void Dump()
-		{
-			base.Dump();
-			if (this.DrawObject != null)
-			{
-				Console.WriteLine("Name = " + this.DrawObject.Name);
-				Console.WriteLine("Color = " + this.DrawObject.Color);
-				Console.WriteLine("PenType = " + this.DrawObject.PenType);
-			}
-			this.Presets.Dump();
-			this.EstimatingItems.Dump();
-			this.COfficeProducts.Dump();
-		}
-
-		[CompilerGenerated]
-		private bool <SystemTemplate>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <DeletionForbidden>k__BackingField;
-
-		[CompilerGenerated]
-		private bool <CreatedFromObject>k__BackingField;
-
-		[CompilerGenerated]
-		private DrawObject <DrawObject>k__BackingField;
-
-		[CompilerGenerated]
-		private Presets <Presets>k__BackingField;
-
-		[CompilerGenerated]
-		private CEstimatingItems <EstimatingItems>k__BackingField;
-
-		[CompilerGenerated]
-		private CEstimatingItems <COfficeProducts>k__BackingField;
-	}
+        private void SaveToStream(StreamWriter sw)
+        {
+            sw.WriteLine("<?xml version=\"1.0\"?>");
+            sw.WriteLine(string.Concat("<Template", (this.DeletionForbidden ? " DeletionForbidden=\"True\"" : string.Empty), ">"));
+            string objectType = this.DrawObject.ObjectType;
+            string str = string.Concat("Name=\"", Utilities.EscapeString(this.DrawObject.Name), "\" ");
+            if (objectType == "Counter")
+            {
+                DrawCounter drawObject = (DrawCounter)this.DrawObject;
+                str = string.Concat(str, "Text=\"", Utilities.EscapeString(drawObject.Text), "\" ");
+            }
+            object[] argb = new object[] { str, "Color=\"", null, null };
+            Color color = this.DrawObject.Color;
+            argb[2] = color.ToArgb();
+            argb[3] = "\" ";
+            str = string.Concat(argb);
+            if (objectType == "Perimeter" || objectType == "Line")
+            {
+                object obj = str;
+                object[] penWidth = new object[] { obj, "PenWidth=\"", this.DrawObject.PenWidth, "\" " };
+                str = string.Concat(penWidth);
+            }
+            if (objectType == "Counter" || objectType == "Area")
+            {
+                object[] objArray = new object[] { str, "FillColor=\"", null, null };
+                Color fillColor = this.DrawObject.FillColor;
+                objArray[2] = fillColor.ToArgb();
+                objArray[3] = "\" ";
+                str = string.Concat(objArray);
+            }
+            if (objectType == "Area")
+            {
+                object obj1 = str;
+                object[] pattern = new object[] { obj1, "Pattern=\"", (int)((DrawPolyLine)this.DrawObject).Pattern, "\" " };
+                str = string.Concat(pattern);
+            }
+            if (objectType == "Counter")
+            {
+                object obj2 = str;
+                object[] shape = new object[] { obj2, "Shape=\"", (int)((DrawCounter)this.DrawObject).Shape, "\" " };
+                str = string.Concat(shape);
+                object obj3 = str;
+                object[] defaultSize = new object[] { obj3, "DefaultSize=\"", ((DrawCounter)this.DrawObject).DefaultSize, "\" " };
+                str = string.Concat(defaultSize);
+            }
+            if (objectType == "Area" || objectType == "Perimeter" || objectType == "Line")
+            {
+                DrawLine drawLine = (DrawLine)this.DrawObject;
+                if (drawLine.SlopeFactor.InternalValue > 0)
+                {
+                    object obj4 = str;
+                    object[] internalValue = new object[] { obj4, "Slope=\"", drawLine.SlopeFactor.InternalValue, "\" " };
+                    str = string.Concat(internalValue);
+                    object obj5 = str;
+                    object[] slopeType = new object[] { obj5, "SlopeType=\"", (int)drawLine.SlopeFactor.SlopeType, "\" " };
+                    str = string.Concat(slopeType);
+                    object obj6 = str;
+                    object[] slopeApplyType = new object[] { obj6, "SlopeApply=\"", (int)drawLine.SlopeFactor.SlopeApplyType, "\" " };
+                    str = string.Concat(slopeApplyType);
+                    object obj7 = str;
+                    object[] hipValley = new object[] { obj7, "HipValley=\"", (int)drawLine.SlopeFactor.HipValley, "\" " };
+                    str = string.Concat(hipValley);
+                }
+            }
+            string[] strArrays = new string[] { "\t<", objectType, " ", str, "/>" };
+            sw.WriteLine(string.Concat(strArrays));
+            if (this.DrawObject.Comment != string.Empty)
+            {
+                sw.WriteLine(string.Concat("\t<Comment>", Utilities.EscapeString(this.DrawObject.Comment.Replace("\n", "`").Replace("\r", "")), "</Comment>"));
+            }
+            foreach (Preset collection in this.Presets.Collection)
+            {
+                string str1 = "\t<Extension ";
+                str1 = string.Concat(str1, "DisplayName=\"", Utilities.EscapeString(collection.DisplayName), "\" ");
+                str1 = string.Concat(str1, "Name=\"", Utilities.EscapeString(collection.ExtensionName), "\" ");
+                str1 = string.Concat(str1, "Category=\"", Utilities.EscapeString(collection.CategoryName), "\" ");
+                object obj8 = str1;
+                object[] scaleSystemType = new object[] { obj8, "ScaleType=\"", (int)collection.ScaleSystemType, "\"" };
+                str1 = string.Concat(scaleSystemType);
+                sw.WriteLine(string.Concat(str1, ">"));
+                foreach (PresetChoice presetChoice in collection.Choices.Collection)
+                {
+                    string[] strArrays1 = new string[] { "\t\t<Choice Name=\"", Utilities.EscapeString(presetChoice.ChoiceName), "\" Element=\"", Utilities.EscapeString(presetChoice.ChoiceElementName), "\"/>" };
+                    sw.WriteLine(string.Concat(strArrays1));
+                }
+                foreach (PresetField presetField in collection.Fields.Collection)
+                {
+                    object[] objArray1 = new object[] { "\t\t<Field Name=\"", Utilities.EscapeString(presetField.Name), "\" Value=\"", presetField.Value, "\"/>" };
+                    sw.WriteLine(string.Concat(objArray1));
+                }
+                sw.WriteLine("\t</Extension>");
+            }
+            foreach (CEstimatingItem cEstimatingItem in this.EstimatingItems.Collection)
+            {
+                string str2 = "\t<CEstimatingItem ";
+                str2 = string.Concat(str2, "ItemID=\"", cEstimatingItem.ItemID, "\" ");
+                str2 = string.Concat(str2, "Description=\"", Utilities.EscapeString(cEstimatingItem.Description), "\" ");
+                str2 = string.Concat(str2, "Unit=\"", Utilities.EscapeString(cEstimatingItem.Unit), "\" ");
+                object obj9 = str2;
+                object[] itemType = new object[] { obj9, "ItemType=\"", (int)cEstimatingItem.ItemType, "\" " };
+                object obj10 = string.Concat(itemType);
+                object[] unitMeasure = new object[] { obj10, "UnitMeasure=\"", (int)cEstimatingItem.UnitMeasure, "\" " };
+                object obj11 = string.Concat(unitMeasure);
+                object[] coverageValue = new object[] { obj11, "CoverageValue=\"", cEstimatingItem.CoverageValue, "\" " };
+                object obj12 = string.Concat(coverageValue);
+                object[] coverageUnit = new object[] { obj12, "CoverageUnit=\"", cEstimatingItem.CoverageUnit, "\" " };
+                object obj13 = string.Concat(coverageUnit);
+                object[] sectionID = new object[] { obj13, "SectionID=\"", cEstimatingItem.SectionID, "\" " };
+                object obj14 = string.Concat(sectionID);
+                object[] subSectionID = new object[] { obj14, "SubSectionID=\"", cEstimatingItem.SubSectionID, "\" " };
+                str2 = string.Concat(subSectionID);
+                str2 = string.Concat(str2, "BidCode=\"", Utilities.EscapeString(cEstimatingItem.BidCode), "\" ");
+                str2 = string.Concat(str2, "Formula=\"", Utilities.EscapeString(cEstimatingItem.Formula), "\"");
+                sw.WriteLine(string.Concat(str2, "/>"));
+            }
+            foreach (CEstimatingItem collection1 in this.COfficeProducts.Collection)
+            {
+                string str3 = "\t<COfficeProduct ";
+                str3 = string.Concat(str3, "ItemID=\"", collection1.ItemID, "\" ");
+                str3 = string.Concat(str3, "Description=\"", Utilities.EscapeString(collection1.Description), "\" ");
+                object obj15 = str3;
+                object[] value = new object[] { obj15, "Cost=\"", collection1.Value, "\" " };
+                str3 = string.Concat(value);
+                str3 = string.Concat(str3, "Unit=\"", Utilities.EscapeString(collection1.Unit), "\" ");
+                str3 = string.Concat(str3, "Formula=\"", Utilities.EscapeString(collection1.Formula), "\"");
+                sw.WriteLine(string.Concat(str3, "/>"));
+            }
+            sw.WriteLine("</Template>");
+        }
+    }
 }

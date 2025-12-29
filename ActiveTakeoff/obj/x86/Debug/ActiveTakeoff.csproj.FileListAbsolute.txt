@@ -1,0 +1,2 @@
+C:\estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.csproj.AssemblyReference.cache
+C:\estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.csproj.CoreCompileInputs.cache
