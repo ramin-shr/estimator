@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace QuoterPlan
 {
-    public class ColorPickerCombo : ComboBoxEx
+    public class ColorPickerCombo : DevComponents.DotNetBar.Controls.ComboBoxEx
     {
         private IContainer components;
 

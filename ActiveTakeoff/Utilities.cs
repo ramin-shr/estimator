@@ -20,6 +20,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
+using Clipboard = System.Windows.Forms.Clipboard;
 
 namespace QuoterPlan
 {
@@ -362,7 +363,7 @@ namespace QuoterPlan
             DataFormats.Format format = DataFormats.GetFormat(formatName);
             IDataObject dataObject = new DataObject();
             dataObject.SetData(format.Name, autoConvert, data);
-            Clipboard.SetDataObject(dataObject, false);
+            System.Windows.Forms.Clipboard.SetDataObject(dataObject, false);
         }
 
         public static bool CopyToClipboard(string text)
@@ -370,8 +371,8 @@ namespace QuoterPlan
             bool flag;
             try
             {
-                Clipboard.Clear();
-                Clipboard.SetText(text);
+                System.Windows.Forms.Clipboard.Clear();
+                System.Windows.Forms.Clipboard.SetText(text);
                 flag = true;
             }
             catch (Exception exception)
@@ -387,8 +388,8 @@ namespace QuoterPlan
             bool flag;
             try
             {
-                Clipboard.Clear();
-                Clipboard.SetText(text, textDataFormat);
+                System.Windows.Forms.Clipboard.Clear();
+                System.Windows.Forms.Clipboard.SetText(text, textDataFormat);
                 flag = true;
             }
             catch (Exception exception)
@@ -1426,7 +1427,7 @@ namespace QuoterPlan
         public static object GetFromClipboard(string formatName)
         {
             object data = null;
-            IDataObject dataObject = Clipboard.GetDataObject();
+            IDataObject dataObject = System.Windows.Forms.Clipboard.GetDataObject();
             if (dataObject.GetDataPresent(formatName))
             {
                 data = dataObject.GetData(formatName);

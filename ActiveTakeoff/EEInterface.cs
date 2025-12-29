@@ -136,7 +136,7 @@ namespace QuoterPlan
             try
             {
                 EEExchangeData eEExchangeDatum = new EEExchangeData();
-                IDataObject dataObject = Clipboard.GetDataObject();
+                IDataObject dataObject = System.Windows.Forms.Clipboard.GetDataObject();
                 if (dataObject.GetDataPresent("Expert Estimator Item Select Data"))
                 {
                     Stream data = (Stream)dataObject.GetData("Expert Estimator Item Select Data");

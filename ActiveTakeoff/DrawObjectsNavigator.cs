@@ -24,7 +24,7 @@ namespace QuoterPlan
 
         private DrawingArea drawArea;
 
-        private ComboBoxEx cbPlans;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx cbPlans;
 
         private TextBoxEx txtPlanName;
 
@@ -139,7 +139,7 @@ namespace QuoterPlan
             }
         }
 
-        public DrawObjectsNavigator(Project project, DrawingArea drawArea, ComboBoxEx cbPlans, TextBoxEx txtPlanName, AdvTree tree, ThumbnailPanel previewPanel, Control parentControl)
+        public DrawObjectsNavigator(Project project, DrawingArea drawArea, DevComponents.DotNetBar.Controls.ComboBoxEx cbPlans, TextBoxEx txtPlanName, AdvTree tree, ThumbnailPanel previewPanel, Control parentControl)
         {
             this.project = project;
             this.drawArea = drawArea;

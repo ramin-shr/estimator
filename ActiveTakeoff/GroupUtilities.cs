@@ -281,52 +281,61 @@ namespace QuoterPlan
 			return groupStats;
 		}
 
-		public static void UpdateGroupProperty(Project project, DrawingArea drawArea, DrawObject drawObject, string propertyName, object value)
-		{
-			string[] array = new string[]
-			{
-				"Label",
-				"RenderingAngle",
-				"RenderingOffsetX",
-				"RenderingOffsetY"
-			};
-			bool flag = drawObject.GroupID > -1 && Array.IndexOf<string>(array, propertyName) == -1;
-			if (flag)
-			{
-				using (IEnumerator enumerator = project.Plans.Collection.GetEnumerator())
-				{
-					while (enumerator.MoveNext())
-					{
-						object obj = enumerator.Current;
-						Plan plan = (Plan)obj;
-						foreach (object obj2 in plan.Layers.Collection)
-						{
-							Layer layer = (Layer)obj2;
-							foreach (object obj3 in layer.DrawingObjects.Collection)
-							{
-								DrawObject drawObject2 = (DrawObject)obj3;
-								if (drawObject2.GroupID == drawObject.GroupID)
-								{
-									GroupUtilities.UpdateProperty(project, drawObject2, propertyName, value);
-								}
-							}
-						}
-					}
-					return;
-				}
-			}
-			if (Array.IndexOf<string>(array, propertyName) != -1 && drawArea.ActiveDrawingObjects != null)
-			{
-				for (int i = 0; i < drawArea.ActiveDrawingObjects.SelectionCount; i++)
-				{
-					GroupUtilities.UpdateProperty(project, drawArea.ActiveDrawingObjects.GetSelectedObject(i), propertyName, value);
-				}
-				return;
-			}
-			GroupUtilities.UpdateProperty(project, drawObject, propertyName, value);
-		}
+        public static void UpdateGroupProperty(Project project, DrawingArea drawArea, DrawObject drawObject, string propertyName, object value)
+        {
+            string[] excludedGroupProperties = new string[]
+            {
+        "Label",
+        "RenderingAngle",
+        "RenderingOffsetX",
+        "RenderingOffsetY"
+            };
 
-		private static void UpdateProperty(Project project, DrawObject drawObject, string propertyName, object value)
+            bool isExcludedProperty = Array.IndexOf<string>(excludedGroupProperties, propertyName) != -1;
+            bool shouldUpdateWholeGroup = (drawObject.GroupID > -1) && !isExcludedProperty;
+
+            if (shouldUpdateWholeGroup)
+            {
+                foreach (object planItem in project.Plans.Collection)
+                {
+                    Plan plan = (Plan)planItem;
+
+                    foreach (object layerItem in plan.Layers.Collection)
+                    {
+                        Layer layer = (Layer)layerItem;
+
+                        foreach (object drawingObjectItem in layer.DrawingObjects.Collection)
+                        {
+                            DrawObject groupMember = (DrawObject)drawingObjectItem;
+
+                            if (groupMember.GroupID == drawObject.GroupID)
+                            {
+                                GroupUtilities.UpdateProperty(project, groupMember, propertyName, value);
+                            }
+                        }
+                    }
+                }
+
+                return;
+            }
+
+            if (isExcludedProperty && drawArea.ActiveDrawingObjects != null)
+            {
+                int selectedCount = drawArea.ActiveDrawingObjects.SelectionCount;
+
+                for (int selectionIndex = 0; selectionIndex < selectedCount; selectionIndex++)
+                {
+                    DrawObject selectedObject = drawArea.ActiveDrawingObjects.GetSelectedObject(selectionIndex);
+                    GroupUtilities.UpdateProperty(project, selectedObject, propertyName, value);
+                }
+
+                return;
+            }
+
+            GroupUtilities.UpdateProperty(project, drawObject, propertyName, value);
+        }
+
+        private static void UpdateProperty(Project project, DrawObject drawObject, string propertyName, object value)
 		{
 			if (drawObject.DeductionParentID != -1)
 			{

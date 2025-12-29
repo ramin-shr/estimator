@@ -5,441 +5,360 @@ using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	public class QuoteReportGenerator
-	{
-		public string Generate(MemoryStream memStream, Report.QuoteReportSortByEnum sortBy, Project projet, DBManagement dbManagement)
-		{
-			string result;
-			try
-			{
-				this.sortBy = sortBy;
-				this.project = projet;
-				this.dbManagement = dbManagement;
-				using (XmlTextReader xmlTextReader = new XmlTextReader(memStream))
-				{
-					this.ReadFromStream(xmlTextReader);
-					xmlTextReader.Close();
-					this.quoteSections.Dump();
-					result = this.CreateXML();
-				}
-			}
-			catch (Exception exception)
-			{
-				Utilities.DisplaySystemError(exception);
-				result = "";
-			}
-			return result;
-		}
+    public class QuoteReportGenerator
+    {
+        public string Generate(MemoryStream memStream, Report.QuoteReportSortByEnum sortBy, Project projet, DBManagement dbManagement)
+        {
+            try
+            {
+                this.sortBy = sortBy;
+                this.project = projet;
+                this.dbManagement = dbManagement;
 
-		private string CreateXML()
-		{
-			string text = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + Environment.NewLine;
-			string text2 = text;
-			text = string.Concat(new string[]
-			{
-				text2,
-				"<Report Title=\"",
-				Utilities.EscapeString(this.project.Name),
-				"\" Date=\"",
-				Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort()),
-				"\">",
-				Environment.NewLine
-			});
-			string companyName = Settings.Default.CompanyName;
-			string companyFullAddress = Settings.Default.CompanyFullAddress;
-			string jobNumber = this.project.JobNumber;
-			string dateString = Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort());
-			string companyRepresentative = Settings.Default.CompanyRepresentative;
-			text = text + "\t<Company>" + Environment.NewLine;
-			string text3 = text;
-			text = string.Concat(new string[]
-			{
-				text3,
-				"\t\t<CompanyName>",
-				Utilities.EscapeString(companyName),
-				"</CompanyName>",
-				Environment.NewLine
-			});
-			string[] fields = Utilities.GetFields(companyFullAddress, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<CompanyInfo>";
-				foreach (string s in fields)
-				{
-					text = text + Utilities.EscapeString(s) + "&#xD;";
-				}
-				text = text + "</CompanyInfo>" + Environment.NewLine;
-			}
-			text = text + "\t</Company>" + Environment.NewLine;
-			text = text + "\t<Quote>" + Environment.NewLine;
-			string text4 = text;
-			text = string.Concat(new string[]
-			{
-				text4,
-				"\t\t<QuoteNumber>",
-				jobNumber,
-				"</QuoteNumber>",
-				Environment.NewLine
-			});
-			string text5 = text;
-			text = string.Concat(new string[]
-			{
-				text5,
-				"\t\t<QuoteDate>",
-				dateString,
-				"</QuoteDate>",
-				Environment.NewLine
-			});
-			string text6 = text;
-			text = string.Concat(new string[]
-			{
-				text6,
-				"\t\t<QuoteRepresentative>",
-				Utilities.EscapeString(companyRepresentative),
-				"</QuoteRepresentative>",
-				Environment.NewLine
-			});
-			text = text + "\t</Quote>" + Environment.NewLine;
-			text = text + "\t<Project>" + Environment.NewLine;
-			string originalString = this.project.Name + '\r' + this.project.Description;
-			fields = Utilities.GetFields(originalString, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<ProjectInfo>";
-				foreach (string s2 in fields)
-				{
-					text = text + Utilities.EscapeString(s2) + "&#xD;";
-				}
-				text = text + "</ProjectInfo>" + Environment.NewLine;
-			}
-			string originalString2 = this.project.ContactName + '\r' + this.project.ContactInfo;
-			fields = Utilities.GetFields(originalString2, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<ContactInfo>";
-				foreach (string s3 in fields)
-				{
-					text = text + Utilities.EscapeString(s3) + "&#xD;";
-				}
-				text = text + "</ContactInfo>" + Environment.NewLine;
-			}
-			fields = Utilities.GetFields(this.project.Comment, new char[]
-			{
-				'\r',
-				'\n'
-			});
-			if (fields.GetUpperBound(0) >= 0)
-			{
-				text += "\t\t<Comment>";
-				foreach (string s4 in fields)
-				{
-					text = text + Utilities.EscapeString(s4) + "&#xD;";
-				}
-				text = text + "</Comment>" + Environment.NewLine;
-			}
-			text = text + "\t</Project>" + Environment.NewLine;
-			string[] array5 = this.dbManagement.SortHashTable(this.quoteSections.Collection, true);
-			double num = 0.0;
-			text = text + "\t<Sections>" + Environment.NewLine;
-			object obj;
-			for (int m = 0; m < this.quoteSections.Count; m++)
-			{
-				QuoteSection quoteSection = this.quoteSections[Utilities.ConvertToInt(array5[m])];
-				if (quoteSection != null && quoteSection.QuoteItems.Count > 0)
-				{
-					text = text + "\t\t<Section Description=\"" + Utilities.EscapeString(quoteSection.Description) + "\" ";
-					text = text + "Total=\"" + string.Format("{0:C}", quoteSection.Total) + "\" ";
-					obj = text;
-					text = string.Concat(new object[]
-					{
-						obj,
-						"RawTotal=\"",
-						quoteSection.Total,
-						"\""
-					});
-					text = text + ">" + Environment.NewLine;
-					num += quoteSection.Total;
-					string[] array6 = this.dbManagement.SortHashTable(quoteSection.QuoteItems.Collection, false);
-					text = text + "\t\t\t<Items>" + Environment.NewLine;
-					for (int n = 0; n < quoteSection.QuoteItems.Count; n++)
-					{
-						QuoteItem quoteItem = quoteSection.QuoteItems[array6[n]];
-						if (quoteItem != null)
-						{
-							text += "\t\t\t\t<Item ";
-							text = text + "Description=\"" + Utilities.EscapeString(quoteItem.Description) + "\" ";
-							object obj2 = text;
-							text = string.Concat(new object[]
-							{
-								obj2,
-								"Quantity=\"",
-								quoteItem.Quantity,
-								"\" "
-							});
-							text = text + "Unit=\"" + Utilities.EscapeString(quoteItem.Unit) + "\" ";
-							text = text + "PriceEach=\"" + string.Format("{0:C}", quoteItem.PriceEach) + "\" ";
-							text = text + "Total=\"" + string.Format("{0:C}", quoteItem.Total) + "\" ";
-							object obj3 = text;
-							text = string.Concat(new object[]
-							{
-								obj3,
-								"RawPriceEach=\"",
-								quoteItem.PriceEach,
-								"\" "
-							});
-							object obj4 = text;
-							text = string.Concat(new object[]
-							{
-								obj4,
-								"RawTotal=\"",
-								quoteItem.Total,
-								"\""
-							});
-							text = text + "/>" + Environment.NewLine;
-						}
-					}
-					text = text + "\t\t\t</Items>" + Environment.NewLine;
-					text = text + "\t\t</Section>" + Environment.NewLine;
-				}
-			}
-			text = text + "\t</Sections>" + Environment.NewLine;
-			text = text + "\t<Totals>" + Environment.NewLine;
-			for (int num2 = 0; num2 < this.quoteSections.Count; num2++)
-			{
-				QuoteSection quoteSection2 = this.quoteSections[Utilities.ConvertToInt(array5[num2])];
-				if (quoteSection2 != null && quoteSection2.QuoteItems.Count > 0)
-				{
-					text = text + "\t\t<SubTotal Description=\"" + Utilities.EscapeString(quoteSection2.Description) + "\" ";
-					text = text + "Total=\"" + string.Format("{0:C}", quoteSection2.Total) + "\" ";
-					obj = text;
-					text = string.Concat(new object[]
-					{
-						obj,
-						"RawTotal=\"",
-						quoteSection2.Total,
-						"\""
-					});
-					text = text + "/>" + Environment.NewLine;
-				}
-			}
-			bool taxOnTax = Settings.Default.TaxOnTax;
-			string tax1Label = Settings.Default.Tax1Label;
-			string tax2Label = Settings.Default.Tax2Label;
-			double tax1Rate = Settings.Default.Tax1Rate;
-			double tax2Rate = Settings.Default.Tax2Rate;
-			string text7 = tax1Label + " (" + string.Format("{0:0.#####%}", tax1Rate) + ") :";
-			string text8 = tax2Label + " (" + string.Format("{0:0.#####%}", tax2Rate) + ") :";
-			double num3 = num * tax1Rate;
-			num3 = Math.Round(num3, 2);
-			double num4 = taxOnTax ? ((num3 + num) * tax2Rate) : (num * tax2Rate);
-			num4 = Math.Round(num4, 2);
-			double num5 = num + num3 + num4;
-			num5 = Math.Round(num5, 2);
-			obj = text;
-			text = string.Concat(new object[]
-			{
-				obj,
-				"\t\t<GrandTotal Total=\"",
-				string.Format("{0:C}", num),
-				"\" RawTotal=\"",
-				num,
-				"\" Taxe1Rate=\"",
-				string.Format("{0:0.00%}", tax1Rate),
-				"\" RawTaxe1Rate=\"",
-				tax1Rate,
-				"\" Taxe2Rate=\"",
-				string.Format("{0:0.00%}", tax2Rate),
-				"\" RawTaxe2Rate=\"",
-				tax2Rate,
-				"\" Taxe1Caption=\"",
-				text7,
-				"\" Taxe2Caption=\"",
-				text8,
-				"\" Taxe1Total=\"",
-				string.Format("{0:C}", num3),
-				"\" RawTaxe1Total=\"",
-				num3,
-				"\" Taxe2Total=\"",
-				string.Format("{0:C}", num4),
-				"\" RawTaxe2Total=\"",
-				num4,
-				"\" TotalAfterTaxes=\"",
-				string.Format("{0:C}", num5),
-				"\" RawTotalAfterTaxes=\"",
-				num5,
-				"\"/>",
-				Environment.NewLine
-			});
-			text = text + "\t</Totals>" + Environment.NewLine;
-			return text + "</Report>" + Environment.NewLine;
-		}
+                using (XmlTextReader reader = new XmlTextReader(memStream))
+                {
+                    this.ReadFromStream(reader);
+                    reader.Close();
 
-		private void ReadFromStream(XmlTextReader reader)
-		{
-			while (reader.Read())
-			{
-				XmlNodeType nodeType = reader.NodeType;
-				switch (nodeType)
-				{
-				case XmlNodeType.Element:
-				{
-					string a;
-					if ((a = reader.Name.ToUpper()) != null)
-					{
-						if (!(a == "EXTENSION"))
-						{
-							if (!(a == "OBJECT"))
-							{
-								if (a == "RESULT")
-								{
-									if (this.groupName != "")
-									{
-										int integerAttribute = Utilities.GetIntegerAttribute(reader, "ItemID", 0);
-										string text = Utilities.GetStringAttribute(reader, "Caption", "");
-										if (this.baseExtension)
-										{
-											text = this.groupName + " - " + text;
-										}
-										string stringAttribute = Utilities.GetStringAttribute(reader, "Unit", "");
-										double doubleAttribute = Utilities.GetDoubleAttribute(reader, "Quantity", 0.0);
-										double doubleAttribute2 = Utilities.GetDoubleAttribute(reader, "RawPriceEach", 0.0);
-										int integerAttribute2 = Utilities.GetIntegerAttribute(reader, "SectionID", 0);
-										DBEstimatingItem.EstimatingItemType integerAttribute3 = (DBEstimatingItem.EstimatingItemType)Utilities.GetIntegerAttribute(reader, "ItemType", 0);
-										bool flag = integerAttribute > 0 || integerAttribute2 > 0;
-										int num = 0;
-										string description = "";
-										switch (this.sortBy)
-										{
-										case Report.QuoteReportSortByEnum.QuoteReportSortBySections:
-											if (integerAttribute2 == 0)
-											{
-												num = 999;
-												description = Resources.Non_classé;
-											}
-											else
-											{
-												DBEstimatingSection dbestimatingSection = this.dbManagement.CSICodesA[integerAttribute2];
-												if (dbestimatingSection == null)
-												{
-													num = 999;
-													description = Resources.Non_classé;
-												}
-												else
-												{
-													num = dbestimatingSection.ID;
-													description = dbestimatingSection.ID.ToString() + ". " + dbestimatingSection.Name;
-												}
-											}
-											break;
-										case Report.QuoteReportSortByEnum.QuoteReportSortByTypes:
-											if (integerAttribute2 == 0)
-											{
-												num = 999;
-												description = Resources.Non_classé;
-											}
-											else
-											{
-												num = (int)(integerAttribute3 + 1);
-												description = DBEstimatingItem.GetItemTypeCaption(integerAttribute3);
-											}
-											break;
-										case Report.QuoteReportSortByEnum.QuoteReportSortByList:
-											description = Resources.Tous_les_items;
-											break;
-										}
-										QuoteSection quoteSection = this.quoteSections[num];
-										if (quoteSection == null)
-										{
-											quoteSection = new QuoteSection(num, description);
-											this.quoteSections.Add(quoteSection);
-										}
-										if (quoteSection != null && doubleAttribute2 > 0.0 && doubleAttribute > 0.0)
-										{
-											string text2 = string.Concat(new string[]
-											{
-												text,
-												";",
-												stringAttribute,
-												";",
-												doubleAttribute2.ToString(),
-												";",
-												(this.baseExtension && !flag) ? this.groupName : "",
-												";"
-											});
-											QuoteItem quoteItem = quoteSection.QuoteItems[text2];
-											if (quoteItem == null)
-											{
-												quoteItem = new QuoteItem(text2, doubleAttribute, doubleAttribute2, text, stringAttribute, quoteSection);
-												quoteSection.QuoteItems.Add(quoteItem);
-											}
-											else
-											{
-												quoteItem.Quantity += doubleAttribute;
-											}
-											quoteSection.Total += doubleAttribute * doubleAttribute2;
-										}
-									}
-								}
-							}
-							else if (!Utilities.GetBoolAttribute(reader, "IsLabel", false))
-							{
-								this.groupName = Utilities.GetStringAttribute(reader, "Name", string.Empty);
-							}
-							else
-							{
-								this.groupName = "";
-							}
-						}
-						else
-						{
-							this.baseExtension = Utilities.GetBoolAttribute(reader, "BaseExtension", false);
-						}
-					}
-					break;
-				}
-				case XmlNodeType.Attribute:
-				case XmlNodeType.Text:
-					break;
-				default:
-					if (nodeType == XmlNodeType.EndElement)
-					{
-						string a2;
-						if ((a2 = reader.Name.ToUpper()) != null)
-						{
-							a2 == "EXTENSION";
-						}
-					}
-					break;
-				}
-			}
-		}
+                    this.quoteSections.Dump();
+                    return this.CreateXML();
+                }
+            }
+            catch (Exception exception)
+            {
+                Utilities.DisplaySystemError(exception);
+                return "";
+            }
+        }
 
-		public QuoteReportGenerator()
-		{
-		}
+        private string CreateXML()
+        {
+            string reportDate = Utilities.GetDateString(Utilities.FormatDate(DateTime.Now), Utilities.GetCurrentValidUICultureShort());
 
-		private string groupName = "";
+            string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" + Environment.NewLine;
+            xml = xml + "<Report Title=\"" + Utilities.EscapeString(this.project.Name) + "\" Date=\"" + reportDate + "\">" + Environment.NewLine;
 
-		private bool baseExtension;
+            string companyName = Settings.Default.CompanyName;
+            string companyFullAddress = Settings.Default.CompanyFullAddress;
+            string quoteNumber = this.project.JobNumber;
+            string companyRepresentative = Settings.Default.CompanyRepresentative;
 
-		private QuoteSections quoteSections = new QuoteSections();
+            xml = xml + "\t<Company>" + Environment.NewLine;
+            xml = xml + "\t\t<CompanyName>" + Utilities.EscapeString(companyName) + "</CompanyName>" + Environment.NewLine;
 
-		private Report.QuoteReportSortByEnum sortBy;
+            string[] addressLines = Utilities.GetFields(companyFullAddress, new char[] { '\r', '\n' });
+            if (addressLines.GetUpperBound(0) >= 0)
+            {
+                xml += "\t\t<CompanyInfo>";
+                foreach (string line in addressLines)
+                {
+                    xml = xml + Utilities.EscapeString(line) + "&#xD;";
+                }
+                xml = xml + "</CompanyInfo>" + Environment.NewLine;
+            }
 
-		private Project project;
+            xml = xml + "\t</Company>" + Environment.NewLine;
 
-		private DBManagement dbManagement;
-	}
+            xml = xml + "\t<Quote>" + Environment.NewLine;
+            xml = xml + "\t\t<QuoteNumber>" + quoteNumber + "</QuoteNumber>" + Environment.NewLine;
+            xml = xml + "\t\t<QuoteDate>" + reportDate + "</QuoteDate>" + Environment.NewLine;
+            xml = xml + "\t\t<QuoteRepresentative>" + Utilities.EscapeString(companyRepresentative) + "</QuoteRepresentative>" + Environment.NewLine;
+            xml = xml + "\t</Quote>" + Environment.NewLine;
+
+            xml = xml + "\t<Project>" + Environment.NewLine;
+
+            string projectInfoRaw = this.project.Name + '\r' + this.project.Description;
+            string[] projectInfoLines = Utilities.GetFields(projectInfoRaw, new char[] { '\r', '\n' });
+            if (projectInfoLines.GetUpperBound(0) >= 0)
+            {
+                xml += "\t\t<ProjectInfo>";
+                foreach (string line in projectInfoLines)
+                {
+                    xml = xml + Utilities.EscapeString(line) + "&#xD;";
+                }
+                xml = xml + "</ProjectInfo>" + Environment.NewLine;
+            }
+
+            string contactInfoRaw = this.project.ContactName + '\r' + this.project.ContactInfo;
+            string[] contactInfoLines = Utilities.GetFields(contactInfoRaw, new char[] { '\r', '\n' });
+            if (contactInfoLines.GetUpperBound(0) >= 0)
+            {
+                xml += "\t\t<ContactInfo>";
+                foreach (string line in contactInfoLines)
+                {
+                    xml = xml + Utilities.EscapeString(line) + "&#xD;";
+                }
+                xml = xml + "</ContactInfo>" + Environment.NewLine;
+            }
+
+            string[] commentLines = Utilities.GetFields(this.project.Comment, new char[] { '\r', '\n' });
+            if (commentLines.GetUpperBound(0) >= 0)
+            {
+                xml += "\t\t<Comment>";
+                foreach (string line in commentLines)
+                {
+                    xml = xml + Utilities.EscapeString(line) + "&#xD;";
+                }
+                xml = xml + "</Comment>" + Environment.NewLine;
+            }
+
+            xml = xml + "\t</Project>" + Environment.NewLine;
+
+            string[] sectionKeys = this.dbManagement.SortHashTable(this.quoteSections.Collection, true);
+
+            double totalBeforeTaxes = 0.0;
+
+            xml = xml + "\t<Sections>" + Environment.NewLine;
+
+            for (int sectionIndex = 0; sectionIndex < this.quoteSections.Count; sectionIndex++)
+            {
+                QuoteSection section = this.quoteSections[Utilities.ConvertToInt(sectionKeys[sectionIndex])];
+                if (section == null || section.QuoteItems.Count <= 0)
+                    continue;
+
+                xml = xml + "\t\t<Section Description=\"" + Utilities.EscapeString(section.Description) + "\" ";
+                xml = xml + "Total=\"" + string.Format("{0:C}", section.Total) + "\" ";
+                xml = xml + "RawTotal=\"" + section.Total + "\"";
+                xml = xml + ">" + Environment.NewLine;
+
+                totalBeforeTaxes += section.Total;
+
+                string[] itemKeys = this.dbManagement.SortHashTable(section.QuoteItems.Collection, false);
+
+                xml = xml + "\t\t\t<Items>" + Environment.NewLine;
+
+                for (int itemIndex = 0; itemIndex < section.QuoteItems.Count; itemIndex++)
+                {
+                    QuoteItem item = section.QuoteItems[itemKeys[itemIndex]];
+                    if (item == null)
+                        continue;
+
+                    xml += "\t\t\t\t<Item ";
+                    xml = xml + "Description=\"" + Utilities.EscapeString(item.Description) + "\" ";
+                    xml = xml + "Quantity=\"" + item.Quantity + "\" ";
+                    xml = xml + "Unit=\"" + Utilities.EscapeString(item.Unit) + "\" ";
+                    xml = xml + "PriceEach=\"" + string.Format("{0:C}", item.PriceEach) + "\" ";
+                    xml = xml + "Total=\"" + string.Format("{0:C}", item.Total) + "\" ";
+                    xml = xml + "RawPriceEach=\"" + item.PriceEach + "\" ";
+                    xml = xml + "RawTotal=\"" + item.Total + "\"";
+                    xml = xml + "/>" + Environment.NewLine;
+                }
+
+                xml = xml + "\t\t\t</Items>" + Environment.NewLine;
+                xml = xml + "\t\t</Section>" + Environment.NewLine;
+            }
+
+            xml = xml + "\t</Sections>" + Environment.NewLine;
+
+            xml = xml + "\t<Totals>" + Environment.NewLine;
+
+            for (int sectionIndex = 0; sectionIndex < this.quoteSections.Count; sectionIndex++)
+            {
+                QuoteSection section = this.quoteSections[Utilities.ConvertToInt(sectionKeys[sectionIndex])];
+                if (section == null || section.QuoteItems.Count <= 0)
+                    continue;
+
+                xml = xml + "\t\t<SubTotal Description=\"" + Utilities.EscapeString(section.Description) + "\" ";
+                xml = xml + "Total=\"" + string.Format("{0:C}", section.Total) + "\" ";
+                xml = xml + "RawTotal=\"" + section.Total + "\"";
+                xml = xml + "/>" + Environment.NewLine;
+            }
+
+            bool taxOnTax = Settings.Default.TaxOnTax;
+            string tax1Label = Settings.Default.Tax1Label;
+            string tax2Label = Settings.Default.Tax2Label;
+            double tax1Rate = Settings.Default.Tax1Rate;
+            double tax2Rate = Settings.Default.Tax2Rate;
+
+            string tax1Caption = tax1Label + " (" + string.Format("{0:0.#####%}", tax1Rate) + ") :";
+            string tax2Caption = tax2Label + " (" + string.Format("{0:0.#####%}", tax2Rate) + ") :";
+
+            double tax1Total = totalBeforeTaxes * tax1Rate;
+            tax1Total = Math.Round(tax1Total, 2);
+
+            double tax2Total = taxOnTax ? ((tax1Total + totalBeforeTaxes) * tax2Rate) : (totalBeforeTaxes * tax2Rate);
+            tax2Total = Math.Round(tax2Total, 2);
+
+            double totalAfterTaxes = totalBeforeTaxes + tax1Total + tax2Total;
+            totalAfterTaxes = Math.Round(totalAfterTaxes, 2);
+
+            xml = xml
+                + "\t\t<GrandTotal Total=\"" + string.Format("{0:C}", totalBeforeTaxes)
+                + "\" RawTotal=\"" + totalBeforeTaxes
+                + "\" Taxe1Rate=\"" + string.Format("{0:0.00%}", tax1Rate)
+                + "\" RawTaxe1Rate=\"" + tax1Rate
+                + "\" Taxe2Rate=\"" + string.Format("{0:0.00%}", tax2Rate)
+                + "\" RawTaxe2Rate=\"" + tax2Rate
+                + "\" Taxe1Caption=\"" + tax1Caption
+                + "\" Taxe2Caption=\"" + tax2Caption
+                + "\" Taxe1Total=\"" + string.Format("{0:C}", tax1Total)
+                + "\" RawTaxe1Total=\"" + tax1Total
+                + "\" Taxe2Total=\"" + string.Format("{0:C}", tax2Total)
+                + "\" RawTaxe2Total=\"" + tax2Total
+                + "\" TotalAfterTaxes=\"" + string.Format("{0:C}", totalAfterTaxes)
+                + "\" RawTotalAfterTaxes=\"" + totalAfterTaxes
+                + "\"/>" + Environment.NewLine;
+
+            xml = xml + "\t</Totals>" + Environment.NewLine;
+            return xml + "</Report>" + Environment.NewLine;
+        }
+
+        private void ReadFromStream(XmlTextReader reader)
+        {
+            while (reader.Read())
+            {
+                XmlNodeType nodeType = reader.NodeType;
+
+                switch (nodeType)
+                {
+                    case XmlNodeType.Element:
+                        {
+                            string elementNameUpper = reader.Name.ToUpper();
+
+                            if (elementNameUpper == "EXTENSION")
+                            {
+                                this.baseExtension = Utilities.GetBoolAttribute(reader, "BaseExtension", false);
+                                break;
+                            }
+
+                            if (elementNameUpper == "OBJECT")
+                            {
+                                if (!Utilities.GetBoolAttribute(reader, "IsLabel", false))
+                                    this.groupName = Utilities.GetStringAttribute(reader, "Name", string.Empty);
+                                else
+                                    this.groupName = "";
+
+                                break;
+                            }
+
+                            if (elementNameUpper == "RESULT")
+                            {
+                                if (this.groupName == "")
+                                    break;
+
+                                int itemId = Utilities.GetIntegerAttribute(reader, "ItemID", 0);
+                                string caption = Utilities.GetStringAttribute(reader, "Caption", "");
+                                if (this.baseExtension)
+                                {
+                                    caption = this.groupName + " - " + caption;
+                                }
+
+                                string unit = Utilities.GetStringAttribute(reader, "Unit", "");
+                                double quantity = Utilities.GetDoubleAttribute(reader, "Quantity", 0.0);
+                                double rawPriceEach = Utilities.GetDoubleAttribute(reader, "RawPriceEach", 0.0);
+                                int sectionId = Utilities.GetIntegerAttribute(reader, "SectionID", 0);
+                                DBEstimatingItem.EstimatingItemType itemType =
+                                    (DBEstimatingItem.EstimatingItemType)Utilities.GetIntegerAttribute(reader, "ItemType", 0);
+
+                                bool hasItemOrSection = (itemId > 0 || sectionId > 0);
+
+                                int groupKey = 0;
+                                string groupDescription = "";
+
+                                switch (this.sortBy)
+                                {
+                                    case Report.QuoteReportSortByEnum.QuoteReportSortBySections:
+                                        if (sectionId == 0)
+                                        {
+                                            groupKey = 999;
+                                            groupDescription = Resources.Non_classé;
+                                        }
+                                        else
+                                        {
+                                            DBEstimatingSection estimatingSection = this.dbManagement.CSICodesA[sectionId];
+                                            if (estimatingSection == null)
+                                            {
+                                                groupKey = 999;
+                                                groupDescription = Resources.Non_classé;
+                                            }
+                                            else
+                                            {
+                                                groupKey = estimatingSection.ID;
+                                                groupDescription = estimatingSection.ID.ToString() + ". " + estimatingSection.Name;
+                                            }
+                                        }
+                                        break;
+
+                                    case Report.QuoteReportSortByEnum.QuoteReportSortByTypes:
+                                        if (sectionId == 0)
+                                        {
+                                            groupKey = 999;
+                                            groupDescription = Resources.Non_classé;
+                                        }
+                                        else
+                                        {
+                                            groupKey = (int)(itemType + 1);
+                                            groupDescription = DBEstimatingItem.GetItemTypeCaption(itemType);
+                                        }
+                                        break;
+
+                                    case Report.QuoteReportSortByEnum.QuoteReportSortByList:
+                                        groupDescription = Resources.Tous_les_items;
+                                        break;
+                                }
+
+                                QuoteSection quoteSection = this.quoteSections[groupKey];
+                                if (quoteSection == null)
+                                {
+                                    quoteSection = new QuoteSection(groupKey, groupDescription);
+                                    this.quoteSections.Add(quoteSection);
+                                }
+
+                                if (quoteSection != null && rawPriceEach > 0.0 && quantity > 0.0)
+                                {
+                                    string groupPrefix = (this.baseExtension && !hasItemOrSection) ? this.groupName : "";
+
+                                    string itemKey = caption + ";" + unit + ";" + rawPriceEach.ToString() + ";" + groupPrefix + ";";
+
+                                    QuoteItem quoteItem = quoteSection.QuoteItems[itemKey];
+                                    if (quoteItem == null)
+                                    {
+                                        quoteItem = new QuoteItem(itemKey, quantity, rawPriceEach, caption, unit, quoteSection);
+                                        quoteSection.QuoteItems.Add(quoteItem);
+                                    }
+                                    else
+                                    {
+                                        quoteItem.Quantity += quantity;
+                                    }
+
+                                    quoteSection.Total += quantity * rawPriceEach;
+                                }
+
+                                break;
+                            }
+
+                            break;
+                        }
+
+                    case XmlNodeType.Attribute:
+                    case XmlNodeType.Text:
+                        break;
+
+                    default:
+                        if (nodeType == XmlNodeType.EndElement)
+                        {
+                            string endElementUpper = reader.Name.ToUpper();
+                            bool isExtensionEnd = (endElementUpper == "EXTENSION"); // keep “no effect” behaviour, but valid C#
+                        }
+                        break;
+                }
+            }
+        }
+
+        public QuoteReportGenerator()
+        {
+        }
+
+        private string groupName = "";
+
+        private bool baseExtension;
+
+        private QuoteSections quoteSections = new QuoteSections();
+
+        private Report.QuoteReportSortByEnum sortBy;
+
+        private Project project;
+
+        private DBManagement dbManagement;
+    }
 }

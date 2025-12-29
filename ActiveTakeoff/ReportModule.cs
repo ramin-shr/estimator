@@ -3050,595 +3050,681 @@ namespace QuoterPlan
             private void OutputReportTotals()
             {
                 if (this.reportTotalTotalSummaries.Count == 0)
-                {
                     return;
-                }
-                IRow row = this.AppendRow(20);
-                row = this.AppendRow(28);
-                this.InsertCell(Resources.SOMMAIRE_DES_TOTAUX, row, 0, CellType.STRING, this.planNameCellStyle);
-                row = this.AppendRow(14);
-                this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
-                this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
-                this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
-                this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
-                this.parserEstimatingRowStartIndex = row.RowNum + 1;
+
+                // spacing + title
+                this.AppendRow(20);
+                IRow titleRow = this.AppendRow(28);
+                this.InsertCell(Resources.SOMMAIRE_DES_TOTAUX, titleRow, 0, CellType.STRING, this.planNameCellStyle);
+
+                // header row
+                IRow headerRow = this.AppendRow(14);
+                this.InsertCell("", headerRow, 0, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Coûtant_total, headerRow, 4, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Prix_total, headerRow, 6, CellType.STRING, this.estimatingItemCellStyle);
+                this.InsertCell(Resources.Marge, headerRow, 7, CellType.STRING, this.estimatingItemCellStyle);
+
+                this.parserEstimatingRowStartIndex = headerRow.RowNum + 1;
                 this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
                 this.parserEstimatingRowStartIndex++;
-                foreach (ReportSummary reportTotalTotalSummary in this.reportTotalTotalSummaries)
+
+                foreach (ReportSummary totalSummary in this.reportTotalTotalSummaries)
                 {
-                    row = this.AppendRow(14);
-                    this.InsertCell(reportTotalTotalSummary.Caption, row, 0, CellType.STRING, this.estimatingItemCellStyle);
-                    ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                    cell.SetCellFormula(string.Format("E{0}", reportTotalTotalSummary.CostSubTotal + 1));
-                    ICell cell1 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                    cell1.SetCellFormula(string.Format("G{0}", reportTotalTotalSummary.CostSubTotal + 1));
-                    ICell cell2 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-                    cell2.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
+                    IRow summaryRow = this.AppendRow(14);
+
+                    this.InsertCell(totalSummary.Caption, summaryRow, 0, CellType.STRING, this.estimatingItemCellStyle);
+
+                    ICell costTotalCell = this.InsertCell(0, summaryRow, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                    costTotalCell.SetCellFormula(string.Format("E{0}", totalSummary.CostSubTotal + 1));
+
+                    ICell priceTotalCell = this.InsertCell(0, summaryRow, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                    priceTotalCell.SetCellFormula(string.Format("G{0}", totalSummary.CostSubTotal + 1));
+
+                    ICell marginCell = this.InsertCell(0, summaryRow, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                    marginCell.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", costTotalCell.RowIndex + 1));
+
                     this.parserEstimatingRowEndIndex++;
                 }
-                row = this.AppendRow(14);
-                ICell cell3 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                cell3.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-                ICell cell4 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                cell4.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-                ICell cell5 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-                cell5.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell3.RowIndex + 1));
+
+                // totals row
+                IRow totalsRow = this.AppendRow(14);
+
+                ICell sumCostCell = this.InsertCell(0, totalsRow, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                sumCostCell.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+
+                ICell sumPriceCell = this.InsertCell(0, totalsRow, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                sumPriceCell.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+
+                ICell totalMarginCell = this.InsertCell(0, totalsRow, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                totalMarginCell.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", sumCostCell.RowIndex + 1));
+
                 bool taxOnTax = Settings.Default.TaxOnTax;
                 string tax1Label = Settings.Default.Tax1Label;
                 string tax2Label = Settings.Default.Tax2Label;
                 double tax1Rate = Settings.Default.Tax1Rate;
                 double tax2Rate = Settings.Default.Tax2Rate;
-                string str = string.Concat(tax1Label, " (", string.Format("{0:0.#####%}", tax1Rate), ") :");
-                string str1 = string.Concat(tax2Label, " (", string.Format("{0:0.#####%}", tax2Rate), ") :");
-                row = this.AppendRow(20);
-                row = this.AppendRow(14);
-                this.InsertCell(str, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-                ICell cell6 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                cell6.SetCellFormula(string.Format(string.Concat("G{0}*", tax1Rate), cell3.RowIndex + 1));
-                row = this.AppendRow(14);
-                this.InsertCell(str1, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-                ICell cell7 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+
+                string tax1Caption = string.Concat(tax1Label, " (", string.Format("{0:0.#####%}", tax1Rate), ") :");
+                string tax2Caption = string.Concat(tax2Label, " (", string.Format("{0:0.#####%}", tax2Rate), ") :");
+
+                // spacing
+                this.AppendRow(20);
+
+                // tax1 row
+                IRow tax1Row = this.AppendRow(14);
+                this.InsertCell(tax1Caption, tax1Row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+
+                ICell tax1Cell = this.InsertCell(0, tax1Row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                tax1Cell.SetCellFormula(string.Format(string.Concat("G{0}*", tax1Rate), sumCostCell.RowIndex + 1));
+
+                // tax2 row
+                IRow tax2Row = this.AppendRow(14);
+                this.InsertCell(tax2Caption, tax2Row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+
+                ICell tax2Cell = this.InsertCell(0, tax2Row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
                 if (!taxOnTax)
                 {
-                    cell7.SetCellFormula(string.Format(string.Concat("G{0}*", tax2Rate), cell3.RowIndex + 1));
+                    tax2Cell.SetCellFormula(string.Format(string.Concat("G{0}*", tax2Rate), sumCostCell.RowIndex + 1));
                 }
                 else
                 {
-                    cell7.SetCellFormula(string.Format(string.Concat("(G{0}+G{1})*", tax2Rate), cell3.RowIndex + 1, cell6.RowIndex + 1));
+                    tax2Cell.SetCellFormula(string.Format(string.Concat("(G{0}+G{1})*", tax2Rate), sumCostCell.RowIndex + 1, tax1Cell.RowIndex + 1));
                 }
-                row = this.AppendRow(10);
-                row = this.AppendRow(14);
-                this.InsertCell(Resources.GRAND_TOTAL_, row, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
-                ICell cell8 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                cell8.SetCellFormula(string.Format("G{0}+G{1}+G{2}", cell3.RowIndex + 1, cell6.RowIndex + 1, cell7.RowIndex + 1));
+
+                // spacing
+                this.AppendRow(10);
+
+                // grand total row
+                IRow grandTotalRow = this.AppendRow(14);
+                this.InsertCell(Resources.GRAND_TOTAL_, grandTotalRow, 5, CellType.STRING, this.estimatingSubTotalCaptionCellStyle);
+
+                ICell grandTotalCell = this.InsertCell(0, grandTotalRow, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                grandTotalCell.SetCellFormula(string.Format("G{0}+G{1}+G{2}", sumCostCell.RowIndex + 1, tax1Cell.RowIndex + 1, tax2Cell.RowIndex + 1));
             }
 
             private void ParseNode(XmlNode node)
             {
-                string str;
-                string str1;
-                string str2;
-                string str3;
-                IRow row = null;
+                string attributeName;
+                string resolvedAttributeName;
+                string valueAttributeName;
+                string resolvedValueAttributeName;
+
+                IRow currentRow = null;
+
+                // ----------------------------
+                // Estimating sheet
+                // ----------------------------
                 if (this.sheet.Equals(this.estimatingSheet))
                 {
-                    string upper = node.Name.ToUpper();
-                    string str4 = upper;
-                    if (upper != null)
+                    string nodeNameUpper = node.Name.ToUpper();
+
+                    if (nodeNameUpper == "PLAN")
                     {
-                        if (str4 == "PLAN")
+                        if (node.HasChildNodes && node.FirstChild.HasChildNodes)
                         {
-                            if (node.HasChildNodes && node.FirstChild.HasChildNodes)
+                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                                this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
                             {
-                                if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-                                {
-                                    this.OutputReportSubTotal(this.parserPlanName);
-                                    this.reportTotalSummaries.Clear();
-                                    if (this.parserPlanName != string.Empty)
-                                    {
-                                        row = this.AppendRow(10);
-                                    }
-                                }
-                                this.parserObjectType = string.Empty;
-                                this.parserObjectTypeCount = 0;
-                                this.parserPlanName = this.GetStringAttribute(node, "Name");
+                                this.OutputReportSubTotal(this.parserPlanName);
+                                this.reportTotalSummaries.Clear();
                                 if (this.parserPlanName != string.Empty)
+                                    currentRow = this.AppendRow(10);
+                            }
+
+                            this.parserObjectType = string.Empty;
+                            this.parserObjectTypeCount = 0;
+                            this.parserPlanName = this.GetStringAttribute(node, "Name");
+
+                            if (this.parserPlanName != string.Empty)
+                            {
+                                currentRow = this.AppendRow(28);
+                                this.InsertCell(this.parserPlanName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+
+                                if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                                    this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
                                 {
-                                    row = this.AppendRow(28);
-                                    this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
-                                    if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-                                    {
-                                        this.reportTotalCaption = this.parserPlanName;
-                                        return;
-                                    }
+                                    this.reportTotalCaption = this.parserPlanName;
+                                    return;
                                 }
                             }
                         }
-                        else if (str4 == "LAYER")
+                    }
+                    else if (nodeNameUpper == "LAYER")
+                    {
+                        if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                            this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
                         {
-                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                            this.OutputReportSubTotal(this.parserLayerName);
+                            this.reportTotalSummaries.Clear();
+                            if (this.parserLayerName != string.Empty)
+                                currentRow = this.AppendRow(10);
+                        }
+
+                        this.parserObjectType = string.Empty;
+                        this.parserObjectTypeCount = 0;
+                        this.parserLayerName = this.GetStringAttribute(node, "Name");
+
+                        currentRow = this.AppendRow(28);
+                        this.InsertCell(this.parserLayerName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+
+                        if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                            this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                        {
+                            this.reportTotalCaption = this.parserLayerName;
+                            return;
+                        }
+                    }
+                    else if (nodeNameUpper == "OBJECT")
+                    {
+                        this.parserExtensionCount = 0;
+                        this.parserEstimatingResultCount = 0;
+
+                        this.parserObjectName = this.GetStringAttribute(node, "Name");
+
+                        string objectType = this.GetStringAttribute(node, "Type");
+                        this.parserObjectTypeHasChanged = objectType != this.parserObjectType;
+                        this.parserObjectType = objectType;
+
+                        this.parserObjectRow = this.AppendRow(26);
+                        this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
+
+                        if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
+                        {
+                            this.reportTotalCaption = this.parserObjectName;
+                            return;
+                        }
+                    }
+                    else if (nodeNameUpper == "COMMENT")
+                    {
+                        if (node.ParentNode.Name.ToUpper() != "PROJECT")
+                        {
+                            string commentValue = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
+                            if (commentValue != string.Empty)
                             {
-                                this.OutputReportSubTotal(this.parserLayerName);
-                                this.reportTotalSummaries.Clear();
-                                if (this.parserLayerName != string.Empty)
-                                {
-                                    row = this.AppendRow(10);
-                                }
+                                currentRow = this.AppendRow(-1);
+                                this.InsertCell(commentValue, currentRow, 0, CellType.STRING, this.commentCellStyle);
+                                return;
                             }
+                        }
+                    }
+                    else if (nodeNameUpper == "RESULT")
+                    {
+                        if (this.parserEstimatingResultCount == 0)
+                        {
+                            currentRow = this.AppendRow(14);
+
+                            this.parserEstimatingRowStartIndex = currentRow.RowNum + 1;
+                            this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
+
+                            this.InsertCell("", currentRow, 0, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Quantité, currentRow, 1, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Unité, currentRow, 2, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Coûtant, currentRow, 3, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Coûtant_total, currentRow, 4, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Prix, currentRow, 5, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Prix_total, currentRow, 6, CellType.STRING, this.estimatingItemCellStyle);
+                            this.InsertCell(Resources.Marge, currentRow, 7, CellType.STRING, this.estimatingItemCellStyle);
+                        }
+
+                        string estimatingCaption = this.GetStringAttribute(node, "EstimatingCaption");
+                        if (estimatingCaption != string.Empty)
+                        {
+                            currentRow = this.AppendRow(14);
+
+                            this.InsertCell(estimatingCaption, currentRow, 0, CellType.STRING, this.estimatingItemCellStyle);
+
+                            ICell quantityCell = this.InsertCell(this.GetStringAttribute(node, "Quantity"), currentRow, 1, CellType.NUMERIC, this.estimatingEditableQuantityCellStyle);
+                            this.InsertCell(this.GetStringAttribute(node, "EstimatingUnit"), currentRow, 2, CellType.STRING, this.estimatingItemResultCellStyle);
+
+                            this.InsertCell(this.GetDoubleAttribute(node, "RawCostEach"), currentRow, 3, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
+
+                            ICell costTotalCell = this.InsertCell(0, currentRow, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                            costTotalCell.SetCellFormula(string.Format("B{0}*D{0}", quantityCell.RowIndex + 1));
+
+                            ICell priceEachCell = this.InsertCell(this.GetDoubleAttribute(node, "RawPriceEach"), currentRow, 5, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
+
+                            ICell priceTotalCell = this.InsertCell(0, currentRow, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                            priceTotalCell.SetCellFormula(string.Format("B{0}*F{0}", quantityCell.RowIndex + 1));
+
+                            ICell marginCell = this.InsertCell(0, currentRow, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                            marginCell.SetCellFormula(string.Format("(F{0}-D{0})/D{0}", priceEachCell.RowIndex + 1));
+
+                            this.parserEstimatingRowEndIndex++;
+                        }
+
+                        this.parserEstimatingResultCount++;
+                        return;
+                    }
+                    else if (nodeNameUpper == "SUMMARY")
+                    {
+                        if (this.parserEstimatingRowStartIndex > 0)
+                        {
+                            currentRow = this.AppendRow(14);
+
+                            ICell sumCostCell = this.InsertCell(0, currentRow, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                            sumCostCell.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+
+                            ICell sumPriceCell = this.InsertCell(0, currentRow, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
+                            sumPriceCell.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
+
+                            ICell sumMarginCell = this.InsertCell(0, currentRow, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
+                            sumMarginCell.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", sumCostCell.RowIndex + 1));
+
+                            if (this.order != Report.ReportOrderEnum.ReportOrderByObjects)
+                            {
+                                this.reportTotalSummaries.Add(new ReportSummary("", (double)currentRow.RowNum, 0, null, null, -1, ""));
+                            }
+                            else
+                            {
+                                this.reportTotalTotalSummaries.Add(new ReportSummary(this.reportTotalCaption, (double)currentRow.RowNum, 0, null, null, -1, ""));
+                            }
+
+                            this.parserEstimatingRowStartIndex = 0;
+                        }
+
+                        this.parserExtensionCount++;
+                        return;
+                    }
+
+                    return;
+                }
+
+                // ----------------------------
+                // Short sheets (formatted/raw)
+                // ----------------------------
+                if (this.sheet.Equals(this.formattedSheetShort) || this.sheet.Equals(this.rawSheetShort))
+                {
+                    string nodeNameUpper = node.Name.ToUpper();
+
+                    if (nodeNameUpper == "PLAN")
+                    {
+                        if (node.HasChildNodes && node.FirstChild.HasChildNodes)
+                        {
+                            if (this.parserPlanName != "")
+                                currentRow = this.AppendRow(10);
+
+                            this.parserPlanName = this.GetStringAttribute(node, "Name");
+
+                            if (this.parserPlanName != "")
+                            {
+                                currentRow = this.AppendRow(28);
+                                this.InsertCell(this.parserPlanName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+                                return;
+                            }
+                        }
+
+                        return;
+                    }
+
+                    if (nodeNameUpper == "LAYER")
+                    {
+                        if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                            this.sortBy == Report.ReportSortByEnum.ReportSortByLayers &&
+                            this.parserLayerName != "")
+                        {
+                            currentRow = this.AppendRow(10);
+                        }
+
+                        this.parserObjectType = string.Empty;
+                        this.parserObjectTypeCount = 0;
+                        this.parserLayerName = this.GetStringAttribute(node, "Name");
+
+                        currentRow = this.AppendRow(28);
+                        this.InsertCell(this.parserLayerName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+                        return;
+                    }
+
+                    if (nodeNameUpper == "OBJECT")
+                    {
+                        this.parserExtensionCount = 0;
+
+                        this.parserObjectName = this.GetStringAttribute(node, "Name");
+                        this.parserObjectType = this.GetStringAttribute(node, "Type");
+
+                        this.parserObjectRow = this.AppendRow(-1);
+                        this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
+                        return;
+                    }
+
+                    if (nodeNameUpper == "EXTENSION")
+                    {
+                        this.parserExtensionCount++;
+                        return;
+                    }
+
+                    if (nodeNameUpper != "RESULT")
+                        return;
+
+                    if (this.parserExtensionCount == 1)
+                    {
+                        bool isDefaultResult = false;
+
+                        string resultName = this.GetStringAttribute(node, "Name");
+                        string objectTypeUpper = this.parserObjectType.ToUpper();
+
+                        if (objectTypeUpper == "AREA")
+                            isDefaultResult = (resultName == "AreaMinusSubstractions");
+                        else if (objectTypeUpper == "PERIMETER")
+                            isDefaultResult = (resultName == "PerimeterMinusOpenings");
+                        else if (objectTypeUpper == "LINE")
+                            isDefaultResult = (resultName == "Length");
+                        else if (objectTypeUpper == "COUNTER")
+                            isDefaultResult = (resultName == "Count");
+
+                        if (isDefaultResult)
+                        {
+                            bool isFormattedShort = this.sheet.Equals(this.formattedSheetShort);
+
+                            if (node.Name.ToUpper() == "FIELD")
+                                attributeName = "Value";
+                            else
+                                attributeName = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
+
+                            string chosenAttribute = attributeName;
+
+                            resolvedAttributeName = isFormattedShort
+                                ? chosenAttribute
+                                : (chosenAttribute == "Value" ? "RawValue" : "TotalRawValue");
+
+                            string attributeValue = this.GetStringAttribute(node, resolvedAttributeName);
+
+                            if (isFormattedShort)
+                            {
+                                this.InsertCell(attributeValue, this.parserObjectRow, 1, CellType.STRING, this.resultCellStyle);
+                            }
+                            else
+                            {
+                                this.InsertCell(attributeValue, this.parserObjectRow, 1, CellType.NUMERIC,
+                                    (Utilities.IsInteger(attributeValue.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
+                            }
+
+                            if (!isFormattedShort)
+                            {
+                                string unitValue = this.GetStringAttribute(node, "Unit");
+                                unitValue = (unitValue == Resources.unité_ ? "" : unitValue);
+                                this.InsertCell(unitValue, this.parserObjectRow, 2, CellType.STRING, this.columnHeaderCellStyle);
+                            }
+                        }
+                    }
+
+                    return;
+                }
+
+                // ----------------------------
+                // Consolidated sheets (formatted/raw)
+                // ----------------------------
+                bool isConsolidatedSheet = this.sheet.Equals(this.formattedSheetConsolidated) || this.sheet.Equals(this.rawSheetConsolidated);
+
+                string consolidatedNodeNameUpper = node.Name.ToUpper();
+
+                switch (consolidatedNodeNameUpper)
+                {
+                    case "PLAN":
+                        {
+                            if (isConsolidatedSheet &&
+                                this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                                this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
+                            {
+                                this.OutputConsolidatedExtensions();
+                            }
+
+                            if (!node.HasChildNodes || !node.FirstChild.HasChildNodes)
+                                break;
+
+                            if (this.parserPlanName != "")
+                                currentRow = this.AppendRow(10);
+
+                            this.parserObjectType = string.Empty;
+                            this.parserObjectTypeCount = 0;
+                            this.parserPlanName = this.GetStringAttribute(node, "Name");
+
+                            if (this.parserPlanName == "")
+                                break;
+
+                            currentRow = this.AppendRow(28);
+                            this.InsertCell(this.parserPlanName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+                            return;
+                        }
+
+                    case "LAYER":
+                        {
+                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans &&
+                                this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+                            {
+                                this.OutputConsolidatedExtensions();
+                                if (this.parserLayerName != "")
+                                    currentRow = this.AppendRow(10);
+                            }
+
                             this.parserObjectType = string.Empty;
                             this.parserObjectTypeCount = 0;
                             this.parserLayerName = this.GetStringAttribute(node, "Name");
-                            row = this.AppendRow(28);
-                            this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
-                            if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
+
+                            currentRow = this.AppendRow(28);
+                            this.InsertCell(this.parserLayerName, currentRow, 0, CellType.STRING, this.planNameCellStyle);
+                            return;
+                        }
+
+                    case "OBJECTS":
+                        {
+                            if (isConsolidatedSheet && this.order == Report.ReportOrderEnum.ReportOrderByObjects)
                             {
-                                this.reportTotalCaption = this.parserLayerName;
+                                this.OutputConsolidatedExtensions();
                                 return;
                             }
+                            break;
                         }
-                        else if (str4 == "OBJECT")
+
+                    case "OBJECT":
                         {
                             this.parserExtensionCount = 0;
-                            this.parserEstimatingResultCount = 0;
                             this.parserObjectName = this.GetStringAttribute(node, "Name");
-                            string stringAttribute = this.GetStringAttribute(node, "Type");
-                            this.parserObjectTypeHasChanged = stringAttribute != this.parserObjectType;
-                            this.parserObjectType = stringAttribute;
+
+                            string objectType = this.GetStringAttribute(node, "Type");
+                            this.parserObjectTypeHasChanged = objectType != this.parserObjectType;
+                            this.parserObjectType = objectType;
+
+                            if (isConsolidatedSheet)
+                                break;
+
                             this.parserObjectRow = this.AppendRow(26);
                             this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-                            if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-                            {
-                                this.reportTotalCaption = this.parserObjectName;
-                                return;
-                            }
+                            return;
                         }
-                        else
+
+                    case "COMMENT":
                         {
-                            if (str4 != "COMMENT")
-                            {
-                                if (str4 != "RESULT")
-                                {
-                                    if (str4 != "SUMMARY")
-                                    {
-                                        return;
-                                    }
-                                    if (this.parserEstimatingRowStartIndex > 0)
-                                    {
-                                        row = this.AppendRow(14);
-                                        ICell cell = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                                        cell.SetCellFormula(string.Format("SUM(E{0}:E{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-                                        ICell cell1 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                                        cell1.SetCellFormula(string.Format("SUM(G{0}:G{1})", this.parserEstimatingRowStartIndex, this.parserEstimatingRowEndIndex));
-                                        ICell cell2 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-                                        cell2.SetCellFormula(string.Format("(G{0}-E{0})/E{0}", cell.RowIndex + 1));
-                                        if (this.order != Report.ReportOrderEnum.ReportOrderByObjects)
-                                        {
-                                            this.reportTotalSummaries.Add(new ReportSummary("", (double)row.RowNum, 0, null, null, -1, ""));
-                                        }
-                                        else
-                                        {
-                                            this.reportTotalTotalSummaries.Add(new ReportSummary(this.reportTotalCaption, (double)row.RowNum, 0, null, null, -1, ""));
-                                        }
-                                        this.parserEstimatingRowStartIndex = 0;
-                                    }
-                                    this.parserExtensionCount++;
-                                    return;
-                                }
-                                if (this.parserEstimatingResultCount == 0)
-                                {
-                                    row = this.AppendRow(14);
-                                    this.parserEstimatingRowStartIndex = row.RowNum + 1;
-                                    this.parserEstimatingRowEndIndex = this.parserEstimatingRowStartIndex;
-                                    this.InsertCell("", row, 0, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Quantité, row, 1, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Unité, row, 2, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Coûtant, row, 3, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Coûtant_total, row, 4, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Prix, row, 5, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Prix_total, row, 6, CellType.STRING, this.estimatingItemCellStyle);
-                                    this.InsertCell(Resources.Marge, row, 7, CellType.STRING, this.estimatingItemCellStyle);
-                                }
-                                string stringAttribute1 = this.GetStringAttribute(node, "EstimatingCaption");
-                                if (stringAttribute1 != string.Empty)
-                                {
-                                    row = this.AppendRow(14);
-                                    this.InsertCell(stringAttribute1, row, 0, CellType.STRING, this.estimatingItemCellStyle);
-                                    ICell cell3 = this.InsertCell(this.GetStringAttribute(node, "Quantity"), row, 1, CellType.NUMERIC, this.estimatingEditableQuantityCellStyle);
-                                    this.InsertCell(this.GetStringAttribute(node, "EstimatingUnit"), row, 2, CellType.STRING, this.estimatingItemResultCellStyle);
-                                    this.InsertCell(this.GetDoubleAttribute(node, "RawCostEach"), row, 3, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
-                                    ICell cell4 = this.InsertCell(0, row, 4, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                                    cell4.SetCellFormula(string.Format("B{0}*D{0}", cell3.RowIndex + 1));
-                                    ICell cell5 = this.InsertCell(this.GetDoubleAttribute(node, "RawPriceEach"), row, 5, CellType.NUMERIC, this.estimatingEditablePriceCellStyle);
-                                    ICell cell6 = this.InsertCell(0, row, 6, CellType.FORMULA, this.estimatingItemPriceCellStyle);
-                                    cell6.SetCellFormula(string.Format("B{0}*F{0}", cell3.RowIndex + 1));
-                                    ICell cell7 = this.InsertCell(0, row, 7, CellType.FORMULA, this.estimatingItemMarginCellStyle);
-                                    cell7.SetCellFormula(string.Format("(F{0}-D{0})/D{0}", cell5.RowIndex + 1));
-                                    this.parserEstimatingRowEndIndex++;
-                                }
-                                this.parserEstimatingResultCount++;
-                                return;
-                            }
-                            if (node.ParentNode.Name.ToUpper() != "PROJECT")
-                            {
-                                string str5 = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
-                                if (str5 != string.Empty)
-                                {
-                                    row = this.AppendRow(-1);
-                                    this.InsertCell(str5, row, 0, CellType.STRING, this.commentCellStyle);
-                                    return;
-                                }
-                            }
+                            if (isConsolidatedSheet)
+                                break;
+
+                            if (node.ParentNode.Name.ToUpper() == "PROJECT")
+                                break;
+
+                            string commentValue = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
+                            if (commentValue == string.Empty)
+                                break;
+
+                            currentRow = this.AppendRow(-1);
+                            this.InsertCell(commentValue, currentRow, 0, CellType.STRING, this.commentCellStyle);
+                            return;
                         }
-                    }
-                }
-                else if ((this.sheet.Equals(this.formattedSheetShort) ? true : this.sheet.Equals(this.rawSheetShort)))
-                {
-                    string upper1 = node.Name.ToUpper();
-                    string str6 = upper1;
-                    if (upper1 != null)
-                    {
-                        if (str6 != "PLAN")
+
+                    case "EXTENSION":
                         {
-                            if (str6 == "LAYER")
+                            this.parserExtensionCount++;
+
+                            if (isConsolidatedSheet)
                             {
-                                if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers && this.parserLayerName != "")
-                                {
-                                    row = this.AppendRow(10);
-                                }
-                                this.parserObjectType = string.Empty;
-                                this.parserObjectTypeCount = 0;
-                                this.parserLayerName = this.GetStringAttribute(node, "Name");
-                                row = this.AppendRow(28);
-                                this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                if (this.parserExtensionCount <= 1)
+                                    break;
+
+                                int resultKindIndex = 0;
+
+                                string objectTypeUpper = this.parserObjectType.ToUpper();
+                                if (objectTypeUpper == "AREA") resultKindIndex = 1;
+                                else if (objectTypeUpper == "PERIMETER") resultKindIndex = 2;
+                                else if (objectTypeUpper == "LINE") resultKindIndex = 3;
+                                else if (objectTypeUpper == "COUNTER") resultKindIndex = 4;
+
+                                Guid presetGuid = Guid.NewGuid();
+
+                                string extensionName = this.GetStringAttribute(node, "Name");
+                                this.parserPreset = new Preset(
+                                    presetGuid.ToString(),
+                                    extensionName,
+                                    this.parserObjectName,
+                                    string.Concat(extensionName, ";", resultKindIndex.ToString()),
+                                    UnitScale.UnitSystem.undefined);
+
+                                this.parserPresets.Add(this.parserPreset);
                                 return;
                             }
-                            if (str6 == "OBJECT")
-                            {
-                                this.parserExtensionCount = 0;
-                                this.parserObjectName = this.GetStringAttribute(node, "Name");
-                                this.parserObjectType = this.GetStringAttribute(node, "Type");
-                                this.parserObjectRow = this.AppendRow(-1);
-                                this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-                                return;
-                            }
-                            if (str6 == "EXTENSION")
-                            {
-                                this.parserExtensionCount++;
-                                return;
-                            }
-                            if (str6 != "RESULT")
-                            {
-                                return;
-                            }
-                            if (this.parserExtensionCount == 1)
-                            {
-                                bool flag = false;
-                                string stringAttribute2 = this.GetStringAttribute(node, "Name");
-                                string upper2 = this.parserObjectType.ToUpper();
-                                string str7 = upper2;
-                                if (upper2 != null)
-                                {
-                                    if (str7 == "AREA")
-                                    {
-                                        flag = stringAttribute2 == "AreaMinusSubstractions";
-                                    }
-                                    else if (str7 == "PERIMETER")
-                                    {
-                                        flag = stringAttribute2 == "PerimeterMinusOpenings";
-                                    }
-                                    else if (str7 == "LINE")
-                                    {
-                                        flag = stringAttribute2 == "Length";
-                                    }
-                                    else if (str7 == "COUNTER")
-                                    {
-                                        flag = stringAttribute2 == "Count";
-                                    }
-                                }
-                                if (flag)
-                                {
-                                    bool flag1 = this.sheet.Equals(this.formattedSheetShort);
-                                    if (node.Name.ToUpper() == "FIELD")
-                                    {
-                                        str = "Value";
-                                    }
-                                    else
-                                    {
-                                        str = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
-                                    }
-                                    string str8 = str;
-                                    if (flag1)
-                                    {
-                                        str1 = str8;
-                                    }
-                                    else
-                                    {
-                                        str1 = (str8 == "Value" ? "RawValue" : "TotalRawValue");
-                                    }
-                                    str8 = str1;
-                                    string stringAttribute3 = this.GetStringAttribute(node, str8);
-                                    if (flag1)
-                                    {
-                                        this.InsertCell(stringAttribute3, this.parserObjectRow, 1, CellType.STRING, this.resultCellStyle);
-                                    }
-                                    else
-                                    {
-                                        this.InsertCell(stringAttribute3, this.parserObjectRow, 1, CellType.NUMERIC, (Utilities.IsInteger(stringAttribute3.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
-                                    }
-                                    if (!flag1)
-                                    {
-                                        string stringAttribute4 = this.GetStringAttribute(node, "Unit");
-                                        stringAttribute4 = (stringAttribute4 == Resources.unité_ ? "" : stringAttribute4);
-                                        this.InsertCell(stringAttribute4, this.parserObjectRow, 2, CellType.STRING, this.columnHeaderCellStyle);
-                                    }
-                                }
-                            }
+
+                            if (this.parserExtensionCount <= 1)
+                                break;
+
+                            currentRow = this.AppendRow(20);
+                            this.InsertCell(this.GetStringAttribute(node, "Name"), currentRow, 0, CellType.STRING, this.extensionNameCellStyle);
+                            return;
                         }
-                        else if (node.HasChildNodes && node.FirstChild.HasChildNodes)
+
+                    case "FIELDS":
+                    case "RESULTS":
                         {
-                            if (this.parserPlanName != "")
+                            if (!isConsolidatedSheet)
                             {
-                                row = this.AppendRow(10);
-                            }
-                            this.parserPlanName = this.GetStringAttribute(node, "Name");
-                            if (this.parserPlanName != "")
-                            {
-                                row = this.AppendRow(28);
-                                this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
+                                this.parserResultColumnIndex = 0;
+                                this.parserResultRowHeader = this.AppendRow(-1);
+
+                                // FIX: ternary must be short (AppendRow wants short)
+                                bool isFieldsNode = consolidatedNodeNameUpper == "FIELDS";
+                                short dataRowHeight = isFieldsNode ? (short)-1 : (short)16;
+
+                                this.parserResultRowData = this.AppendRow(dataRowHeight);
                                 return;
                             }
+
+                            if (this.parserExtensionCount != 1)
+                                break;
+
+                            this.parserResultColumnIndex = 1;
+
+                            if (this.parserObjectTypeHasChanged)
+                            {
+                                if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
+                                {
+                                    if (this.sheet.PhysicalNumberOfRows > 0)
+                                        this.AppendRow(-1);
+                                }
+                                else if (this.parserObjectTypeCount > 0)
+                                {
+                                    this.AppendRow(-1);
+                                }
+
+                                this.parserObjectTypeCount++;
+                                this.parserResultRowHeader = this.AppendRow(-1);
+                            }
+
+                            // FIX: ternary must be short (AppendRow wants short)
+                            bool isFieldsNode2 = consolidatedNodeNameUpper == "FIELDS";
+                            short dataRowHeight2 = isFieldsNode2 ? (short)-1 : (short)16;
+
+                            this.parserResultRowData = this.AppendRow(dataRowHeight2);
+                            this.InsertCell(this.parserObjectName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
+                            return;
                         }
-                    }
-                }
-                else
-                {
-                    bool flag2 = (this.sheet.Equals(this.formattedSheetConsolidated) ? true : this.sheet.Equals(this.rawSheetConsolidated));
-                    string upper3 = node.Name.ToUpper();
-                    string str9 = upper3;
-                    if (upper3 != null)
-                    {
-                        switch (str9)
+
+                    case "FIELD":
+                    case "RESULT":
                         {
-                            case "PLAN":
+                            if (!isConsolidatedSheet && this.parserResultColumnIndex == 7)
+                            {
+                                this.parserResultColumnIndex = 0;
+                                this.parserResultRowHeader = this.AppendRow(-1);
+
+                                // FIX: ternary must be short (AppendRow wants short)
+                                bool isFieldNode = consolidatedNodeNameUpper == "FIELD";
+                                short dataRowHeight = isFieldNode ? (short)-1 : (short)16;
+
+                                this.parserResultRowData = this.AppendRow(dataRowHeight);
+                            }
+
+                            bool isFormattedSheet = this.sheet.Equals(this.formattedSheet) || this.sheet.Equals(this.formattedSheetConsolidated);
+
+                            string caption = this.GetStringAttribute(node, "Caption");
+
+                            if (node.Name.ToUpper() == "FIELD")
+                                valueAttributeName = "Value";
+                            else
+                                valueAttributeName = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
+
+                            string baseValueAttribute = valueAttributeName;
+
+                            resolvedValueAttributeName = isFormattedSheet
+                                ? baseValueAttribute
+                                : (baseValueAttribute == "Value" ? "RawValue" : "TotalRawValue");
+
+                            if (!isFormattedSheet)
+                            {
+                                string unitValue = this.GetStringAttribute(node, "Unit");
+                                unitValue = (unitValue == Resources.unité_ ? "" : unitValue);
+                                if (unitValue != string.Empty)
+                                    caption = string.Concat(caption, " (", unitValue, ")");
+                            }
+
+                            if (!isConsolidatedSheet || this.parserExtensionCount == 1)
+                            {
+                                if (!isConsolidatedSheet || this.parserObjectTypeHasChanged)
                                 {
-                                    if (flag2 && this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByPlans)
-                                    {
-                                        this.OutputConsolidatedExtensions();
-                                    }
-                                    if (!node.HasChildNodes || !node.FirstChild.HasChildNodes)
-                                    {
-                                        break;
-                                    }
-                                    if (this.parserPlanName != "")
-                                    {
-                                        row = this.AppendRow(10);
-                                    }
-                                    this.parserObjectType = string.Empty;
-                                    this.parserObjectTypeCount = 0;
-                                    this.parserPlanName = this.GetStringAttribute(node, "Name");
-                                    if (this.parserPlanName == "")
-                                    {
-                                        break;
-                                    }
-                                    row = this.AppendRow(28);
-                                    this.InsertCell(this.parserPlanName, row, 0, CellType.STRING, this.planNameCellStyle);
-                                    return;
+                                    this.InsertCell(caption, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
                                 }
-                            case "LAYER":
+
+                                string cellValue = this.GetStringAttribute(node, resolvedValueAttributeName);
+
+                                if (isFormattedSheet)
                                 {
-                                    if (this.order == Report.ReportOrderEnum.ReportOrderByPlans && this.sortBy == Report.ReportSortByEnum.ReportSortByLayers)
-                                    {
-                                        this.OutputConsolidatedExtensions();
-                                        if (this.parserLayerName != "")
-                                        {
-                                            row = this.AppendRow(10);
-                                        }
-                                    }
-                                    this.parserObjectType = string.Empty;
-                                    this.parserObjectTypeCount = 0;
-                                    this.parserLayerName = this.GetStringAttribute(node, "Name");
-                                    row = this.AppendRow(28);
-                                    this.InsertCell(this.parserLayerName, row, 0, CellType.STRING, this.planNameCellStyle);
-                                    return;
+                                    this.InsertCell(cellValue, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
                                 }
-                            case "OBJECTS":
+                                else if (Utilities.IsNumber(cellValue.ToString()))
                                 {
-                                    if (!flag2 || this.order != Report.ReportOrderEnum.ReportOrderByObjects)
-                                    {
-                                        break;
-                                    }
-                                    this.OutputConsolidatedExtensions();
-                                    return;
+                                    this.InsertCell(cellValue, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC,
+                                        (Utilities.IsInteger(cellValue.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
                                 }
-                            case "OBJECT":
+                                else
                                 {
-                                    this.parserExtensionCount = 0;
-                                    this.parserObjectName = this.GetStringAttribute(node, "Name");
-                                    string stringAttribute5 = this.GetStringAttribute(node, "Type");
-                                    this.parserObjectTypeHasChanged = stringAttribute5 != this.parserObjectType;
-                                    this.parserObjectType = stringAttribute5;
-                                    if (flag2)
-                                    {
-                                        break;
-                                    }
-                                    this.parserObjectRow = this.AppendRow(26);
-                                    this.InsertCell(this.parserObjectName, this.parserObjectRow, 0, CellType.STRING, this.objectNameCellStyle);
-                                    return;
+                                    this.InsertCell(cellValue, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
                                 }
-                            case "COMMENT":
+                            }
+                            else if (isConsolidatedSheet)
+                            {
+                                PresetResult presetResult = new PresetResult(
+                                    this.GetStringAttribute(node, "Name"),
+                                    caption,
+                                    this.GetStringAttribute(node, resolvedValueAttributeName),
+                                    "",
+                                    "",
+                                    ExtensionResult.ExtensionResultTypeEnum.ResultTypeUnit,
+                                    false,
+                                    true,
+                                    -1,
+                                    -1,
+                                    -1);
+
+                                this.parserPreset.Results.Add(presetResult);
+
+                                if (!isFormattedSheet)
                                 {
-                                    if (flag2 || !(node.ParentNode.Name.ToUpper() != "PROJECT"))
-                                    {
-                                        break;
-                                    }
-                                    string str10 = this.GetStringAttribute(node, "Value").Trim().Replace("`", "\r\n");
-                                    if (str10 == string.Empty)
-                                    {
-                                        break;
-                                    }
-                                    row = this.AppendRow(-1);
-                                    this.InsertCell(str10, row, 0, CellType.STRING, this.commentCellStyle);
-                                    return;
+                                    Preset preset = this.parserPreset;
+                                    preset.Tag = string.Concat(preset.Tag, caption, ";");
                                 }
-                            case "EXTENSION":
-                                {
-                                    this.parserExtensionCount++;
-                                    if (flag2)
-                                    {
-                                        if (this.parserExtensionCount <= 1)
-                                        {
-                                            break;
-                                        }
-                                        int num = 0;
-                                        string upper4 = this.parserObjectType.ToUpper();
-                                        string str11 = upper4;
-                                        if (upper4 != null)
-                                        {
-                                            if (str11 == "AREA")
-                                            {
-                                                num = 1;
-                                            }
-                                            else if (str11 == "PERIMETER")
-                                            {
-                                                num = 2;
-                                            }
-                                            else if (str11 == "LINE")
-                                            {
-                                                num = 3;
-                                            }
-                                            else if (str11 == "COUNTER")
-                                            {
-                                                num = 4;
-                                            }
-                                        }
-                                        Guid guid = Guid.NewGuid();
-                                        this.parserPreset = new Preset(guid.ToString(), this.GetStringAttribute(node, "Name"), this.parserObjectName, string.Concat(this.GetStringAttribute(node, "Name"), ";", num.ToString()), UnitScale.UnitSystem.undefined);
-                                        this.parserPresets.Add(this.parserPreset);
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        if (this.parserExtensionCount <= 1)
-                                        {
-                                            break;
-                                        }
-                                        row = this.AppendRow(20);
-                                        this.InsertCell(this.GetStringAttribute(node, "Name"), row, 0, CellType.STRING, this.extensionNameCellStyle);
-                                        return;
-                                    }
-                                }
-                            case "FIELDS":
-                            case "RESULTS":
-                                {
-                                    if (!flag2)
-                                    {
-                                        this.parserResultColumnIndex = 0;
-                                        this.parserResultRowHeader = this.AppendRow(-1);
-                                        this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS" ? -1 : 16));
-                                        return;
-                                    }
-                                    if (this.parserExtensionCount != 1)
-                                    {
-                                        break;
-                                    }
-                                    this.parserResultColumnIndex = 1;
-                                    if (this.parserObjectTypeHasChanged)
-                                    {
-                                        if (this.order == Report.ReportOrderEnum.ReportOrderByObjects)
-                                        {
-                                            if (this.sheet.PhysicalNumberOfRows > 0)
-                                            {
-                                                this.AppendRow(-1);
-                                            }
-                                        }
-                                        else if (this.parserObjectTypeCount > 0)
-                                        {
-                                            this.AppendRow(-1);
-                                        }
-                                        this.parserObjectTypeCount++;
-                                        this.parserResultRowHeader = this.AppendRow(-1);
-                                    }
-                                    this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELDS" ? -1 : 16));
-                                    this.InsertCell(this.parserObjectName, this.parserResultRowData, 0, CellType.STRING, this.objectNameCellStyle);
-                                    return;
-                                }
-                            case "FIELD":
-                            case "RESULT":
-                                {
-                                    if (!flag2 && this.parserResultColumnIndex == 7)
-                                    {
-                                        this.parserResultColumnIndex = 0;
-                                        this.parserResultRowHeader = this.AppendRow(-1);
-                                        this.parserResultRowData = this.AppendRow((node.Name.ToUpper() == "FIELD" ? -1 : 16));
-                                    }
-                                    bool flag3 = (this.sheet.Equals(this.formattedSheet) ? true : this.sheet.Equals(this.formattedSheetConsolidated));
-                                    string stringAttribute6 = this.GetStringAttribute(node, "Caption");
-                                    if (node.Name.ToUpper() == "FIELD")
-                                    {
-                                        str2 = "Value";
-                                    }
-                                    else
-                                    {
-                                        str2 = (this.order == Report.ReportOrderEnum.ReportOrderByObjects ? "TotalValue" : "Value");
-                                    }
-                                    string str12 = str2;
-                                    if (flag3)
-                                    {
-                                        str3 = str12;
-                                    }
-                                    else
-                                    {
-                                        str3 = (str12 == "Value" ? "RawValue" : "TotalRawValue");
-                                    }
-                                    str12 = str3;
-                                    if (!flag3)
-                                    {
-                                        string stringAttribute7 = this.GetStringAttribute(node, "Unit");
-                                        stringAttribute7 = (stringAttribute7 == Resources.unité_ ? "" : stringAttribute7);
-                                        if (stringAttribute7 != string.Empty)
-                                        {
-                                            stringAttribute6 = string.Concat(stringAttribute6, " (", stringAttribute7, ")");
-                                        }
-                                    }
-                                    if (!flag2 || this.parserExtensionCount == 1)
-                                    {
-                                        if (!flag2 || this.parserObjectTypeHasChanged)
-                                        {
-                                            this.InsertCell(stringAttribute6, this.parserResultRowHeader, this.parserResultColumnIndex, CellType.STRING, this.columnHeaderCellStyle);
-                                        }
-                                        string stringAttribute8 = this.GetStringAttribute(node, str12);
-                                        if (flag3)
-                                        {
-                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-                                        }
-                                        else if (Utilities.IsNumber(stringAttribute8.ToString()))
-                                        {
-                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.NUMERIC, (Utilities.IsInteger(stringAttribute8.ToString()) ? this.integerCellStyle : this.decimalCellStyle));
-                                        }
-                                        else
-                                        {
-                                            this.InsertCell(stringAttribute8, this.parserResultRowData, this.parserResultColumnIndex, CellType.STRING, this.resultCellStyle);
-                                        }
-                                    }
-                                    else if (flag2)
-                                    {
-                                        PresetResult presetResult = new PresetResult(this.GetStringAttribute(node, "Name"), stringAttribute6, this.GetStringAttribute(node, str12), "", "", ExtensionResult.ExtensionResultTypeEnum.ResultTypeUnit, false, true, -1, -1, -1);
-                                        this.parserPreset.Results.Add(presetResult);
-                                        if (!flag3)
-                                        {
-                                            Preset preset = this.parserPreset;
-                                            preset.Tag = string.Concat(preset.Tag, stringAttribute6, ";");
-                                        }
-                                    }
-                                    this.parserResultColumnIndex++;
-                                    return;
-                                }
-                            default:
-                                {
-                                    return;
-                                }
+                            }
+
+                            this.parserResultColumnIndex++;
+                            return;
                         }
-                    }
+
+                    default:
+                        return;
                 }
             }
 

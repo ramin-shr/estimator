@@ -33,7 +33,7 @@ namespace QuoterPlan
 
         private DrawObjectProperties properties;
 
-        private ComboBoxEx comboBox;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBox;
 
         private AdvPropertyGrid propertyGrid;
 
@@ -158,7 +158,7 @@ namespace QuoterPlan
             }
         }
 
-        public DrawObjectEditor(Project project, DrawingArea drawArea, ExtensionsSupport extensionSupport, ComboBoxEx comboBox, AdvPropertyGrid propertyGrid, ExtensionsManager extensionsManager, TabControl tabProperties, SuperTabControl superTabProperties, Bar barDisplayCalculations, CEstimatingsItemsControl estimatingItemsControl, CEstimatingsItemsControl coControl, COfficeInterface coInterface)
+        public DrawObjectEditor(Project project, DrawingArea drawArea, ExtensionsSupport extensionSupport, DevComponents.DotNetBar.Controls.ComboBoxEx comboBox, AdvPropertyGrid propertyGrid, ExtensionsManager extensionsManager, TabControl tabProperties, SuperTabControl superTabProperties, Bar barDisplayCalculations, CEstimatingsItemsControl estimatingItemsControl, CEstimatingsItemsControl coControl, COfficeInterface coInterface)
         {
             this.project = project;
             this.drawArea = drawArea;

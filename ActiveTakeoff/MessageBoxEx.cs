@@ -168,43 +168,54 @@ namespace QuoterPlan
 			}
 		}
 
-		public MessageBoxEx(string title, string message, MessageBoxEx.MessageTypeEnum messageType, DialogResult defaultResult)
-		{
-			this.InitializeComponent();
-			this.LoadResources();
-			this.InitializeFonts();
-			this.Text = Utilities.ApplicationName;
-			this.lblTitle.Text = title;
-			this.messageType = messageType;
-			this.defaultResult = defaultResult;
-			using (Graphics graphics = base.CreateGraphics())
-			{
-				Control control = (messageType != MessageBoxEx.MessageTypeEnum.DisplayLogError) ? this.lblMessage : this.txtMessage;
-				int num = (int)Math.Ceiling((double)graphics.MeasureString(message, control.Font, control.Width).Height);
-				if (!Utilities.IsSegoeUIInstalled())
-				{
-					num = (int)((float)num * 1.1f);
-				}
-				num = ((num > 200) ? 200 : num);
-				if (num > control.Height)
-				{
-					int num2 = num - control.Height;
-					control.Height = num;
-					base.Height += num2;
-				}
-				if (messageType != MessageBoxEx.MessageTypeEnum.DisplayLogError)
-				{
-					this.lblMessage.Text = message;
-				}
-				else
-				{
-					this.txtMessage.Text = message;
-				}
-			}
-			this.InitializeWindow();
-		}
+        public MessageBoxEx(string title, string message, MessageBoxEx.MessageTypeEnum messageType, DialogResult defaultResult)
+        {
+            Control control;
+            this.InitializeComponent();
+            this.LoadResources();
+            this.InitializeFonts();
+            this.Text = Utilities.ApplicationName;
+            this.lblTitle.Text = title;
+            this.messageType = messageType;
+            this.defaultResult = defaultResult;
+            using (Graphics graphic = base.CreateGraphics())
+            {
+                if (messageType != MessageBoxEx.MessageTypeEnum.DisplayLogError)
+                {
+                    control = this.lblMessage;
+                }
+                else
+                {
+                    control = this.txtMessage;
+                }
+                Control control1 = control;
+                SizeF sizeF = graphic.MeasureString(message, control1.Font, control1.Width);
+                int num = (int)Math.Ceiling((double)sizeF.Height);
+                if (!Utilities.IsSegoeUIInstalled())
+                {
+                    num = (int)((float)num * 1.1f);
+                }
+                num = (num > 200 ? 200 : num);
+                if (num > control1.Height)
+                {
+                    int height = num - control1.Height;
+                    control1.Height = num;
+                    MessageBoxEx messageBoxEx = this;
+                    messageBoxEx.Height = messageBoxEx.Height + height;
+                }
+                if (messageType == MessageBoxEx.MessageTypeEnum.DisplayLogError)
+                {
+                    this.txtMessage.Text = message;
+                }
+                else
+                {
+                    this.lblMessage.Text = message;
+                }
+            }
+            this.InitializeWindow();
+        }
 
-		private void btButton_Click(object sender, EventArgs e)
+        private void btButton_Click(object sender, EventArgs e)
 		{
 			base.Close();
 		}

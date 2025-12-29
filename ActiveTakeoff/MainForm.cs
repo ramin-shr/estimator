@@ -239,7 +239,7 @@ namespace QuoterPlan
 
 		private void InitializeTurboActivate()
 		{
-			this.TurboActivate = new TurboActivate("2b7d027d541e2ff9d9bbc0.18338856", null);
+			this.TurboActivate = new TurboActivate("2b7d027d541e2ff9d9bbc0.18338856", "");
 		}
 
 		private void InitializeLicensing()
@@ -3571,73 +3571,83 @@ namespace QuoterPlan
 			this.drawArea.DrawingBoard.Origin = p;
 		}
 
-		private void ZoomObject(DrawObject drawObject, bool selectGroup)
-		{
-			if (drawObject == null)
-			{
-				return;
-			}
-			Layer objectLayer = this.drawArea.GetObjectLayer(drawObject);
-			if (objectLayer == null)
-			{
-				return;
-			}
-			Point empty = Point.Empty;
-			Point empty2 = Point.Empty;
-			Rectangle boundingRectangle;
-			if (selectGroup)
-			{
-				using (IEnumerator enumerator = objectLayer.DrawingObjects.Collection.GetEnumerator())
-				{
-					while (enumerator.MoveNext())
-					{
-						object obj = enumerator.Current;
-						DrawObject drawObject2 = (DrawObject)obj;
-						if (!drawObject2.IsDeduction() && drawObject2.HasSameGroupOrID(drawObject) && drawObject2.Center != Point.Empty)
-						{
-							boundingRectangle = drawObject2.BoundingRectangle;
-							if (empty == Point.Empty)
-							{
-								empty.X = boundingRectangle.X;
-								empty.Y = boundingRectangle.Y;
-							}
-							else
-							{
-								if (boundingRectangle.X < empty.X)
-								{
-									empty.X = boundingRectangle.X;
-								}
-								if (boundingRectangle.Y < empty.Y)
-								{
-									empty.Y = boundingRectangle.Y;
-								}
-							}
-							if (boundingRectangle.X + boundingRectangle.Width > empty2.X)
-							{
-								empty2.X = boundingRectangle.X + boundingRectangle.Width;
-							}
-							if (boundingRectangle.Y + boundingRectangle.Height > empty2.Y)
-							{
-								empty2.Y = boundingRectangle.Y + boundingRectangle.Height;
-							}
-						}
-					}
-					goto IL_1B8;
-				}
-			}
-			boundingRectangle = drawObject.BoundingRectangle;
-			empty.X = boundingRectangle.X;
-			empty.Y = boundingRectangle.Y;
-			empty2.X = boundingRectangle.X + boundingRectangle.Width;
-			empty2.Y = boundingRectangle.Y + boundingRectangle.Height;
-			IL_1B8:
-			Rectangle selectedRectangle = new Rectangle(empty.X - (int)this.drawArea.DrawingBoard.Origin.X - 50, empty.Y - (int)this.drawArea.DrawingBoard.Origin.Y - 50, Math.Abs(empty2.X - empty.X) + 100, Math.Abs(empty2.Y - empty.Y) + 100);
-			this.drawArea.DrawingBoard.ZoomSelection(selectedRectangle);
-			Point objectCenter = new Point(empty.X + Math.Abs(empty2.X - empty.X) / 2, empty.Y + Math.Abs(empty2.Y - empty.Y) / 2);
-			this.CenterObject(objectCenter);
-		}
+        private void ZoomObject(DrawObject drawObject, bool selectGroup)
+        {
+            if (drawObject == null)
+                return;
 
-		private void EnsureObjectVisible(DrawObject drawObject, bool forceDisplay)
+            Layer objectLayer = this.drawArea.GetObjectLayer(drawObject);
+            if (objectLayer == null)
+                return;
+
+            Point minPoint = Point.Empty;
+            Point maxPoint = Point.Empty;
+            Rectangle boundingRectangle;
+
+            if (selectGroup)
+            {
+                foreach (object item in objectLayer.DrawingObjects.Collection)
+                {
+                    DrawObject candidate = (DrawObject)item;
+
+                    if (!candidate.IsDeduction() &&
+                        candidate.HasSameGroupOrID(drawObject) &&
+                        candidate.Center != Point.Empty)
+                    {
+                        boundingRectangle = candidate.BoundingRectangle;
+
+                        if (minPoint == Point.Empty)
+                        {
+                            minPoint.X = boundingRectangle.X;
+                            minPoint.Y = boundingRectangle.Y;
+                        }
+                        else
+                        {
+                            if (boundingRectangle.X < minPoint.X)
+                                minPoint.X = boundingRectangle.X;
+
+                            if (boundingRectangle.Y < minPoint.Y)
+                                minPoint.Y = boundingRectangle.Y;
+                        }
+
+                        int right = boundingRectangle.X + boundingRectangle.Width;
+                        int bottom = boundingRectangle.Y + boundingRectangle.Height;
+
+                        if (right > maxPoint.X)
+                            maxPoint.X = right;
+
+                        if (bottom > maxPoint.Y)
+                            maxPoint.Y = bottom;
+                    }
+                }
+            }
+            else
+            {
+                boundingRectangle = drawObject.BoundingRectangle;
+
+                minPoint.X = boundingRectangle.X;
+                minPoint.Y = boundingRectangle.Y;
+
+                maxPoint.X = boundingRectangle.X + boundingRectangle.Width;
+                maxPoint.Y = boundingRectangle.Y + boundingRectangle.Height;
+            }
+
+            Rectangle selectionRectangle = new Rectangle(
+                minPoint.X - (int)this.drawArea.DrawingBoard.Origin.X - 50,
+                minPoint.Y - (int)this.drawArea.DrawingBoard.Origin.Y - 50,
+                Math.Abs(maxPoint.X - minPoint.X) + 100,
+                Math.Abs(maxPoint.Y - minPoint.Y) + 100);
+
+            this.drawArea.DrawingBoard.ZoomSelection(selectionRectangle);
+
+            Point selectionCenter = new Point(
+                minPoint.X + Math.Abs(maxPoint.X - minPoint.X) / 2,
+                minPoint.Y + Math.Abs(maxPoint.Y - minPoint.Y) / 2);
+
+            this.CenterObject(selectionCenter);
+        }
+
+        private void EnsureObjectVisible(DrawObject drawObject, bool forceDisplay)
 		{
 			if (drawObject.IsDisplayed() && !forceDisplay)
 			{
@@ -4944,81 +4954,89 @@ namespace QuoterPlan
 			this.GroupAddObject(selectedObject);
 		}
 
-		private void GroupMoveTo(DrawObject groupObject)
-		{
-			if (groupObject == null)
-			{
-				return;
-			}
-			if (this.drawArea.SelectionCount == 0)
-			{
-				return;
-			}
-			if (this.drawArea.SelectionCount == 1 && this.drawArea.SelectedLegend != null)
-			{
-				return;
-			}
-			this.drawArea.UnselectLegend();
-			DrawObject selectedObject = this.drawArea.SelectedObject;
-			int num = this.drawArea.FindGroupLayer(selectedObject.GroupID);
-			int num2 = this.drawArea.FindGroupLayer(groupObject.GroupID);
-			CommandChangeStateEx commandChangeStateEx = new CommandChangeStateEx(this.drawArea, this.drawArea.ActiveLayerName, true, true);
-			for (int i = 0; i < this.drawArea.SelectionCount; i++)
-			{
-				DrawObject selectedObject2 = this.drawArea.GetSelectedObject(i);
-				if (selectedObject2.ObjectType == groupObject.ObjectType)
-				{
-					selectedObject2.Name = groupObject.Name;
-					selectedObject2.GroupID = groupObject.GroupID;
-					selectedObject2.Text = groupObject.Text;
-					selectedObject2.Comment = groupObject.Comment;
-					selectedObject2.Color = groupObject.Color;
-					selectedObject2.FillColor = groupObject.FillColor;
-					selectedObject2.PenWidth = groupObject.PenWidth;
-					selectedObject2.ShowMeasure = groupObject.ShowMeasure;
-					selectedObject2.Visible = groupObject.Visible;
-					selectedObject2.SetSlopeFactor(groupObject.SlopeFactor);
-					selectedObject2.Group = groupObject.Group;
-					if (selectedObject2.ObjectType == "Area")
-					{
-						((DrawPolyLine)selectedObject2).Pattern = ((DrawPolyLine)groupObject).Pattern;
-					}
-					if (selectedObject2.ObjectType == "Area" || selectedObject2.ObjectType == "Perimeter")
-					{
-						DrawPolyLine drawPolyLine = (DrawPolyLine)selectedObject2;
-						using (IEnumerator enumerator = drawPolyLine.DeductionArray.GetEnumerator())
-						{
-							while (enumerator.MoveNext())
-							{
-								object obj = enumerator.Current;
-								DrawObject drawObject = (DrawObject)obj;
-								drawObject.GroupID = selectedObject2.GroupID;
-							}
-							goto IL_225;
-						}
-					}
-					if (selectedObject2.ObjectType == "Counter")
-					{
-						((DrawCounter)selectedObject2).UpdateDefaultSize(((DrawCounter)groupObject).DefaultSize);
-						((DrawCounter)selectedObject2).Shape = ((DrawCounter)groupObject).Shape;
-					}
-				}
-				IL_225:;
-			}
-			if (num != num2)
-			{
-				this.LayerMoveTo(num2, commandChangeStateEx);
-				return;
-			}
-			commandChangeStateEx.NewState(this.drawArea.ActiveLayerName);
-			this.drawArea.AddCommandToHistory(commandChangeStateEx);
-			this.ReloadObjectsInGUI();
-			this.UpdateSelectedObjects();
-			this.SetModified();
-			this.Refresh();
-		}
+        private void GroupMoveTo(DrawObject targetGroupObject)
+        {
+            if (targetGroupObject == null)
+                return;
 
-		private void GroupMoveToNew()
+            int selectionCount = this.drawArea.SelectionCount;
+            if (selectionCount == 0)
+                return;
+
+            if (selectionCount == 1 && this.drawArea.SelectedLegend != null)
+                return;
+
+            this.drawArea.UnselectLegend();
+
+            DrawObject selectedObject = this.drawArea.SelectedObject;
+            int sourceGroupLayerIndex = this.drawArea.FindGroupLayer(selectedObject.GroupID);
+            int targetGroupLayerIndex = this.drawArea.FindGroupLayer(targetGroupObject.GroupID);
+
+            CommandChangeStateEx changeStateCommand =
+                new CommandChangeStateEx(this.drawArea, this.drawArea.ActiveLayerName, true, true);
+
+            for (int selectionIndex = 0; selectionIndex < selectionCount; selectionIndex++)
+            {
+                DrawObject selectedItem = this.drawArea.GetSelectedObject(selectionIndex);
+
+                if (selectedItem.ObjectType != targetGroupObject.ObjectType)
+                    continue;
+
+                selectedItem.Name = targetGroupObject.Name;
+                selectedItem.GroupID = targetGroupObject.GroupID;
+                selectedItem.Text = targetGroupObject.Text;
+                selectedItem.Comment = targetGroupObject.Comment;
+                selectedItem.Color = targetGroupObject.Color;
+                selectedItem.FillColor = targetGroupObject.FillColor;
+                selectedItem.PenWidth = targetGroupObject.PenWidth;
+                selectedItem.ShowMeasure = targetGroupObject.ShowMeasure;
+                selectedItem.Visible = targetGroupObject.Visible;
+                selectedItem.SetSlopeFactor(targetGroupObject.SlopeFactor);
+                selectedItem.Group = targetGroupObject.Group;
+
+                if (selectedItem.ObjectType == "Area")
+                {
+                    ((DrawPolyLine)selectedItem).Pattern = ((DrawPolyLine)targetGroupObject).Pattern;
+                }
+
+                if (selectedItem.ObjectType == "Area" || selectedItem.ObjectType == "Perimeter")
+                {
+                    DrawPolyLine selectedPolyLine = (DrawPolyLine)selectedItem;
+
+                    foreach (object deductionItem in selectedPolyLine.DeductionArray)
+                    {
+                        DrawObject deductionObject = (DrawObject)deductionItem;
+                        deductionObject.GroupID = selectedItem.GroupID;
+                    }
+
+                    continue; // matches the original goto-to-end-of-loop behavior
+                }
+
+                if (selectedItem.ObjectType == "Counter")
+                {
+                    DrawCounter selectedCounter = (DrawCounter)selectedItem;
+                    DrawCounter targetCounter = (DrawCounter)targetGroupObject;
+
+                    selectedCounter.UpdateDefaultSize(targetCounter.DefaultSize);
+                    selectedCounter.Shape = targetCounter.Shape;
+                }
+            }
+
+            if (sourceGroupLayerIndex != targetGroupLayerIndex)
+            {
+                this.LayerMoveTo(targetGroupLayerIndex, changeStateCommand);
+                return;
+            }
+
+            changeStateCommand.NewState(this.drawArea.ActiveLayerName);
+            this.drawArea.AddCommandToHistory(changeStateCommand);
+            this.ReloadObjectsInGUI();
+            this.UpdateSelectedObjects();
+            this.SetModified();
+            this.Refresh();
+        }
+
+        private void GroupMoveToNew()
 		{
 			if (this.drawArea.SelectionCount == 0)
 			{
