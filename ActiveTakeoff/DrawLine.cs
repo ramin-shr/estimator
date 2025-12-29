@@ -2,12 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace QuoterPlan
@@ -15,119 +12,57 @@ namespace QuoterPlan
     public class DrawLine : DrawObject
     {
         private Point startPoint;
-
         private Point endPoint;
 
         private double height;
-
         private double lastDistance;
 
-        private SlopeFactor slopeFactor = new SlopeFactor(SlopeFactor.HipValleyEnum.hipValleyDisabled);
+        private readonly SlopeFactor slopeFactor = new SlopeFactor(SlopeFactor.HipValleyEnum.hipValleyDisabled);
 
         private bool figureCompleted;
 
         private int toolTipMinThreshold = 50;
-
         private int toolTipMaxThreshold = 100;
 
-        public override int ActiveHandleCount
-        {
-            get
-            {
-                if (!this.FigureCompleted)
-                {
-                    return 1;
-                }
-                return 2;
-            }
-        }
+        public override int ActiveHandleCount => this.FigureCompleted ? 2 : 1;
 
-        public override Rectangle BoundingRectangle
-        {
-            get
-            {
-                return this.GetNormalizedRectangle();
-            }
-        }
+        public override Rectangle BoundingRectangle => this.GetNormalizedRectangle();
 
-        public override Point Center
-        {
-            get
-            {
-                return this.ComputeCenter();
-            }
-        }
+        public override Point Center => this.ComputeCenter();
 
         public Point EndPoint
         {
-            get
-            {
-                return this.endPoint;
-            }
-            set
-            {
-                this.endPoint = value;
-            }
+            get => this.endPoint;
+            set => this.endPoint = value;
         }
 
         public bool FigureCompleted
         {
-            get
-            {
-                return this.figureCompleted;
-            }
-            set
-            {
-                this.figureCompleted = value;
-            }
+            get => this.figureCompleted;
+            set => this.figureCompleted = value;
         }
 
-        public override int HandleCount
-        {
-            get
-            {
-                return 2;
-            }
-        }
+        public override int HandleCount => 2;
 
         public double Height
         {
-            get
-            {
-                return this.height;
-            }
-            set
-            {
-                this.height = value;
-            }
+            get => this.height;
+            set => this.height = value;
         }
 
-        public override SlopeFactor SlopeFactor
-        {
-            get
-            {
-                return this.slopeFactor;
-            }
-        }
+        public override SlopeFactor SlopeFactor => this.slopeFactor;
 
         public Point StartPoint
         {
-            get
-            {
-                return this.startPoint;
-            }
-            set
-            {
-                this.startPoint = value;
-            }
+            get => this.startPoint;
+            set => this.startPoint = value;
         }
 
         public DrawLine()
         {
-            this.startPoint.X = 0;
-            this.startPoint.Y = 0;
-            this.endPoint.X = 1;
-            this.endPoint.Y = 1;
+            this.startPoint = new Point(0, 0);
+            this.endPoint = new Point(1, 1);
+
             base.ZOrder = 0;
             this.FigureCompleted = false;
             base.Initialize();
@@ -135,253 +70,311 @@ namespace QuoterPlan
 
         public DrawLine(int x1, int y1, int x2, int y2, PointF offset, string name, int groupID, string comment)
         {
-            this.startPoint.X = x1;
-            this.startPoint.Y = y1;
-            this.endPoint.X = x2;
-            this.endPoint.Y = y2;
+            this.startPoint = new Point(x1, y1);
+            this.endPoint = new Point(x2, y2);
+
             base.Offset = offset;
             base.ZOrder = 0;
             base.Name = name;
             base.GroupID = groupID;
             base.Comment = comment;
+
             this.FigureCompleted = false;
             base.Initialize();
         }
 
-        public DrawLine(int x1, int y1, int x2, int y2, PointF offset, string name, int groupID, string comment, bool figureCompleted, Color lineColor, int opacity, int lineWidth)
+        public DrawLine(
+            int x1,
+            int y1,
+            int x2,
+            int y2,
+            PointF offset,
+            string name,
+            int groupID,
+            string comment,
+            bool figureCompleted,
+            Color lineColor,
+            int opacity,
+            int lineWidth)
         {
-            this.startPoint.X = x1;
-            this.startPoint.Y = y1;
-            this.endPoint.X = x2;
-            this.endPoint.Y = y2;
+            this.startPoint = new Point(x1, y1);
+            this.endPoint = new Point(x2, y2);
+
             base.Offset = offset;
             base.Color = lineColor;
             base.Opacity = opacity;
             base.PenWidth = lineWidth;
+
             base.ZOrder = 0;
             base.Name = name;
             base.GroupID = groupID;
             base.Comment = comment;
+
             this.FigureCompleted = figureCompleted;
             base.Initialize();
         }
 
         public static double Angle(double px1, double py1, double px2, double py2)
         {
-            double num = px2 - px1;
-            double num1 = py2 - py1;
-            double num2 = 0;
-            if (num == 0)
+            double dx = px2 - px1;
+            double dy = py2 - py1;
+
+            double angleRad;
+
+            if (dx == 0)
             {
-                num2 = (num1 < 0 ? 4.71238898038469 : 1.5707963267949);
+                angleRad = (dy < 0) ? 4.71238898038469 : 1.5707963267949;
             }
-            else if (num1 == 0)
+            else if (dy == 0)
             {
-                num2 = (num > 0 ? 0 : 3.14159265358979);
+                angleRad = (dx > 0) ? 0 : 3.14159265358979;
             }
-            else if (num >= 0)
+            else if (dx >= 0)
             {
-                num2 = (num1 >= 0 ? Math.Atan(num1 / num) : Math.Atan(num1 / num) + 6.28318530717959);
+                angleRad = (dy >= 0) ? Math.Atan(dy / dx) : Math.Atan(dy / dx) + 6.28318530717959;
             }
             else
             {
-                num2 = Math.Atan(num1 / num) + 3.14159265358979;
+                angleRad = Math.Atan(dy / dx) + 3.14159265358979;
             }
-            num2 = num2 * 180 / 3.14159265358979;
-            return num2;
+
+            return angleRad * 180 / 3.14159265358979;
         }
 
         public override DrawObject Clone()
         {
-            DrawLine drawLine = new DrawLine()
+            DrawLine copy = new DrawLine
             {
                 StartPoint = new Point(this.StartPoint.X, this.StartPoint.Y),
                 EndPoint = new Point(this.EndPoint.X, this.EndPoint.Y),
                 Height = this.Height,
                 FigureCompleted = true
             };
-            drawLine.SetSlopeFactor(this.slopeFactor);
-            drawLine.DisplayName = new Utilities.DisplayName(drawLine, "");
-            base.FillDrawObjectFields(drawLine);
-            return drawLine;
+
+            copy.SetSlopeFactor(this.slopeFactor);
+            copy.DisplayName = new Utilities.DisplayName(copy, "");
+            base.FillDrawObjectFields(copy);
+
+            return copy;
         }
 
         private Point ComputeCenter()
         {
-            Rectangle normalizedRectangle = this.GetNormalizedRectangle();
-            return new Point(normalizedRectangle.X + normalizedRectangle.Width / 2, normalizedRectangle.Y + normalizedRectangle.Height / 2);
+            Rectangle bounds = this.GetNormalizedRectangle();
+            return new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
         }
 
         public int Distance2D(Point startPoint, Point endPoint)
         {
-            return DrawLine.GetDistance(startPoint, endPoint);
+            return GetDistance(startPoint, endPoint);
         }
 
         public int Distance2D(bool applySlope)
         {
-            int num = 0;
             if (!applySlope)
-            {
                 return this.Distance2D(this.StartPoint, this.EndPoint);
-            }
-            int x = this.StartPoint.X;
-            int y = this.StartPoint.Y;
-            int x1 = this.EndPoint.X;
-            Point endPoint = this.EndPoint;
-            return this.Distance2D(x, y, x1, endPoint.Y, true, ref num);
+
+            int distanceBeforeSlope = 0;
+            return this.Distance2D(
+                this.StartPoint.X,
+                this.StartPoint.Y,
+                this.EndPoint.X,
+                this.EndPoint.Y,
+                true,
+                ref distanceBeforeSlope);
         }
 
         public int Distance2D(int x1, int y1, int x2, int y2, bool applySlopeOnPlan, ref int distanceBeforeSlope)
         {
-            int num = this.Distance2D(new Point(x1, y1), new Point(x2, y2));
-            distanceBeforeSlope = num;
-            if (this.SlopeFactor.InternalValue > 0 && (this.SlopeFactor.SlopeApplyType != SlopeFactor.SlopeApplyTypeEnum.applyOnPlan || this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnPlan && applySlopeOnPlan))
+            int distance = this.Distance2D(new Point(x1, y1), new Point(x2, y2));
+            distanceBeforeSlope = distance;
+
+            if (this.SlopeFactor.InternalValue > 0 &&
+                (this.SlopeFactor.SlopeApplyType != SlopeFactor.SlopeApplyTypeEnum.applyOnPlan ||
+                 (this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnPlan && applySlopeOnPlan)))
             {
-                double num1 = DrawLine.Angle((double)x1, (double)y1, (double)x2, (double)y2);
-                Console.WriteLine(string.Concat("angle = ", num1));
-                if (this.SlopeFactor.HipValley == SlopeFactor.HipValleyEnum.hipValleyEnabled && this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnElevation)
+                double angleDeg = Angle(x1, y1, x2, y2);
+                Console.WriteLine("angle = " + angleDeg);
+
+                if (this.SlopeFactor.HipValley == SlopeFactor.HipValleyEnum.hipValleyEnabled &&
+                    this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnElevation)
                 {
-                    num = (int)this.SlopeFactor.Apply((double)num, (double)Math.Abs(x2 - x1), (double)Math.Abs(y2 - y1));
+                    distance = (int)this.SlopeFactor.Apply(distance, Math.Abs(x2 - x1), Math.Abs(y2 - y1));
                 }
-                else if (num1 >= 89 && num1 <= 91 || num1 >= 269 && num1 <= 271 || this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnPlan)
+                else if ((angleDeg >= 89 && angleDeg <= 91) ||
+                         (angleDeg >= 269 && angleDeg <= 271) ||
+                         this.SlopeFactor.SlopeApplyType == SlopeFactor.SlopeApplyTypeEnum.applyOnPlan)
                 {
-                    num = (int)this.SlopeFactor.Apply((double)num, 0, 0);
+                    distance = (int)this.SlopeFactor.Apply(distance, 0, 0);
                 }
             }
-            return num;
+
+            return distance;
         }
 
-        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1)
+        public override void Draw(
+            Graphics g,
+            int offsetX,
+            int offsetY,
+            bool printToScreen = true,
+            MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh)
         {
-            Pen pen;
-            TextRenderingHint textRenderingHint;
-            SmoothingMode smoothingMode = g.SmoothingMode;
+            SmoothingMode previousSmoothing = g.SmoothingMode;
             g.SmoothingMode = SmoothingMode.HighQuality;
-            TextRenderingHint textRenderingHint1 = g.TextRenderingHint;
-            Graphics graphic = g;
-            if (printToScreen)
-            {
-                textRenderingHint = (imageQuality == MainForm.ImageQualityEnum.QualityHigh ? TextRenderingHint.AntiAliasGridFit : TextRenderingHint.SingleBitPerPixel);
-            }
-            else
-            {
-                textRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            }
-            graphic.TextRenderingHint = textRenderingHint;
-            pen = (base.DrawPen != null ? (Pen)base.DrawPen.Clone() : new Pen(Color.FromArgb(base.Opacity + 30, base.Color), (float)base.PenWidth));
+
+            TextRenderingHint previousTextHint = g.TextRenderingHint;
+            g.TextRenderingHint = printToScreen
+                ? (imageQuality == MainForm.ImageQualityEnum.QualityHigh ? TextRenderingHint.AntiAliasGridFit : TextRenderingHint.SingleBitPerPixel)
+                : TextRenderingHint.ClearTypeGridFit;
+
+            Pen pen = base.DrawPen != null
+                ? (Pen)base.DrawPen.Clone()
+                : new Pen(Color.FromArgb(base.Opacity + 30, base.Color), (float)base.PenWidth);
+
             base.ClearTextArray();
-            int num = 0;
-            int x = this.StartPoint.X;
-            int y = this.StartPoint.Y;
-            int x1 = this.EndPoint.X;
-            Point endPoint = this.EndPoint;
-            int num1 = this.Distance2D(x, y, x1, endPoint.Y, true, ref num);
-            if ((double)num * base.DrawingBoard.ZoomFactor >= (double)(this.toolTipMinThreshold + (base.DrawArea.UnitScaleIsImperial() ? 10 : 0)))
+
+            int distanceBeforeSlope = 0;
+            int distance = this.Distance2D(
+                this.StartPoint.X,
+                this.StartPoint.Y,
+                this.EndPoint.X,
+                this.EndPoint.Y,
+                true,
+                ref distanceBeforeSlope);
+
+            double scaledBaseDistance = distanceBeforeSlope * base.DrawingBoard.ZoomFactor;
+            int thresholdBonus = base.DrawArea.UnitScaleIsImperial() ? 10 : 0;
+
+            if (scaledBaseDistance >= (this.toolTipMinThreshold + thresholdBonus))
             {
-                string str = (base.DisplayInPixels ? string.Concat(num1.ToString(), " pixels") : base.DrawArea.ToLengthString(num1, (double)num * base.DrawingBoard.ZoomFactor <= (double)this.toolTipMaxThreshold));
-                base.TextArray.Add(new DrawText(str, this.Center, this.TextAngle(this.startPoint, this.endPoint)));
+                bool compact = scaledBaseDistance <= this.toolTipMaxThreshold;
+
+                string text = base.DisplayInPixels
+                    ? distance + " pixels"
+                    : base.DrawArea.ToLengthString(distance, compact);
+
+                base.TextArray.Add(new DrawText(text, this.Center, this.TextAngle(this.startPoint, this.endPoint)));
             }
-            this.lastDistance = (double)num;
-            GraphicsPath graphicsPath = new GraphicsPath();
-            Point point = new Point(this.startPoint.X, this.startPoint.Y);
-            Point point1 = new Point(this.endPoint.X, this.endPoint.Y);
-            point.X = point.X - offsetX;
-            point.Y = point.Y - offsetY;
-            point1.X = point1.X - offsetX;
-            point1.Y = point1.Y - offsetY;
-            graphicsPath.AddLine(point, point1);
-            if (base.Rotation != 0)
+
+            this.lastDistance = distanceBeforeSlope;
+
+            using (GraphicsPath path = new GraphicsPath())
             {
-                RectangleF bounds = graphicsPath.GetBounds();
-                Matrix matrix = new Matrix();
-                matrix.RotateAt((float)base.Rotation, new PointF(bounds.Left + bounds.Width / 2f, bounds.Top + bounds.Height / 2f), MatrixOrder.Append);
-                graphicsPath.Transform(matrix);
+                Point p1 = new Point(this.startPoint.X - offsetX, this.startPoint.Y - offsetY);
+                Point p2 = new Point(this.endPoint.X - offsetX, this.endPoint.Y - offsetY);
+
+                path.AddLine(p1, p2);
+
+                if (base.Rotation != 0)
+                {
+                    RectangleF bounds = path.GetBounds();
+                    using (Matrix transform = new Matrix())
+                    {
+                        transform.RotateAt(
+                            (float)base.Rotation,
+                            new PointF(bounds.Left + bounds.Width / 2f, bounds.Top + bounds.Height / 2f),
+                            MatrixOrder.Append);
+
+                        path.Transform(transform);
+                    }
+                }
+
+                g.DrawPath(pen, path);
             }
-            g.DrawPath(pen, graphicsPath);
-            graphicsPath.Dispose();
+
             pen.Dispose();
-            g.TextRenderingHint = textRenderingHint1;
-            g.SmoothingMode = smoothingMode;
+
+            g.TextRenderingHint = previousTextHint;
+            g.SmoothingMode = previousSmoothing;
         }
 
-        public override void DrawText(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1, float defaultFontSize = 12f)
+        public override void DrawText(
+            Graphics g,
+            int offsetX,
+            int offsetY,
+            bool printToScreen = true,
+            MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh,
+            float defaultFontSize = 12f)
         {
             if (!base.ShowMeasure || base.TextArray.Count == 0)
-            {
                 return;
-            }
+
             if (base.DrawingBoard.ZoomFactor >= 0.15)
             {
-                ((DrawText)base.TextArray[0]).Draw(g, offsetX, offsetY, (float)base.DrawingBoard.ZoomFactor, base.Opacity, printToScreen, imageQuality, defaultFontSize);
+                ((DrawText)base.TextArray[0]).Draw(
+                    g,
+                    offsetX,
+                    offsetY,
+                    (float)base.DrawingBoard.ZoomFactor,
+                    base.Opacity,
+                    printToScreen,
+                    imageQuality,
+                    defaultFontSize);
             }
+
             base.TextDirty = false;
         }
 
         public static double FindDistanceToSegment(Point pt, Point p1, Point p2)
         {
-            PointF pointF;
-            return DrawLine.FindDistanceToSegment(pt, p1, p2, out pointF);
+            PointF closest;
+            return FindDistanceToSegment(pt, p1, p2, out closest);
         }
 
         public static double FindDistanceToSegment(Point pt, Point p1, Point p2, out PointF closest)
         {
-            float x = (float)(p2.X - p1.X);
-            float y = (float)(p2.Y - p1.Y);
-            if (x == 0f && y == 0f)
+            float dx = p2.X - p1.X;
+            float dy = p2.Y - p1.Y;
+
+            if (dx == 0f && dy == 0f)
             {
                 closest = p1;
-                x = (float)(pt.X - p1.X);
-                y = (float)(pt.Y - p1.Y);
-                return Math.Sqrt((double)(x * x + y * y));
+                float ax = pt.X - p1.X;
+                float ay = pt.Y - p1.Y;
+                return Math.Sqrt(ax * ax + ay * ay);
             }
-            float single = ((float)(pt.X - p1.X) * x + (float)(pt.Y - p1.Y) * y) / (x * x + y * y);
-            if (single < 0f)
+
+            float t = ((pt.X - p1.X) * dx + (pt.Y - p1.Y) * dy) / (dx * dx + dy * dy);
+
+            if (t < 0f)
             {
                 closest = new Point(p1.X, p1.Y);
-                x = (float)(pt.X - p1.X);
-                y = (float)(pt.Y - p1.Y);
+                dx = pt.X - p1.X;
+                dy = pt.Y - p1.Y;
             }
-            else if (single <= 1f)
+            else if (t <= 1f)
             {
-                closest = new PointF((float)p1.X + single * x, (float)p1.Y + single * y);
-                x = (float)pt.X - closest.X;
-                y = (float)pt.Y - closest.Y;
+                closest = new PointF(p1.X + t * dx, p1.Y + t * dy);
+                dx = pt.X - closest.X;
+                dy = pt.Y - closest.Y;
             }
             else
             {
                 closest = new Point(p2.X, p2.Y);
-                x = (float)(pt.X - p2.X);
-                y = (float)(pt.Y - p2.Y);
+                dx = pt.X - p2.X;
+                dy = pt.Y - p2.Y;
             }
-            return Math.Sqrt((double)(x * x + y * y));
+
+            return Math.Sqrt(dx * dx + dy * dy);
         }
 
         public static int GetDistance(Point startPoint, Point endPoint)
         {
-            int x = startPoint.X;
-            int y = startPoint.Y;
-            int num = endPoint.X;
-            int y1 = endPoint.Y;
-            double num1 = Math.Pow((double)(num - x), 2);
-            double num2 = Math.Pow((double)(y1 - y), 2);
-            return (int)Math.Sqrt(num1 + num2);
+            int dx = endPoint.X - startPoint.X;
+            int dy = endPoint.Y - startPoint.Y;
+
+            double dx2 = Math.Pow(dx, 2);
+            double dy2 = Math.Pow(dy, 2);
+
+            return (int)Math.Sqrt(dx2 + dy2);
         }
 
         public override Point GetHandle(int handleNumber)
         {
-            if (handleNumber < 1)
-            {
-                handleNumber = 1;
-            }
-            if (handleNumber > 2)
-            {
-                handleNumber = 2;
-            }
-            if (handleNumber != 1)
-            {
-                return this.EndPoint;
-            }
-            return this.StartPoint;
+            if (handleNumber < 1) handleNumber = 1;
+            if (handleNumber > 2) handleNumber = 2;
+
+            return handleNumber == 1 ? this.StartPoint : this.EndPoint;
         }
 
         public override Cursor GetHandleCursor(int handleNumber)
@@ -390,11 +383,10 @@ namespace QuoterPlan
             {
                 case 1:
                 case 2:
-                    {
-                        return Cursors.SizeAll;
-                    }
+                    return Cursors.SizeAll;
+                default:
+                    return Cursors.Default;
             }
-            return Cursors.Default;
         }
 
         public override int GetHandleSize()
@@ -404,83 +396,84 @@ namespace QuoterPlan
 
         private Rectangle GetNormalizedRectangle()
         {
-            int x;
-            int y;
-            int num;
-            int y1;
+            int left, right;
+            int top, bottom;
+
             if (this.startPoint.X > this.endPoint.X)
             {
-                x = this.endPoint.X;
-                num = this.startPoint.X;
+                left = this.endPoint.X;
+                right = this.startPoint.X;
             }
             else
             {
-                x = this.startPoint.X;
-                num = this.endPoint.X;
+                left = this.startPoint.X;
+                right = this.endPoint.X;
             }
+
             if (this.startPoint.Y > this.endPoint.Y)
             {
-                y = this.endPoint.Y;
-                y1 = this.startPoint.Y;
+                top = this.endPoint.Y;
+                bottom = this.startPoint.Y;
             }
             else
             {
-                y = this.startPoint.Y;
-                y1 = this.endPoint.Y;
+                top = this.startPoint.Y;
+                bottom = this.endPoint.Y;
             }
-            int num1 = num - x;
-            int num2 = y1 - y;
-            return new Rectangle(x, y, num1 + 1, num2 + 1);
+
+            int width = right - left;
+            int height = bottom - top;
+
+            return new Rectangle(left, top, width + 1, height + 1);
         }
 
         public static Point GetPointAtAngle(Point startPoint, double angle, double distance)
         {
-            Point point = new Point((int)Math.Ceiling((double)startPoint.X + distance * Math.Cos(Utilities.DegreeToRadian(angle))), (int)Math.Ceiling((double)startPoint.Y + distance * Math.Sin(Utilities.DegreeToRadian(angle))));
-            return point;
+            return new Point(
+                (int)Math.Ceiling(startPoint.X + distance * Math.Cos(Utilities.DegreeToRadian(angle))),
+                (int)Math.Ceiling(startPoint.Y + distance * Math.Sin(Utilities.DegreeToRadian(angle))));
         }
 
         public static PointF GetPointAtAngle(PointF startPoint, double angle, double distance)
         {
-            PointF pointF = new PointF((float)Math.Ceiling((double)startPoint.X + distance * Math.Cos(Utilities.DegreeToRadian(angle))), (float)Math.Ceiling((double)startPoint.Y + distance * Math.Sin(Utilities.DegreeToRadian(angle))));
-            return pointF;
+            return new PointF(
+                (float)Math.Ceiling(startPoint.X + distance * Math.Cos(Utilities.DegreeToRadian(angle))),
+                (float)Math.Ceiling(startPoint.Y + distance * Math.Sin(Utilities.DegreeToRadian(angle))));
         }
 
+        // Clean replacement for the decompiler-generated iterator state machine.
+        // Logic is unchanged (Bresenham-style line stepping, including steep/swap behavior).
         public static IEnumerable<Point> GetPointsOnLine(int x0, int y0, int x1, int y1)
         {
-            int num;
-            bool flag = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
-            if (flag)
+            bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
+
+            if (steep)
             {
-                int num1 = x0;
-                x0 = y0;
-                y0 = num1;
-                num1 = x1;
-                x1 = y1;
-                y1 = num1;
+                int tmp = x0; x0 = y0; y0 = tmp;
+                tmp = x1; x1 = y1; y1 = tmp;
             }
+
             if (x0 > x1)
             {
-                int num2 = x0;
-                x0 = x1;
-                x1 = num2;
-                num2 = y0;
-                y0 = y1;
-                y1 = num2;
+                int tmp = x0; x0 = x1; x1 = tmp;
+                tmp = y0; y0 = y1; y1 = tmp;
             }
-            int num3 = x1 - x0;
-            int num4 = Math.Abs(y1 - y0);
-            int num5 = num3 / 2;
-            int num6 = (y0 < y1 ? 1 : -1);
-            int num7 = y0;
-            for (int i = x0; i <= x1; i++)
+
+            int dx = x1 - x0;
+            int dy = Math.Abs(y1 - y0);
+            int error = dx / 2;
+            int ystep = (y0 < y1) ? 1 : -1;
+            int y = y0;
+
+            for (int x = x0; x <= x1; x++)
             {
-                num = (flag ? num7 : i);
-                yield return new Point(num, (flag ? i : num7));
-                num5 -= num4;
-                if (num5 < 0)
+                yield return new Point(steep ? y : x, steep ? x : y);
+
+                error -= dy;
+                if (error < 0)
                 {
-                    num7 += num6;
-                    num5 += num3;
+                    y += ystep;
+                    error += dx;
                 }
             }
         }
@@ -489,28 +482,24 @@ namespace QuoterPlan
         {
             if (this.Selected)
             {
-                for (int i = 1; i <= this.HandleCount; i++)
+                for (int handle = 1; handle <= this.HandleCount; handle++)
                 {
-                    GraphicsPath graphicsPath = new GraphicsPath();
-                    graphicsPath.AddRectangle(this.GetHandleRectangle(i, offsetX, offsetY));
-                    bool flag = graphicsPath.IsVisible(point);
-                    graphicsPath.Dispose();
-                    if (flag)
+                    using (GraphicsPath handlePath = new GraphicsPath())
                     {
-                        return i;
+                        handlePath.AddRectangle(this.GetHandleRectangle(handle, offsetX, offsetY));
+                        if (handlePath.IsVisible(point))
+                            return handle;
                     }
                 }
             }
-            if (this.PointInObject(point, offsetX, offsetY))
-            {
-                return 0;
-            }
-            return -1;
+
+            return this.PointInObject(point, offsetX, offsetY) ? 0 : -1;
         }
 
         public override bool IntersectsWith(Rectangle rectangle, int offsetX, int offsetY)
         {
-            return DrawLine.LineIntersectsRectangle(new Rectangle(rectangle.X + offsetX, rectangle.Y + offsetY, rectangle.Width, rectangle.Height), this.startPoint, this.endPoint);
+            Rectangle shifted = new Rectangle(rectangle.X + offsetX, rectangle.Y + offsetY, rectangle.Width, rectangle.Height);
+            return LineIntersectsRectangle(shifted, this.startPoint, this.endPoint);
         }
 
         protected void Invalidate()
@@ -519,252 +508,241 @@ namespace QuoterPlan
 
         public static bool LineIntersectsLine(Point l1p1, Point l1p2, Point l2p1, Point l2p2)
         {
-            float y = (float)((l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y));
-            float x = (float)((l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X));
-            if (x == 0f)
-            {
+            float numerator = (l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y);
+            float denominator = (l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X);
+
+            if (denominator == 0f)
                 return false;
-            }
-            float single = y / x;
-            y = (float)((l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y));
-            float single1 = y / x;
-            if (single >= 0f && single <= 1f && single1 >= 0f && single1 <= 1f)
-            {
-                return true;
-            }
-            return false;
+
+            float ua = numerator / denominator;
+
+            numerator = (l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y);
+            float ub = numerator / denominator;
+
+            return ua >= 0f && ua <= 1f && ub >= 0f && ub <= 1f;
         }
 
         public static bool LineIntersectsLine(PointF l1p1, PointF l1p2, PointF l2p1, PointF l2p2)
         {
-            float y = (l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y);
-            float x = (l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X);
-            if (x == 0f)
-            {
+            float numerator = (l1p1.Y - l2p1.Y) * (l2p2.X - l2p1.X) - (l1p1.X - l2p1.X) * (l2p2.Y - l2p1.Y);
+            float denominator = (l1p2.X - l1p1.X) * (l2p2.Y - l2p1.Y) - (l1p2.Y - l1p1.Y) * (l2p2.X - l2p1.X);
+
+            if (denominator == 0f)
                 return false;
-            }
-            float single = y / x;
-            y = (l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y);
-            float single1 = y / x;
-            if (single >= 0f && single <= 1f && single1 >= 0f && single1 <= 1f)
-            {
-                return true;
-            }
-            return false;
+
+            float ua = numerator / denominator;
+
+            numerator = (l1p1.Y - l2p1.Y) * (l1p2.X - l1p1.X) - (l1p1.X - l2p1.X) * (l1p2.Y - l1p1.Y);
+            float ub = numerator / denominator;
+
+            return ua >= 0f && ua <= 1f && ub >= 0f && ub <= 1f;
         }
 
         public static bool LineIntersectsRectangle(Rectangle rectangle, Point p1, Point p2)
         {
-            if (DrawLine.LineIntersectsLine(p1, p2, new Point(rectangle.X, rectangle.Y), new Point(rectangle.X + rectangle.Width, rectangle.Y)) || DrawLine.LineIntersectsLine(p1, p2, new Point(rectangle.X + rectangle.Width, rectangle.Y), new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height)) || DrawLine.LineIntersectsLine(p1, p2, new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height), new Point(rectangle.X, rectangle.Y + rectangle.Height)) || DrawLine.LineIntersectsLine(p1, p2, new Point(rectangle.X, rectangle.Y + rectangle.Height), new Point(rectangle.X, rectangle.Y)))
+            if (LineIntersectsLine(p1, p2, new Point(rectangle.X, rectangle.Y), new Point(rectangle.X + rectangle.Width, rectangle.Y)) ||
+                LineIntersectsLine(p1, p2, new Point(rectangle.X + rectangle.Width, rectangle.Y), new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height)) ||
+                LineIntersectsLine(p1, p2, new Point(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height), new Point(rectangle.X, rectangle.Y + rectangle.Height)) ||
+                LineIntersectsLine(p1, p2, new Point(rectangle.X, rectangle.Y + rectangle.Height), new Point(rectangle.X, rectangle.Y)))
             {
                 return true;
             }
+
             if (!rectangle.Contains(p1))
-            {
                 return false;
-            }
+
             return rectangle.Contains(p2);
         }
 
         public static bool LineIsReverse(Point startPoint, Point endPoint)
         {
-            bool y = false;
+            bool reverse;
+
             if (endPoint.X == startPoint.X && endPoint.Y != startPoint.Y)
             {
-                y = endPoint.Y < startPoint.Y;
+                reverse = endPoint.Y < startPoint.Y;
             }
             else if (endPoint.X == startPoint.X || endPoint.Y != startPoint.Y)
             {
-                y = (Math.Abs(endPoint.X - startPoint.X) <= Math.Abs(endPoint.Y - startPoint.Y) ? endPoint.Y < startPoint.Y : endPoint.X < startPoint.X);
+                reverse = (Math.Abs(endPoint.X - startPoint.X) <= Math.Abs(endPoint.Y - startPoint.Y))
+                    ? endPoint.Y < startPoint.Y
+                    : endPoint.X < startPoint.X;
             }
             else
             {
-                y = endPoint.X < startPoint.X;
+                reverse = endPoint.X < startPoint.X;
             }
-            return y;
+
+            return reverse;
         }
 
         public static bool LineIsReverse(PointF startPoint, PointF endPoint)
         {
-            bool y = false;
+            bool reverse;
+
             if (endPoint.X == startPoint.X && endPoint.Y != startPoint.Y)
             {
-                y = endPoint.Y < startPoint.Y;
+                reverse = endPoint.Y < startPoint.Y;
             }
             else if (endPoint.X == startPoint.X || endPoint.Y != startPoint.Y)
             {
-                y = (Math.Abs(endPoint.X - startPoint.X) <= Math.Abs(endPoint.Y - startPoint.Y) ? endPoint.Y < startPoint.Y : endPoint.X < startPoint.X);
+                reverse = (Math.Abs(endPoint.X - startPoint.X) <= Math.Abs(endPoint.Y - startPoint.Y))
+                    ? endPoint.Y < startPoint.Y
+                    : endPoint.X < startPoint.X;
             }
             else
             {
-                y = endPoint.X < startPoint.X;
+                reverse = endPoint.X < startPoint.X;
             }
-            return y;
+
+            return reverse;
         }
 
         public Point LocatePointOnLine(Point pt, Point p1, Point p2)
         {
-            PointF pointF;
-            DrawLine.FindDistanceToSegment(pt, p1, p2, out pointF);
-            return new Point((int)pointF.X, (int)pointF.Y);
+            PointF closest;
+            FindDistanceToSegment(pt, p1, p2, out closest);
+            return new Point((int)closest.X, (int)closest.Y);
         }
 
         public override void Move(int deltaX, int deltaY)
         {
-            ref Point x = ref this.startPoint;
-            x.X = x.X + deltaX;
-            ref Point y = ref this.startPoint;
-            y.Y = y.Y + deltaY;
-            ref Point pointPointer = ref this.endPoint;
-            pointPointer.X = pointPointer.X + deltaX;
-            ref Point y1 = ref this.endPoint;
-            y1.Y = y1.Y + deltaY;
+            this.startPoint = new Point(this.startPoint.X + deltaX, this.startPoint.Y + deltaY);
+            this.endPoint = new Point(this.endPoint.X + deltaX, this.endPoint.Y + deltaY);
+
             base.Dirty = true;
             this.Invalidate();
         }
 
         public override void MoveHandleTo(Point point, int handleNumber)
         {
+            PointF origin = base.DrawingBoard.Origin;
+
             if (handleNumber != 1)
             {
-                this.endPoint = point;
-                ref Point x = ref this.endPoint;
-                int num = x.X;
-                PointF origin = base.DrawingBoard.Origin;
-                x.X = num + (int)origin.X;
-                ref Point y = ref this.endPoint;
-                int y1 = y.Y;
-                PointF pointF = base.DrawingBoard.Origin;
-                y.Y = y1 + (int)pointF.Y;
+                this.endPoint = new Point(point.X + (int)origin.X, point.Y + (int)origin.Y);
             }
             else
             {
-                this.startPoint = point;
-                ref Point pointPointer = ref this.startPoint;
-                int x1 = pointPointer.X;
-                PointF origin1 = base.DrawingBoard.Origin;
-                pointPointer.X = x1 + (int)origin1.X;
-                ref Point pointPointer1 = ref this.startPoint;
-                int num1 = pointPointer1.Y;
-                PointF pointF1 = base.DrawingBoard.Origin;
-                pointPointer1.Y = num1 + (int)pointF1.Y;
+                this.startPoint = new Point(point.X + (int)origin.X, point.Y + (int)origin.Y);
             }
+
             base.Dirty = true;
             this.Invalidate();
         }
 
         public void NormalizeLine()
         {
-            if (DrawLine.LineIsReverse(this.startPoint, this.endPoint))
+            if (LineIsReverse(this.startPoint, this.endPoint))
             {
-                Point point = new Point(this.startPoint.X, this.startPoint.Y);
+                Point temp = new Point(this.startPoint.X, this.startPoint.Y);
                 this.startPoint = new Point(this.endPoint.X, this.endPoint.Y);
-                this.endPoint = new Point(point.X, point.Y);
+                this.endPoint = new Point(temp.X, temp.Y);
             }
         }
 
         protected override bool PointInObject(Point point, int offsetX, int offsetY)
         {
-            double segment = DrawLine.FindDistanceToSegment(new Point(point.X + offsetX, point.Y + offsetY), this.startPoint, this.endPoint);
-            if (segment < 0)
-            {
+            double distanceToSegment = FindDistanceToSegment(
+                new Point(point.X + offsetX, point.Y + offsetY),
+                this.startPoint,
+                this.endPoint);
+
+            if (distanceToSegment < 0)
                 return false;
-            }
-            return segment <= (double)(base.PenWidth / 2);
+
+            return distanceToSegment <= (double)(base.PenWidth / 2);
         }
 
         public override Region Region(int offsetX, int offsetY, float zoomFactor)
         {
             Region region = new Region();
+
             offsetX -= (int)((float)base.DrawArea.DrawingBoard.HorizontalOffset / zoomFactor);
             offsetY -= (int)((float)base.DrawArea.DrawingBoard.VerticalOffset / zoomFactor);
-            Rectangle normalizedRectangle = this.GetNormalizedRectangle();
-            normalizedRectangle.X = normalizedRectangle.X - offsetX;
-            normalizedRectangle.Y = normalizedRectangle.Y - offsetY;
-            normalizedRectangle.X = (int)((float)normalizedRectangle.X * zoomFactor);
-            normalizedRectangle.Y = (int)((float)normalizedRectangle.Y * zoomFactor);
-            normalizedRectangle.Width = (int)((float)normalizedRectangle.Width * zoomFactor);
-            normalizedRectangle.Height = (int)((float)normalizedRectangle.Height * zoomFactor);
-            normalizedRectangle.Inflate(new Size(10 + base.PenWidth, 10 + base.PenWidth));
+
+            Rectangle bounds = this.GetNormalizedRectangle();
+
+            bounds.X -= offsetX;
+            bounds.Y -= offsetY;
+
+            bounds.X = (int)(bounds.X * zoomFactor);
+            bounds.Y = (int)(bounds.Y * zoomFactor);
+            bounds.Width = (int)(bounds.Width * zoomFactor);
+            bounds.Height = (int)(bounds.Height * zoomFactor);
+
+            bounds.Inflate(new Size(10 + base.PenWidth, 10 + base.PenWidth));
+
             region.MakeEmpty();
-            region.Union(normalizedRectangle);
+            region.Union(bounds);
+
             if (base.TextArray.Count > 0)
             {
-                DrawText item = (DrawText)base.TextArray[0];
-                Point point = item.Point;
-                Rectangle rectangle = item.Rectangle;
-                int x = point.X - offsetX - rectangle.Width / 2;
-                Point point1 = item.Point;
-                Rectangle rectangle1 = item.Rectangle;
-                int y = point1.Y - offsetY - rectangle1.Height / 2;
-                int width = item.Rectangle.Width;
-                Rectangle rectangle2 = item.Rectangle;
-                Rectangle rectangle3 = new Rectangle(x, y, width, rectangle2.Height)
+                DrawText label = (DrawText)base.TextArray[0];
+
+                int labelX = label.Point.X - offsetX - label.Rectangle.Width / 2;
+                int labelY = label.Point.Y - offsetY - label.Rectangle.Height / 2;
+
+                Rectangle labelRect = new Rectangle(labelX, labelY, label.Rectangle.Width, label.Rectangle.Height)
                 {
-                    X = (int)((float)rectangle3.X * zoomFactor),
-                    Y = (int)((float)rectangle3.Y * zoomFactor),
-                    Width = (int)((float)rectangle3.Width * zoomFactor),
-                    Height = (int)((float)rectangle3.Height * zoomFactor)
+                    X = (int)(labelX * zoomFactor),
+                    Y = (int)(labelY * zoomFactor),
+                    Width = (int)(label.Rectangle.Width * zoomFactor),
+                    Height = (int)(label.Rectangle.Height * zoomFactor)
                 };
-                rectangle3.Inflate(new Size(base.PenWidth, base.PenWidth));
-                region.Union(rectangle3);
+
+                labelRect.Inflate(new Size(base.PenWidth, base.PenWidth));
+                region.Union(labelRect);
             }
-            for (int i = 1; i <= this.HandleCount; i++)
+
+            for (int handle = 1; handle <= this.HandleCount; handle++)
             {
-                Rectangle handleRectangle = this.GetHandleRectangle(i, offsetX, offsetY);
-                handleRectangle.X = (int)((float)handleRectangle.X * zoomFactor);
-                handleRectangle.Y = (int)((float)handleRectangle.Y * zoomFactor);
-                handleRectangle.Width = (int)((float)handleRectangle.Width * zoomFactor);
-                handleRectangle.Height = (int)((float)handleRectangle.Height * zoomFactor);
-                handleRectangle.Inflate(new Size(base.PenWidth, base.PenWidth));
-                region.Union(handleRectangle);
+                Rectangle handleRect = this.GetHandleRectangle(handle, offsetX, offsetY);
+
+                handleRect.X = (int)(handleRect.X * zoomFactor);
+                handleRect.Y = (int)(handleRect.Y * zoomFactor);
+                handleRect.Width = (int)(handleRect.Width * zoomFactor);
+                handleRect.Height = (int)(handleRect.Height * zoomFactor);
+
+                handleRect.Inflate(new Size(base.PenWidth, base.PenWidth));
+                region.Union(handleRect);
             }
+
             return region;
         }
 
         public double RoundAngle(double angle, int precision)
         {
             if (angle == 0 || angle == 90 || angle == 180 || angle == 270 || angle == 360)
+                return angle == 360 ? 0 : angle;
+
+            int[] snapAngles = { 0, 90, 180, 270, 360 };
+            double[] diffs =
             {
-                if (angle != 360)
-                {
-                    return angle;
-                }
-                return 0;
+                Math.Abs(angle - 0),
+                Math.Abs(angle - 90),
+                Math.Abs(angle - 180),
+                Math.Abs(angle - 270),
+                Math.Abs(angle - 360)
+            };
+
+            int bestIndex = 0;
+            for (int i = 1; i < diffs.Length; i++)
+            {
+                if (diffs[i] < diffs[bestIndex])
+                    bestIndex = i;
             }
-            int[] numArray = new int[5];
-            double[] numArray1 = new double[5];
-            numArray[0] = 0;
-            numArray[1] = 90;
-            numArray[2] = 180;
-            numArray[3] = 0x10e;
-            numArray[4] = 0;
-            numArray1[0] = Math.Abs(angle - 0);
-            numArray1[1] = Math.Abs(angle - 90);
-            numArray1[2] = Math.Abs(angle - 180);
-            numArray1[3] = Math.Abs(angle - 270);
-            numArray1[4] = Math.Abs(angle - 360);
-            int num = 0;
-            for (int i = 1; i < (int)numArray1.Length; i++)
-            {
-                if (numArray1[i] < numArray1[num])
-                {
-                    num = i;
-                }
-            }
-            if (numArray1[num] > (double)precision)
-            {
+
+            if (diffs[bestIndex] > precision)
                 return angle;
-            }
-            return (double)numArray[num];
+
+            return snapAngles[bestIndex];
         }
 
         public override void Scale(float scaleX, float scaleY)
         {
-            this.startPoint.X = (int)((float)this.startPoint.X * scaleX);
-            this.startPoint.Y = (int)((float)this.startPoint.Y * scaleY);
-            this.endPoint.X = (int)((float)this.endPoint.X * scaleX);
-            this.endPoint.Y = (int)((float)this.endPoint.Y * scaleY);
+            this.startPoint = new Point((int)(this.startPoint.X * scaleX), (int)(this.startPoint.Y * scaleY));
+            this.endPoint = new Point((int)(this.endPoint.X * scaleX), (int)(this.endPoint.Y * scaleY));
         }
 
         public override void SetSlopeFactor(SlopeFactor slopeFactor)
@@ -774,9 +752,9 @@ namespace QuoterPlan
 
         public override void SetSlopeFactor(double internalValue, SlopeFactor.SlopeTypeEnum slopeType, SlopeFactor.SlopeApplyTypeEnum slopeApplyType, SlopeFactor.HipValleyEnum hipValley)
         {
-            SlopeFactor slopeFactor = new SlopeFactor(SlopeFactor.HipValleyEnum.hipValleyDisabled);
-            slopeFactor.SetValues(internalValue, slopeType, slopeApplyType, hipValley);
-            this.SetSlopeFactor(slopeFactor);
+            SlopeFactor sf = new SlopeFactor(SlopeFactor.HipValleyEnum.hipValleyDisabled);
+            sf.SetValues(internalValue, slopeType, slopeApplyType, hipValley);
+            this.SetSlopeFactor(sf);
         }
 
         public float Slope(PointF point1, PointF point2)
@@ -786,201 +764,23 @@ namespace QuoterPlan
 
         public int TextAngle(Point startPoint, Point endPoint)
         {
-            int num = 0;
-            int num1 = (int)DrawLine.Angle((double)startPoint.X, (double)startPoint.Y, (double)endPoint.X, (double)endPoint.Y);
-            if (num1 >= 0 && num1 <= 90)
-            {
-                num = num1;
-            }
-            if (num1 > 90 && num1 < 180)
-            {
-                num = 0x10e + (num1 - 90);
-            }
-            if (num1 >= 180 && num1 < 0x10e)
-            {
-                num = num1 - 180;
-            }
-            if (num1 >= 0x10e)
-            {
-                num = 0x10e + (num1 - 0x10e);
-            }
-            return Math.Abs(num);
-        }
+            int result = 0;
 
-        [CompilerGenerated]
-        // <GetPointsOnLine>d__0
-        private sealed class u003cGetPointsOnLineu003ed__0 : IEnumerable<Point>, IEnumerable, IEnumerator<Point>, IEnumerator, IDisposable
-        {
-            // <>2__current
-            private Point u003cu003e2__current;
+            int angleDeg = (int)Angle(startPoint.X, startPoint.Y, endPoint.X, endPoint.Y);
 
-            // <>1__state
-            private int u003cu003e1__state;
+            if (angleDeg >= 0 && angleDeg <= 90)
+                result = angleDeg;
 
-            // <>l__initialThreadId
-            private int u003cu003el__initialThreadId;
+            if (angleDeg > 90 && angleDeg < 180)
+                result = 0x10e + (angleDeg - 90);
 
-            public int x0;
+            if (angleDeg >= 180 && angleDeg < 0x10e)
+                result = angleDeg - 180;
 
-            // <>3__x0
-            public int u003cu003e3__x0;
+            if (angleDeg >= 0x10e)
+                result = 0x10e + (angleDeg - 0x10e);
 
-            public int y0;
-
-            // <>3__y0
-            public int u003cu003e3__y0;
-
-            public int x1;
-
-            // <>3__x1
-            public int u003cu003e3__x1;
-
-            public int y1;
-
-            // <>3__y1
-            public int u003cu003e3__y1;
-
-            // <steep>5__1
-            public bool u003csteepu003e5__1;
-
-            // <dx>5__2
-            public int u003cdxu003e5__2;
-
-            // <dy>5__3
-            public int u003cdyu003e5__3;
-
-            // <error>5__4
-            public int u003cerroru003e5__4;
-
-            // <ystep>5__5
-            public int u003cystepu003e5__5;
-
-            // <y>5__6
-            public int u003cyu003e5__6;
-
-            // <x>5__7
-            public int u003cxu003e5__7;
-
-            Point System.Collections.Generic.IEnumerator<System.Drawing.Point>.Current
-            {
-                [DebuggerHidden]
-                get
-                {
-                    return this.u003cu003e2__current;
-                }
-            }
-
-            object System.Collections.IEnumerator.Current
-            {
-                [DebuggerHidden]
-                get
-                {
-                    return this.u003cu003e2__current;
-                }
-            }
-
-            [DebuggerHidden]
-            public u003cGetPointsOnLineu003ed__0(int u003cu003e1__state)
-            {
-                this.u003cu003e1__state = u003cu003e1__state;
-                this.u003cu003el__initialThreadId = Thread.CurrentThread.ManagedThreadId;
-            }
-
-            bool MoveNext()
-            {
-                switch (this.u003cu003e1__state)
-                {
-                    case 0:
-                        {
-                            this.u003cu003e1__state = -1;
-                            this.u003csteepu003e5__1 = Math.Abs(this.y1 - this.y0) > Math.Abs(this.x1 - this.x0);
-                            if (this.u003csteepu003e5__1)
-                            {
-                                int num = this.x0;
-                                this.x0 = this.y0;
-                                this.y0 = num;
-                                num = this.x1;
-                                this.x1 = this.y1;
-                                this.y1 = num;
-                            }
-                            if (this.x0 > this.x1)
-                            {
-                                int num1 = this.x0;
-                                this.x0 = this.x1;
-                                this.x1 = num1;
-                                num1 = this.y0;
-                                this.y0 = this.y1;
-                                this.y1 = num1;
-                            }
-                            this.u003cdxu003e5__2 = this.x1 - this.x0;
-                            this.u003cdyu003e5__3 = Math.Abs(this.y1 - this.y0);
-                            this.u003cerroru003e5__4 = this.u003cdxu003e5__2 / 2;
-                            this.u003cystepu003e5__5 = (this.y0 < this.y1 ? 1 : -1);
-                            this.u003cyu003e5__6 = this.y0;
-                            this.u003cxu003e5__7 = this.x0;
-                            break;
-                        }
-                    case 1:
-                        {
-                            this.u003cu003e1__state = -1;
-                            this.u003cerroru003e5__4 -= this.u003cdyu003e5__3;
-                            if (this.u003cerroru003e5__4 < 0)
-                            {
-                                this.u003cyu003e5__6 += this.u003cystepu003e5__5;
-                                this.u003cerroru003e5__4 += this.u003cdxu003e5__2;
-                            }
-                            this.u003cxu003e5__7++;
-                            break;
-                        }
-                    default:
-                        {
-                            return false;
-                        }
-                }
-                if (this.u003cxu003e5__7 <= this.x1)
-                {
-                    this.u003cu003e2__current = new Point((this.u003csteepu003e5__1 ? this.u003cyu003e5__6 : this.u003cxu003e5__7), (this.u003csteepu003e5__1 ? this.u003cxu003e5__7 : this.u003cyu003e5__6));
-                    this.u003cu003e1__state = 1;
-                    return true;
-                }
-                return false;
-            }
-
-            [DebuggerHidden]
-            IEnumerator<Point> System.Collections.Generic.IEnumerable<System.Drawing.Point>.GetEnumerator()
-            {
-                DrawLine.u003cGetPointsOnLineu003ed__0 variable;
-                if (Thread.CurrentThread.ManagedThreadId != this.u003cu003el__initialThreadId || this.u003cu003e1__state != -2)
-                {
-                    variable = new DrawLine.u003cGetPointsOnLineu003ed__0(0);
-                }
-                else
-                {
-                    this.u003cu003e1__state = 0;
-                    variable = this;
-                }
-                variable.x0 = this.u003cu003e3__x0;
-                variable.y0 = this.u003cu003e3__y0;
-                variable.x1 = this.u003cu003e3__x1;
-                variable.y1 = this.u003cu003e3__y1;
-                return variable;
-            }
-
-            [DebuggerHidden]
-            IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                return this.System.Collections.Generic.IEnumerable<System.Drawing.Point>.GetEnumerator();
-            }
-
-            [DebuggerHidden]
-            void System.Collections.IEnumerator.Reset()
-            {
-                throw new NotSupportedException();
-            }
-
-            void System.IDisposable.Dispose()
-            {
-            }
+            return Math.Abs(result);
         }
     }
 }

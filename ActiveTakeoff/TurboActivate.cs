@@ -167,24 +167,23 @@ namespace QuoterPlan
 
         public void Activate(string extraData = null)
         {
-            int num;
+            int result;
+
             if (extraData == null)
             {
-                num = TurboActivate.Native.TA_Activate(this.handle, IntPtr.Zero);
+                result = TurboActivate.Native.TA_Activate(this.handle, IntPtr.Zero);
             }
             else
             {
-                TurboActivate.Native.ACTIVATE_OPTIONS aCTIVATEOPTION = new TurboActivate.Native.ACTIVATE_OPTIONS()
-                {
-                    sExtraData = extraData,
-                    nLength = (uint)Marshal.SizeOf(aCTIVATEOPTION)
-                };
-                num = TurboActivate.Native.TA_Activate(this.handle, ref aCTIVATEOPTION);
+                TurboActivate.Native.ACTIVATE_OPTIONS activateOptions = new TurboActivate.Native.ACTIVATE_OPTIONS();
+                activateOptions.sExtraData = extraData;
+                activateOptions.nLength = (uint)Marshal.SizeOf(typeof(TurboActivate.Native.ACTIVATE_OPTIONS));
+
+                result = TurboActivate.Native.TA_Activate(this.handle, ref activateOptions);
             }
-            if (num != 0)
-            {
-                throw TurboActivate.taHresultToExcep(num, "Activate");
-            }
+
+            if (result != 0)
+                throw TurboActivate.taHresultToExcep(result, "Activate");
         }
 
         public void ActivateFromFile(string filename)
@@ -198,27 +197,26 @@ namespace QuoterPlan
 
         public void ActivationRequestToFile(string filename, string extraData)
         {
-            int file;
+            int result;
+
             if (extraData == null)
             {
-                file = TurboActivate.Native.TA_ActivationRequestToFile(this.handle, filename, IntPtr.Zero);
+                result = TurboActivate.Native.TA_ActivationRequestToFile(this.handle, filename, IntPtr.Zero);
             }
             else
             {
-                TurboActivate.Native.ACTIVATE_OPTIONS aCTIVATEOPTION = new TurboActivate.Native.ACTIVATE_OPTIONS()
-                {
-                    sExtraData = extraData,
-                    nLength = (uint)Marshal.SizeOf(aCTIVATEOPTION)
-                };
-                file = TurboActivate.Native.TA_ActivationRequestToFile(this.handle, filename, ref aCTIVATEOPTION);
+                TurboActivate.Native.ACTIVATE_OPTIONS activateOptions = new TurboActivate.Native.ACTIVATE_OPTIONS();
+                activateOptions.sExtraData = extraData;
+                activateOptions.nLength = (uint)Marshal.SizeOf(typeof(TurboActivate.Native.ACTIVATE_OPTIONS));
+
+                result = TurboActivate.Native.TA_ActivationRequestToFile(this.handle, filename, ref activateOptions);
             }
-            if (file != 0)
-            {
-                throw TurboActivate.taHresultToExcep(file, "ActivationRequestToFile");
-            }
+
+            if (result != 0)
+                throw TurboActivate.taHresultToExcep(result, "ActivationRequestToFile");
         }
 
-        public bool CheckAndSavePKey(string productKey, TA_Flags flags = 1)
+        public bool CheckAndSavePKey(string productKey, TA_Flags flags = TA_Flags.TA_SYSTEM)
         {
             int num = TurboActivate.Native.TA_CheckAndSavePKey(this.handle, productKey, flags);
             switch (num)
@@ -274,7 +272,7 @@ namespace QuoterPlan
             }
         }
 
-        public void ExtendTrial(string trialExtension, TA_Flags useTrialFlags = 33)
+        public void ExtendTrial(string trialExtension, TA_Flags useTrialFlags = TA_Flags.TA_VERIFIED_TRIAL)
         {
             int num = TurboActivate.Native.TA_ExtendTrial(this.handle, useTrialFlags, trialExtension);
             if (num != 0)
@@ -713,7 +711,7 @@ namespace QuoterPlan
             }
         }
 
-        public uint TrialDaysRemaining(TA_Flags useTrialFlags = 33)
+        public uint TrialDaysRemaining(TA_Flags useTrialFlags = TA_Flags.TA_VERIFIED_TRIAL)
         {
             uint num = 0;
             int num1 = TurboActivate.Native.TA_TrialDaysRemaining(this.handle, useTrialFlags, ref num);
@@ -724,7 +722,7 @@ namespace QuoterPlan
             return num;
         }
 
-        public void UseTrial(TA_Flags flags = 33, string extraData = null)
+        public void UseTrial(TA_Flags flags = TA_Flags.TA_VERIFIED_TRIAL, string extraData = null)
         {
             int num = TurboActivate.Native.TA_UseTrial(this.handle, flags, extraData);
             if (num != 0)
@@ -737,7 +735,7 @@ namespace QuoterPlan
             }
         }
 
-        public void UseTrialVerifiedFromFile(string filename, TA_Flags flags = 33)
+        public void UseTrialVerifiedFromFile(string filename, TA_Flags flags = TA_Flags.TA_VERIFIED_TRIAL)
         {
             int num = TurboActivate.Native.TA_UseTrialVerifiedFromFile(this.handle, filename, flags);
             if (num != 0)

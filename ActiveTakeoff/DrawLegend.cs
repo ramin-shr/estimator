@@ -155,21 +155,24 @@ namespace QuoterPlan
 
         public override DrawObject Clone()
         {
-            DrawLegend drawLegend = new DrawLegend(this.Plan, this.ExtensionsSupport)
-            {
-                Rectangle = new Rectangle(base.Rectangle.Location, base.Rectangle.Size),
-                DisplayName = new Utilities.DisplayName(drawLegend, "")
-            };
+            DrawLegend drawLegend = new DrawLegend(this.Plan, this.ExtensionsSupport);
+
+            drawLegend.Rectangle = new Rectangle(base.Rectangle.Location, base.Rectangle.Size);
+            drawLegend.DisplayName = new Utilities.DisplayName(drawLegend, "");
+
             base.FillDrawObjectFields(drawLegend);
-            this.Groups = new DrawObjectGroups();
-            this.ColumnMarginLeft = new ArrayList();
-            this.ColumnWidth = new ArrayList();
-            this.UpdateContent = true;
-            this.MustSetLocation = false;
+
+            drawLegend.Groups = new DrawObjectGroups();
+            drawLegend.ColumnMarginLeft = new ArrayList();
+            drawLegend.ColumnWidth = new ArrayList();
+            drawLegend.UpdateContent = true;
+            drawLegend.MustSetLocation = false;
+
             return drawLegend;
         }
 
-        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1)
+
+        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh)
         {
             Pen pen;
             TextRenderingHint textRenderingHint;

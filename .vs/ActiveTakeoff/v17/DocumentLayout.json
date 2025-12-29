@@ -3,15 +3,71 @@
   "WorkspaceRootPath": "C:\\estimator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawingobjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawingobjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\properties\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\properties\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawpolyline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawpolyline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjecteditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobjecteditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\slopefactorcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\slopefactorcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawlegend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawlegend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\turboactivate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\turboactivate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\reportscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\reportscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\customrendering.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\customrendering.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\cestimatingsitemscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\cestimatingsitemscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\backuptimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\backuptimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\hatchstylepickercombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\hatchstylepickercombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\properties\\resources.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\drawingobjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawingobjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\estimatingitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\estimatingitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\properties\\resources.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\properties\\resources.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -55,10 +111,6 @@
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\alreadyverifiedtrialexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\backuptimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\backuptimer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\basefileinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\basefileinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -89,10 +141,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\cestimatingsection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\cestimatingsection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\cestimatingsitemscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\cestimatingsitemscontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\clipboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -149,10 +197,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\commandpaste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\commandpaste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\customrendering.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\customrendering.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\customrenderinggenericrows.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -223,10 +267,6 @@
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\dockingwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawcounter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawcounter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -239,16 +279,8 @@
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawingpens.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawlegend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawlegend.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjectcolorindicator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobjectcolorindicator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjecteditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobjecteditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjectgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -259,16 +291,8 @@
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobjectgroups.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawnote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawnote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjecticonindicator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -281,10 +305,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawobjectsnavigator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawobjectsnavigator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawpolyline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\drawpolyline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\drawrectangle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -317,10 +337,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\estimatingitemprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\estimatingitemprice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\estimatingitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\estimatingitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\extensioncategories.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -594,7 +610,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -602,80 +618,202 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Resources.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Properties\\Resources.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\Properties\\Resources.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Properties\\Resources.cs",
-              "RelativeToolTip": "ActiveTakeoff\\Properties\\Resources.cs",
-              "ViewState": "AgIAAAoUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Settings.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Properties\\Settings.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\Properties\\Settings.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Properties\\Settings.cs",
+              "RelativeToolTip": "ActiveTakeoff\\Properties\\Settings.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAwwFAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T05:09:52.112Z",
+              "WhenOpened": "2025-12-29T07:38:16.003Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ArgumentsReceivedEventArgs.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
-              "RelativeToolTip": "ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Title": "SlopeFactorControl.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\SlopeFactorControl.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\SlopeFactorControl.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\SlopeFactorControl.cs",
+              "RelativeToolTip": "ActiveTakeoff\\SlopeFactorControl.cs",
+              "ViewState": "AgIAAPcAAAAAAAAAAAAcwBgBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T05:04:51.188Z"
+              "WhenOpened": "2025-12-29T05:33:57.808Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "DBEstimatingItem.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItem.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItem.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItem.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DBEstimatingItem.cs",
-              "ViewState": "AgIAAOIAAAAAAAAAAAAcwAMBAAABAAAAAAAAAA==",
+              "Title": "ReportsControl.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ReportsControl.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\ReportsControl.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\ReportsControl.cs",
+              "RelativeToolTip": "ActiveTakeoff\\ReportsControl.cs",
+              "ViewState": "AgIAAOkEAAAAAAAAAAApwPkEAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:54:43.625Z"
+              "WhenOpened": "2025-12-29T05:29:11.819Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Utilities.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Utilities.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\Utilities.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Utilities.cs",
-              "RelativeToolTip": "ActiveTakeoff\\Utilities.cs",
-              "ViewState": "AgIAABYMAAAAAAAAAAAcwDcMAAABAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "TurboActivate.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\TurboActivate.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\TurboActivate.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\TurboActivate.cs",
+              "RelativeToolTip": "ActiveTakeoff\\TurboActivate.cs",
+              "ViewState": "AgIAAMAAAAAAAAAAAIAwwNgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:53:02.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "TreeViewNode.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\TreeViewNode.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\TreeViewNode.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\TreeViewNode.cs",
-              "RelativeToolTip": "ActiveTakeoff\\TreeViewNode.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAcwCcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:52:43.116Z"
+              "WhenOpened": "2025-12-29T05:24:02.851Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "ThumbnailPanel.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ThumbnailPanel.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\ThumbnailPanel.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\ThumbnailPanel.cs",
-              "RelativeToolTip": "ActiveTakeoff\\ThumbnailPanel.cs",
-              "ViewState": "AgIAAF4BAAAAAAAAAAAcwH8BAAABAAAAAAAAAA==",
+              "Title": "CEstimatingsItemsControl.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingsItemsControl.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingsItemsControl.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\CEstimatingsItemsControl.cs",
+              "RelativeToolTip": "ActiveTakeoff\\CEstimatingsItemsControl.cs",
+              "ViewState": "AgIAAO0AAAAAAAAAAAAMwP4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:52:04.006Z"
+              "WhenOpened": "2025-12-29T04:49:47.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DrawAngle.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawAngle.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawAngle.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawAngle.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawAngle.cs",
+              "ViewState": "AgIAAIEAAAAAAAAAAIAwwJIAAAC1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:45:56.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CustomRendering.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRendering.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRendering.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\CustomRendering.cs",
+              "RelativeToolTip": "ActiveTakeoff\\CustomRendering.cs",
+              "ViewState": "AgIAANEAAAAAAAAAAAAMwOIAAADIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:48:11.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DrawPolyLine.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawPolyLine.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawPolyLine.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawPolyLine.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawPolyLine.cs",
+              "ViewState": "AgIAACgGAAAAAAAAAIAwwDgGAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:42:06.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DrawLegend.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawLegend.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawLegend.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawLegend.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawLegend.cs",
+              "ViewState": "AgIAAJAAAAAAAAAAAAApwKwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:45:14.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DrawObjectEditor.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectEditor.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectEditor.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawObjectEditor.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawObjectEditor.cs",
+              "ViewState": "AgIAANAEAAAAAAAAAIAwwO4EAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:43:21.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DrawObject.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObject.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObject.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawObject.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawObject.cs",
+              "ViewState": "AgIAAPkCAAAAAAAAAIA9wAoDAAC0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:43:37.721Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+              "Title": "BackupTimer.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\BackupTimer.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\BackupTimer.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\BackupTimer.cs",
+              "RelativeToolTip": "ActiveTakeoff\\BackupTimer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:51:37.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "HatchStylePickerCombo.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\HatchStylePickerCombo.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\HatchStylePickerCombo.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\HatchStylePickerCombo.cs",
+              "RelativeToolTip": "ActiveTakeoff\\HatchStylePickerCombo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:36:44.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DrawingObjects.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawingObjects.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawingObjects.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawingObjects.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawingObjects.cs",
+              "ViewState": "AgIAALsBAAAAAAAAAAAcwNwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:45:26.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DrawLine.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawLine.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawLine.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawLine.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DrawLine.cs",
+              "ViewState": "AgIAADsBAAAAAAAAAAAswBIDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:44:25.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
               "Title": "AlreadyVerifiedTrialException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\AlreadyVerifiedTrialException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\AlreadyVerifiedTrialException.cs",
@@ -687,33 +825,92 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HatchStylePickerCombo.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\HatchStylePickerCombo.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\HatchStylePickerCombo.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\HatchStylePickerCombo.cs",
-              "RelativeToolTip": "ActiveTakeoff\\HatchStylePickerCombo.cs",
-              "ViewState": "AgIAADcCAAAAAAAAAAAewDQCAAARAAAAAAAAAA==",
+              "DocumentIndex": 25,
+              "Title": "ThumbnailPanel.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ThumbnailPanel.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\ThumbnailPanel.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\ThumbnailPanel.cs",
+              "RelativeToolTip": "ActiveTakeoff\\ThumbnailPanel.cs",
+              "ViewState": "AgIAAF4BAAAAAAAAAAAcwH8BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:36:44.621Z",
+              "WhenOpened": "2025-12-29T04:52:04.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TreeViewNode.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\TreeViewNode.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\TreeViewNode.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\TreeViewNode.cs",
+              "RelativeToolTip": "ActiveTakeoff\\TreeViewNode.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAcwCcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:52:43.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Utilities.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Utilities.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\Utilities.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Utilities.cs",
+              "RelativeToolTip": "ActiveTakeoff\\Utilities.cs",
+              "ViewState": "AgIAABYMAAAAAAAAAAAcwDcMAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:53:02.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DBEstimatingItem.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItem.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItem.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItem.cs",
+              "RelativeToolTip": "ActiveTakeoff\\DBEstimatingItem.cs",
+              "ViewState": "AgIAAOIAAAAAAAAAAAAcwAMBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:54:43.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ArgumentsReceivedEventArgs.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
+              "RelativeToolTip": "ActiveTakeoff\\ArgumentsReceivedEventArgs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T05:04:51.188Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EstimatingItems.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EstimatingItems.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\EstimatingItems.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\EstimatingItems.cs",
+              "RelativeToolTip": "ActiveTakeoff\\EstimatingItems.cs",
+              "ViewState": "AgIAAHgCAAAAAAAAAAAIwJsCAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-29T04:40:49.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DrawingObjects.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawingObjects.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawingObjects.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawingObjects.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawingObjects.cs",
-              "ViewState": "AgIAAPIBAAAAAAAAAAAhwAECAAB6AAAAAAAAAA==",
+              "DocumentIndex": 16,
+              "Title": "Resources.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Properties\\Resources.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\Properties\\Resources.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Properties\\Resources.cs",
+              "RelativeToolTip": "ActiveTakeoff\\Properties\\Resources.cs",
+              "ViewState": "AgIAAAoUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:45:26.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-29T05:09:52.112Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 17,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Properties\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Properties\\AssemblyInfo.cs",
@@ -721,11 +918,12 @@
               "RelativeToolTip": "ActiveTakeoff\\Properties\\AssemblyInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T05:09:49.092Z"
+              "WhenOpened": "2025-12-29T05:09:49.092Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 20,
               "Title": "CustomRenderingGenericTiles.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRenderingGenericTiles.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRenderingGenericTiles.cs",
@@ -737,7 +935,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 19,
               "Title": "CEstimatingItemsBrowserForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingItemsBrowserForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingItemsBrowserForm.cs",
@@ -749,19 +947,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "BackupTimer.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\BackupTimer.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\BackupTimer.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\BackupTimer.cs",
-              "RelativeToolTip": "ActiveTakeoff\\BackupTimer.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAcwE8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:51:37.816Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 27,
               "Title": "BaseFileInfo.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\BaseFileInfo.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\BaseFileInfo.cs",
@@ -773,7 +959,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 28,
               "Title": "BaseForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\BaseForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\BaseForm.cs",
@@ -785,7 +971,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 29,
               "Title": "BaseInfo.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\BaseInfo.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\BaseInfo.cs",
@@ -797,7 +983,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 22,
               "Title": "EELinkManager.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EELinkManager.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EELinkManager.cs",
@@ -809,7 +995,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 30,
               "Title": "Bookmark.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Bookmark.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Bookmark.cs",
@@ -821,7 +1007,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 31,
               "Title": "CEstimatingItem.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingItem.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingItem.cs",
@@ -833,7 +1019,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 32,
               "Title": "CEstimatingItems.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingItems.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingItems.cs",
@@ -845,7 +1031,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 33,
               "Title": "CEstimatingItemsBrowserInterface.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingItemsBrowserInterface.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingItemsBrowserInterface.cs",
@@ -857,7 +1043,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 34,
               "Title": "CEstimatingSection.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingSection.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingSection.cs",
@@ -869,19 +1055,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "CEstimatingsItemsControl.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CEstimatingsItemsControl.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\CEstimatingsItemsControl.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\CEstimatingsItemsControl.cs",
-              "RelativeToolTip": "ActiveTakeoff\\CEstimatingsItemsControl.cs",
-              "ViewState": "AgIAAGcCAAAAAAAAAAAcwIgCAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:49:47.148Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 35,
               "Title": "Clipboard.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Clipboard.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Clipboard.cs",
@@ -893,7 +1067,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 36,
               "Title": "COfficeInterface.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\COfficeInterface.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\COfficeInterface.cs",
@@ -905,7 +1079,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 37,
               "Title": "ColorPicker.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ColorPicker.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ColorPicker.cs",
@@ -917,7 +1091,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 38,
               "Title": "ColorPickerCombo.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ColorPickerCombo.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ColorPickerCombo.cs",
@@ -929,7 +1103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 39,
               "Title": "ComboBoxEx.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ComboBoxEx.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ComboBoxEx.cs",
@@ -941,7 +1115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 40,
               "Title": "COMException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\COMException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\COMException.cs",
@@ -953,7 +1127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 41,
               "Title": "CommandAdd.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandAdd.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandAdd.cs",
@@ -965,7 +1139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 42,
               "Title": "Command.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Command.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Command.cs",
@@ -977,7 +1151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 43,
               "Title": "CommandAddLayer.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandAddLayer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandAddLayer.cs",
@@ -989,7 +1163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 44,
               "Title": "CommandChangeState.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandChangeState.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandChangeState.cs",
@@ -1001,7 +1175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 45,
               "Title": "CommandChangeStateEx.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandChangeStateEx.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandChangeStateEx.cs",
@@ -1013,7 +1187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 46,
               "Title": "CommandDelete.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandDelete.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandDelete.cs",
@@ -1025,7 +1199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 47,
               "Title": "CommandDeleteLayer.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandDeleteLayer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandDeleteLayer.cs",
@@ -1037,7 +1211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 48,
               "Title": "CommandPaste.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CommandPaste.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CommandPaste.cs",
@@ -1049,19 +1223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "CustomRendering.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRendering.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRendering.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\CustomRendering.cs",
-              "RelativeToolTip": "ActiveTakeoff\\CustomRendering.cs",
-              "ViewState": "AgIAAIsBAAAAAAAAAAAcwKwBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:48:11.929Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 49,
               "Title": "CustomRenderingGenericRows.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRenderingGenericRows.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRenderingGenericRows.cs",
@@ -1073,7 +1235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 50,
               "Title": "CustomRenderingProperties.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRenderingProperties.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRenderingProperties.cs",
@@ -1085,7 +1247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 51,
               "Title": "CustomRenderingResult.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\CustomRenderingResult.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\CustomRenderingResult.cs",
@@ -1097,7 +1259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 52,
               "Title": "DataFolderForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DataFolderForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DataFolderForm.cs",
@@ -1109,7 +1271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 53,
               "Title": "DateTimeException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DateTimeException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DateTimeException.cs",
@@ -1121,7 +1283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 54,
               "Title": "DBEstimatingItemEventHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItemEventHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItemEventHandler.cs",
@@ -1133,7 +1295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 55,
               "Title": "DBEstimatingItemForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItemForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItemForm.cs",
@@ -1145,7 +1307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 56,
               "Title": "DBEstimatingItems.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItems.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItems.cs",
@@ -1157,7 +1319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 57,
               "Title": "DBEstimatingItemsEditor.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItemsEditor.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItemsEditor.cs",
@@ -1169,7 +1331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 58,
               "Title": "DBEstimatingItemUpdateEventHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingItemUpdateEventHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingItemUpdateEventHandler.cs",
@@ -1181,7 +1343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 59,
               "Title": "DBEstimatingSection.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingSection.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingSection.cs",
@@ -1193,7 +1355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 60,
               "Title": "DBEstimatingSections.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBEstimatingSections.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBEstimatingSections.cs",
@@ -1205,7 +1367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 61,
               "Title": "DBManagement.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DBManagement.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DBManagement.cs",
@@ -1217,7 +1379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 62,
               "Title": "DimensionForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DimensionForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DimensionForm.cs",
@@ -1229,7 +1391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 63,
               "Title": "DimensionInput.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DimensionInput.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DimensionInput.cs",
@@ -1241,7 +1403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 64,
               "Title": "DimensionInputEx.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DimensionInputEx.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DimensionInputEx.cs",
@@ -1253,7 +1415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 65,
               "Title": "DockingWindow.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DockingWindow.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DockingWindow.cs",
@@ -1265,19 +1427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
-              "Title": "DrawAngle.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawAngle.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawAngle.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawAngle.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawAngle.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAcwKsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:45:56.46Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 66,
               "Title": "DrawCounter.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawCounter.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawCounter.cs",
@@ -1289,7 +1439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 67,
               "Title": "DrawingArea.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawingArea.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawingArea.cs",
@@ -1301,7 +1451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 68,
               "Title": "DrawingPens.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawingPens.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawingPens.cs",
@@ -1313,31 +1463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "DrawLegend.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawLegend.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawLegend.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawLegend.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawLegend.cs",
-              "ViewState": "AgIAAFsDAAAAAAAAAAA0wHwDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:45:14.477Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 64,
-              "Title": "DrawLine.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawLine.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawLine.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawLine.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawLine.cs",
-              "ViewState": "AgIAALgDAAAAAAAAAAAcwNkDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:44:25.229Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 72,
               "Title": "DrawNote.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawNote.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawNote.cs",
@@ -1349,19 +1475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
-              "Title": "DrawObject.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObject.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObject.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawObject.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawObject.cs",
-              "ViewState": "AgIAAL0DAAAAAAAAAAAuwNQDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:43:37.721Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 69,
               "Title": "DrawObjectColorIndicator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectColorIndicator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectColorIndicator.cs",
@@ -1373,19 +1487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
-              "Title": "DrawObjectEditor.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectEditor.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectEditor.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawObjectEditor.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawObjectEditor.cs",
-              "ViewState": "AgIAAOYKAAAAAAAAAAAcwAcLAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:43:21.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 70,
               "Title": "DrawObjectGroup.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectGroup.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectGroup.cs",
@@ -1397,7 +1499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 71,
               "Title": "DrawObjectGroups.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectGroups.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectGroups.cs",
@@ -1409,7 +1511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 73,
               "Title": "DrawObjectIconIndicator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectIconIndicator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectIconIndicator.cs",
@@ -1421,7 +1523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 74,
               "Title": "DrawObjectProperties.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectProperties.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectProperties.cs",
@@ -1433,7 +1535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 75,
               "Title": "DrawObjectsNavigator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawObjectsNavigator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawObjectsNavigator.cs",
@@ -1445,19 +1547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
-              "Title": "DrawPolyLine.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawPolyLine.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\DrawPolyLine.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\DrawPolyLine.cs",
-              "RelativeToolTip": "ActiveTakeoff\\DrawPolyLine.cs",
-              "ViewState": "AgIAAN4KAAAAAAAAAAAcwP8KAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:42:06.398Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 76,
               "Title": "DrawRectangle.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawRectangle.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawRectangle.cs",
@@ -1469,7 +1559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 77,
               "Title": "DrawText.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\DrawText.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\DrawText.cs",
@@ -1481,7 +1571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 78,
               "Title": "EEExchangeData.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EEExchangeData.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EEExchangeData.cs",
@@ -1493,7 +1583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 79,
               "Title": "EEInterface.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EEInterface.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EEInterface.cs",
@@ -1505,7 +1595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 80,
               "Title": "EnableNetworkAdaptersException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EnableNetworkAdaptersException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EnableNetworkAdaptersException.cs",
@@ -1517,7 +1607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 81,
               "Title": "EstimatingEditor.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EstimatingEditor.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EstimatingEditor.cs",
@@ -1529,7 +1619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 82,
               "Title": "EstimatingItem.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EstimatingItem.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EstimatingItem.cs",
@@ -1541,7 +1631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 83,
               "Title": "EstimatingItemPrice.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EstimatingItemPrice.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\EstimatingItemPrice.cs",
@@ -1553,19 +1643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
-              "Title": "EstimatingItems.cs",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\EstimatingItems.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\EstimatingItems.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\EstimatingItems.cs",
-              "RelativeToolTip": "ActiveTakeoff\\EstimatingItems.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-29T04:40:49.763Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 85,
               "Title": "Extension.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Extension.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Extension.cs",
@@ -1577,7 +1655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 84,
               "Title": "ExtensionCategories.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionCategories.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionCategories.cs",
@@ -1589,7 +1667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 86,
               "Title": "ExtensionCategory.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionCategory.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionCategory.cs",
@@ -1601,7 +1679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 88,
               "Title": "ExtensionCategoryReader.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionCategoryReader.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionCategoryReader.cs",
@@ -1613,7 +1691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 87,
               "Title": "ExtensionChoice.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionChoice.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionChoice.cs",
@@ -1625,7 +1703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 89,
               "Title": "ExtensionChoiceElement.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionChoiceElement.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionChoiceElement.cs",
@@ -1637,7 +1715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 90,
               "Title": "ExtensionChoiceElements.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionChoiceElements.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionChoiceElements.cs",
@@ -1649,7 +1727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 91,
               "Title": "ExtensionChoices.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionChoices.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionChoices.cs",
@@ -1661,7 +1739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 92,
               "Title": "ExtensionField.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionField.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionField.cs",
@@ -1673,7 +1751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 93,
               "Title": "ExtensionFields.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionFields.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionFields.cs",
@@ -1685,7 +1763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 94,
               "Title": "ExtensionResult.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionResult.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionResult.cs",
@@ -1697,7 +1775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 95,
               "Title": "ExtensionResults.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionResults.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionResults.cs",
@@ -1709,7 +1787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 96,
               "Title": "Extensions.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Extensions.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Extensions.cs",
@@ -1721,7 +1799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 97,
               "Title": "ExtensionsManager.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionsManager.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionsManager.cs",
@@ -1733,7 +1811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 98,
               "Title": "ExtensionsSupport.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtensionsSupport.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtensionsSupport.cs",
@@ -1745,7 +1823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 99,
               "Title": "ExtraDataTooLongException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ExtraDataTooLongException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ExtraDataTooLongException.cs",
@@ -1757,7 +1835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 100,
               "Title": "FillBrushes.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FillBrushes.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FillBrushes.cs",
@@ -1769,7 +1847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 101,
               "Title": "Filter.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Filter.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Filter.cs",
@@ -1781,7 +1859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 102,
               "Title": "FilterElement.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FilterElement.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FilterElement.cs",
@@ -1793,7 +1871,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 103,
               "Title": "FormulaBuilderForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FormulaBuilderForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FormulaBuilderForm.cs",
@@ -1805,7 +1883,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 104,
               "Title": "FormulaResult.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FormulaResult.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FormulaResult.cs",
@@ -1817,7 +1895,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 105,
               "Title": "FormulaResults.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FormulaResults.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FormulaResults.cs",
@@ -1829,7 +1907,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 106,
               "Title": "FormulaUtilities.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\FormulaUtilities.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\FormulaUtilities.cs",
@@ -1841,7 +1919,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 107,
               "Title": "GenericValue.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\GenericValue.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\GenericValue.cs",
@@ -1853,7 +1931,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 108,
               "Title": "GroupBoxEx.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\GroupBoxEx.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\GroupBoxEx.cs",
@@ -1865,7 +1943,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 105,
+              "DocumentIndex": 109,
               "Title": "GroupStats.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\GroupStats.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\GroupStats.cs",
@@ -1877,7 +1955,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 106,
+              "DocumentIndex": 110,
               "Title": "GroupUtilities.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\GroupUtilities.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\GroupUtilities.cs",
@@ -1889,7 +1967,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 107,
+              "DocumentIndex": 111,
               "Title": "HelpUtilities.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\HelpUtilities.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\HelpUtilities.cs",
@@ -1901,7 +1979,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 108,
+              "DocumentIndex": 112,
               "Title": "ImportSettingsForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\ImportSettingsForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\ImportSettingsForm.cs",
@@ -1913,7 +1991,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 109,
+              "DocumentIndex": 113,
               "Title": "IsGenuineResult.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\IsGenuineResult.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\IsGenuineResult.cs",
@@ -1925,7 +2003,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 110,
+              "DocumentIndex": 114,
               "Title": "LabelEx.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\LabelEx.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\LabelEx.cs",
@@ -1937,7 +2015,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 111,
+              "DocumentIndex": 115,
               "Title": "Layer.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Layer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Layer.cs",
@@ -1949,7 +2027,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 112,
+              "DocumentIndex": 116,
               "Title": "Layers.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Layers.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Layers.cs",
@@ -1961,7 +2039,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 113,
+              "DocumentIndex": 117,
               "Title": "LayersNavigator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\LayersNavigator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\LayersNavigator.cs",
@@ -1973,7 +2051,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 114,
+              "DocumentIndex": 118,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MainForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MainForm.cs",
@@ -1985,7 +2063,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 115,
+              "DocumentIndex": 119,
               "Title": "MathParser.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MathParser.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MathParser.cs",
@@ -1997,7 +2075,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 116,
+              "DocumentIndex": 120,
               "Title": "MathParserException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MathParserException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MathParserException.cs",
@@ -2009,7 +2087,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 117,
+              "DocumentIndex": 121,
               "Title": "MathParserNode.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MathParserNode.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MathParserNode.cs",
@@ -2021,7 +2099,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 118,
+              "DocumentIndex": 122,
               "Title": "MathParserOperator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MathParserOperator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MathParserOperator.cs",
@@ -2033,7 +2111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 119,
+              "DocumentIndex": 123,
               "Title": "MruManager.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MruManager.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MruManager.cs",
@@ -2045,7 +2123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 120,
+              "DocumentIndex": 124,
               "Title": "NotActivatedException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\NotActivatedException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\NotActivatedException.cs",
@@ -2057,7 +2135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 121,
+              "DocumentIndex": 125,
               "Title": "NoteEditForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\NoteEditForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\NoteEditForm.cs",
@@ -2069,7 +2147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 122,
+              "DocumentIndex": 126,
               "Title": "NumericComparer.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\NumericComparer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\NumericComparer.cs",
@@ -2081,7 +2159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 123,
+              "DocumentIndex": 127,
               "Title": "OnPlanActionHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\OnPlanActionHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\OnPlanActionHandler.cs",
@@ -2093,7 +2171,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 124,
+              "DocumentIndex": 128,
               "Title": "OnSlopeFactorSaveHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\OnSlopeFactorSaveHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\OnSlopeFactorSaveHandler.cs",
@@ -2105,7 +2183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 125,
+              "DocumentIndex": 129,
               "Title": "PDFSelectionForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PDFSelectionForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PDFSelectionForm.cs",
@@ -2117,7 +2195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 126,
+              "DocumentIndex": 130,
               "Title": "PDFUtilities.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PDFUtilities.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PDFUtilities.cs",
@@ -2129,7 +2207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 127,
+              "DocumentIndex": 131,
               "Title": "PermissionException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PermissionException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PermissionException.cs",
@@ -2141,7 +2219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 128,
+              "DocumentIndex": 132,
               "Title": "PkeyMaxUsedException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PkeyMaxUsedException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PkeyMaxUsedException.cs",
@@ -2153,7 +2231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 129,
+              "DocumentIndex": 133,
               "Title": "PkeyRevokedException.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PkeyRevokedException.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PkeyRevokedException.cs",
@@ -2165,7 +2243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 130,
+              "DocumentIndex": 134,
               "Title": "Plan.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Plan.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Plan.cs",
@@ -2177,7 +2255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 131,
+              "DocumentIndex": 135,
               "Title": "PlanDuplicateForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PlanDuplicateForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PlanDuplicateForm.cs",
@@ -2189,7 +2267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 132,
+              "DocumentIndex": 136,
               "Title": "PlanPropertiesForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PlanPropertiesForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PlanPropertiesForm.cs",
@@ -2201,7 +2279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 133,
+              "DocumentIndex": 137,
               "Title": "PlanRemoveForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PlanRemoveForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PlanRemoveForm.cs",
@@ -2213,7 +2291,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 134,
+              "DocumentIndex": 138,
               "Title": "Plans.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Plans.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Plans.cs",
@@ -2225,7 +2303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 135,
+              "DocumentIndex": 139,
               "Title": "PlansNavigator.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PlansNavigator.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PlansNavigator.cs",
@@ -2237,7 +2315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 136,
+              "DocumentIndex": 140,
               "Title": "PreferencesForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PreferencesForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PreferencesForm.cs",
@@ -2249,7 +2327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 137,
+              "DocumentIndex": 141,
               "Title": "Preset.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Preset.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\Preset.cs",
@@ -2261,7 +2339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 138,
+              "DocumentIndex": 142,
               "Title": "PresetChoice.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetChoice.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetChoice.cs",
@@ -2273,7 +2351,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 139,
+              "DocumentIndex": 143,
               "Title": "PresetChoices.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetChoices.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetChoices.cs",
@@ -2285,7 +2363,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 140,
+              "DocumentIndex": 144,
               "Title": "PresetEditForm.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetEditForm.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetEditForm.cs",
@@ -2297,7 +2375,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 141,
+              "DocumentIndex": 145,
               "Title": "PresetEventHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetEventHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetEventHandler.cs",
@@ -2309,7 +2387,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 142,
+              "DocumentIndex": 146,
               "Title": "PresetField.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetField.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetField.cs",
@@ -2321,7 +2399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 143,
+              "DocumentIndex": 147,
               "Title": "PresetFields.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetFields.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetFields.cs",
@@ -2333,7 +2411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 144,
+              "DocumentIndex": 148,
               "Title": "PresetRenameEventHandler.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetRenameEventHandler.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetRenameEventHandler.cs",
@@ -2345,7 +2423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 145,
+              "DocumentIndex": 149,
               "Title": "PresetResult.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\PresetResult.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\PresetResult.cs",

@@ -224,7 +224,7 @@ namespace QuoterPlan
             return point;
         }
 
-        public Segment GetSegmentAtAngle(Point startPoint, Point endPoint, int angle, double distance = 32565, CustomRendering.SegmentDirection segmentDirection = 2, int offsetX = 0)
+        public Segment GetSegmentAtAngle(Point startPoint, Point endPoint, int angle, double distance = 32565, CustomRendering.SegmentDirection segmentDirection = SegmentDirection.SegmentDirectionBoth, int offsetX = 0)
         {
             switch (segmentDirection)
             {

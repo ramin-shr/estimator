@@ -9,7 +9,7 @@ using QuoterPlan.Properties;
 
 namespace QuoterPlan
 {
-	public class HatchStylePickerCombo : ComboBoxEx
+	public class HatchStylePickerCombo : DevComponents.DotNetBar.Controls.ComboBoxEx
 	{
 		public static string PatternToString(HatchStylePickerCombo.HatchStylePickerEnum pattern)
 		{
@@ -541,47 +541,25 @@ namespace QuoterPlan
 			SolidDiamond
 		}
 
-		public class HatchStyleInfo
-		{
-			public string Text
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.<Text>k__BackingField;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.<Text>k__BackingField = value;
-				}
-			}
+        public class HatchStyleInfo
+        {
+            public HatchStylePickerCombo.HatchStylePickerEnum HatchStyle
+            {
+                get;
+                set;
+            }
 
-			public HatchStylePickerCombo.HatchStylePickerEnum HatchStyle
-			{
-				[CompilerGenerated]
-				get
-				{
-					return this.<HatchStyle>k__BackingField;
-				}
-				[CompilerGenerated]
-				set
-				{
-					this.<HatchStyle>k__BackingField = value;
-				}
-			}
+            public string Text
+            {
+                get;
+                set;
+            }
 
-			public HatchStyleInfo(string text, HatchStylePickerCombo.HatchStylePickerEnum hatchStyle)
-			{
-				this.Text = text;
-				this.HatchStyle = hatchStyle;
-			}
-
-			[CompilerGenerated]
-			private string <Text>k__BackingField;
-
-			[CompilerGenerated]
-			private HatchStylePickerCombo.HatchStylePickerEnum <HatchStyle>k__BackingField;
-		}
-	}
+            public HatchStyleInfo(string text, HatchStylePickerCombo.HatchStylePickerEnum hatchStyle)
+            {
+                this.Text = text;
+                this.HatchStyle = hatchStyle;
+            }
+        }
+    }
 }

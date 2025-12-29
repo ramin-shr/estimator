@@ -92,7 +92,7 @@ namespace QuoterPlan
             return drawAngle;
         }
 
-        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1)
+        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh)
         {
             Pen pen;
             TextRenderingHint textRenderingHint;
@@ -144,7 +144,7 @@ namespace QuoterPlan
             g.SmoothingMode = smoothingMode;
         }
 
-        public override void DrawText(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1, float defaultFontSize = 12f)
+        public override void DrawText(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh, float defaultFontSize = 12f)
         {
             if (!base.ShowMeasure || base.TextArray.Count == 0)
             {

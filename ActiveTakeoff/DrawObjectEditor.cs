@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using TabControl = DevComponents.DotNetBar.TabControl;
 
 namespace QuoterPlan
 {
@@ -1244,10 +1245,22 @@ namespace QuoterPlan
             {
                 return;
             }
-            CEstimatingItem cEstimatingItem = new CEstimatingItem(selectedProduct.ItemID, selectedProduct.Description, selectedProduct.Value, selectedProduct.Unit, selectedProduct.ItemType, selectedProduct.UnitMeasure, selectedProduct.CoverageValue, selectedProduct.CoverageUnit, selectedProduct.SectionID, selectedProduct.SubSectionID, selectedProduct.BidCode, "")
-            {
-                Tag = cEstimatingItem
-            };
+            CEstimatingItem cEstimatingItem = new CEstimatingItem(
+                selectedProduct.ItemID,
+                selectedProduct.Description,
+                selectedProduct.Value,
+                selectedProduct.Unit,
+                selectedProduct.ItemType,
+                selectedProduct.UnitMeasure,
+                selectedProduct.CoverageValue,
+                selectedProduct.CoverageUnit,
+                selectedProduct.SectionID,
+                selectedProduct.SubSectionID,
+                selectedProduct.BidCode,
+                "");
+
+            cEstimatingItem.Tag = cEstimatingItem;
+
             if (value != 0)
             {
                 cEstimatingItem.Value = value;

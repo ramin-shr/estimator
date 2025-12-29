@@ -1243,7 +1243,7 @@ namespace QuoterPlan
             return DrawPolyLine.WindingDirection.Clockwise;
         }
 
-        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1)
+        public override void Draw(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh)
         {
             TextRenderingHint textRenderingHint;
             SmoothingMode smoothingMode = g.SmoothingMode;
@@ -1507,7 +1507,7 @@ namespace QuoterPlan
             }
         }
 
-        public override void DrawText(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = 1, float defaultFontSize = 12f)
+        public override void DrawText(Graphics g, int offsetX, int offsetY, bool printToScreen = true, MainForm.ImageQualityEnum imageQuality = MainForm.ImageQualityEnum.QualityHigh, float defaultFontSize = 12f)
         {
             int num;
             bool flag;
@@ -1589,17 +1589,6 @@ namespace QuoterPlan
                 }
             }
             return region;
-        }
-
-        protected override void Finalize()
-        {
-            try
-            {
-            }
-            finally
-            {
-                base.Finalize();
-            }
         }
 
         public Point FindCentroid(double area)
@@ -1938,104 +1927,88 @@ namespace QuoterPlan
             return base.LocatePointOnLine(point, this.SelectedSegment.StartPoint, this.SelectedSegment.EndPoint);
         }
 
-        private Point MatchPointToColor(Bitmap image, Point point, int angle, Color colorToMatch, bool directionOutward, int maxOffset)
+        private Point MatchPointToColor(
+           Bitmap image,
+           Point point,
+           int angle,
+           Color colorToMatch,
+           bool directionOutward,
+           int maxOffset)
         {
-            bool flag = false;
-            int num = 0;
-            Point x = new Point(point.X, point.Y);
-            int x1 = point.X;
-            int y = point.Y;
-            do
+            Point current = new Point(point.X, point.Y);
+            int steps = 0;
+
+            while (true)
             {
-                if (x.X < 0 || x.Y < 0 || x.X >= image.Width || x.Y >= image.Height)
+                if (current.X < 0 || current.Y < 0 || current.X >= image.Width || current.Y >= image.Height)
                 {
-                    if (x.X < 0)
-                    {
-                        x.X = 0;
-                    }
-                    if (x.Y >= 0)
-                    {
-                        break;
-                    }
-                    x.Y = 0;
+                    if (current.X < 0)
+                        current.X = 0;
+
+                    if (current.Y < 0)
+                        current.Y = 0;
+
                     break;
+                }
+
+                Color pixel = image.GetPixel(current.X, current.Y);
+
+                if (colorToMatch.R == 0 && colorToMatch.G == 0 && colorToMatch.B == 0)
+                {
+                    if (pixel.R != 0xFF && pixel.G != 0xFF && pixel.B != 0xFF)
+                        break;
                 }
                 else
                 {
-                    Color pixel = image.GetPixel(x.X, x.Y);
-                    if (colorToMatch.R == 0 && colorToMatch.G == 0 && colorToMatch.B == 0)
-                    {
-                        if (pixel.R != 0xff && pixel.G != 0xff && pixel.B != 0xff)
-                        {
-                            break;
-                        }
-                    }
-                    else if (pixel.R == colorToMatch.R && pixel.G == colorToMatch.G && pixel.B == colorToMatch.B)
-                    {
+                    if (pixel.R == colorToMatch.R && pixel.G == colorToMatch.G && pixel.B == colorToMatch.B)
                         break;
-                    }
-                    int num1 = x.X;
-                    int y1 = x.Y;
-                    int num2 = angle;
-                    if (num2 <= 90)
+                }
+
+                bool invalidAngle = false;
+
+                if (angle <= 90)
+                {
+                    if (angle == 0)
                     {
-                        if (num2 != 0)
-                        {
-                            if (num2 != 90)
-                            {
-                                goto Label0;
-                            }
-                            if (!directionOutward)
-                            {
-                                x.X = x.X - 1;
-                            }
-                            else
-                            {
-                                x.X = x.X + 1;
-                            }
-                        }
-                        else if (!directionOutward)
-                        {
-                            x.Y = x.Y + 1;
-                        }
-                        else
-                        {
-                            x.Y = x.Y - 1;
-                        }
+                        current.Y += directionOutward ? -1 : +1;
                     }
-                    else if (num2 != 180)
+                    else if (angle == 90)
                     {
-                        if (num2 != 0x10e)
-                        {
-                            goto Label0;
-                        }
-                        if (!directionOutward)
-                        {
-                            x.X = x.X + 1;
-                        }
-                        else
-                        {
-                            x.X = x.X - 1;
-                        }
-                    }
-                    else if (!directionOutward)
-                    {
-                        x.Y = x.Y - 1;
+                        current.X += directionOutward ? +1 : -1;
                     }
                     else
                     {
-                        x.Y = x.Y + 1;
+                        invalidAngle = true;
                     }
-                Label3:
-                    num++;
                 }
+                else
+                {
+                    if (angle == 180)
+                    {
+                        current.Y += directionOutward ? +1 : -1;
+                    }
+                    else if (angle == 0x10E)
+                    {
+                        current.X += directionOutward ? -1 : +1;
+                    }
+                    else
+                    {
+                        invalidAngle = true;
+                    }
+                }
+
+                steps++;
+
+                if (invalidAngle)
+                    break;
+
+                if (steps >= maxOffset)
+                    break;
             }
-            while (!flag);
-            return x;
-        Label0:
-            flag = true;
-            goto Label3;
+
+            return current;
         }
+
 
         public bool MatchSegment(Segment segment, int tolerance)
         {
@@ -2429,13 +2402,13 @@ namespace QuoterPlan
                     int y2 = point1.Y - offsetY - rectangle1.Height / 2;
                     int width = textArray.Rectangle.Width;
                     Rectangle rectangle2 = textArray.Rectangle;
-                    Rectangle rectangle3 = new Rectangle(num1, y2, width, rectangle2.Height)
-                    {
-                        X = (int)((float)rectangle3.X * zoomFactor),
-                        Y = (int)((float)rectangle3.Y * zoomFactor),
-                        Width = (int)((float)rectangle3.Width * zoomFactor),
-                        Height = (int)((float)rectangle3.Height * zoomFactor)
-                    };
+                    Rectangle rectangle3 = new Rectangle(num1, y2, width, rectangle2.Height);
+
+                    rectangle3.X = (int)(rectangle3.X * zoomFactor);
+                    rectangle3.Y = (int)(rectangle3.Y * zoomFactor);
+                    rectangle3.Width = (int)(rectangle3.Width * zoomFactor);
+                    rectangle3.Height = (int)(rectangle3.Height * zoomFactor);
+
                     rectangle3.Inflate(new Size(base.PenWidth, base.PenWidth));
                     region.Union(rectangle3);
                 }
