@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Printing;
 
 namespace FastColoredTextBoxNS
 {
@@ -108,6 +110,24 @@ namespace FastColoredTextBoxNS
             get { return menuText; }
             set { menuText = value; }
         }
+
+        /// <summary>
+        /// Fore color of text of item
+        /// </summary>
+        public virtual Color ForeColor
+        {
+            get { return Color.Transparent; }
+            set { throw new NotImplementedException("Override this property to change color"); }
+        }
+
+        /// <summary>
+        /// Back color of item
+        /// </summary>
+        public virtual Color BackColor
+        {
+            get { return Color.Transparent; }
+            set { throw new NotImplementedException("Override this property to change color"); }
+        }
     }
 
     public enum CompareResult
@@ -197,46 +217,23 @@ namespace FastColoredTextBoxNS
     public class MethodAutocompleteItem : AutocompleteItem
     {
         string firstPart;
-        public string className;
         string lowercaseText;
-        char delim;
 
         public MethodAutocompleteItem(string text)
             : base(text)
         {
             lowercaseText = Text.ToLower();
-            className = "";
-        }
-
-        public MethodAutocompleteItem(string text, string clsName):
-            base(text)
-        {
-            lowercaseText = Text.ToLower();
-            className = clsName;
         }
 
         public override CompareResult Compare(string fragmentText)
         {
             int i = fragmentText.LastIndexOf('.');
             if (i < 0)
-            {
-                i = fragmentText.LastIndexOf(':');
-                if (i < 0)
-                {
-                    return CompareResult.Hidden;
-                }
-                else
-                    delim = ':';
-            }
-            else
-                delim = '.';
+                return CompareResult.Hidden;
             string lastPart = fragmentText.Substring(i + 1);
             firstPart = fragmentText.Substring(0, i);
 
-            if (className != null && className.Length != 0 && className != firstPart) return CompareResult.Hidden;
             if(lastPart=="") return CompareResult.Visible;
-           
-
             if(Text.StartsWith(lastPart, StringComparison.InvariantCultureIgnoreCase))
                 return CompareResult.VisibleAndSelected;
             if(lowercaseText.Contains(lastPart.ToLower()))
@@ -247,7 +244,23 @@ namespace FastColoredTextBoxNS
 
         public override string GetTextForReplace()
         {
-            return firstPart + delim + Text;
+            return firstPart + "." + Text;
+        }
+    }
+
+    /// <summary>
+    /// This Item does not check correspondence to current text fragment.
+    /// SuggestItem is intended for dynamic menus.
+    /// </summary>
+    public class SuggestItem : AutocompleteItem
+    {
+        public SuggestItem(string text, int imageIndex):base(text, imageIndex)
+        {   
+        }
+
+        public override CompareResult Compare(string fragmentText)
+        {
+            return CompareResult.Visible;
         }
     }
 }

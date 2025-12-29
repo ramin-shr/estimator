@@ -25,7 +25,7 @@ namespace FastColoredTextBoxNS
         }
     }
 
-    class CollapseFoldingMarker: VisualMarker
+    public class CollapseFoldingMarker: VisualMarker
     {
         public readonly int iLine;
 
@@ -35,16 +35,16 @@ namespace FastColoredTextBoxNS
             this.iLine = iLine;
         }
 
-        public override void Draw(Graphics gr, Pen pen)
+        public void Draw(Graphics gr, Pen pen, Brush backgroundBrush, Pen forePen)
         {
             //draw minus
-            gr.FillRectangle(Brushes.White, rectangle);
+            gr.FillRectangle(backgroundBrush, rectangle);
             gr.DrawRectangle(pen, rectangle);
-            gr.DrawLine(pen, rectangle.Left + 2, rectangle.Top + rectangle.Height / 2, rectangle.Right - 2, rectangle.Top + rectangle.Height / 2);
+            gr.DrawLine(forePen, rectangle.Left + 2, rectangle.Top + rectangle.Height / 2, rectangle.Right - 2, rectangle.Top + rectangle.Height / 2);
         }
     }
 
-    class ExpandFoldingMarker : VisualMarker
+    public class ExpandFoldingMarker : VisualMarker
     {
         public readonly int iLine;
 
@@ -54,17 +54,17 @@ namespace FastColoredTextBoxNS
             this.iLine = iLine;
         }
 
-        public override void Draw(Graphics gr, Pen pen)
+        public void Draw(Graphics gr, Pen pen,  Brush backgroundBrush, Pen forePen)
         {
             //draw plus
-            gr.FillRectangle(Brushes.White, rectangle);
+            gr.FillRectangle(backgroundBrush, rectangle);
             gr.DrawRectangle(pen, rectangle);
-            gr.DrawLine(Pens.Red, rectangle.Left + 2, rectangle.Top + rectangle.Height / 2, rectangle.Right - 2, rectangle.Top + rectangle.Height / 2);
-            gr.DrawLine(Pens.Red, rectangle.Left + rectangle.Width / 2, rectangle.Top + 2, rectangle.Left + rectangle.Width / 2, rectangle.Bottom - 2);
+            gr.DrawLine(forePen, rectangle.Left + 2, rectangle.Top + rectangle.Height / 2, rectangle.Right - 2, rectangle.Top + rectangle.Height / 2);
+            gr.DrawLine(forePen, rectangle.Left + rectangle.Width / 2, rectangle.Top + 2, rectangle.Left + rectangle.Width / 2, rectangle.Bottom - 2);
         }
     }
 
-    class FoldedAreaMarker : VisualMarker
+    public class FoldedAreaMarker : VisualMarker
     {
         public readonly int iLine;
 

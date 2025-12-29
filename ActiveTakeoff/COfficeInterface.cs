@@ -375,10 +375,23 @@ namespace QuoterPlan
                     string str3 = row.Field<string>("DESCRIPT").Trim();
                     decimal num = row.Field<decimal>("COST");
                     string str4 = row.Field<string>("MEASURE").Trim();
-                    CEstimatingItem cEstimatingItem = new CEstimatingItem(str2, str3, (double)((double)num), str4, DBEstimatingItem.EstimatingItemType.MaterialItem, DBEstimatingItem.UnitMeasureType.none, 0, 1, 0, 0, "", "")
-                    {
-                        Tag = cEstimatingItem
-                    };
+                    CEstimatingItem cEstimatingItem = new CEstimatingItem(
+                        str2,
+                        str3,
+                        (double)num,
+                        str4,
+                        DBEstimatingItem.EstimatingItemType.MaterialItem,
+                        DBEstimatingItem.UnitMeasureType.none,
+                        0,
+                        1,
+                        0,
+                        0,
+                        "",
+                        ""
+                    );
+
+                    cEstimatingItem.Tag = cEstimatingItem;
+
                     products.Add(cEstimatingItem);
                 }
             }
@@ -408,10 +421,24 @@ namespace QuoterPlan
                     string str3 = row.Field<string>("DESCRIPT").Trim();
                     decimal num = row.Field<decimal>("COST");
                     string str4 = row.Field<string>("MEASURE").Trim();
-                    CEstimatingItem cEstimatingItem = new CEstimatingItem(str2, str3, (double)((double)num), str4, DBEstimatingItem.EstimatingItemType.MaterialItem, DBEstimatingItem.UnitMeasureType.none, 0, 1, 0, 0, "", "")
-                    {
-                        Tag = cEstimatingItem
-                    };
+
+                    CEstimatingItem cEstimatingItem = new CEstimatingItem(
+                        str2,
+                        str3,
+                        (double)num,
+                        str4,
+                        DBEstimatingItem.EstimatingItemType.MaterialItem,
+                        DBEstimatingItem.UnitMeasureType.none,
+                        0,
+                        1,
+                        0,
+                        0,
+                        "",
+                        ""
+                    );
+
+                    cEstimatingItem.Tag = cEstimatingItem;
+
                     products.Add(cEstimatingItem);
                 }
             }
@@ -466,10 +493,9 @@ namespace QuoterPlan
                             str1 = string.Concat("0;", str, ";");
                             if (!hashtables.ContainsKey(str1))
                             {
-                                CEstimatingSection cEstimatingSection = new CEstimatingSection(num1, 0, str, str2)
-                                {
-                                    Tag = cEstimatingSection
-                                };
+                                CEstimatingSection cEstimatingSection = new CEstimatingSection(num1, 0, str, str2);
+                                cEstimatingSection.Tag = cEstimatingSection;
+
                                 sections.Add(num1, 0, cEstimatingSection);
                                 num = num1;
                                 hashtables.Add(str1, cEstimatingSection);
@@ -480,10 +506,8 @@ namespace QuoterPlan
                             str1 = string.Concat(num.ToString(), ";", str, ";");
                             if (!hashtables.ContainsKey(str1))
                             {
-                                CEstimatingSection cEstimatingSection1 = new CEstimatingSection(num1, num, str, str2)
-                                {
-                                    Tag = cEstimatingSection1
-                                };
+                                CEstimatingSection cEstimatingSection1 = new CEstimatingSection(num1, num, str, str2);
+                                cEstimatingSection1.Tag = cEstimatingSection1;
                                 sections.Add(num1, num, cEstimatingSection1);
                                 hashtables.Add(str1, cEstimatingSection1);
                             }
@@ -524,10 +548,9 @@ namespace QuoterPlan
                             str1 = string.Concat("0;", str, ";");
                             if (!hashtables.ContainsKey(str1))
                             {
-                                CEstimatingSection cEstimatingSection = new CEstimatingSection(num1, 0, str, str3)
-                                {
-                                    Tag = cEstimatingSection
-                                };
+                                CEstimatingSection cEstimatingSection = new CEstimatingSection(num1, 0, str, str3);
+                                cEstimatingSection.Tag = cEstimatingSection;
+
                                 sections.Add(num1, 0, cEstimatingSection);
                                 num = num1;
                                 hashtables.Add(str1, cEstimatingSection);
@@ -538,10 +561,9 @@ namespace QuoterPlan
                             str1 = string.Concat(num.ToString(), ";", str, ";");
                             if (!hashtables.ContainsKey(str1))
                             {
-                                CEstimatingSection cEstimatingSection1 = new CEstimatingSection(num1, num, str, str3)
-                                {
-                                    Tag = cEstimatingSection1
-                                };
+                                CEstimatingSection cEstimatingSection1 = new CEstimatingSection(num1, num, str, str3);
+                                cEstimatingSection1.Tag = cEstimatingSection1;
+
                                 sections.Add(num1, num, cEstimatingSection1);
                                 hashtables.Add(str1, cEstimatingSection1);
                             }

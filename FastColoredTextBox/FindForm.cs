@@ -7,7 +7,6 @@ namespace FastColoredTextBoxNS
 {
     public partial class FindForm : Form
     {
-        public static string RegexSpecSymbolsPattern = @"[\^\$\[\]\(\)\.\\\*\+\|\?\{\}]";
         bool firstSearch = true;
         Place startPlace;
         FastColoredTextBox tb;
@@ -25,17 +24,16 @@ namespace FastColoredTextBoxNS
 
         private void btFindNext_Click(object sender, EventArgs e)
         {
-            FindNext();
+            FindNext(tbFind.Text);
         }
 
-        private void FindNext()
+        public virtual void FindNext(string pattern)
         {
             try
             {
-                string pattern = tbFind.Text;
                 RegexOptions opt = cbMatchCase.Checked ? RegexOptions.None : RegexOptions.IgnoreCase;
                 if (!cbRegex.Checked)
-                    pattern = Regex.Replace(pattern, RegexSpecSymbolsPattern, "\\$0");
+                    pattern = Regex.Escape(pattern);
                 if (cbWholeWord.Checked)
                     pattern = "\\b" + pattern + "\\b";
                 //
@@ -65,7 +63,7 @@ namespace FastColoredTextBoxNS
                 if (range.Start >= startPlace && startPlace > Place.Empty)
                 {
                     tb.Selection.Start = new Place(0, 0);
-                    FindNext();
+                    FindNext(pattern);
                     return;
                 }
                 MessageBox.Show("Not found");
@@ -99,6 +97,17 @@ namespace FastColoredTextBoxNS
                 e.Cancel = true;
                 Hide();
             }
+            this.tb.Focus();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         protected override void OnActivated(EventArgs e)

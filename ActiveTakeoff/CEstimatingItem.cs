@@ -155,10 +155,23 @@ namespace QuoterPlan
 
         public CEstimatingItem Clone(bool preserveInternalKey = false)
         {
-            CEstimatingItem cEstimatingItem = new CEstimatingItem(this.ItemID, this.Description, this.Value, this.Unit, this.ItemType, this.UnitMeasure, this.CoverageValue, this.CoverageUnit, this.SectionID, this.SubSectionID, this.BidCode, this.Formula)
-            {
-                Tag = cEstimatingItem
-            };
+            CEstimatingItem cEstimatingItem = new CEstimatingItem(
+                this.ItemID,
+                this.Description,
+                this.Value,
+                this.Unit,
+                this.ItemType,
+                this.UnitMeasure,
+                this.CoverageValue,
+                this.CoverageUnit,
+                this.SectionID,
+                this.SubSectionID,
+                this.BidCode,
+                this.Formula
+            );
+
+            cEstimatingItem.Tag = cEstimatingItem;
+
             if (preserveInternalKey)
             {
                 cEstimatingItem.InternalKey = this.InternalKey;

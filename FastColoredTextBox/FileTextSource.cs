@@ -34,6 +34,8 @@ namespace FastColoredTextBoxNS
             timer.Interval = 10000;
             timer.Tick += new EventHandler(timer_Tick);
             timer.Enabled = true;
+
+            SaveEOL = Environment.NewLine;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -74,27 +76,81 @@ namespace FastColoredTextBoxNS
             if (fs != null)
                 fs.Dispose();
 
+            SaveEOL = Environment.NewLine;
+
             //read lines of file
             fs = new FileStream(fileName, FileMode.Open);
             var length = fs.Length;
             //read signature
-            enc = DefineEncoding(enc);
+            enc = DefineEncoding(enc, fs);
             int shift = DefineShift(enc);
             //first line
             sourceFileLinePositions.Add((int)fs.Position);
             base.lines.Add(null);
             //other lines
-            while(fs.Position < length)
+            sourceFileLinePositions.Capacity = (int)(length/7 + 1000);
+
+            //int prev = 0;
+            //while(fs.Position < length)
+            //{
+            //    var b = fs.ReadByte();
+
+            //    if (b == 10)// \n
+            //    {
+            //        sourceFileLinePositions.Add((int)(fs.Position) + shift);
+            //        base.lines.Add(null);
+            //    }else
+            //    if (prev == 13)// \r (Mac format)
+            //    {
+            //        sourceFileLinePositions.Add((int)(fs.Position - 1) + shift);
+            //        base.lines.Add(null);
+            //        SaveEOL = "\r";
+            //    }
+
+            //    prev = b;
+            //}
+
+            //if (prev == 13)
+            //{
+            //    sourceFileLinePositions.Add((int)(fs.Position) + shift);
+            //    base.lines.Add(null);
+            //}
+
+            int prev = 0;
+            int prevPos = 0;
+            BinaryReader br = new BinaryReader(fs, enc);
+            while (fs.Position < length)
             {
-                var b = fs.ReadByte();
-                if (b == 10)// char \n
+                prevPos = (int)fs.Position;
+                var b = br.ReadChar();
+
+                if (b == 10)// \n
                 {
-                    sourceFileLinePositions.Add((int)(fs.Position) + shift);
+                    sourceFileLinePositions.Add((int)fs.Position);
                     base.lines.Add(null);
                 }
+                else
+                if (prev == 13)// \r (Mac format)
+                {
+                    sourceFileLinePositions.Add((int)prevPos);
+                    base.lines.Add(null);
+                    SaveEOL = "\r";
+                }
+
+                prev = b;
             }
 
+            if (prev == 13)
+            {
+                sourceFileLinePositions.Add((int)prevPos);
+                base.lines.Add(null);
+            }
+
+            if(length > 2000000)
+                GC.Collect();
+
             Line[] temp = new Line[100];
+
             var c = base.lines.Count;
             base.lines.AddRange(temp);
             base.lines.TrimExcess();
@@ -111,7 +167,14 @@ namespace FastColoredTextBoxNS
             fileEncoding = enc;
 
             OnLineInserted(0, Count);
-            NeedRecalc(new TextChangedEventArgs(0, 1));
+            //load first lines for calc width of the text
+            var linesCount = Math.Min(lines.Count, CurrentTB.ClientRectangle.Height/CurrentTB.CharHeight);
+            for (int i = 0; i < linesCount; i++)
+                LoadLineFromSourceFile(i);
+            //
+            NeedRecalc(new TextChangedEventArgs(0, linesCount - 1));
+            if (CurrentTB.WordWrap)
+                OnRecalcWordWrap(new TextChangedEventArgs(0, linesCount - 1));
         }
 
         private int DefineShift(Encoding enc)
@@ -134,7 +197,7 @@ namespace FastColoredTextBoxNS
             return 0;
         }
 
-        private Encoding DefineEncoding(Encoding enc)
+        private static Encoding DefineEncoding(Encoding enc, FileStream fs)
         {
             int bytesPerSignature = 0;
             byte[] signature = new byte[4];
@@ -177,9 +240,21 @@ namespace FastColoredTextBoxNS
         public void CloseFile()
         {
             if(fs!=null)
-                fs.Dispose();
+                try
+                {
+                    fs.Dispose();
+                }
+                catch
+                {
+                    ;
+                }
             fs = null;
         }
+
+        /// <summary>
+        /// End Of Line characters used for saving
+        /// </summary>
+        public string SaveEOL { get; set; }
 
         public override void SaveToFile(string fileName, Encoding enc)
         {
@@ -220,10 +295,10 @@ namespace FastColoredTextBoxNS
                     }
 
                     //save line to file
-                    if (i == Count - 1)
-                        sw.Write(line);
-                    else
-                        sw.WriteLine(line);
+                    sw.Write(line);
+
+                    if (i < Count - 1)
+                        sw.Write(SaveEOL);
 
                     sw.Flush();
                 }
@@ -304,8 +379,11 @@ namespace FastColoredTextBoxNS
             }
 
             foreach (var c in s)
-                line.Add(new Char(c, FastColoredTextBox.GetCharSize(base.currentTB.Font, c)));
+                line.Add(new Char(c));
             base.lines[i] = line;
+
+            if (CurrentTB.WordWrap)
+                OnRecalcWordWrap(new TextChangedEventArgs(i, i));
         }
 
         public override void InsertLine(int index, Line line)
@@ -349,7 +427,7 @@ namespace FastColoredTextBoxNS
                 return !string.IsNullOrEmpty(lines[iLine].FoldingEndMarker);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (fs != null)
                 fs.Dispose();
@@ -401,6 +479,14 @@ namespace FastColoredTextBoxNS
             this.DisplayedLineIndex = displayedLineIndex;
             this.DisplayedLineText = displayedLineText;
             this.SavedText = displayedLineText;
+        }
+    }
+
+    class CharReader : TextReader
+    {
+        public override int Read()
+        {
+            return base.Read();
         }
     }
 }

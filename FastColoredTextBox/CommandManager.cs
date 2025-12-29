@@ -5,28 +5,54 @@ namespace FastColoredTextBoxNS
 {
     public class CommandManager
     {
-        readonly int maxHistoryLength = 200;
+        public static int MaxHistoryLength = 200;
+
         LimitedStack<UndoableCommand> history;
         Stack<UndoableCommand> redoStack = new Stack<UndoableCommand>();
         public TextSource TextSource{ get; private set; }
+        public bool UndoRedoStackIsEnabled { get; set; }
+
+        public event EventHandler RedoCompleted = delegate { };
 
         public CommandManager(TextSource ts)
         {
-            history = new LimitedStack<UndoableCommand>(maxHistoryLength);
+            history = new LimitedStack<UndoableCommand>(MaxHistoryLength);
             TextSource = ts;
+            UndoRedoStackIsEnabled = true;
         }
 
-        public void ExecuteCommand(Command cmd)
+        public virtual void ExecuteCommand(Command cmd)
         {
             if (disabledCommands > 0)
                 return;
 
+            //multirange ?
+            if (cmd.ts.CurrentTB.Selection.ColumnSelectionMode)
+            if (cmd is UndoableCommand)
+                //make wrapper
+                cmd = new MultiRangeCommand((UndoableCommand)cmd);
+
+
             if (cmd is UndoableCommand)
             {
+                //if range is ColumnRange, then create wrapper
                 (cmd as UndoableCommand).autoUndo = autoUndoCommands > 0;
                 history.Push(cmd as UndoableCommand);
             }
-            cmd.Execute();
+
+            try
+            {
+                cmd.Execute();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                //OnTextChanging cancels enter of the text
+                if (cmd is UndoableCommand)
+                    history.Pop();
+            }
+            //
+            if (!UndoRedoStackIsEnabled)
+                ClearHistory();
             //
             redoStack.Clear();
             //
@@ -62,7 +88,7 @@ namespace FastColoredTextBoxNS
             TextSource.CurrentTB.OnUndoRedoStateChanged();
         }
 
-        int disabledCommands = 0;
+        protected int disabledCommands = 0;
 
         private void EndDisableCommands()
         {
@@ -105,6 +131,8 @@ namespace FastColoredTextBoxNS
             try
             {
                 cmd = redoStack.Pop();
+                if (TextSource.CurrentTB.Selection.ColumnSelectionMode)
+                    TextSource.CurrentTB.Selection.ColumnSelectionMode = false;
                 TextSource.CurrentTB.Selection.Start = cmd.sel.Start;
                 TextSource.CurrentTB.Selection.End = cmd.sel.End;
                 cmd.Execute();
@@ -114,6 +142,9 @@ namespace FastColoredTextBoxNS
             {
                 EndDisableCommands();
             }
+
+            //call event
+            RedoCompleted(this, EventArgs.Empty);
 
             //redo command after autoUndoable command
             if (cmd.autoUndo)
@@ -141,9 +172,8 @@ namespace FastColoredTextBoxNS
 
     public abstract class Command
     {
-        internal TextSource ts;
+        public TextSource ts;
         public abstract void Execute();
-
     }
 
     internal class RangeInfo
@@ -209,5 +239,7 @@ namespace FastColoredTextBoxNS
                     ts.OnTextChanged(lastSel.Start.iLine, lastSel.Start.iLine);
             }
         }
+
+        public abstract UndoableCommand Clone();
     }
 }

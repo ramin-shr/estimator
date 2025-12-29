@@ -201,27 +201,30 @@ namespace QuoterPlan
         private void TrackPanning(Point location)
         {
             if (this.Tracking)
-            {
                 return;
-            }
+
             this.Tracking = true;
-            Point point = base.DrawArea.BackTrackMouse(location);
-            Point point1 = new Point(this.lastOrigin.X, this.lastOrigin.Y)
-            {
-                X = point1.X + (this.lastPoint.X - point.X),
-                Y = point1.Y + (this.lastPoint.Y - point.Y)
-            };
-            if (!point1.Equals(this.lastOrigin))
+
+            Point currentPoint = base.DrawArea.BackTrackMouse(location);
+
+            int newOriginX = this.lastOrigin.X + (this.lastPoint.X - currentPoint.X);
+            int newOriginY = this.lastOrigin.Y + (this.lastPoint.Y - currentPoint.Y);
+            Point newOrigin = new Point(newOriginX, newOriginY);
+
+            if (!newOrigin.Equals(this.lastOrigin))
             {
                 base.DrawArea.PanningInProgress = true;
-                base.DrawArea.DrawingBoard.Origin = point1;
+                base.DrawArea.DrawingBoard.Origin = newOrigin;
                 base.DrawArea.Refresh();
             }
-            this.lastPoint = new Point(point.X, point.Y);
-            int x = (int)base.DrawArea.DrawingBoard.Origin.X;
+
+            this.lastPoint = new Point(currentPoint.X, currentPoint.Y);
+
             PointF origin = base.DrawArea.DrawingBoard.Origin;
-            this.lastOrigin = new Point(x, (int)origin.Y);
+            this.lastOrigin = new Point((int)origin.X, (int)origin.Y);
+
             this.Tracking = false;
         }
+
     }
 }

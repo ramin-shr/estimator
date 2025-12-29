@@ -10,6 +10,8 @@ namespace FastColoredTextBoxNS
     /// <remarks>At this time only TextStyle renderer is supported. Other styles is not exported.</remarks>
     public class ExportToHTML
     {
+        public string LineNumbersCSS = "<style type=\"text/css\"> .lineNumber{font-family : monospace; font-size : small; font-style : normal; font-weight : normal; color : Teal; background-color : ThreedFace;} </style>";
+
         /// <summary>
         /// Use nbsp; instead space
         /// </summary>
@@ -27,9 +29,13 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public bool UseStyleTag { get; set; }
         /// <summary>
-        /// Use br tag instead \n
+        /// Use 'br' tag instead of '\n'
         /// </summary>
         public bool UseBr { get; set; }
+        /// <summary>
+        /// Includes line numbers
+        /// </summary>
+        public bool IncludeLineNumbers { get; set; }
 
         FastColoredTextBox tb;
 
@@ -60,8 +66,13 @@ namespace FastColoredTextBoxNS
             int currentLine = r.Start.iLine;
             styles[currentStyleId] = null;
             //
-            if(UseOriginalFont)
-                sb.AppendFormat("<font style=\"font-family: {0}, monospace; font-size: {1}px; line-height: {2}px;\">", r.tb.Font.Name, r.tb.CharHeight - r.tb.LineInterval, r.tb.CharHeight);
+            if (UseOriginalFont)
+                sb.AppendFormat("<font style=\"font-family: {0}, monospace; font-size: {1}pt; line-height: {2}px;\">",
+                                                r.tb.Font.Name, r.tb.Font.SizeInPoints, r.tb.CharHeight);
+
+            //
+            if (IncludeLineNumbers)
+                tempSB.AppendFormat("<span class=lineNumber>{0}</span>  ", currentLine + 1);
             //
             bool hasNonSpace = false;
             foreach (Place p in r)
@@ -74,54 +85,66 @@ namespace FastColoredTextBoxNS
                     styles[currentStyleId] = null;
                 }
 
-                if(p.iLine!=currentLine)
+                if (p.iLine != currentLine)
                 {
-                    for (int i = currentLine; i < p.iLine;i++)
-                        tempSB.AppendLine(UseBr?"<br>":"");
+                    for (int i = currentLine; i < p.iLine; i++)
+                    {
+                        tempSB.Append(UseBr ? "<br>" : "\r\n");
+                        if (IncludeLineNumbers)
+                            tempSB.AppendFormat("<span class=lineNumber>{0}</span>  ", i + 2);
+                    }
                     currentLine = p.iLine;
                     hasNonSpace = false;
                 }
-                switch(c.c)
+                switch (c.c)
                 {
                     case ' ':
-                        if((hasNonSpace || !UseForwardNbsp) && !UseNbsp)
+                        if ((hasNonSpace || !UseForwardNbsp) && !UseNbsp)
                             goto default;
 
-                        tempSB.Append("&nbsp;");                            
+                        tempSB.Append("&nbsp;");
                         break;
                     case '<':
-                        tempSB.Append("&lt;"); break;
+                        tempSB.Append("&lt;");
+                        break;
                     case '>':
-                        tempSB.Append("&gt;"); break;
+                        tempSB.Append("&gt;");
+                        break;
                     case '&':
-                        tempSB.Append("&amp;"); break;
+                        tempSB.Append("&amp;");
+                        break;
                     default:
                         hasNonSpace = true;
-                        tempSB.Append(c.c); break;
+                        tempSB.Append(c.c);
+                        break;
                 }
             }
             Flush(sb, tempSB, currentStyleId);
 
             if (UseOriginalFont)
-                sb.AppendLine("</font>");
+                sb.Append("</font>");
 
             //build styles
             if (UseStyleTag)
             {
                 tempSB.Length = 0;
-                tempSB.AppendLine("<style type=\"text/css\">");
+                tempSB.Append("<style type=\"text/css\">");
                 foreach (var styleId in styles.Keys)
                     tempSB.AppendFormat(".fctb{0}{{ {1} }}\r\n", GetStyleName(styleId), GetCss(styleId));
-                tempSB.AppendLine("</style>");
+                tempSB.Append("</style>");
 
                 sb.Insert(0, tempSB.ToString());
             }
+
+            if (IncludeLineNumbers)
+                sb.Insert(0, LineNumbersCSS);
 
             return sb.ToString();
         }
 
         private string GetCss(StyleIndex styleIndex)
         {
+            List<Style> styles = new List<Style>();
             //find text renderer
             TextStyle textStyle = null;
             int mask = 1;
@@ -129,49 +152,43 @@ namespace FastColoredTextBoxNS
             for (int i = 0; i < tb.Styles.Length; i++)
             {
                 if (tb.Styles[i] != null && ((int)styleIndex & mask) != 0)
+                if (tb.Styles[i].IsExportable)
                 {
-                    Style style = tb.Styles[i];
+                    var style = tb.Styles[i];
+                    styles.Add(style);
+
                     bool isTextStyle = style is TextStyle;
                     if (isTextStyle)
-                    if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
-                    {
-                        hasTextStyle = true;
-                        textStyle = style as TextStyle;
-                    }
+                        if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
+                        {
+                            hasTextStyle = true;
+                            textStyle = style as TextStyle;
+                        }
                 }
                 mask = mask << 1;
             }
-            //draw by default renderer
-            if (!hasTextStyle)
-                textStyle = tb.DefaultStyle;
-            //
+            //add TextStyle css
             string result = "";
-            string s = "";
-            if (textStyle.BackgroundBrush is SolidBrush)
+            
+            if (!hasTextStyle)
             {
-                s = GetColorAsString((textStyle.BackgroundBrush as SolidBrush).Color);
-                if (s != "")
-                    result += "background-color:" + s + ";";
+                //draw by default renderer
+                result = tb.DefaultStyle.GetCSS();
             }
-            if (textStyle.ForeBrush is SolidBrush)
+            else
             {
-                s = GetColorAsString((textStyle.ForeBrush as SolidBrush).Color);
-                if (s != "")
-                    result += "color:" + s + ";";
+                result = textStyle.GetCSS();
             }
-            if ((textStyle.FontStyle & FontStyle.Bold) != 0)
-                result += "font-weight:bold;";
-            if ((textStyle.FontStyle & FontStyle.Italic) != 0)
-                result += "font-style:oblique;";
-            if ((textStyle.FontStyle & FontStyle.Strikeout) != 0)
-                result += "text-decoration:line-through;";
-            if ((textStyle.FontStyle & FontStyle.Underline) != 0)
-                result += "text-decoration:underline;";
+            //add no TextStyle css
+            foreach(var style in styles)
+//            if (style != textStyle)
+            if(!(style is TextStyle))
+                result += style.GetCSS();
 
             return result;
         }
 
-        private static string GetColorAsString(Color color)
+        public static string GetColorAsString(Color color)
         {
             if(color==Color.Transparent)
                 return "";
@@ -186,8 +203,6 @@ namespace FastColoredTextBoxNS
         private void Flush(StringBuilder sb, StringBuilder tempSB, StyleIndex currentStyle)
         {
             //find textRenderer
-            //var textStyle = styles.Where(s => s is TextStyle).FirstOrDefault();
-            //
             if (tempSB.Length == 0)
                 return;
             if (UseStyleTag)

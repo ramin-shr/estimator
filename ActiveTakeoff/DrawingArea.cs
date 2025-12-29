@@ -2165,81 +2165,64 @@ namespace QuoterPlan
 
         public DrawObject GetNextOrPreviousObject(bool byObjectType, bool getPrevious)
         {
-            DrawObject selectedObject = this.SelectedObject;
-            if (selectedObject == null)
-            {
+            DrawObject currentSelection = this.SelectedObject;
+            if (currentSelection == null)
                 return null;
-            }
-            if (this.ActiveDrawingObjects.Count < 2)
+
+            int objectCount = this.ActiveDrawingObjects.Count;
+            if (objectCount < 2)
+                return currentSelection;
+
+            int selectedIndex = -1;
+            for (int i = 0; i < objectCount; i++)
             {
-                return selectedObject;
-            }
-            int num = -1;
-            int num1 = 0;
-            while (num1 < this.ActiveDrawingObjects.Count)
-            {
-                if (this.ActiveDrawingObjects[num1].ID != selectedObject.ID)
+                if (this.ActiveDrawingObjects[i].ID == currentSelection.ID)
                 {
-                    num1++;
-                }
-                else
-                {
-                    num = num1;
+                    selectedIndex = i;
                     break;
                 }
             }
-            if (num == -1)
-            {
-                return selectedObject;
-            }
-            int count = num;
+
+            if (selectedIndex == -1)
+                return currentSelection;
+
+            int candidateIndex = selectedIndex;
+
             do
             {
                 if (getPrevious)
                 {
-                    if (count + 1 != this.ActiveDrawingObjects.Count)
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                }
-                else if (count - 1 >= 0)
-                {
-                    count--;
+                    candidateIndex = (candidateIndex + 1 != objectCount) ? (candidateIndex + 1) : 0;
                 }
                 else
                 {
-                    count = this.ActiveDrawingObjects.Count - 1;
+                    candidateIndex = (candidateIndex - 1 >= 0) ? (candidateIndex - 1) : (objectCount - 1);
                 }
-                if (count == num)
-                {
-                    return selectedObject;
-                }
-                if (!this.ActiveDrawingObjects[count].IsDeduction())
+
+                if (candidateIndex == selectedIndex)
+                    return currentSelection;
+
+                DrawObject candidate = this.ActiveDrawingObjects[candidateIndex];
+
+                if (!candidate.IsDeduction())
                 {
                     if (!byObjectType)
-                    {
                         continue;
-                    }
-                    if (this.ActiveDrawingObjects[count].ObjectType == selectedObject.ObjectType)
-                    {
-                        return this.ActiveDrawingObjects[count];
-                    }
-                    else
-                    {
-                        goto Label0;
-                    }
+
+                    if (candidate.ObjectType == currentSelection.ObjectType)
+                        return candidate;
+
+                    // (type mismatch) fall through to the loop condition exactly like the old goto
                 }
                 else
                 {
-                    goto Label0;
+                    // (deduction) fall through to the loop condition exactly like the old goto
                 }
             }
-            while (!selectedObject.IsPartOfGroup() || this.ActiveDrawingObjects[count].GroupID != selectedObject.GroupID);
-            return this.ActiveDrawingObjects[count];
+            while (!currentSelection.IsPartOfGroup() ||
+                   this.ActiveDrawingObjects[candidateIndex].GroupID != currentSelection.GroupID);
+
+            return this.ActiveDrawingObjects[candidateIndex];
         }
 
         public Color GetNoteDefaultColor()

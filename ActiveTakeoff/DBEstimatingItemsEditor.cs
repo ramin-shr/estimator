@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using TextEdit = DevExpress.XtraEditors.TextEdit;
 
 namespace QuoterPlan
 {

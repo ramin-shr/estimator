@@ -5,20 +5,25 @@ using System.Windows.Forms;
 namespace FastColoredTextBoxNS
 {
     ///
-    /// This classes is required for correct data binding to Text property of FastColoredTextbox
+    /// These classes are required for correct data binding to Text property of FastColoredTextbox
     /// 
     class FCTBDescriptionProvider : TypeDescriptionProvider
     {
-        private static TypeDescriptionProvider defaultTypeProvider = TypeDescriptor.GetProvider(typeof(FastColoredTextBox));
-
-        public FCTBDescriptionProvider()
-            : base(defaultTypeProvider)
-        {  
+        public FCTBDescriptionProvider(Type type)
+            : base(GetDefaultTypeProvider(type))
+        {
         }
+
+        private static TypeDescriptionProvider GetDefaultTypeProvider(Type type)
+        {
+            return TypeDescriptor.GetProvider(type);
+        }
+
+
 
         public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
         {
-            ICustomTypeDescriptor defaultDescriptor = base.GetTypeDescriptor(typeof(FastColoredTextBox), instance);
+            ICustomTypeDescriptor defaultDescriptor = base.GetTypeDescriptor(objectType, instance);
             return new FCTBTypeDescriptor(defaultDescriptor, instance);
         }
     }

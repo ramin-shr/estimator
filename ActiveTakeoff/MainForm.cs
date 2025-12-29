@@ -3829,54 +3829,72 @@ namespace QuoterPlan
 			return result;
 		}
 
-		private bool SavePDFDoc(PdfDocument pdfDoc, string destination, bool askToOpen)
-		{
-			bool flag = false;
-			try
-			{
-				IL_02:
-				pdfDoc.Save(destination);
-				flag = true;
-			}
-			catch (Exception ex)
-			{
-				if (ex.Message.IndexOf("process") != -1)
-				{
-					string fichier_utilisé_par_un_autre_processus = Resources.Fichier_utilisé_par_un_autre_processus;
-					string veuillez_fermer_votre_fichier_PDF = Resources.Veuillez_fermer_votre_fichier_PDF;
-					if (Utilities.DisplayWarningQuestionRetryCancel(fichier_utilisé_par_un_autre_processus, veuillez_fermer_votre_fichier_PDF) != DialogResult.Cancel)
-					{
-						goto IL_02;
-					}
-				}
-				else
-				{
-					Utilities.DisplaySystemError(ex);
-				}
-			}
-			if (flag && askToOpen)
-			{
-				string fichier_créé_avec_succès = Resources.Fichier_créé_avec_succès;
-				string message = Resources.Nom_du_fichier + "\n" + destination;
-				DialogResult dialogResult = Utilities.DisplayQuestionCustom(fichier_créé_avec_succès, message, Resources.Ouvrir_le_fichier, Resources.Ouvrir_le_répertoire);
-				DialogResult dialogResult2 = dialogResult;
-				if (dialogResult2 != DialogResult.Cancel)
-				{
-					switch (dialogResult2)
-					{
-					case DialogResult.Yes:
-						Utilities.OpenDocument(destination);
-						break;
-					case DialogResult.No:
-						Utilities.OpenDocument(Path.GetDirectoryName(destination));
-						break;
-					}
-				}
-			}
-			return flag;
-		}
+        private bool SavePDFDoc(PdfDocument pdfDoc, string destination, bool askToOpen)
+        {
+            bool savedSuccessfully = false;
 
-		private void PrintPlan(PrintPageEventArgs ev)
+            while (true)
+            {
+                try
+                {
+                    pdfDoc.Save(destination);
+                    savedSuccessfully = true;
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    // Keep original behavior: if message mentions "process", offer Retry/Cancel.
+                    if (ex.Message != null && ex.Message.IndexOf("process", StringComparison.OrdinalIgnoreCase) != -1)
+                    {
+                        string fileUsedByAnotherProcessTitle = Resources.Fichier_utilisé_par_un_autre_processus;
+                        string closePdfFileMessage = Resources.Veuillez_fermer_votre_fichier_PDF;
+
+                        DialogResult choice = Utilities.DisplayWarningQuestionRetryCancel(
+                            fileUsedByAnotherProcessTitle,
+                            closePdfFileMessage);
+
+                        if (choice == DialogResult.Cancel)
+                            break;
+
+                        // Any non-cancel means retry (matches original != Cancel logic)
+                        continue;
+                    }
+
+                    Utilities.DisplaySystemError(ex);
+                    break;
+                }
+            }
+
+            if (savedSuccessfully && askToOpen)
+            {
+                string successTitle = Resources.Fichier_créé_avec_succès;
+                string infoMessage = Resources.Nom_du_fichier + "\n" + destination;
+
+                DialogResult openChoice = Utilities.DisplayQuestionCustom(
+                    successTitle,
+                    infoMessage,
+                    Resources.Ouvrir_le_fichier,
+                    Resources.Ouvrir_le_répertoire);
+
+                if (openChoice != DialogResult.Cancel)
+                {
+                    switch (openChoice)
+                    {
+                        case DialogResult.Yes:
+                            Utilities.OpenDocument(destination);
+                            break;
+
+                        case DialogResult.No:
+                            Utilities.OpenDocument(Path.GetDirectoryName(destination));
+                            break;
+                    }
+                }
+            }
+
+            return savedSuccessfully;
+        }
+
+        private void PrintPlan(PrintPageEventArgs ev)
 		{
 			Image image = null;
 			try
@@ -5384,28 +5402,38 @@ namespace QuoterPlan
 			this.UnlockInterface(ref flag);
 		}
 
-		private bool DoRotateFlip(RotateFlipType rotateFlip)
-		{
-			bool result = false;
-			try
-			{
-				IL_02:
-				this.mainControl.Image.RotateFlip(rotateFlip);
-				result = true;
-			}
-			catch (Exception)
-			{
-				string impossible_d_effectuer_l_opération_désirée = Resources.Impossible_d_effectuer_l_opération_désirée;
-				string ressources_insuffisantes_pour_compléter_l_opération = Resources.Ressources_insuffisantes_pour_compléter_l_opération;
-				if (Utilities.DisplayWarningQuestionRetryCancel(impossible_d_effectuer_l_opération_désirée, ressources_insuffisantes_pour_compléter_l_opération) != DialogResult.Cancel)
-				{
-					goto IL_02;
-				}
-			}
-			return result;
-		}
+        private bool DoRotateFlip(RotateFlipType rotateFlip)
+        {
+            bool succeeded = false;
 
-		private void RotateFlip(RotateFlipType rotateFlip)
+            while (true)
+            {
+                try
+                {
+                    this.mainControl.Image.RotateFlip(rotateFlip);
+                    succeeded = true;
+                    break;
+                }
+                catch (Exception)
+                {
+                    string operationFailedTitle = Resources.Impossible_d_effectuer_l_opération_désirée;
+                    string insufficientResourcesMessage = Resources.Ressources_insuffisantes_pour_compléter_l_opération;
+
+                    DialogResult choice = Utilities.DisplayWarningQuestionRetryCancel(
+                        operationFailedTitle,
+                        insufficientResourcesMessage);
+
+                    if (choice == DialogResult.Cancel)
+                        break;
+
+                    // any non-cancel => retry (same as original)
+                }
+            }
+
+            return succeeded;
+        }
+
+        private void RotateFlip(RotateFlipType rotateFlip)
 		{
 			if (this.mainControl.Image == null)
 			{
@@ -9318,12 +9346,12 @@ namespace QuoterPlan
 					{
 						Template template = (Template)buttonItem.Tag;
 						DrawObject drawObject = template.DrawObject;
-						visible = Regex.IsMatch(drawObject.Name.ToLower(), filter.ToLower(), 16);
+						visible = Regex.IsMatch(drawObject.Name.ToLower(), filter.ToLower(), RegexOptions.Singleline);
 					}
 					else
 					{
 						DrawObject drawObject2 = (DrawObject)buttonItem.Tag;
-						visible = Regex.IsMatch(drawObject2.Name.ToLower(), filter.ToLower(), 16);
+						visible = Regex.IsMatch(drawObject2.Name.ToLower(), filter.ToLower(), RegexOptions.Singleline);
 					}
 					buttonItem.Visible = visible;
 				}

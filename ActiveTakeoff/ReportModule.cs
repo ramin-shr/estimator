@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using HorizontalAlignment = NPOI.SS.UserModel.HorizontalAlignment;
 
 namespace QuoterPlan
 {

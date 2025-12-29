@@ -127,21 +127,24 @@ namespace QuoterPlan
 			return this.filterList.Add(new FilterElement(planName, layerName, groupID));
 		}
 
-		public bool QueryFilter(string planName, string layerName, int groupID, bool layerCanBeEmpty = false)
-		{
-			foreach (object obj in this.filterList)
-			{
-				FilterElement filterElement = (FilterElement)obj;
-				planName == filterElement.PlanName;
-				if (planName == filterElement.PlanName && (layerName == filterElement.LayerName || (layerName == "" && layerCanBeEmpty)) && groupID == filterElement.GroupID)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
+        public bool QueryFilter(string planName, string layerName, int groupID, bool layerCanBeEmpty = false)
+        {
+            foreach (object item in this.filterList)
+            {
+                FilterElement filter = (FilterElement)item;
 
-		public bool QueryFilter(string planName, int groupID)
+                bool planMatches = (planName == filter.PlanName);
+                bool layerMatches = (layerName == filter.LayerName) || (layerName == "" && layerCanBeEmpty);
+                bool groupMatches = (groupID == filter.GroupID);
+
+                if (planMatches && layerMatches && groupMatches)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool QueryFilter(string planName, int groupID)
 		{
 			foreach (object obj in this.filterList)
 			{

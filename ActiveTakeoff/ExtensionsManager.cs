@@ -10,6 +10,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
+using eStyleTextTrimming = DevComponents.DotNetBar.eStyleTextTrimming;
 
 namespace QuoterPlan
 {

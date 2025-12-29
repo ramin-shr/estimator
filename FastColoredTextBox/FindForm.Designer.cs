@@ -39,9 +39,9 @@
             // 
             // btClose
             // 
-            this.btClose.Location = new System.Drawing.Point(273, 66);
+            this.btClose.Location = new System.Drawing.Point(273, 73);
             this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(75, 21);
+            this.btClose.Size = new System.Drawing.Size(75, 23);
             this.btClose.TabIndex = 5;
             this.btClose.Text = "Close";
             this.btClose.UseVisualStyleBackColor = true;
@@ -49,9 +49,9 @@
             // 
             // btFindNext
             // 
-            this.btFindNext.Location = new System.Drawing.Point(192, 66);
+            this.btFindNext.Location = new System.Drawing.Point(192, 73);
             this.btFindNext.Name = "btFindNext";
-            this.btFindNext.Size = new System.Drawing.Size(75, 21);
+            this.btFindNext.Size = new System.Drawing.Size(75, 23);
             this.btFindNext.TabIndex = 4;
             this.btFindNext.Text = "Find next";
             this.btFindNext.UseVisualStyleBackColor = true;
@@ -59,8 +59,7 @@
             // 
             // tbFind
             // 
-            this.tbFind.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbFind.Location = new System.Drawing.Point(42, 11);
+            this.tbFind.Location = new System.Drawing.Point(42, 12);
             this.tbFind.Name = "tbFind";
             this.tbFind.Size = new System.Drawing.Size(306, 20);
             this.tbFind.TabIndex = 0;
@@ -70,9 +69,9 @@
             // cbRegex
             // 
             this.cbRegex.AutoSize = true;
-            this.cbRegex.Location = new System.Drawing.Point(249, 35);
+            this.cbRegex.Location = new System.Drawing.Point(249, 38);
             this.cbRegex.Name = "cbRegex";
-            this.cbRegex.Size = new System.Drawing.Size(54, 16);
+            this.cbRegex.Size = new System.Drawing.Size(57, 17);
             this.cbRegex.TabIndex = 3;
             this.cbRegex.Text = "Regex";
             this.cbRegex.UseVisualStyleBackColor = true;
@@ -81,9 +80,9 @@
             // cbMatchCase
             // 
             this.cbMatchCase.AutoSize = true;
-            this.cbMatchCase.Location = new System.Drawing.Point(42, 35);
+            this.cbMatchCase.Location = new System.Drawing.Point(42, 38);
             this.cbMatchCase.Name = "cbMatchCase";
-            this.cbMatchCase.Size = new System.Drawing.Size(84, 16);
+            this.cbMatchCase.Size = new System.Drawing.Size(82, 17);
             this.cbMatchCase.TabIndex = 1;
             this.cbMatchCase.Text = "Match case";
             this.cbMatchCase.UseVisualStyleBackColor = true;
@@ -92,18 +91,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 14);
+            this.label1.Location = new System.Drawing.Point(6, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.Size = new System.Drawing.Size(33, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Find: ";
             // 
             // cbWholeWord
             // 
             this.cbWholeWord.AutoSize = true;
-            this.cbWholeWord.Location = new System.Drawing.Point(130, 35);
+            this.cbWholeWord.Location = new System.Drawing.Point(130, 38);
             this.cbWholeWord.Name = "cbWholeWord";
-            this.cbWholeWord.Size = new System.Drawing.Size(120, 16);
+            this.cbWholeWord.Size = new System.Drawing.Size(113, 17);
             this.cbWholeWord.TabIndex = 2;
             this.cbWholeWord.Text = "Match whole word";
             this.cbWholeWord.UseVisualStyleBackColor = true;
@@ -111,9 +110,9 @@
             // 
             // FindForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 95);
+            this.ClientSize = new System.Drawing.Size(360, 108);
             this.Controls.Add(this.cbWholeWord);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbMatchCase);
