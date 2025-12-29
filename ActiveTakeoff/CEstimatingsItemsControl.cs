@@ -17,7 +17,7 @@ using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
 using Padding = System.Windows.Forms.Padding;
-using PanelControl = DevComponents.DotNetBar.PanelControl;
+using PanelControl = DevExpress.XtraEditors.PanelControl;
 
 namespace QuoterPlan
 {

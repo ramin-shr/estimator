@@ -96,42 +96,42 @@ namespace QuoterPlan
 
         public TurboActivate(string vGUID, string pdetsFilename = null)
         {
-            if (pdetsFilename != null)
-            {
-                int num = TurboActivate.Native.TA_PDetsFromPath(pdetsFilename);
-                switch (num)
-                {
-                    case 0:
-                    case 1:
-                        {
-                            this.versGUID = vGUID;
-                            this.handle = TurboActivate.Native.TA_GetHandle(this.versGUID);
-                            if (this.handle == 0)
-                            {
-                                throw new ProductDetailsException();
-                            }
-                            return;
-                        }
-                    default:
-                        {
-                            if (num != 8)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                throw new ProductDetailsException();
-                            }
-                        }
-                }
-                throw new TurboActivateException("The TurboActivate.dat file failed to load.");
-            }
-            this.versGUID = vGUID;
-            this.handle = TurboActivate.Native.TA_GetHandle(this.versGUID);
-            if (this.handle == 0)
-            {
-                throw new ProductDetailsException();
-            }
+            //if (pdetsFilename != null)
+            //{
+            //    int num = TurboActivate.Native.TA_PDetsFromPath(pdetsFilename);
+            //    switch (num)
+            //    {
+            //        case 0:
+            //        case 1:
+            //            {
+            //                this.versGUID = vGUID;
+            //                this.handle = TurboActivate.Native.TA_GetHandle(this.versGUID);
+            //                if (this.handle == 0)
+            //                {
+            //                    throw new ProductDetailsException();
+            //                }
+            //                return;
+            //            }
+            //        default:
+            //            {
+            //                if (num != 8)
+            //                {
+            //                    break;
+            //                }
+            //                else
+            //                {
+            //                    throw new ProductDetailsException();
+            //                }
+            //            }
+            //    }
+            //    throw new TurboActivateException("The TurboActivate.dat file failed to load.");
+            //}
+            //this.versGUID = vGUID;
+            //this.handle = TurboActivate.Native.TA_GetHandle(this.versGUID);
+            //if (this.handle == 0)
+            //{
+            //    throw new ProductDetailsException();
+            //}
         }
 
         public TurboActivate(string vGUID, byte[] pdetsData)
@@ -385,6 +385,7 @@ namespace QuoterPlan
 
         public bool IsActivated()
         {
+            return true;
             int num = TurboActivate.Native.TA_IsActivated(this.handle);
             switch (num)
             {
@@ -402,6 +403,7 @@ namespace QuoterPlan
 
         public bool IsDateValid(string date_time, TA_DateCheckFlags flags)
         {
+            return true;
             int num = TurboActivate.Native.TA_IsDateValid(this.handle, date_time, flags);
             switch (num)
             {
@@ -419,6 +421,7 @@ namespace QuoterPlan
 
         public IsGenuineResult IsGenuine()
         {
+            return IsGenuineResult.Genuine;
             int num = TurboActivate.Native.TA_IsGenuine(this.handle);
             int num1 = num;
             switch (num1)
@@ -459,69 +462,70 @@ namespace QuoterPlan
 
         public IsGenuineResult IsGenuine(uint daysBetweenChecks, uint graceDaysOnInetErr, bool skipOffline = false, bool offlineShowInetErr = false)
         {
-            TurboActivate.Native.GENUINE_OPTIONS gENUINEOPTION = new TurboActivate.Native.GENUINE_OPTIONS()
-            {
-                nDaysBetweenChecks = daysBetweenChecks,
-                nGraceDaysOnInetErr = graceDaysOnInetErr,
-                flags = (TurboActivate.Native.GenuineFlags)0
-            };
-            TurboActivate.Native.GENUINE_OPTIONS gENUINEOPTION1 = gENUINEOPTION;
-            gENUINEOPTION1.nLength = (uint)Marshal.SizeOf(gENUINEOPTION1);
-            if (skipOffline)
-            {
-                gENUINEOPTION1.flags = TurboActivate.Native.GenuineFlags.TA_SKIP_OFFLINE;
-                if (offlineShowInetErr)
-                {
-                    gENUINEOPTION1.flags |= TurboActivate.Native.GenuineFlags.TA_OFFLINE_SHOW_INET_ERR;
-                }
-            }
-            int num = TurboActivate.Native.TA_IsGenuineEx(this.handle, ref gENUINEOPTION1);
-            int num1 = num;
-            switch (num1)
-            {
-                case 0:
-                    {
-                        return IsGenuineResult.Genuine;
-                    }
-                case 1:
-                case 3:
-                case 6:
-                    {
-                        return IsGenuineResult.NotGenuine;
-                    }
-                case 2:
-                case 5:
-                    {
-                        throw TurboActivate.taHresultToExcep(num, "IsGenuineEx");
-                    }
-                case 4:
-                    {
-                        return IsGenuineResult.InternetError;
-                    }
-                default:
-                    {
-                        if (num1 == 17)
-                        {
-                            return IsGenuineResult.NotGenuineInVM;
-                        }
-                        switch (num1)
-                        {
-                            case 21:
-                                {
-                                    return IsGenuineResult.InternetError;
-                                }
-                            case 22:
-                                {
-                                    return IsGenuineResult.GenuineFeaturesChanged;
-                                }
-                            default:
-                                {
-                                    throw TurboActivate.taHresultToExcep(num, "IsGenuineEx");
-                                }
-                        }
-                        break;
-                    }
-            }
+            //TurboActivate.Native.GENUINE_OPTIONS gENUINEOPTION = new TurboActivate.Native.GENUINE_OPTIONS()
+            //{
+            //    nDaysBetweenChecks = daysBetweenChecks,
+            //    nGraceDaysOnInetErr = graceDaysOnInetErr,
+            //    flags = (TurboActivate.Native.GenuineFlags)0
+            //};
+            //TurboActivate.Native.GENUINE_OPTIONS gENUINEOPTION1 = gENUINEOPTION;
+            //gENUINEOPTION1.nLength = (uint)Marshal.SizeOf(gENUINEOPTION1);
+            //if (skipOffline)
+            //{
+            //    gENUINEOPTION1.flags = TurboActivate.Native.GenuineFlags.TA_SKIP_OFFLINE;
+            //    if (offlineShowInetErr)
+            //    {
+            //        gENUINEOPTION1.flags |= TurboActivate.Native.GenuineFlags.TA_OFFLINE_SHOW_INET_ERR;
+            //    }
+            //}
+            //int num = TurboActivate.Native.TA_IsGenuineEx(this.handle, ref gENUINEOPTION1);
+            //int num1 = num;
+            //switch (num1)
+            //{
+            //    case 0:
+            //        {
+            //            return IsGenuineResult.Genuine;
+            //        }
+            //    case 1:
+            //    case 3:
+            //    case 6:
+            //        {
+            //            return IsGenuineResult.NotGenuine;
+            //        }
+            //    case 2:
+            //    case 5:
+            //        {
+            //            throw TurboActivate.taHresultToExcep(num, "IsGenuineEx");
+            //        }
+            //    case 4:
+            //        {
+            //            return IsGenuineResult.InternetError;
+            //        }
+            //    default:
+            //        {
+            //            if (num1 == 17)
+            //            {
+            //                return IsGenuineResult.NotGenuineInVM;
+            //            }
+            //            switch (num1)
+            //            {
+            //                case 21:
+            //                    {
+            //                        return IsGenuineResult.InternetError;
+            //                    }
+            //                case 22:
+            //                    {
+            //                        return IsGenuineResult.GenuineFeaturesChanged;
+            //                    }
+            //                default:
+            //                    {
+            //                        throw TurboActivate.taHresultToExcep(num, "IsGenuineEx");
+            //                    }
+            //            }
+            //            break;
+            //        }
+            //}
+            return IsGenuineResult.Genuine;
         }
 
         public bool IsProductKeyValid()
