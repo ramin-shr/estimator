@@ -2,19 +2,26 @@
 {
 	public partial class MainForm : global::DevComponents.DotNetBar.Office2007RibbonForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			this.components = new global::System.ComponentModel.Container();
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.MainForm));
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+            global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.MainForm));
 			this.ribbonControl = new global::DevComponents.DotNetBar.RibbonControl();
 			this.ribbonPanelEstimating = new global::DevComponents.DotNetBar.RibbonPanel();
 			this.ribbonEstimating = new global::DevComponents.DotNetBar.RibbonBar();
@@ -600,7 +607,7 @@
 			this.ribbonControl.Controls.Add(this.ribbonPanelTemplates);
 			this.ribbonControl.Controls.Add(this.ribbonPanelPlans);
 			this.ribbonControl.Controls.Add(this.ribbonPanelExtensions);
-			componentResourceManager.ApplyResources(this.ribbonControl, "ribbonControl");
+			resources.ApplyResources(this.ribbonControl, "ribbonControl");
 			this.ribbonControl.ForeColor = global::System.Drawing.Color.Black;
 			this.ribbonControl.GlobalContextMenuBar = this.contextMenuBar1;
 			this.ribbonControl.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
@@ -625,21 +632,21 @@
 				this.btRedo
 			});
 			this.ribbonControl.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.ribbonControl.SystemText.MaximizeRibbonText = componentResourceManager.GetString("ribbonControl.SystemText.MaximizeRibbonText");
-			this.ribbonControl.SystemText.MinimizeRibbonText = componentResourceManager.GetString("ribbonControl.SystemText.MinimizeRibbonText");
-			this.ribbonControl.SystemText.QatAddItemText = componentResourceManager.GetString("ribbonControl.SystemText.QatAddItemText");
-			this.ribbonControl.SystemText.QatCustomizeMenuLabel = componentResourceManager.GetString("ribbonControl.SystemText.QatCustomizeMenuLabel");
-			this.ribbonControl.SystemText.QatCustomizeText = componentResourceManager.GetString("ribbonControl.SystemText.QatCustomizeText");
-			this.ribbonControl.SystemText.QatDialogAddButton = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogAddButton");
-			this.ribbonControl.SystemText.QatDialogCancelButton = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogCancelButton");
-			this.ribbonControl.SystemText.QatDialogCaption = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogCaption");
-			this.ribbonControl.SystemText.QatDialogCategoriesLabel = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogCategoriesLabel");
-			this.ribbonControl.SystemText.QatDialogOkButton = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogOkButton");
-			this.ribbonControl.SystemText.QatDialogPlacementCheckbox = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogPlacementCheckbox");
-			this.ribbonControl.SystemText.QatDialogRemoveButton = componentResourceManager.GetString("ribbonControl.SystemText.QatDialogRemoveButton");
-			this.ribbonControl.SystemText.QatPlaceAboveRibbonText = componentResourceManager.GetString("ribbonControl.SystemText.QatPlaceAboveRibbonText");
-			this.ribbonControl.SystemText.QatPlaceBelowRibbonText = componentResourceManager.GetString("ribbonControl.SystemText.QatPlaceBelowRibbonText");
-			this.ribbonControl.SystemText.QatRemoveItemText = componentResourceManager.GetString("ribbonControl.SystemText.QatRemoveItemText");
+			this.ribbonControl.SystemText.MaximizeRibbonText = resources.GetString("ribbonControl.SystemText.MaximizeRibbonText");
+			this.ribbonControl.SystemText.MinimizeRibbonText = resources.GetString("ribbonControl.SystemText.MinimizeRibbonText");
+			this.ribbonControl.SystemText.QatAddItemText = resources.GetString("ribbonControl.SystemText.QatAddItemText");
+			this.ribbonControl.SystemText.QatCustomizeMenuLabel = resources.GetString("ribbonControl.SystemText.QatCustomizeMenuLabel");
+			this.ribbonControl.SystemText.QatCustomizeText = resources.GetString("ribbonControl.SystemText.QatCustomizeText");
+			this.ribbonControl.SystemText.QatDialogAddButton = resources.GetString("ribbonControl.SystemText.QatDialogAddButton");
+			this.ribbonControl.SystemText.QatDialogCancelButton = resources.GetString("ribbonControl.SystemText.QatDialogCancelButton");
+			this.ribbonControl.SystemText.QatDialogCaption = resources.GetString("ribbonControl.SystemText.QatDialogCaption");
+			this.ribbonControl.SystemText.QatDialogCategoriesLabel = resources.GetString("ribbonControl.SystemText.QatDialogCategoriesLabel");
+			this.ribbonControl.SystemText.QatDialogOkButton = resources.GetString("ribbonControl.SystemText.QatDialogOkButton");
+			this.ribbonControl.SystemText.QatDialogPlacementCheckbox = resources.GetString("ribbonControl.SystemText.QatDialogPlacementCheckbox");
+			this.ribbonControl.SystemText.QatDialogRemoveButton = resources.GetString("ribbonControl.SystemText.QatDialogRemoveButton");
+			this.ribbonControl.SystemText.QatPlaceAboveRibbonText = resources.GetString("ribbonControl.SystemText.QatPlaceAboveRibbonText");
+			this.ribbonControl.SystemText.QatPlaceBelowRibbonText = resources.GetString("ribbonControl.SystemText.QatPlaceBelowRibbonText");
+			this.ribbonControl.SystemText.QatRemoveItemText = resources.GetString("ribbonControl.SystemText.QatRemoveItemText");
 			this.ribbonControl.TabGroupHeight = 14;
 			this.ribbonControl.TabGroups.AddRange(new global::DevComponents.DotNetBar.RibbonTabItemGroup[]
 			{
@@ -652,7 +659,7 @@
 			this.ribbonPanelEstimating.Controls.Add(this.ribbonEstimating);
 			this.ribbonPanelEstimating.Controls.Add(this.ribbonEstimatingNew);
 			this.ribbonPanelEstimating.Controls.Add(this.ribbonEstimatingDatabase);
-			componentResourceManager.ApplyResources(this.ribbonPanelEstimating, "ribbonPanelEstimating");
+			resources.ApplyResources(this.ribbonPanelEstimating, "ribbonPanelEstimating");
 			this.ribbonPanelEstimating.Name = "ribbonPanelEstimating";
 			this.ribbonPanelEstimating.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanelEstimating.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -661,7 +668,7 @@
 			this.ribbonEstimating.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimating.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimating.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonEstimating, "ribbonEstimating");
+			resources.ApplyResources(this.ribbonEstimating, "ribbonEstimating");
 			this.ribbonEstimating.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btEstimatingModify,
@@ -679,30 +686,30 @@
 			this.btEstimatingModify.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingModify.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingModify.Name = "btEstimatingModify";
-			componentResourceManager.ApplyResources(this.btEstimatingModify, "btEstimatingModify");
+			resources.ApplyResources(this.btEstimatingModify, "btEstimatingModify");
 			this.btEstimatingModify.Click += new global::System.EventHandler(this.btEstimatingModify_Click);
 			this.btEstimatingDuplicate.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingDuplicate.CanCustomize = false;
-			this.btEstimatingDuplicate.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingDuplicate.Image");
+			this.btEstimatingDuplicate.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingDuplicate.Image");
 			this.btEstimatingDuplicate.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingDuplicate.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingDuplicate.Name = "btEstimatingDuplicate";
-			componentResourceManager.ApplyResources(this.btEstimatingDuplicate, "btEstimatingDuplicate");
+			resources.ApplyResources(this.btEstimatingDuplicate, "btEstimatingDuplicate");
 			this.btEstimatingDuplicate.Click += new global::System.EventHandler(this.btEstimatingDuplicate_Click);
 			this.btEstimatingDelete.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingDelete.CanCustomize = false;
-			this.btEstimatingDelete.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingDelete.Image");
+			this.btEstimatingDelete.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingDelete.Image");
 			this.btEstimatingDelete.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingDelete.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingDelete.Name = "btEstimatingDelete";
-			componentResourceManager.ApplyResources(this.btEstimatingDelete, "btEstimatingDelete");
+			resources.ApplyResources(this.btEstimatingDelete, "btEstimatingDelete");
 			this.btEstimatingDelete.Click += new global::System.EventHandler(this.btEstimatingDelete_Click);
 			this.ribbonEstimatingNew.AutoOverflowEnabled = false;
 			this.ribbonEstimatingNew.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimatingNew.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimatingNew.CanCustomize = false;
 			this.ribbonEstimatingNew.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonEstimatingNew, "ribbonEstimatingNew");
+			resources.ApplyResources(this.ribbonEstimatingNew, "ribbonEstimatingNew");
 			this.ribbonEstimatingNew.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btEstimatingMaterial,
@@ -717,41 +724,41 @@
 			this.ribbonEstimatingNew.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btEstimatingMaterial.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingMaterial.CanCustomize = false;
-			this.btEstimatingMaterial.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingMaterial.Image");
+			this.btEstimatingMaterial.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingMaterial.Image");
 			this.btEstimatingMaterial.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingMaterial.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingMaterial.Name = "btEstimatingMaterial";
-			componentResourceManager.ApplyResources(this.btEstimatingMaterial, "btEstimatingMaterial");
+			resources.ApplyResources(this.btEstimatingMaterial, "btEstimatingMaterial");
 			this.btEstimatingMaterial.Click += new global::System.EventHandler(this.btEstimatingMaterial_Click);
 			this.btEstimatingLabour.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingLabour.CanCustomize = false;
-			this.btEstimatingLabour.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingLabour.Image");
+			this.btEstimatingLabour.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingLabour.Image");
 			this.btEstimatingLabour.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingLabour.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingLabour.Name = "btEstimatingLabour";
-			componentResourceManager.ApplyResources(this.btEstimatingLabour, "btEstimatingLabour");
+			resources.ApplyResources(this.btEstimatingLabour, "btEstimatingLabour");
 			this.btEstimatingLabour.Click += new global::System.EventHandler(this.btEstimatingLabour_Click);
 			this.btEstimatingEquipment.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingEquipment.CanCustomize = false;
-			this.btEstimatingEquipment.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingEquipment.Image");
+			this.btEstimatingEquipment.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingEquipment.Image");
 			this.btEstimatingEquipment.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingEquipment.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingEquipment.Name = "btEstimatingEquipment";
-			componentResourceManager.ApplyResources(this.btEstimatingEquipment, "btEstimatingEquipment");
+			resources.ApplyResources(this.btEstimatingEquipment, "btEstimatingEquipment");
 			this.btEstimatingEquipment.Click += new global::System.EventHandler(this.btEstimatingEquipment_Click);
 			this.btEstimatingSubcontract.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btEstimatingSubcontract.CanCustomize = false;
-			this.btEstimatingSubcontract.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingSubcontract.Image");
+			this.btEstimatingSubcontract.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingSubcontract.Image");
 			this.btEstimatingSubcontract.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingSubcontract.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingSubcontract.Name = "btEstimatingSubcontract";
-			componentResourceManager.ApplyResources(this.btEstimatingSubcontract, "btEstimatingSubcontract");
+			resources.ApplyResources(this.btEstimatingSubcontract, "btEstimatingSubcontract");
 			this.btEstimatingSubcontract.Click += new global::System.EventHandler(this.btEstimatingSubcontract_Click);
 			this.ribbonEstimatingDatabase.AutoOverflowEnabled = false;
 			this.ribbonEstimatingDatabase.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimatingDatabase.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimatingDatabase.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonEstimatingDatabase, "ribbonEstimatingDatabase");
+			resources.ApplyResources(this.ribbonEstimatingDatabase, "ribbonEstimatingDatabase");
 			this.ribbonEstimatingDatabase.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btEstimatingTradesPackages,
@@ -765,43 +772,43 @@
 			this.ribbonEstimatingDatabase.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonEstimatingDatabase.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btEstimatingTradesPackages.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btEstimatingTradesPackages.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingTradesPackages.Image");
+			this.btEstimatingTradesPackages.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingTradesPackages.Image");
 			this.btEstimatingTradesPackages.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingTradesPackages.ImagePaddingHorizontal = 10;
 			this.btEstimatingTradesPackages.ImagePaddingVertical = 5;
 			this.btEstimatingTradesPackages.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingTradesPackages.Name = "btEstimatingTradesPackages";
-			componentResourceManager.ApplyResources(this.btEstimatingTradesPackages, "btEstimatingTradesPackages");
+			resources.ApplyResources(this.btEstimatingTradesPackages, "btEstimatingTradesPackages");
 			this.btEstimatingTradesPackages.Visible = false;
 			this.btEstimatingSaveDatabase.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btEstimatingSaveDatabase.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingSaveDatabase.Image");
+			this.btEstimatingSaveDatabase.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingSaveDatabase.Image");
 			this.btEstimatingSaveDatabase.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingSaveDatabase.ImagePaddingVertical = 5;
 			this.btEstimatingSaveDatabase.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingSaveDatabase.Name = "btEstimatingSaveDatabase";
-			componentResourceManager.ApplyResources(this.btEstimatingSaveDatabase, "btEstimatingSaveDatabase");
+			resources.ApplyResources(this.btEstimatingSaveDatabase, "btEstimatingSaveDatabase");
 			this.btEstimatingSaveDatabase.Click += new global::System.EventHandler(this.btEstimatingSaveDatabase_Click);
 			this.btEstimatingCompactDatabase.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btEstimatingCompactDatabase.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingCompactDatabase.Image");
+			this.btEstimatingCompactDatabase.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingCompactDatabase.Image");
 			this.btEstimatingCompactDatabase.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingCompactDatabase.ImagePaddingVertical = 5;
 			this.btEstimatingCompactDatabase.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingCompactDatabase.Name = "btEstimatingCompactDatabase";
-			componentResourceManager.ApplyResources(this.btEstimatingCompactDatabase, "btEstimatingCompactDatabase");
+			resources.ApplyResources(this.btEstimatingCompactDatabase, "btEstimatingCompactDatabase");
 			this.btEstimatingCompactDatabase.Visible = false;
 			this.btEstimatingImportPrices.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btEstimatingImportPrices.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingImportPrices.Image");
+			this.btEstimatingImportPrices.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingImportPrices.Image");
 			this.btEstimatingImportPrices.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEstimatingImportPrices.ImagePaddingVertical = 5;
 			this.btEstimatingImportPrices.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEstimatingImportPrices.Name = "btEstimatingImportPrices";
-			componentResourceManager.ApplyResources(this.btEstimatingImportPrices, "btEstimatingImportPrices");
+			resources.ApplyResources(this.btEstimatingImportPrices, "btEstimatingImportPrices");
 			this.btEstimatingImportPrices.Click += new global::System.EventHandler(this.btEstimatingImportPrices_Click);
 			this.ribbonPanelReport.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonPanelReport.Controls.Add(this.ribbonExportReport);
 			this.ribbonPanelReport.Controls.Add(this.ribbonPrintReport);
 			this.ribbonPanelReport.Controls.Add(this.ribbonReportOrder);
-			componentResourceManager.ApplyResources(this.ribbonPanelReport, "ribbonPanelReport");
+			resources.ApplyResources(this.ribbonPanelReport, "ribbonPanelReport");
 			this.ribbonPanelReport.Name = "ribbonPanelReport";
 			this.ribbonPanelReport.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanelReport.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -811,7 +818,7 @@
 			this.ribbonExportReport.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExportReport.CanCustomize = false;
 			this.ribbonExportReport.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonExportReport, "ribbonExportReport");
+			resources.ApplyResources(this.ribbonExportReport, "ribbonExportReport");
 			this.ribbonExportReport.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btReportExportToExcel,
@@ -829,7 +836,7 @@
 			this.ribbonExportReport.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btReportExportToExcel.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btReportExportToExcel.CanCustomize = false;
-			this.btReportExportToExcel.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToExcel.Image");
+			this.btReportExportToExcel.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToExcel.Image");
 			this.btReportExportToExcel.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToExcel.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToExcel.Name = "btReportExportToExcel";
@@ -841,7 +848,7 @@
 				this.btExportToExcelFormattedData,
 				this.btExportToExcelRawAndFormatted
 			});
-			componentResourceManager.ApplyResources(this.btReportExportToExcel, "btReportExportToExcel");
+			resources.ApplyResources(this.btReportExportToExcel, "btReportExportToExcel");
 			this.btReportExportToExcel.Click += new global::System.EventHandler(this.btReportExportToExcel_Click);
 			this.lblExportToExcelOptions.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblExportToExcelOptions.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -855,7 +862,7 @@
 			{
 				this.buttonItem1
 			});
-			componentResourceManager.ApplyResources(this.lblExportToExcelOptions, "lblExportToExcelOptions");
+			resources.ApplyResources(this.lblExportToExcelOptions, "lblExportToExcelOptions");
 			this.lblExportToExcelOptions.Visible = false;
 			this.buttonItem1.CanCustomize = false;
 			this.buttonItem1.Name = "buttonItem1";
@@ -864,44 +871,44 @@
 			this.btExportToExcelRawData.CanCustomize = false;
 			this.btExportToExcelRawData.Name = "btExportToExcelRawData";
 			this.btExportToExcelRawData.OptionGroup = "ExportToExcelType";
-			componentResourceManager.ApplyResources(this.btExportToExcelRawData, "btExportToExcelRawData");
+			resources.ApplyResources(this.btExportToExcelRawData, "btExportToExcelRawData");
 			this.btExportToExcelRawData.Visible = false;
 			this.btExportToExcelRawData.Click += new global::System.EventHandler(this.btExportToExcelType_Click);
 			this.btExportToExcelFormattedData.AutoCheckOnClick = true;
 			this.btExportToExcelFormattedData.CanCustomize = false;
 			this.btExportToExcelFormattedData.Name = "btExportToExcelFormattedData";
 			this.btExportToExcelFormattedData.OptionGroup = "ExportToExcelType";
-			componentResourceManager.ApplyResources(this.btExportToExcelFormattedData, "btExportToExcelFormattedData");
+			resources.ApplyResources(this.btExportToExcelFormattedData, "btExportToExcelFormattedData");
 			this.btExportToExcelFormattedData.Visible = false;
 			this.btExportToExcelFormattedData.Click += new global::System.EventHandler(this.btExportToExcelType_Click);
 			this.btExportToExcelRawAndFormatted.AutoCheckOnClick = true;
 			this.btExportToExcelRawAndFormatted.CanCustomize = false;
 			this.btExportToExcelRawAndFormatted.Name = "btExportToExcelRawAndFormatted";
 			this.btExportToExcelRawAndFormatted.OptionGroup = "ExportToExcelType";
-			componentResourceManager.ApplyResources(this.btExportToExcelRawAndFormatted, "btExportToExcelRawAndFormatted");
+			resources.ApplyResources(this.btExportToExcelRawAndFormatted, "btExportToExcelRawAndFormatted");
 			this.btExportToExcelRawAndFormatted.Visible = false;
 			this.btExportToExcelRawAndFormatted.Click += new global::System.EventHandler(this.btExportToExcelType_Click);
 			this.btReportExportToCSV.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportExportToCSV.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToCSV.Image");
+			this.btReportExportToCSV.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToCSV.Image");
 			this.btReportExportToCSV.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToCSV.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToCSV.Name = "btReportExportToCSV";
-			componentResourceManager.ApplyResources(this.btReportExportToCSV, "btReportExportToCSV");
+			resources.ApplyResources(this.btReportExportToCSV, "btReportExportToCSV");
 			this.btReportExportToCSV.Visible = false;
 			this.btReportExportToCSV.Click += new global::System.EventHandler(this.btReportExportToCSV_Click);
 			this.btReportExportToXML.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportExportToXML.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToXML.Image");
+			this.btReportExportToXML.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToXML.Image");
 			this.btReportExportToXML.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToXML.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToXML.Name = "btReportExportToXML";
-			componentResourceManager.ApplyResources(this.btReportExportToXML, "btReportExportToXML");
+			resources.ApplyResources(this.btReportExportToXML, "btReportExportToXML");
 			this.btReportExportToXML.Click += new global::System.EventHandler(this.btReportExportToXML_Click);
 			this.btReportExportToHTML.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportExportToHTML.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToHTML.Image");
+			this.btReportExportToHTML.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToHTML.Image");
 			this.btReportExportToHTML.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToHTML.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToHTML.Name = "btReportExportToHTML";
-			componentResourceManager.ApplyResources(this.btReportExportToHTML, "btReportExportToHTML");
+			resources.ApplyResources(this.btReportExportToHTML, "btReportExportToHTML");
 			this.btReportExportToHTML.Click += new global::System.EventHandler(this.btReportExportToHTML_Click);
 			this.btReportExportToPDF.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btReportExportToPDF.Image = global::QuoterPlan.Properties.Resources.file_pdf_40x40;
@@ -909,21 +916,21 @@
 			this.btReportExportToPDF.ImagePaddingVertical = 5;
 			this.btReportExportToPDF.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToPDF.Name = "btReportExportToPDF";
-			componentResourceManager.ApplyResources(this.btReportExportToPDF, "btReportExportToPDF");
+			resources.ApplyResources(this.btReportExportToPDF, "btReportExportToPDF");
 			this.btReportExportToPDF.Click += new global::System.EventHandler(this.btReportExportToPDF_Click);
 			this.btReportExportToEE.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportExportToEE.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToEE.Image");
+			this.btReportExportToEE.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToEE.Image");
 			this.btReportExportToEE.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToEE.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToEE.Name = "btReportExportToEE";
-			componentResourceManager.ApplyResources(this.btReportExportToEE, "btReportExportToEE");
+			resources.ApplyResources(this.btReportExportToEE, "btReportExportToEE");
 			this.btReportExportToEE.Visible = false;
 			this.btReportExportToCOffice.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportExportToCOffice.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportExportToCOffice.Image");
+			this.btReportExportToCOffice.Image = (global::System.Drawing.Image)resources.GetObject("btReportExportToCOffice.Image");
 			this.btReportExportToCOffice.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportExportToCOffice.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportExportToCOffice.Name = "btReportExportToCOffice";
-			componentResourceManager.ApplyResources(this.btReportExportToCOffice, "btReportExportToCOffice");
+			resources.ApplyResources(this.btReportExportToCOffice, "btReportExportToCOffice");
 			this.btReportExportToCOffice.Visible = false;
 			this.btReportExportToCOffice.Click += new global::System.EventHandler(this.btReportExportToCOffice_Click);
 			this.ribbonPrintReport.AutoOverflowEnabled = false;
@@ -931,7 +938,7 @@
 			this.ribbonPrintReport.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPrintReport.CanCustomize = false;
 			this.ribbonPrintReport.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonPrintReport, "ribbonPrintReport");
+			resources.ApplyResources(this.ribbonPrintReport, "ribbonPrintReport");
 			this.ribbonPrintReport.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btReportPrint,
@@ -944,26 +951,26 @@
 			this.ribbonPrintReport.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPrintReport.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btReportPrint.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportPrint.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportPrint.Image");
+			this.btReportPrint.Image = (global::System.Drawing.Image)resources.GetObject("btReportPrint.Image");
 			this.btReportPrint.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportPrint.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportPrint.Name = "btReportPrint";
-			componentResourceManager.ApplyResources(this.btReportPrint, "btReportPrint");
+			resources.ApplyResources(this.btReportPrint, "btReportPrint");
 			this.btReportPrint.Click += new global::System.EventHandler(this.btReportPrint_Click);
 			this.btReportPrintPreview.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportPrintPreview.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportPrintPreview.Image");
+			this.btReportPrintPreview.Image = (global::System.Drawing.Image)resources.GetObject("btReportPrintPreview.Image");
 			this.btReportPrintPreview.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportPrintPreview.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportPrintPreview.Name = "btReportPrintPreview";
-			componentResourceManager.ApplyResources(this.btReportPrintPreview, "btReportPrintPreview");
+			resources.ApplyResources(this.btReportPrintPreview, "btReportPrintPreview");
 			this.btReportPrintPreview.Visible = false;
 			this.btReportPrintPreview.Click += new global::System.EventHandler(this.btReportPrintPreview_Click);
 			this.btReportPrintSetup.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportPrintSetup.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportPrintSetup.Image");
+			this.btReportPrintSetup.Image = (global::System.Drawing.Image)resources.GetObject("btReportPrintSetup.Image");
 			this.btReportPrintSetup.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportPrintSetup.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportPrintSetup.Name = "btReportPrintSetup";
-			componentResourceManager.ApplyResources(this.btReportPrintSetup, "btReportPrintSetup");
+			resources.ApplyResources(this.btReportPrintSetup, "btReportPrintSetup");
 			this.btReportPrintSetup.Visible = false;
 			this.btReportPrintSetup.Click += new global::System.EventHandler(this.btReportPrintSetup_Click);
 			this.ribbonReportOrder.AutoOverflowEnabled = false;
@@ -971,7 +978,7 @@
 			this.ribbonReportOrder.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonReportOrder.CanCustomize = false;
 			this.ribbonReportOrder.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonReportOrder, "ribbonReportOrder");
+			resources.ApplyResources(this.ribbonReportOrder, "ribbonReportOrder");
 			this.ribbonReportOrder.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btReportFilter,
@@ -984,7 +991,7 @@
 			this.ribbonReportOrder.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btReportFilter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btReportFilter.CanCustomize = false;
-			this.btReportFilter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportFilter.Image");
+			this.btReportFilter.Image = (global::System.Drawing.Image)resources.GetObject("btReportFilter.Image");
 			this.btReportFilter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportFilter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportFilter.Name = "btReportFilter";
@@ -1000,7 +1007,7 @@
 				this.btReportScalePrecision8,
 				this.lblReportTheme
 			});
-			componentResourceManager.ApplyResources(this.btReportFilter, "btReportFilter");
+			resources.ApplyResources(this.btReportFilter, "btReportFilter");
 			this.btReportFilter.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btReportEdit_PopupOpen);
 			this.btReportFilter.Click += new global::System.EventHandler(this.btReportEdit_Click);
 			this.lblReportSystemType.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -1011,7 +1018,7 @@
 			this.lblReportSystemType.PaddingLeft = 10;
 			this.lblReportSystemType.PaddingTop = 3;
 			this.lblReportSystemType.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblReportSystemType, "lblReportSystemType");
+			resources.ApplyResources(this.lblReportSystemType, "lblReportSystemType");
 			this.btReportScaleImperial.CanCustomize = false;
 			this.btReportScaleImperial.Name = "btReportScaleImperial";
 			this.btReportScaleImperial.Text = global::QuoterPlan.Properties.Resources.Impérial;
@@ -1028,22 +1035,22 @@
 			this.lblReportPrecision.PaddingLeft = 10;
 			this.lblReportPrecision.PaddingTop = 3;
 			this.lblReportPrecision.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblReportPrecision, "lblReportPrecision");
+			resources.ApplyResources(this.lblReportPrecision, "lblReportPrecision");
 			this.btReportScalePrecision64.CanCustomize = false;
 			this.btReportScalePrecision64.Name = "btReportScalePrecision64";
-			componentResourceManager.ApplyResources(this.btReportScalePrecision64, "btReportScalePrecision64");
+			resources.ApplyResources(this.btReportScalePrecision64, "btReportScalePrecision64");
 			this.btReportScalePrecision64.Click += new global::System.EventHandler(this.btReportScalePrecision64_Click);
 			this.btReportScalePrecision32.CanCustomize = false;
 			this.btReportScalePrecision32.Name = "btReportScalePrecision32";
-			componentResourceManager.ApplyResources(this.btReportScalePrecision32, "btReportScalePrecision32");
+			resources.ApplyResources(this.btReportScalePrecision32, "btReportScalePrecision32");
 			this.btReportScalePrecision32.Click += new global::System.EventHandler(this.btReportScalePrecision32_Click);
 			this.btReportScalePrecision16.CanCustomize = false;
 			this.btReportScalePrecision16.Name = "btReportScalePrecision16";
-			componentResourceManager.ApplyResources(this.btReportScalePrecision16, "btReportScalePrecision16");
+			resources.ApplyResources(this.btReportScalePrecision16, "btReportScalePrecision16");
 			this.btReportScalePrecision16.Click += new global::System.EventHandler(this.btReportScalePrecision16_Click);
 			this.btReportScalePrecision8.CanCustomize = false;
 			this.btReportScalePrecision8.Name = "btReportScalePrecision8";
-			componentResourceManager.ApplyResources(this.btReportScalePrecision8, "btReportScalePrecision8");
+			resources.ApplyResources(this.btReportScalePrecision8, "btReportScalePrecision8");
 			this.btReportScalePrecision8.Click += new global::System.EventHandler(this.btReportScalePrecision8_Click);
 			this.lblReportTheme.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblReportTheme.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1053,14 +1060,14 @@
 			this.lblReportTheme.PaddingLeft = 10;
 			this.lblReportTheme.PaddingTop = 3;
 			this.lblReportTheme.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblReportTheme, "lblReportTheme");
+			resources.ApplyResources(this.lblReportTheme, "lblReportTheme");
 			this.lblReportTheme.Visible = false;
 			this.btReportSettings.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btReportSettings.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btReportSettings.Image");
+			this.btReportSettings.Image = (global::System.Drawing.Image)resources.GetObject("btReportSettings.Image");
 			this.btReportSettings.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btReportSettings.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btReportSettings.Name = "btReportSettings";
-			componentResourceManager.ApplyResources(this.btReportSettings, "btReportSettings");
+			resources.ApplyResources(this.btReportSettings, "btReportSettings");
 			this.btReportSettings.Click += new global::System.EventHandler(this.btReportSettings_Click);
 			this.ribbonPanel.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonPanel.Controls.Add(this.ribbonBarPrintExport);
@@ -1072,7 +1079,7 @@
 			this.ribbonPanel.Controls.Add(this.ribbonBarScale);
 			this.ribbonPanel.Controls.Add(this.ribbonBarEdit);
 			this.ribbonPanel.Controls.Add(this.ribbonBarLayout);
-			componentResourceManager.ApplyResources(this.ribbonPanel, "ribbonPanel");
+			resources.ApplyResources(this.ribbonPanel, "ribbonPanel");
 			this.ribbonPanel.Name = "ribbonPanel";
 			this.ribbonPanel.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanel.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -1081,7 +1088,7 @@
 			this.ribbonBarPrintExport.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPrintExport.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPrintExport.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarPrintExport, "ribbonBarPrintExport");
+			resources.ApplyResources(this.ribbonBarPrintExport, "ribbonBarPrintExport");
 			this.ribbonBarPrintExport.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btPrintPlan,
@@ -1106,7 +1113,7 @@
 				this.btPrintPlanFullSize,
 				this.btPrintPlanWindow
 			});
-			componentResourceManager.ApplyResources(this.btPrintPlan, "btPrintPlan");
+			resources.ApplyResources(this.btPrintPlan, "btPrintPlan");
 			this.btPrintPlan.Click += new global::System.EventHandler(this.btPrintPlan_Click);
 			this.lblPrintPlanOptions.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblPrintPlanOptions.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1120,7 +1127,7 @@
 			{
 				this.buttonItem2
 			});
-			componentResourceManager.ApplyResources(this.lblPrintPlanOptions, "lblPrintPlanOptions");
+			resources.ApplyResources(this.lblPrintPlanOptions, "lblPrintPlanOptions");
 			this.buttonItem2.CanCustomize = false;
 			this.buttonItem2.Name = "buttonItem2";
 			this.buttonItem2.Text = global::QuoterPlan.Properties.Resources.Impérial;
@@ -1128,13 +1135,13 @@
 			this.btPrintPlanFullSize.CanCustomize = false;
 			this.btPrintPlanFullSize.Name = "btPrintPlanFullSize";
 			this.btPrintPlanFullSize.OptionGroup = "PrintPlanOptions";
-			componentResourceManager.ApplyResources(this.btPrintPlanFullSize, "btPrintPlanFullSize");
+			resources.ApplyResources(this.btPrintPlanFullSize, "btPrintPlanFullSize");
 			this.btPrintPlanFullSize.Click += new global::System.EventHandler(this.btPrintPlanType_Click);
 			this.btPrintPlanWindow.AutoCheckOnClick = true;
 			this.btPrintPlanWindow.CanCustomize = false;
 			this.btPrintPlanWindow.Name = "btPrintPlanWindow";
 			this.btPrintPlanWindow.OptionGroup = "PrintPlanOptions";
-			componentResourceManager.ApplyResources(this.btPrintPlanWindow, "btPrintPlanWindow");
+			resources.ApplyResources(this.btPrintPlanWindow, "btPrintPlanWindow");
 			this.btPrintPlanWindow.Click += new global::System.EventHandler(this.btPrintPlanType_Click);
 			this.btExportPlanToPDF.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExportPlanToPDF.Image = global::QuoterPlan.Properties.Resources.file_pdf_40x40;
@@ -1142,14 +1149,14 @@
 			this.btExportPlanToPDF.ImagePaddingVertical = 5;
 			this.btExportPlanToPDF.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExportPlanToPDF.Name = "btExportPlanToPDF";
-			componentResourceManager.ApplyResources(this.btExportPlanToPDF, "btExportPlanToPDF");
+			resources.ApplyResources(this.btExportPlanToPDF, "btExportPlanToPDF");
 			this.btExportPlanToPDF.Click += new global::System.EventHandler(this.btExportPlanToPDF_Click);
 			this.ribbonBarImage.AutoOverflowEnabled = true;
 			this.ribbonBarImage.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarImage.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarImage.CanCustomize = false;
 			this.ribbonBarImage.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarImage, "ribbonBarImage");
+			resources.ApplyResources(this.ribbonBarImage, "ribbonBarImage");
 			this.ribbonBarImage.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btBrightnessContrast,
@@ -1157,30 +1164,30 @@
 			});
 			this.ribbonBarImage.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
 			this.ribbonBarImage.Name = "ribbonBarImage";
-			this.ribbonBarImage.OverflowButtonImage = (global::System.Drawing.Image)componentResourceManager.GetObject("ribbonBarImage.OverflowButtonImage");
+			this.ribbonBarImage.OverflowButtonImage = (global::System.Drawing.Image)resources.GetObject("ribbonBarImage.OverflowButtonImage");
 			this.ribbonBarImage.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonBarImage.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarImage.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btBrightnessContrast.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrightnessContrast.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrightnessContrast.Image");
+			this.btBrightnessContrast.Image = (global::System.Drawing.Image)resources.GetObject("btBrightnessContrast.Image");
 			this.btBrightnessContrast.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBrightnessContrast.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btBrightnessContrast.Name = "btBrightnessContrast";
-			componentResourceManager.ApplyResources(this.btBrightnessContrast, "btBrightnessContrast");
+			resources.ApplyResources(this.btBrightnessContrast, "btBrightnessContrast");
 			this.btBrightnessContrast.Click += new global::System.EventHandler(this.btBrightnessContrast_Click);
 			this.btRotation.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btRotation.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btRotation.Image");
+			this.btRotation.Image = (global::System.Drawing.Image)resources.GetObject("btRotation.Image");
 			this.btRotation.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btRotation.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btRotation.Name = "btRotation";
-			componentResourceManager.ApplyResources(this.btRotation, "btRotation");
+			resources.ApplyResources(this.btRotation, "btRotation");
 			this.btRotation.Click += new global::System.EventHandler(this.btRotation_Click);
 			this.ribbonBarBrowse.AutoOverflowEnabled = true;
 			this.ribbonBarBrowse.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarBrowse.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarBrowse.CanCustomize = false;
 			this.ribbonBarBrowse.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarBrowse, "ribbonBarBrowse");
+			resources.ApplyResources(this.ribbonBarBrowse, "ribbonBarBrowse");
 			this.ribbonBarBrowse.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.itemContainerBrowse1,
@@ -1188,7 +1195,7 @@
 			});
 			this.ribbonBarBrowse.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
 			this.ribbonBarBrowse.Name = "ribbonBarBrowse";
-			this.ribbonBarBrowse.OverflowButtonImage = (global::System.Drawing.Image)componentResourceManager.GetObject("ribbonBarBrowse.OverflowButtonImage");
+			this.ribbonBarBrowse.OverflowButtonImage = (global::System.Drawing.Image)resources.GetObject("ribbonBarBrowse.OverflowButtonImage");
 			this.ribbonBarBrowse.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonBarBrowse.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarBrowse.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -1207,7 +1214,7 @@
 			this.lblBrowseGroup.Name = "lblBrowseGroup";
 			this.lblBrowseGroup.PaddingTop = 3;
 			this.lblBrowseGroup.Stretch = true;
-			componentResourceManager.ApplyResources(this.lblBrowseGroup, "lblBrowseGroup");
+			resources.ApplyResources(this.lblBrowseGroup, "lblBrowseGroup");
 			this.lblBrowseGroup.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblBrowseGroup.Width = 88;
 			this.lblBrowseGroup.WordWrap = true;
@@ -1222,13 +1229,13 @@
 			});
 			this.itemContainerBrowse3.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btBrowsePrevious.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrowsePrevious.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrowsePrevious.Image");
+			this.btBrowsePrevious.Image = (global::System.Drawing.Image)resources.GetObject("btBrowsePrevious.Image");
 			this.btBrowsePrevious.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBrowsePrevious.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Bottom;
 			this.btBrowsePrevious.Name = "btBrowsePrevious";
 			this.btBrowsePrevious.Click += new global::System.EventHandler(this.btBrowsePrevious_Click);
 			this.btBrowseNext.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrowseNext.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrowseNext.Image");
+			this.btBrowseNext.Image = (global::System.Drawing.Image)resources.GetObject("btBrowseNext.Image");
 			this.btBrowseNext.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBrowseNext.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Bottom;
 			this.btBrowseNext.Name = "btBrowseNext";
@@ -1248,7 +1255,7 @@
 			this.lblBrowseObjectType.Name = "lblBrowseObjectType";
 			this.lblBrowseObjectType.PaddingTop = 3;
 			this.lblBrowseObjectType.Stretch = true;
-			componentResourceManager.ApplyResources(this.lblBrowseObjectType, "lblBrowseObjectType");
+			resources.ApplyResources(this.lblBrowseObjectType, "lblBrowseObjectType");
 			this.lblBrowseObjectType.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblBrowseObjectType.Width = 88;
 			this.lblBrowseObjectType.WordWrap = true;
@@ -1263,13 +1270,13 @@
 			});
 			this.itemContainerBrowse4.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btBrowseObjectTypePrevious.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrowseObjectTypePrevious.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrowseObjectTypePrevious.Image");
+			this.btBrowseObjectTypePrevious.Image = (global::System.Drawing.Image)resources.GetObject("btBrowseObjectTypePrevious.Image");
 			this.btBrowseObjectTypePrevious.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBrowseObjectTypePrevious.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Bottom;
 			this.btBrowseObjectTypePrevious.Name = "btBrowseObjectTypePrevious";
 			this.btBrowseObjectTypePrevious.Click += new global::System.EventHandler(this.btBrowseObjectTypePrevious_Click);
 			this.btBrowseObjectTypeNext.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrowseObjectTypeNext.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrowseObjectTypeNext.Image");
+			this.btBrowseObjectTypeNext.Image = (global::System.Drawing.Image)resources.GetObject("btBrowseObjectTypeNext.Image");
 			this.btBrowseObjectTypeNext.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBrowseObjectTypeNext.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Bottom;
 			this.btBrowseObjectTypeNext.Name = "btBrowseObjectTypeNext";
@@ -1279,7 +1286,7 @@
 			this.ribbonBarZoom.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarZoom.CanCustomize = false;
 			this.ribbonBarZoom.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarZoom, "ribbonBarZoom");
+			resources.ApplyResources(this.ribbonBarZoom, "ribbonBarZoom");
 			this.ribbonBarZoom.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btZoomToSelection,
@@ -1296,22 +1303,22 @@
 			this.ribbonBarZoom.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btZoomToSelection.BeginGroup = true;
 			this.btZoomToSelection.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btZoomToSelection.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoomToSelection.Image");
+			this.btZoomToSelection.Image = (global::System.Drawing.Image)resources.GetObject("btZoomToSelection.Image");
 			this.btZoomToSelection.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoomToSelection.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoomToSelection.Name = "btZoomToSelection";
-			componentResourceManager.ApplyResources(this.btZoomToSelection, "btZoomToSelection");
+			resources.ApplyResources(this.btZoomToSelection, "btZoomToSelection");
 			this.btZoomToSelection.Click += new global::System.EventHandler(this.btZoomToSelection_Click);
 			this.btZoomToWindow.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btZoomToWindow.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoomToWindow.Image");
+			this.btZoomToWindow.Image = (global::System.Drawing.Image)resources.GetObject("btZoomToWindow.Image");
 			this.btZoomToWindow.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoomToWindow.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoomToWindow.Name = "btZoomToWindow";
-			componentResourceManager.ApplyResources(this.btZoomToWindow, "btZoomToWindow");
+			resources.ApplyResources(this.btZoomToWindow, "btZoomToWindow");
 			this.btZoomToWindow.Click += new global::System.EventHandler(this.btZoomToWindow_Click);
 			this.btZoomActualSize.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btZoomActualSize.CanCustomize = false;
-			this.btZoomActualSize.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoomActualSize.Image");
+			this.btZoomActualSize.Image = (global::System.Drawing.Image)resources.GetObject("btZoomActualSize.Image");
 			this.btZoomActualSize.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoomActualSize.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoomActualSize.Name = "btZoomActualSize";
@@ -1321,44 +1328,44 @@
 				this.btZoom50,
 				this.btZoom25
 			});
-			componentResourceManager.ApplyResources(this.btZoomActualSize, "btZoomActualSize");
+			resources.ApplyResources(this.btZoomActualSize, "btZoomActualSize");
 			this.btZoomActualSize.Click += new global::System.EventHandler(this.btZoomActualSize_Click);
 			this.btZoom75.CanCustomize = false;
-			this.btZoom75.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoom75.Image");
+			this.btZoom75.Image = (global::System.Drawing.Image)resources.GetObject("btZoom75.Image");
 			this.btZoom75.Name = "btZoom75";
-			componentResourceManager.ApplyResources(this.btZoom75, "btZoom75");
+			resources.ApplyResources(this.btZoom75, "btZoom75");
 			this.btZoom75.Click += new global::System.EventHandler(this.btZoom75_Click);
 			this.btZoom50.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btZoom50.CanCustomize = false;
-			this.btZoom50.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoom50.Image");
+			this.btZoom50.Image = (global::System.Drawing.Image)resources.GetObject("btZoom50.Image");
 			this.btZoom50.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoom50.ImagePaddingHorizontal = 12;
 			this.btZoom50.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoom50.Name = "btZoom50";
-			componentResourceManager.ApplyResources(this.btZoom50, "btZoom50");
+			resources.ApplyResources(this.btZoom50, "btZoom50");
 			this.btZoom50.Click += new global::System.EventHandler(this.btZoom50_Click);
 			this.btZoom25.CanCustomize = false;
-			this.btZoom25.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoom25.Image");
+			this.btZoom25.Image = (global::System.Drawing.Image)resources.GetObject("btZoom25.Image");
 			this.btZoom25.Name = "btZoom25";
-			componentResourceManager.ApplyResources(this.btZoom25, "btZoom25");
+			resources.ApplyResources(this.btZoom25, "btZoom25");
 			this.btZoom25.Click += new global::System.EventHandler(this.btZoom25_Click);
 			this.btZoomIn.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btZoomIn.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoomIn.Image");
+			this.btZoomIn.Image = (global::System.Drawing.Image)resources.GetObject("btZoomIn.Image");
 			this.btZoomIn.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoomIn.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoomIn.Name = "btZoomIn";
-			componentResourceManager.ApplyResources(this.btZoomIn, "btZoomIn");
+			resources.ApplyResources(this.btZoomIn, "btZoomIn");
 			this.btZoomIn.Click += new global::System.EventHandler(this.btZoomIn_Click);
 			this.btZoomOut.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btZoomOut.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btZoomOut.Image");
+			this.btZoomOut.Image = (global::System.Drawing.Image)resources.GetObject("btZoomOut.Image");
 			this.btZoomOut.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btZoomOut.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btZoomOut.Name = "btZoomOut";
-			componentResourceManager.ApplyResources(this.btZoomOut, "btZoomOut");
+			resources.ApplyResources(this.btZoomOut, "btZoomOut");
 			this.btZoomOut.Click += new global::System.EventHandler(this.btZoomOut_Click);
 			this.btBookmarks.BeginGroup = true;
 			this.btBookmarks.CanCustomize = false;
-			this.btBookmarks.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBookmarks.Image");
+			this.btBookmarks.Image = (global::System.Drawing.Image)resources.GetObject("btBookmarks.Image");
 			this.btBookmarks.ImageFixedSize = new global::System.Drawing.Size(32, 32);
 			this.btBookmarks.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btBookmarks.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
@@ -1373,29 +1380,29 @@
 				this.buttonItem61,
 				this.btModifyBookmarks
 			});
-			componentResourceManager.ApplyResources(this.btBookmarks, "btBookmarks");
+			resources.ApplyResources(this.btBookmarks, "btBookmarks");
 			this.btBookmarks.Visible = false;
 			this.btZoomTo75.Name = "btZoomTo75";
-			componentResourceManager.ApplyResources(this.btZoomTo75, "btZoomTo75");
+			resources.ApplyResources(this.btZoomTo75, "btZoomTo75");
 			this.btZoomTo50.Name = "btZoomTo50";
-			componentResourceManager.ApplyResources(this.btZoomTo50, "btZoomTo50");
+			resources.ApplyResources(this.btZoomTo50, "btZoomTo50");
 			this.btZoomTo25.Name = "btZoomTo25";
-			componentResourceManager.ApplyResources(this.btZoomTo25, "btZoomTo25");
+			resources.ApplyResources(this.btZoomTo25, "btZoomTo25");
 			this.btZoomTo150.Name = "btZoomTo150";
-			componentResourceManager.ApplyResources(this.btZoomTo150, "btZoomTo150");
+			resources.ApplyResources(this.btZoomTo150, "btZoomTo150");
 			this.btZoomTo200.Name = "btZoomTo200";
-			componentResourceManager.ApplyResources(this.btZoomTo200, "btZoomTo200");
+			resources.ApplyResources(this.btZoomTo200, "btZoomTo200");
 			this.buttonItem61.Name = "buttonItem61";
-			componentResourceManager.ApplyResources(this.buttonItem61, "buttonItem61");
+			resources.ApplyResources(this.buttonItem61, "buttonItem61");
 			this.btModifyBookmarks.BeginGroup = true;
 			this.btModifyBookmarks.Name = "btModifyBookmarks";
-			componentResourceManager.ApplyResources(this.btModifyBookmarks, "btModifyBookmarks");
+			resources.ApplyResources(this.btModifyBookmarks, "btModifyBookmarks");
 			this.ribbonBarAnnotations.AutoOverflowEnabled = false;
 			this.ribbonBarAnnotations.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarAnnotations.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarAnnotations.CanCustomize = false;
 			this.ribbonBarAnnotations.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarAnnotations, "ribbonBarAnnotations");
+			resources.ApplyResources(this.ribbonBarAnnotations, "ribbonBarAnnotations");
 			this.ribbonBarAnnotations.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btMarkZone,
@@ -1409,34 +1416,34 @@
 			this.ribbonBarAnnotations.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btMarkZone.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btMarkZone.CanCustomize = false;
-			this.btMarkZone.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btMarkZone.Image");
+			this.btMarkZone.Image = (global::System.Drawing.Image)resources.GetObject("btMarkZone.Image");
 			this.btMarkZone.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btMarkZone.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btMarkZone.Name = "btMarkZone";
-			componentResourceManager.ApplyResources(this.btMarkZone, "btMarkZone");
+			resources.ApplyResources(this.btMarkZone, "btMarkZone");
 			this.btMarkZone.Click += new global::System.EventHandler(this.btMarkZone_Click);
 			this.btInsertNote.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btInsertNote.CanCustomize = false;
-			this.btInsertNote.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btInsertNote.Image");
+			this.btInsertNote.Image = (global::System.Drawing.Image)resources.GetObject("btInsertNote.Image");
 			this.btInsertNote.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btInsertNote.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btInsertNote.Name = "btInsertNote";
-			componentResourceManager.ApplyResources(this.btInsertNote, "btInsertNote");
+			resources.ApplyResources(this.btInsertNote, "btInsertNote");
 			this.btInsertNote.Click += new global::System.EventHandler(this.btInsertNote_Click);
 			this.btInsertPicture.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btInsertPicture.CanCustomize = false;
-			this.btInsertPicture.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btInsertPicture.Image");
+			this.btInsertPicture.Image = (global::System.Drawing.Image)resources.GetObject("btInsertPicture.Image");
 			this.btInsertPicture.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btInsertPicture.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btInsertPicture.Name = "btInsertPicture";
-			componentResourceManager.ApplyResources(this.btInsertPicture, "btInsertPicture");
+			resources.ApplyResources(this.btInsertPicture, "btInsertPicture");
 			this.btInsertPicture.Visible = false;
 			this.ribbonBarTools.AutoOverflowEnabled = false;
 			this.ribbonBarTools.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarTools.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarTools.CanCustomize = false;
 			this.ribbonBarTools.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarTools, "ribbonBarTools");
+			resources.ApplyResources(this.ribbonBarTools, "ribbonBarTools");
 			this.ribbonBarTools.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btToolSelection,
@@ -1454,23 +1461,23 @@
 			this.ribbonBarTools.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btToolSelection.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolSelection.CanCustomize = false;
-			this.btToolSelection.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolSelection.Image");
+			this.btToolSelection.Image = (global::System.Drawing.Image)resources.GetObject("btToolSelection.Image");
 			this.btToolSelection.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolSelection.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolSelection.Name = "btToolSelection";
-			componentResourceManager.ApplyResources(this.btToolSelection, "btToolSelection");
+			resources.ApplyResources(this.btToolSelection, "btToolSelection");
 			this.btToolSelection.Click += new global::System.EventHandler(this.btToolSelection_Click);
 			this.btToolPan.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolPan.CanCustomize = false;
-			this.btToolPan.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolPan.Image");
+			this.btToolPan.Image = (global::System.Drawing.Image)resources.GetObject("btToolPan.Image");
 			this.btToolPan.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolPan.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolPan.Name = "btToolPan";
-			componentResourceManager.ApplyResources(this.btToolPan, "btToolPan");
+			resources.ApplyResources(this.btToolPan, "btToolPan");
 			this.btToolPan.Click += new global::System.EventHandler(this.btToolPan_Click);
 			this.btToolArea.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolArea.CanCustomize = false;
-			this.btToolArea.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolArea.Image");
+			this.btToolArea.Image = (global::System.Drawing.Image)resources.GetObject("btToolArea.Image");
 			this.btToolArea.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolArea.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolArea.Name = "btToolArea";
@@ -1484,7 +1491,7 @@
 				this.lblAreaTemplates,
 				this.galleryAreaTemplates
 			});
-			componentResourceManager.ApplyResources(this.btToolArea, "btToolArea");
+			resources.ApplyResources(this.btToolArea, "btToolArea");
 			this.btToolArea.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btToolArea_PopupOpen);
 			this.btToolArea.Click += new global::System.EventHandler(this.btToolArea_Click);
 			this.lblNoArea.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -1495,7 +1502,7 @@
 			this.lblNoArea.PaddingLeft = 10;
 			this.lblNoArea.PaddingTop = 3;
 			this.lblNoArea.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblNoArea, "lblNoArea");
+			resources.ApplyResources(this.lblNoArea, "lblNoArea");
 			this.lblAreaFilter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblAreaFilter.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.lblAreaFilter.CanCustomize = false;
@@ -1504,7 +1511,7 @@
 			this.lblAreaFilter.PaddingLeft = 10;
 			this.lblAreaFilter.PaddingTop = 3;
 			this.lblAreaFilter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblAreaFilter, "lblAreaFilter");
+			resources.ApplyResources(this.lblAreaFilter, "lblAreaFilter");
 			this.itemContainerAreaFilter.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerAreaFilter.CanCustomize = false;
 			this.itemContainerAreaFilter.ItemSpacing = 0;
@@ -1544,14 +1551,14 @@
 			this.lblAreaGroups.PaddingLeft = 10;
 			this.lblAreaGroups.PaddingTop = 3;
 			this.lblAreaGroups.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblAreaGroups, "lblAreaGroups");
+			resources.ApplyResources(this.lblAreaGroups, "lblAreaGroups");
 			this.galleryAreaGroups.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryAreaGroups.CanCustomize = false;
 			this.galleryAreaGroups.DefaultSize = new global::System.Drawing.Size(200, 20);
 			this.galleryAreaGroups.EnableGalleryPopup = false;
 			this.galleryAreaGroups.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryAreaGroups.Name = "galleryAreaGroups";
-			componentResourceManager.ApplyResources(this.galleryAreaGroups, "galleryAreaGroups");
+			resources.ApplyResources(this.galleryAreaGroups, "galleryAreaGroups");
 			this.galleryAreaGroups.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblAreaTemplates.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblAreaTemplates.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1561,18 +1568,18 @@
 			this.lblAreaTemplates.PaddingLeft = 10;
 			this.lblAreaTemplates.PaddingTop = 3;
 			this.lblAreaTemplates.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblAreaTemplates, "lblAreaTemplates");
+			resources.ApplyResources(this.lblAreaTemplates, "lblAreaTemplates");
 			this.galleryAreaTemplates.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryAreaTemplates.CanCustomize = false;
 			this.galleryAreaTemplates.DefaultSize = new global::System.Drawing.Size(200, 20);
 			this.galleryAreaTemplates.EnableGalleryPopup = false;
 			this.galleryAreaTemplates.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryAreaTemplates.Name = "galleryAreaTemplates";
-			componentResourceManager.ApplyResources(this.galleryAreaTemplates, "galleryAreaTemplates");
+			resources.ApplyResources(this.galleryAreaTemplates, "galleryAreaTemplates");
 			this.galleryAreaTemplates.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btToolPerimeter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolPerimeter.CanCustomize = false;
-			this.btToolPerimeter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolPerimeter.Image");
+			this.btToolPerimeter.Image = (global::System.Drawing.Image)resources.GetObject("btToolPerimeter.Image");
 			this.btToolPerimeter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolPerimeter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolPerimeter.Name = "btToolPerimeter";
@@ -1586,7 +1593,7 @@
 				this.lblPerimeterTemplates,
 				this.galleryPerimeterTemplates
 			});
-			componentResourceManager.ApplyResources(this.btToolPerimeter, "btToolPerimeter");
+			resources.ApplyResources(this.btToolPerimeter, "btToolPerimeter");
 			this.btToolPerimeter.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btToolPerimeter_PopupOpen);
 			this.btToolPerimeter.Click += new global::System.EventHandler(this.btToolPerimeter_Click);
 			this.lblNoPerimeter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -1597,7 +1604,7 @@
 			this.lblNoPerimeter.PaddingLeft = 10;
 			this.lblNoPerimeter.PaddingTop = 3;
 			this.lblNoPerimeter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblNoPerimeter, "lblNoPerimeter");
+			resources.ApplyResources(this.lblNoPerimeter, "lblNoPerimeter");
 			this.lblPerimeterFilter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblPerimeterFilter.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.lblPerimeterFilter.CanCustomize = false;
@@ -1606,7 +1613,7 @@
 			this.lblPerimeterFilter.PaddingLeft = 10;
 			this.lblPerimeterFilter.PaddingTop = 3;
 			this.lblPerimeterFilter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblPerimeterFilter, "lblPerimeterFilter");
+			resources.ApplyResources(this.lblPerimeterFilter, "lblPerimeterFilter");
 			this.itemContainerPerimeterFilter.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerPerimeterFilter.CanCustomize = false;
 			this.itemContainerPerimeterFilter.ItemSpacing = 0;
@@ -1642,7 +1649,7 @@
 			this.lblPerimeterGroups.PaddingLeft = 10;
 			this.lblPerimeterGroups.PaddingTop = 3;
 			this.lblPerimeterGroups.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblPerimeterGroups, "lblPerimeterGroups");
+			resources.ApplyResources(this.lblPerimeterGroups, "lblPerimeterGroups");
 			this.galleryPerimeterGroups.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryPerimeterGroups.CanCustomize = false;
 			this.galleryPerimeterGroups.DefaultSize = new global::System.Drawing.Size(200, 20);
@@ -1650,7 +1657,7 @@
 			this.galleryPerimeterGroups.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryPerimeterGroups.Name = "galleryPerimeterGroups";
 			this.galleryPerimeterGroups.ScrollAnimation = false;
-			componentResourceManager.ApplyResources(this.galleryPerimeterGroups, "galleryPerimeterGroups");
+			resources.ApplyResources(this.galleryPerimeterGroups, "galleryPerimeterGroups");
 			this.galleryPerimeterGroups.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblPerimeterTemplates.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblPerimeterTemplates.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1660,18 +1667,18 @@
 			this.lblPerimeterTemplates.PaddingLeft = 10;
 			this.lblPerimeterTemplates.PaddingTop = 3;
 			this.lblPerimeterTemplates.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblPerimeterTemplates, "lblPerimeterTemplates");
+			resources.ApplyResources(this.lblPerimeterTemplates, "lblPerimeterTemplates");
 			this.galleryPerimeterTemplates.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryPerimeterTemplates.CanCustomize = false;
 			this.galleryPerimeterTemplates.DefaultSize = new global::System.Drawing.Size(200, 20);
 			this.galleryPerimeterTemplates.EnableGalleryPopup = false;
 			this.galleryPerimeterTemplates.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryPerimeterTemplates.Name = "galleryPerimeterTemplates";
-			componentResourceManager.ApplyResources(this.galleryPerimeterTemplates, "galleryPerimeterTemplates");
+			resources.ApplyResources(this.galleryPerimeterTemplates, "galleryPerimeterTemplates");
 			this.galleryPerimeterTemplates.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btToolRuler.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolRuler.CanCustomize = false;
-			this.btToolRuler.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolRuler.Image");
+			this.btToolRuler.Image = (global::System.Drawing.Image)resources.GetObject("btToolRuler.Image");
 			this.btToolRuler.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolRuler.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolRuler.Name = "btToolRuler";
@@ -1685,7 +1692,7 @@
 				this.lblDistanceTemplates,
 				this.galleryDistanceTemplates
 			});
-			componentResourceManager.ApplyResources(this.btToolRuler, "btToolRuler");
+			resources.ApplyResources(this.btToolRuler, "btToolRuler");
 			this.btToolRuler.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btToolRuler_PopupOpen);
 			this.btToolRuler.Click += new global::System.EventHandler(this.btToolRuler_Click);
 			this.lblNoDistance.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -1696,7 +1703,7 @@
 			this.lblNoDistance.PaddingLeft = 10;
 			this.lblNoDistance.PaddingTop = 3;
 			this.lblNoDistance.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblNoDistance, "lblNoDistance");
+			resources.ApplyResources(this.lblNoDistance, "lblNoDistance");
 			this.lblDistanceFilter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblDistanceFilter.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.lblDistanceFilter.CanCustomize = false;
@@ -1705,7 +1712,7 @@
 			this.lblDistanceFilter.PaddingLeft = 10;
 			this.lblDistanceFilter.PaddingTop = 3;
 			this.lblDistanceFilter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblDistanceFilter, "lblDistanceFilter");
+			resources.ApplyResources(this.lblDistanceFilter, "lblDistanceFilter");
 			this.itemContainerDistanceFilter.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerDistanceFilter.CanCustomize = false;
 			this.itemContainerDistanceFilter.ItemSpacing = 0;
@@ -1741,7 +1748,7 @@
 			this.lblDistanceGroups.PaddingLeft = 10;
 			this.lblDistanceGroups.PaddingTop = 3;
 			this.lblDistanceGroups.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblDistanceGroups, "lblDistanceGroups");
+			resources.ApplyResources(this.lblDistanceGroups, "lblDistanceGroups");
 			this.galleryDistanceGroups.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryDistanceGroups.CanCustomize = false;
 			this.galleryDistanceGroups.DefaultSize = new global::System.Drawing.Size(200, 20);
@@ -1749,7 +1756,7 @@
 			this.galleryDistanceGroups.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryDistanceGroups.Name = "galleryDistanceGroups";
 			this.galleryDistanceGroups.ScrollAnimation = false;
-			componentResourceManager.ApplyResources(this.galleryDistanceGroups, "galleryDistanceGroups");
+			resources.ApplyResources(this.galleryDistanceGroups, "galleryDistanceGroups");
 			this.galleryDistanceGroups.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblDistanceTemplates.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblDistanceTemplates.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1759,7 +1766,7 @@
 			this.lblDistanceTemplates.PaddingLeft = 10;
 			this.lblDistanceTemplates.PaddingTop = 3;
 			this.lblDistanceTemplates.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblDistanceTemplates, "lblDistanceTemplates");
+			resources.ApplyResources(this.lblDistanceTemplates, "lblDistanceTemplates");
 			this.galleryDistanceTemplates.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryDistanceTemplates.CanCustomize = false;
 			this.galleryDistanceTemplates.DefaultSize = new global::System.Drawing.Size(200, 20);
@@ -1767,11 +1774,11 @@
 			this.galleryDistanceTemplates.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryDistanceTemplates.Name = "galleryDistanceTemplates";
 			this.galleryDistanceTemplates.ScrollAnimation = false;
-			componentResourceManager.ApplyResources(this.galleryDistanceTemplates, "galleryDistanceTemplates");
+			resources.ApplyResources(this.galleryDistanceTemplates, "galleryDistanceTemplates");
 			this.galleryDistanceTemplates.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btToolCounter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolCounter.CanCustomize = false;
-			this.btToolCounter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolCounter.Image");
+			this.btToolCounter.Image = (global::System.Drawing.Image)resources.GetObject("btToolCounter.Image");
 			this.btToolCounter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolCounter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolCounter.Name = "btToolCounter";
@@ -1785,7 +1792,7 @@
 				this.lblCounterTemplates,
 				this.galleryCounterTemplates
 			});
-			componentResourceManager.ApplyResources(this.btToolCounter, "btToolCounter");
+			resources.ApplyResources(this.btToolCounter, "btToolCounter");
 			this.btToolCounter.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btToolCounter_PopupOpen);
 			this.btToolCounter.Click += new global::System.EventHandler(this.btToolCounter_Click);
 			this.lblNoCounter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -1796,7 +1803,7 @@
 			this.lblNoCounter.PaddingLeft = 10;
 			this.lblNoCounter.PaddingTop = 3;
 			this.lblNoCounter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblNoCounter, "lblNoCounter");
+			resources.ApplyResources(this.lblNoCounter, "lblNoCounter");
 			this.lblCounterFilter.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblCounterFilter.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.lblCounterFilter.CanCustomize = false;
@@ -1805,7 +1812,7 @@
 			this.lblCounterFilter.PaddingLeft = 10;
 			this.lblCounterFilter.PaddingTop = 3;
 			this.lblCounterFilter.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblCounterFilter, "lblCounterFilter");
+			resources.ApplyResources(this.lblCounterFilter, "lblCounterFilter");
 			this.itemContainerCounterFilter.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerCounterFilter.CanCustomize = false;
 			this.itemContainerCounterFilter.ItemSpacing = 0;
@@ -1841,7 +1848,7 @@
 			this.lblCounterGroups.PaddingLeft = 10;
 			this.lblCounterGroups.PaddingTop = 3;
 			this.lblCounterGroups.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblCounterGroups, "lblCounterGroups");
+			resources.ApplyResources(this.lblCounterGroups, "lblCounterGroups");
 			this.galleryCounterGroups.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryCounterGroups.CanCustomize = false;
 			this.galleryCounterGroups.DefaultSize = new global::System.Drawing.Size(200, 20);
@@ -1849,7 +1856,7 @@
 			this.galleryCounterGroups.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryCounterGroups.Name = "galleryCounterGroups";
 			this.galleryCounterGroups.ScrollAnimation = false;
-			componentResourceManager.ApplyResources(this.galleryCounterGroups, "galleryCounterGroups");
+			resources.ApplyResources(this.galleryCounterGroups, "galleryCounterGroups");
 			this.galleryCounterGroups.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblCounterTemplates.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblCounterTemplates.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -1859,7 +1866,7 @@
 			this.lblCounterTemplates.PaddingLeft = 10;
 			this.lblCounterTemplates.PaddingTop = 3;
 			this.lblCounterTemplates.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblCounterTemplates, "lblCounterTemplates");
+			resources.ApplyResources(this.lblCounterTemplates, "lblCounterTemplates");
 			this.galleryCounterTemplates.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.galleryCounterTemplates.CanCustomize = false;
 			this.galleryCounterTemplates.DefaultSize = new global::System.Drawing.Size(200, 20);
@@ -1867,11 +1874,11 @@
 			this.galleryCounterTemplates.MinimumSize = new global::System.Drawing.Size(200, 20);
 			this.galleryCounterTemplates.Name = "galleryCounterTemplates";
 			this.galleryCounterTemplates.ScrollAnimation = false;
-			componentResourceManager.ApplyResources(this.galleryCounterTemplates, "galleryCounterTemplates");
+			resources.ApplyResources(this.galleryCounterTemplates, "galleryCounterTemplates");
 			this.galleryCounterTemplates.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btToolAngle.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btToolAngle.CanCustomize = false;
-			this.btToolAngle.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btToolAngle.Image");
+			this.btToolAngle.Image = (global::System.Drawing.Image)resources.GetObject("btToolAngle.Image");
 			this.btToolAngle.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btToolAngle.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btToolAngle.Name = "btToolAngle";
@@ -1882,7 +1889,7 @@
 			this.ribbonBarScale.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarScale.CanCustomize = false;
 			this.ribbonBarScale.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarScale, "ribbonBarScale");
+			resources.ApplyResources(this.ribbonBarScale, "ribbonBarScale");
 			this.ribbonBarScale.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btScaleSet
@@ -1894,7 +1901,7 @@
 			this.ribbonBarScale.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btScaleSet.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btScaleSet.CanCustomize = false;
-			this.btScaleSet.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btScaleSet.Image");
+			this.btScaleSet.Image = (global::System.Drawing.Image)resources.GetObject("btScaleSet.Image");
 			this.btScaleSet.ImageFixedSize = new global::System.Drawing.Size(48, 48);
 			this.btScaleSet.ImagePaddingVertical = 3;
 			this.btScaleSet.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
@@ -1919,7 +1926,7 @@
 			this.lblSystemType.PaddingLeft = 10;
 			this.lblSystemType.PaddingTop = 3;
 			this.lblSystemType.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblSystemType, "lblSystemType");
+			resources.ApplyResources(this.lblSystemType, "lblSystemType");
 			this.btScaleImperial.CanCustomize = false;
 			this.btScaleImperial.Name = "btScaleImperial";
 			this.btScaleImperial.Text = global::QuoterPlan.Properties.Resources.Impérial;
@@ -1936,29 +1943,29 @@
 			this.lblPrecision.PaddingLeft = 10;
 			this.lblPrecision.PaddingTop = 4;
 			this.lblPrecision.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblPrecision, "lblPrecision");
+			resources.ApplyResources(this.lblPrecision, "lblPrecision");
 			this.btScalePrecision64.CanCustomize = false;
 			this.btScalePrecision64.Name = "btScalePrecision64";
-			componentResourceManager.ApplyResources(this.btScalePrecision64, "btScalePrecision64");
+			resources.ApplyResources(this.btScalePrecision64, "btScalePrecision64");
 			this.btScalePrecision64.Click += new global::System.EventHandler(this.btScalePrecision64_Click);
 			this.btScalePrecision32.CanCustomize = false;
 			this.btScalePrecision32.Name = "btScalePrecision32";
-			componentResourceManager.ApplyResources(this.btScalePrecision32, "btScalePrecision32");
+			resources.ApplyResources(this.btScalePrecision32, "btScalePrecision32");
 			this.btScalePrecision32.Click += new global::System.EventHandler(this.btScalePrecision32_Click);
 			this.btScalePrecision16.CanCustomize = false;
 			this.btScalePrecision16.Name = "btScalePrecision16";
-			componentResourceManager.ApplyResources(this.btScalePrecision16, "btScalePrecision16");
+			resources.ApplyResources(this.btScalePrecision16, "btScalePrecision16");
 			this.btScalePrecision16.Click += new global::System.EventHandler(this.btScalePrecision16_Click);
 			this.btScalePrecision8.CanCustomize = false;
 			this.btScalePrecision8.Name = "btScalePrecision8";
-			componentResourceManager.ApplyResources(this.btScalePrecision8, "btScalePrecision8");
+			resources.ApplyResources(this.btScalePrecision8, "btScalePrecision8");
 			this.btScalePrecision8.Click += new global::System.EventHandler(this.btScalePrecision8_Click);
 			this.ribbonBarEdit.AutoOverflowEnabled = false;
 			this.ribbonBarEdit.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarEdit.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarEdit.CanCustomize = false;
 			this.ribbonBarEdit.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarEdit, "ribbonBarEdit");
+			resources.ApplyResources(this.ribbonBarEdit, "ribbonBarEdit");
 			this.ribbonBarEdit.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btEditPaste,
@@ -1972,11 +1979,11 @@
 			this.ribbonBarEdit.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarEdit.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btEditPaste.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btEditPaste.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditPaste.Image");
+			this.btEditPaste.Image = (global::System.Drawing.Image)resources.GetObject("btEditPaste.Image");
 			this.btEditPaste.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEditPaste.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Center;
 			this.btEditPaste.Name = "btEditPaste";
-			componentResourceManager.ApplyResources(this.btEditPaste, "btEditPaste");
+			resources.ApplyResources(this.btEditPaste, "btEditPaste");
 			this.btEditPaste.Click += new global::System.EventHandler(this.btEditPaste_Click);
 			this.itemContainerEdit.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerEdit.HorizontalItemAlignment = global::DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
@@ -1990,21 +1997,21 @@
 			});
 			this.itemContainerEdit.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerEdit.VerticalItemAlignment = global::DevComponents.DotNetBar.eVerticalItemsAlignment.Middle;
-			this.btEditCut.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditCut.Image");
+			this.btEditCut.Image = (global::System.Drawing.Image)resources.GetObject("btEditCut.Image");
 			this.btEditCut.ImageFixedSize = new global::System.Drawing.Size(22, 22);
 			this.btEditCut.ImagePaddingVertical = 1;
 			this.btEditCut.Name = "btEditCut";
-			componentResourceManager.ApplyResources(this.btEditCut, "btEditCut");
+			resources.ApplyResources(this.btEditCut, "btEditCut");
 			this.btEditCut.Click += new global::System.EventHandler(this.btEditCut_Click);
-			this.btEditCopy.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditCopy.Image");
+			this.btEditCopy.Image = (global::System.Drawing.Image)resources.GetObject("btEditCopy.Image");
 			this.btEditCopy.ImagePaddingVertical = 1;
 			this.btEditCopy.Name = "btEditCopy";
-			componentResourceManager.ApplyResources(this.btEditCopy, "btEditCopy");
+			resources.ApplyResources(this.btEditCopy, "btEditCopy");
 			this.btEditCopy.Click += new global::System.EventHandler(this.btEditCopy_Click);
-			this.btEditDelete.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditDelete.Image");
+			this.btEditDelete.Image = (global::System.Drawing.Image)resources.GetObject("btEditDelete.Image");
 			this.btEditDelete.ImagePaddingVertical = 1;
 			this.btEditDelete.Name = "btEditDelete";
-			componentResourceManager.ApplyResources(this.btEditDelete, "btEditDelete");
+			resources.ApplyResources(this.btEditDelete, "btEditDelete");
 			this.btEditDelete.Click += new global::System.EventHandler(this.btEditDelete_Click);
 			this.itemContainerUndoRedo.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerUndoRedo.HorizontalItemAlignment = global::DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
@@ -2019,15 +2026,15 @@
 			this.itemContainerUndoRedo.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerUndoRedo.VerticalItemAlignment = global::DevComponents.DotNetBar.eVerticalItemsAlignment.Middle;
 			this.itemContainerUndoRedo.Visible = false;
-			this.btEditUndo.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditUndo.Image");
+			this.btEditUndo.Image = (global::System.Drawing.Image)resources.GetObject("btEditUndo.Image");
 			this.btEditUndo.ImagePaddingVertical = 2;
 			this.btEditUndo.Name = "btEditUndo";
-			componentResourceManager.ApplyResources(this.btEditUndo, "btEditUndo");
+			resources.ApplyResources(this.btEditUndo, "btEditUndo");
 			this.btEditUndo.Click += new global::System.EventHandler(this.btEditUndo_Click);
-			this.btEditRedo.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEditRedo.Image");
+			this.btEditRedo.Image = (global::System.Drawing.Image)resources.GetObject("btEditRedo.Image");
 			this.btEditRedo.ImagePaddingVertical = 2;
 			this.btEditRedo.Name = "btEditRedo";
-			componentResourceManager.ApplyResources(this.btEditRedo, "btEditRedo");
+			resources.ApplyResources(this.btEditRedo, "btEditRedo");
 			this.btEditRedo.Click += new global::System.EventHandler(this.btEditRedo_Click);
 			this.btEditSendData.AutoExpandOnClick = true;
 			this.btEditSendData.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
@@ -2035,14 +2042,14 @@
 			this.btEditSendData.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btEditSendData.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btEditSendData.Name = "btEditSendData";
-			componentResourceManager.ApplyResources(this.btEditSendData, "btEditSendData");
+			resources.ApplyResources(this.btEditSendData, "btEditSendData");
 			this.btEditSendData.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btEditSendData_PopupOpen);
 			this.btEditSendData.Click += new global::System.EventHandler(this.btEditSendData_Click);
 			this.ribbonBarLayout.AutoOverflowEnabled = false;
 			this.ribbonBarLayout.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarLayout.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarLayout.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarLayout, "ribbonBarLayout");
+			resources.ApplyResources(this.ribbonBarLayout, "ribbonBarLayout");
 			this.ribbonBarLayout.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.itemContainerLayouts
@@ -2067,16 +2074,16 @@
 			this.opTakeoffLayout.Checked = true;
 			this.opTakeoffLayout.CheckState = global::System.Windows.Forms.CheckState.Checked;
 			this.opTakeoffLayout.Name = "opTakeoffLayout";
-			componentResourceManager.ApplyResources(this.opTakeoffLayout, "opTakeoffLayout");
+			resources.ApplyResources(this.opTakeoffLayout, "opTakeoffLayout");
 			this.opEstimatingLayout.CheckBoxPosition = global::DevComponents.DotNetBar.eCheckBoxPosition.Right;
 			this.opEstimatingLayout.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.opEstimatingLayout.Name = "opEstimatingLayout";
-			componentResourceManager.ApplyResources(this.opEstimatingLayout, "opEstimatingLayout");
+			resources.ApplyResources(this.opEstimatingLayout, "opEstimatingLayout");
 			this.ribbonPanelTemplates.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonPanelTemplates.Controls.Add(this.ribbonTemplate);
 			this.ribbonPanelTemplates.Controls.Add(this.ribbonTemplateCreate);
 			this.ribbonPanelTemplates.Controls.Add(this.ribbonTemplateDatabase);
-			componentResourceManager.ApplyResources(this.ribbonPanelTemplates, "ribbonPanelTemplates");
+			resources.ApplyResources(this.ribbonPanelTemplates, "ribbonPanelTemplates");
 			this.ribbonPanelTemplates.Name = "ribbonPanelTemplates";
 			this.ribbonPanelTemplates.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanelTemplates.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -2085,7 +2092,7 @@
 			this.ribbonTemplate.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplate.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplate.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonTemplate, "ribbonTemplate");
+			resources.ApplyResources(this.ribbonTemplate, "ribbonTemplate");
 			this.ribbonTemplate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btTemplateModify,
@@ -2103,30 +2110,30 @@
 			this.btTemplateModify.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateModify.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateModify.Name = "btTemplateModify";
-			componentResourceManager.ApplyResources(this.btTemplateModify, "btTemplateModify");
+			resources.ApplyResources(this.btTemplateModify, "btTemplateModify");
 			this.btTemplateModify.Click += new global::System.EventHandler(this.btTemplateModify_Click);
 			this.btTemplateDuplicate.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplateDuplicate.CanCustomize = false;
-			this.btTemplateDuplicate.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateDuplicate.Image");
+			this.btTemplateDuplicate.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateDuplicate.Image");
 			this.btTemplateDuplicate.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateDuplicate.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateDuplicate.Name = "btTemplateDuplicate";
-			componentResourceManager.ApplyResources(this.btTemplateDuplicate, "btTemplateDuplicate");
+			resources.ApplyResources(this.btTemplateDuplicate, "btTemplateDuplicate");
 			this.btTemplateDuplicate.Click += new global::System.EventHandler(this.btTemplateDuplicate_Click);
 			this.btTemplateDelete.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplateDelete.CanCustomize = false;
-			this.btTemplateDelete.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateDelete.Image");
+			this.btTemplateDelete.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateDelete.Image");
 			this.btTemplateDelete.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateDelete.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateDelete.Name = "btTemplateDelete";
-			componentResourceManager.ApplyResources(this.btTemplateDelete, "btTemplateDelete");
+			resources.ApplyResources(this.btTemplateDelete, "btTemplateDelete");
 			this.btTemplateDelete.Click += new global::System.EventHandler(this.btTemplateDelete_Click);
 			this.ribbonTemplateCreate.AutoOverflowEnabled = false;
 			this.ribbonTemplateCreate.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplateCreate.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplateCreate.CanCustomize = false;
 			this.ribbonTemplateCreate.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonTemplateCreate, "ribbonTemplateCreate");
+			resources.ApplyResources(this.ribbonTemplateCreate, "ribbonTemplateCreate");
 			this.ribbonTemplateCreate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btTemplateArea,
@@ -2141,41 +2148,41 @@
 			this.ribbonTemplateCreate.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btTemplateArea.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplateArea.CanCustomize = false;
-			this.btTemplateArea.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateArea.Image");
+			this.btTemplateArea.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateArea.Image");
 			this.btTemplateArea.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateArea.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateArea.Name = "btTemplateArea";
-			componentResourceManager.ApplyResources(this.btTemplateArea, "btTemplateArea");
+			resources.ApplyResources(this.btTemplateArea, "btTemplateArea");
 			this.btTemplateArea.Click += new global::System.EventHandler(this.btTemplateArea_Click);
 			this.btTemplatePerimeter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplatePerimeter.CanCustomize = false;
-			this.btTemplatePerimeter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplatePerimeter.Image");
+			this.btTemplatePerimeter.Image = (global::System.Drawing.Image)resources.GetObject("btTemplatePerimeter.Image");
 			this.btTemplatePerimeter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplatePerimeter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplatePerimeter.Name = "btTemplatePerimeter";
-			componentResourceManager.ApplyResources(this.btTemplatePerimeter, "btTemplatePerimeter");
+			resources.ApplyResources(this.btTemplatePerimeter, "btTemplatePerimeter");
 			this.btTemplatePerimeter.Click += new global::System.EventHandler(this.btTemplatePerimeter_Click);
 			this.btTemplateLength.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplateLength.CanCustomize = false;
-			this.btTemplateLength.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateLength.Image");
+			this.btTemplateLength.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateLength.Image");
 			this.btTemplateLength.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateLength.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateLength.Name = "btTemplateLength";
-			componentResourceManager.ApplyResources(this.btTemplateLength, "btTemplateLength");
+			resources.ApplyResources(this.btTemplateLength, "btTemplateLength");
 			this.btTemplateLength.Click += new global::System.EventHandler(this.btTemplateLength_Click);
 			this.btTemplateCounter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btTemplateCounter.CanCustomize = false;
-			this.btTemplateCounter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateCounter.Image");
+			this.btTemplateCounter.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateCounter.Image");
 			this.btTemplateCounter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateCounter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateCounter.Name = "btTemplateCounter";
-			componentResourceManager.ApplyResources(this.btTemplateCounter, "btTemplateCounter");
+			resources.ApplyResources(this.btTemplateCounter, "btTemplateCounter");
 			this.btTemplateCounter.Click += new global::System.EventHandler(this.btTemplateCounter_Click);
 			this.ribbonTemplateDatabase.AutoOverflowEnabled = false;
 			this.ribbonTemplateDatabase.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplateDatabase.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplateDatabase.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonTemplateDatabase, "ribbonTemplateDatabase");
+			resources.ApplyResources(this.ribbonTemplateDatabase, "ribbonTemplateDatabase");
 			this.ribbonTemplateDatabase.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btTemplateTradesPackages,
@@ -2187,25 +2194,25 @@
 			this.ribbonTemplateDatabase.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonTemplateDatabase.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btTemplateTradesPackages.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btTemplateTradesPackages.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateTradesPackages.Image");
+			this.btTemplateTradesPackages.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateTradesPackages.Image");
 			this.btTemplateTradesPackages.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateTradesPackages.ImagePaddingHorizontal = 10;
 			this.btTemplateTradesPackages.ImagePaddingVertical = 5;
 			this.btTemplateTradesPackages.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateTradesPackages.Name = "btTemplateTradesPackages";
-			componentResourceManager.ApplyResources(this.btTemplateTradesPackages, "btTemplateTradesPackages");
+			resources.ApplyResources(this.btTemplateTradesPackages, "btTemplateTradesPackages");
 			this.btTemplateCompactDatabase.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btTemplateCompactDatabase.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btTemplateCompactDatabase.Image");
+			this.btTemplateCompactDatabase.Image = (global::System.Drawing.Image)resources.GetObject("btTemplateCompactDatabase.Image");
 			this.btTemplateCompactDatabase.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btTemplateCompactDatabase.ImagePaddingVertical = 5;
 			this.btTemplateCompactDatabase.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btTemplateCompactDatabase.Name = "btTemplateCompactDatabase";
-			componentResourceManager.ApplyResources(this.btTemplateCompactDatabase, "btTemplateCompactDatabase");
+			resources.ApplyResources(this.btTemplateCompactDatabase, "btTemplateCompactDatabase");
 			this.ribbonPanelPlans.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonPanelPlans.Controls.Add(this.ribbonBarMultiPlans);
 			this.ribbonPanelPlans.Controls.Add(this.ribbonBarPlans);
 			this.ribbonPanelPlans.Controls.Add(this.ribbonBarPlansInsert);
-			componentResourceManager.ApplyResources(this.ribbonPanelPlans, "ribbonPanelPlans");
+			resources.ApplyResources(this.ribbonPanelPlans, "ribbonPanelPlans");
 			this.ribbonPanelPlans.Name = "ribbonPanelPlans";
 			this.ribbonPanelPlans.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanelPlans.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -2214,7 +2221,7 @@
 			this.ribbonBarMultiPlans.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarMultiPlans.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarMultiPlans.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarMultiPlans, "ribbonBarMultiPlans");
+			resources.ApplyResources(this.ribbonBarMultiPlans, "ribbonBarMultiPlans");
 			this.ribbonBarMultiPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btPlansPrint,
@@ -2232,7 +2239,7 @@
 			this.btPlansPrint.ImagePaddingVertical = 5;
 			this.btPlansPrint.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlansPrint.Name = "btPlansPrint";
-			componentResourceManager.ApplyResources(this.btPlansPrint, "btPlansPrint");
+			resources.ApplyResources(this.btPlansPrint, "btPlansPrint");
 			this.btPlansPrint.Click += new global::System.EventHandler(this.btPlansPrint_Click);
 			this.btPlansExport.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btPlansExport.Image = global::QuoterPlan.Properties.Resources.file_pdf_40x40;
@@ -2240,14 +2247,14 @@
 			this.btPlansExport.ImagePaddingVertical = 5;
 			this.btPlansExport.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlansExport.Name = "btPlansExport";
-			componentResourceManager.ApplyResources(this.btPlansExport, "btPlansExport");
+			resources.ApplyResources(this.btPlansExport, "btPlansExport");
 			this.btPlansExport.Click += new global::System.EventHandler(this.btPlansExport_Click);
 			this.ribbonBarPlans.AutoOverflowEnabled = false;
 			this.ribbonBarPlans.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlans.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlans.CanCustomize = false;
 			this.ribbonBarPlans.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarPlans, "ribbonBarPlans");
+			resources.ApplyResources(this.ribbonBarPlans, "ribbonBarPlans");
 			this.ribbonBarPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btPlanLoad,
@@ -2262,47 +2269,47 @@
 			this.ribbonBarPlans.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlans.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btPlanLoad.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanLoad.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanLoad.Image");
+			this.btPlanLoad.Image = (global::System.Drawing.Image)resources.GetObject("btPlanLoad.Image");
 			this.btPlanLoad.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanLoad.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanLoad.Name = "btPlanLoad";
-			componentResourceManager.ApplyResources(this.btPlanLoad, "btPlanLoad");
+			resources.ApplyResources(this.btPlanLoad, "btPlanLoad");
 			this.btPlanLoad.Click += new global::System.EventHandler(this.btPlanLoad_Click);
 			this.btPlanProperties.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanProperties.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanProperties.Image");
+			this.btPlanProperties.Image = (global::System.Drawing.Image)resources.GetObject("btPlanProperties.Image");
 			this.btPlanProperties.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanProperties.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanProperties.Name = "btPlanProperties";
-			componentResourceManager.ApplyResources(this.btPlanProperties, "btPlanProperties");
+			resources.ApplyResources(this.btPlanProperties, "btPlanProperties");
 			this.btPlanProperties.Click += new global::System.EventHandler(this.btPlanProperties_Click);
 			this.btPlanRemove.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanRemove.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanRemove.Image");
+			this.btPlanRemove.Image = (global::System.Drawing.Image)resources.GetObject("btPlanRemove.Image");
 			this.btPlanRemove.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanRemove.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanRemove.Name = "btPlanRemove";
-			componentResourceManager.ApplyResources(this.btPlanRemove, "btPlanRemove");
+			resources.ApplyResources(this.btPlanRemove, "btPlanRemove");
 			this.btPlanRemove.Click += new global::System.EventHandler(this.btPlanRemove_Click);
 			this.btPlanExport.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanExport.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanExport.Image");
+			this.btPlanExport.Image = (global::System.Drawing.Image)resources.GetObject("btPlanExport.Image");
 			this.btPlanExport.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanExport.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanExport.Name = "btPlanExport";
-			componentResourceManager.ApplyResources(this.btPlanExport, "btPlanExport");
+			resources.ApplyResources(this.btPlanExport, "btPlanExport");
 			this.btPlanExport.Visible = false;
 			this.btPlanExport.Click += new global::System.EventHandler(this.btPlanExport_Click);
 			this.btPlanDuplicate.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanDuplicate.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanDuplicate.Image");
+			this.btPlanDuplicate.Image = (global::System.Drawing.Image)resources.GetObject("btPlanDuplicate.Image");
 			this.btPlanDuplicate.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanDuplicate.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanDuplicate.Name = "btPlanDuplicate";
-			componentResourceManager.ApplyResources(this.btPlanDuplicate, "btPlanDuplicate");
+			resources.ApplyResources(this.btPlanDuplicate, "btPlanDuplicate");
 			this.btPlanDuplicate.Click += new global::System.EventHandler(this.btPlanDuplicate_Click);
 			this.ribbonBarPlansInsert.AutoOverflowEnabled = false;
 			this.ribbonBarPlansInsert.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlansInsert.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlansInsert.CanCustomize = false;
 			this.ribbonBarPlansInsert.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarPlansInsert, "ribbonBarPlansInsert");
+			resources.ApplyResources(this.ribbonBarPlansInsert, "ribbonBarPlansInsert");
 			this.ribbonBarPlansInsert.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btPlanInsertFromPDF,
@@ -2316,7 +2323,7 @@
 			this.btPlanInsertFromPDF.AutoCollapseOnClick = false;
 			this.btPlanInsertFromPDF.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btPlanInsertFromPDF.CanCustomize = false;
-			this.btPlanInsertFromPDF.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanInsertFromPDF.Image");
+			this.btPlanInsertFromPDF.Image = (global::System.Drawing.Image)resources.GetObject("btPlanInsertFromPDF.Image");
 			this.btPlanInsertFromPDF.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanInsertFromPDF.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanInsertFromPDF.Name = "btPlanInsertFromPDF";
@@ -2331,7 +2338,7 @@
 				this.iblImportColorManagement,
 				this.opConvertToColor
 			});
-			componentResourceManager.ApplyResources(this.btPlanInsertFromPDF, "btPlanInsertFromPDF");
+			resources.ApplyResources(this.btPlanInsertFromPDF, "btPlanInsertFromPDF");
 			this.btPlanInsertFromPDF.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.btPlanInsertFromPDF_PopupOpen);
 			this.btPlanInsertFromPDF.Click += new global::System.EventHandler(this.btPlanInsertFromPDF_Click);
 			this.iblImportDPI.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -2346,7 +2353,7 @@
 			{
 				this.labelItem2
 			});
-			componentResourceManager.ApplyResources(this.iblImportDPI, "iblImportDPI");
+			resources.ApplyResources(this.iblImportDPI, "iblImportDPI");
 			this.labelItem2.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.labelItem2.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.labelItem2.CanCustomize = false;
@@ -2355,22 +2362,22 @@
 			this.labelItem2.PaddingLeft = 10;
 			this.labelItem2.PaddingTop = 3;
 			this.labelItem2.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.labelItem2, "labelItem2");
+			resources.ApplyResources(this.labelItem2, "labelItem2");
 			this.op172Dpi.CanCustomize = false;
 			this.op172Dpi.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.op172Dpi.Name = "op172Dpi";
-			componentResourceManager.ApplyResources(this.op172Dpi, "op172Dpi");
+			resources.ApplyResources(this.op172Dpi, "op172Dpi");
 			this.op172Dpi.Click += new global::System.EventHandler(this.op172Dpi_Click);
 			this.op300Dpi.CanCustomize = false;
 			this.op300Dpi.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.op300Dpi.Name = "op300Dpi";
-			componentResourceManager.ApplyResources(this.op300Dpi, "op300Dpi");
+			resources.ApplyResources(this.op300Dpi, "op300Dpi");
 			this.op300Dpi.Click += new global::System.EventHandler(this.op300Dpi_Click);
 			this.opOtherDpi.AutoCollapseOnClick = false;
 			this.opOtherDpi.CanCustomize = false;
 			this.opOtherDpi.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.opOtherDpi.Name = "opOtherDpi";
-			componentResourceManager.ApplyResources(this.opOtherDpi, "opOtherDpi");
+			resources.ApplyResources(this.opOtherDpi, "opOtherDpi");
 			this.opOtherDpi.Click += new global::System.EventHandler(this.opOtherDpi_Click);
 			this.sliderDpi.AutoCollapseOnClick = false;
 			this.sliderDpi.CanCustomize = false;
@@ -2379,7 +2386,7 @@
 			this.sliderDpi.Maximum = 300;
 			this.sliderDpi.Minimum = 150;
 			this.sliderDpi.Name = "sliderDpi";
-			componentResourceManager.ApplyResources(this.sliderDpi, "sliderDpi");
+			resources.ApplyResources(this.sliderDpi, "sliderDpi");
 			this.sliderDpi.TextColor = global::System.Drawing.Color.Black;
 			this.sliderDpi.TrackMarker = false;
 			this.sliderDpi.Value = 150;
@@ -2399,7 +2406,7 @@
 			this.itemContainerDpi.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblDpi1.CanCustomize = false;
 			this.lblDpi1.Name = "lblDpi1";
-			componentResourceManager.ApplyResources(this.lblDpi1, "lblDpi1");
+			resources.ApplyResources(this.lblDpi1, "lblDpi1");
 			this.lblDpi1.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblDpi1.WordWrap = true;
 			this.labelDpiPadding1.CanCustomize = false;
@@ -2408,7 +2415,7 @@
 			this.labelDpiPadding1.Width = 120;
 			this.lblDpi2.CanCustomize = false;
 			this.lblDpi2.Name = "lblDpi2";
-			componentResourceManager.ApplyResources(this.lblDpi2, "lblDpi2");
+			resources.ApplyResources(this.lblDpi2, "lblDpi2");
 			this.lblDpi2.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblDpi2.WordWrap = true;
 			this.iblImportColorManagement.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -2423,7 +2430,7 @@
 			{
 				this.labelItem4
 			});
-			componentResourceManager.ApplyResources(this.iblImportColorManagement, "iblImportColorManagement");
+			resources.ApplyResources(this.iblImportColorManagement, "iblImportColorManagement");
 			this.labelItem4.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.labelItem4.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.labelItem4.CanCustomize = false;
@@ -2432,23 +2439,23 @@
 			this.labelItem4.PaddingLeft = 10;
 			this.labelItem4.PaddingTop = 3;
 			this.labelItem4.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.labelItem4, "labelItem4");
+			resources.ApplyResources(this.labelItem4, "labelItem4");
 			this.opConvertToColor.CanCustomize = false;
-			componentResourceManager.ApplyResources(this.opConvertToColor, "opConvertToColor");
+			resources.ApplyResources(this.opConvertToColor, "opConvertToColor");
 			this.opConvertToColor.Name = "opConvertToColor";
 			this.opConvertToColor.Click += new global::System.EventHandler(this.opConvertToColor_Click);
 			this.btPlanInsertFromImage.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlanInsertFromImage.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanInsertFromImage.Image");
+			this.btPlanInsertFromImage.Image = (global::System.Drawing.Image)resources.GetObject("btPlanInsertFromImage.Image");
 			this.btPlanInsertFromImage.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlanInsertFromImage.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlanInsertFromImage.Name = "btPlanInsertFromImage";
-			componentResourceManager.ApplyResources(this.btPlanInsertFromImage, "btPlanInsertFromImage");
+			resources.ApplyResources(this.btPlanInsertFromImage, "btPlanInsertFromImage");
 			this.btPlanInsertFromImage.Click += new global::System.EventHandler(this.btPlanInsertFromImage_Click);
 			this.ribbonPanelExtensions.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.ribbonPanelExtensions.Controls.Add(this.ribbonExtension);
 			this.ribbonPanelExtensions.Controls.Add(this.ribbonExtensionCreate);
 			this.ribbonPanelExtensions.Controls.Add(this.ribbonExtensionDatabase);
-			componentResourceManager.ApplyResources(this.ribbonPanelExtensions, "ribbonPanelExtensions");
+			resources.ApplyResources(this.ribbonPanelExtensions, "ribbonPanelExtensions");
 			this.ribbonPanelExtensions.Name = "ribbonPanelExtensions";
 			this.ribbonPanelExtensions.Style.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonPanelExtensions.StyleMouseDown.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -2457,7 +2464,7 @@
 			this.ribbonExtension.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtension.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtension.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonExtension, "ribbonExtension");
+			resources.ApplyResources(this.ribbonExtension, "ribbonExtension");
 			this.ribbonExtension.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btExtensionModify,
@@ -2475,27 +2482,27 @@
 			this.btExtensionModify.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionModify.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionModify.Name = "btExtensionModify";
-			componentResourceManager.ApplyResources(this.btExtensionModify, "btExtensionModify");
+			resources.ApplyResources(this.btExtensionModify, "btExtensionModify");
 			this.btExtensionDuplicate.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionDuplicate.CanCustomize = false;
-			this.btExtensionDuplicate.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionDuplicate.Image");
+			this.btExtensionDuplicate.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionDuplicate.Image");
 			this.btExtensionDuplicate.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionDuplicate.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionDuplicate.Name = "btExtensionDuplicate";
-			componentResourceManager.ApplyResources(this.btExtensionDuplicate, "btExtensionDuplicate");
+			resources.ApplyResources(this.btExtensionDuplicate, "btExtensionDuplicate");
 			this.btExtensionDelete.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionDelete.CanCustomize = false;
-			this.btExtensionDelete.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionDelete.Image");
+			this.btExtensionDelete.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionDelete.Image");
 			this.btExtensionDelete.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionDelete.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionDelete.Name = "btExtensionDelete";
-			componentResourceManager.ApplyResources(this.btExtensionDelete, "btExtensionDelete");
+			resources.ApplyResources(this.btExtensionDelete, "btExtensionDelete");
 			this.ribbonExtensionCreate.AutoOverflowEnabled = false;
 			this.ribbonExtensionCreate.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtensionCreate.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtensionCreate.CanCustomize = false;
 			this.ribbonExtensionCreate.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonExtensionCreate, "ribbonExtensionCreate");
+			resources.ApplyResources(this.ribbonExtensionCreate, "ribbonExtensionCreate");
 			this.ribbonExtensionCreate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btExtensionArea,
@@ -2510,37 +2517,37 @@
 			this.ribbonExtensionCreate.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btExtensionArea.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionArea.CanCustomize = false;
-			this.btExtensionArea.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionArea.Image");
+			this.btExtensionArea.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionArea.Image");
 			this.btExtensionArea.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionArea.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionArea.Name = "btExtensionArea";
-			componentResourceManager.ApplyResources(this.btExtensionArea, "btExtensionArea");
+			resources.ApplyResources(this.btExtensionArea, "btExtensionArea");
 			this.btExtensionPerimeter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionPerimeter.CanCustomize = false;
-			this.btExtensionPerimeter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionPerimeter.Image");
+			this.btExtensionPerimeter.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionPerimeter.Image");
 			this.btExtensionPerimeter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionPerimeter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionPerimeter.Name = "btExtensionPerimeter";
-			componentResourceManager.ApplyResources(this.btExtensionPerimeter, "btExtensionPerimeter");
+			resources.ApplyResources(this.btExtensionPerimeter, "btExtensionPerimeter");
 			this.btExtensionRuler.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionRuler.CanCustomize = false;
-			this.btExtensionRuler.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionRuler.Image");
+			this.btExtensionRuler.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionRuler.Image");
 			this.btExtensionRuler.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionRuler.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionRuler.Name = "btExtensionRuler";
-			componentResourceManager.ApplyResources(this.btExtensionRuler, "btExtensionRuler");
+			resources.ApplyResources(this.btExtensionRuler, "btExtensionRuler");
 			this.btExtensionCounter.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btExtensionCounter.CanCustomize = false;
-			this.btExtensionCounter.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionCounter.Image");
+			this.btExtensionCounter.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionCounter.Image");
 			this.btExtensionCounter.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionCounter.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionCounter.Name = "btExtensionCounter";
-			componentResourceManager.ApplyResources(this.btExtensionCounter, "btExtensionCounter");
+			resources.ApplyResources(this.btExtensionCounter, "btExtensionCounter");
 			this.ribbonExtensionDatabase.AutoOverflowEnabled = false;
 			this.ribbonExtensionDatabase.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtensionDatabase.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtensionDatabase.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonExtensionDatabase, "ribbonExtensionDatabase");
+			resources.ApplyResources(this.ribbonExtensionDatabase, "ribbonExtensionDatabase");
 			this.ribbonExtensionDatabase.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.btExtensionTradesPackages,
@@ -2552,21 +2559,21 @@
 			this.ribbonExtensionDatabase.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonExtensionDatabase.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btExtensionTradesPackages.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btExtensionTradesPackages.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionTradesPackages.Image");
+			this.btExtensionTradesPackages.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionTradesPackages.Image");
 			this.btExtensionTradesPackages.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionTradesPackages.ImagePaddingHorizontal = 10;
 			this.btExtensionTradesPackages.ImagePaddingVertical = 5;
 			this.btExtensionTradesPackages.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionTradesPackages.Name = "btExtensionTradesPackages";
-			componentResourceManager.ApplyResources(this.btExtensionTradesPackages, "btExtensionTradesPackages");
+			resources.ApplyResources(this.btExtensionTradesPackages, "btExtensionTradesPackages");
 			this.btExtensionCompactDatabase.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btExtensionCompactDatabase.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btExtensionCompactDatabase.Image");
+			this.btExtensionCompactDatabase.Image = (global::System.Drawing.Image)resources.GetObject("btExtensionCompactDatabase.Image");
 			this.btExtensionCompactDatabase.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btExtensionCompactDatabase.ImagePaddingVertical = 5;
 			this.btExtensionCompactDatabase.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btExtensionCompactDatabase.Name = "btExtensionCompactDatabase";
-			componentResourceManager.ApplyResources(this.btExtensionCompactDatabase, "btExtensionCompactDatabase");
-			componentResourceManager.ApplyResources(this.contextMenuBar1, "contextMenuBar1");
+			resources.ApplyResources(this.btExtensionCompactDatabase, "btExtensionCompactDatabase");
+			resources.ApplyResources(this.contextMenuBar1, "contextMenuBar1");
 			this.contextMenuBar1.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.bEditPopup
@@ -2619,76 +2626,76 @@
 				this.bGroupMoveTo,
 				this.bGroupMoveToNew
 			});
-			componentResourceManager.ApplyResources(this.bEditPopup, "bEditPopup");
+			resources.ApplyResources(this.bEditPopup, "bEditPopup");
 			this.bEditPopup.Visible = false;
-			componentResourceManager.ApplyResources(this.bAutoAdjustToZone, "bAutoAdjustToZone");
+			resources.ApplyResources(this.bAutoAdjustToZone, "bAutoAdjustToZone");
 			this.bAutoAdjustToZone.BeginGroup = true;
 			this.bAutoAdjustToZone.Name = "bAutoAdjustToZone";
 			this.bAutoAdjustToZone.Click += new global::System.EventHandler(this.btAutoAdjustToZone_Click);
-			componentResourceManager.ApplyResources(this.bEditNote, "bEditNote");
+			resources.ApplyResources(this.bEditNote, "bEditNote");
 			this.bEditNote.Image = global::QuoterPlan.Properties.Resources.note_small;
 			this.bEditNote.Name = "bEditNote";
 			this.bEditNote.Click += new global::System.EventHandler(this.btEditNote_Click);
-			componentResourceManager.ApplyResources(this.bPointInsert, "bPointInsert");
+			resources.ApplyResources(this.bPointInsert, "bPointInsert");
 			this.bPointInsert.Name = "bPointInsert";
 			this.bPointInsert.Click += new global::System.EventHandler(this.btPointInsert_Click);
-			componentResourceManager.ApplyResources(this.bPointRemove, "bPointRemove");
+			resources.ApplyResources(this.bPointRemove, "bPointRemove");
 			this.bPointRemove.Name = "bPointRemove";
 			this.bPointRemove.Click += new global::System.EventHandler(this.btPointRemove_Click);
-			componentResourceManager.ApplyResources(this.bSetHeight, "bSetHeight");
+			resources.ApplyResources(this.bSetHeight, "bSetHeight");
 			this.bSetHeight.Name = "bSetHeight";
 			this.bSetHeight.Click += new global::System.EventHandler(this.bOpeningHeight_Click);
-			componentResourceManager.ApplyResources(this.bGroupAddObject, "bGroupAddObject");
+			resources.ApplyResources(this.bGroupAddObject, "bGroupAddObject");
 			this.bGroupAddObject.BeginGroup = true;
 			this.bGroupAddObject.Name = "bGroupAddObject";
 			this.bGroupAddObject.Click += new global::System.EventHandler(this.btGroupAddObject_Click);
-			componentResourceManager.ApplyResources(this.bDeductionCreate, "bDeductionCreate");
+			resources.ApplyResources(this.bDeductionCreate, "bDeductionCreate");
 			this.bDeductionCreate.Image = global::QuoterPlan.Properties.Resources.deduction_small;
 			this.bDeductionCreate.Name = "bDeductionCreate";
 			this.bDeductionCreate.Click += new global::System.EventHandler(this.btDeductionCreate_Click);
-			componentResourceManager.ApplyResources(this.bDeductionsEdit, "bDeductionsEdit");
+			resources.ApplyResources(this.bDeductionsEdit, "bDeductionsEdit");
 			this.bDeductionsEdit.Name = "bDeductionsEdit";
 			this.bDeductionsEdit.Click += new global::System.EventHandler(this.btDeductionsEdit_Click);
-			componentResourceManager.ApplyResources(this.bPerimeterCreateFromArea, "bPerimeterCreateFromArea");
+			resources.ApplyResources(this.bPerimeterCreateFromArea, "bPerimeterCreateFromArea");
 			this.bPerimeterCreateFromArea.Image = global::QuoterPlan.Properties.Resources.perimeter_small;
 			this.bPerimeterCreateFromArea.Name = "bPerimeterCreateFromArea";
 			this.bPerimeterCreateFromArea.Shortcuts.Add(global::DevComponents.DotNetBar.eShortcut.CtrlP);
 			this.bPerimeterCreateFromArea.Click += new global::System.EventHandler(this.btPerimeterCreateFromArea_Click);
-			componentResourceManager.ApplyResources(this.bOpeningCreateFromPosition, "bOpeningCreateFromPosition");
+			resources.ApplyResources(this.bOpeningCreateFromPosition, "bOpeningCreateFromPosition");
 			this.bOpeningCreateFromPosition.Name = "bOpeningCreateFromPosition";
 			this.bOpeningCreateFromPosition.Click += new global::System.EventHandler(this.btOpeningCreateFromPosition_Click);
-			componentResourceManager.ApplyResources(this.bOpeningDuplicate, "bOpeningDuplicate");
+			resources.ApplyResources(this.bOpeningDuplicate, "bOpeningDuplicate");
 			this.bOpeningDuplicate.Name = "bOpeningDuplicate";
 			this.bOpeningDuplicate.Click += new global::System.EventHandler(this.btOpeningDuplicate_Click);
 			this.bOpeningCreateFromSegment.Name = "bOpeningCreateFromSegment";
-			componentResourceManager.ApplyResources(this.bOpeningCreateFromSegment, "bOpeningCreateFromSegment");
+			resources.ApplyResources(this.bOpeningCreateFromSegment, "bOpeningCreateFromSegment");
 			this.bOpeningCreateFromSegment.Click += new global::System.EventHandler(this.btOpeningCreateFromSegment_Click);
 			this.bOpeningDelete.Name = "bOpeningDelete";
-			componentResourceManager.ApplyResources(this.bOpeningDelete, "bOpeningDelete");
+			resources.ApplyResources(this.bOpeningDelete, "bOpeningDelete");
 			this.bOpeningDelete.Click += new global::System.EventHandler(this.btOpeningDelete_Click);
-			componentResourceManager.ApplyResources(this.bDropInsert, "bDropInsert");
+			resources.ApplyResources(this.bDropInsert, "bDropInsert");
 			this.bDropInsert.Name = "bDropInsert";
 			this.bDropInsert.Click += new global::System.EventHandler(this.btDropInsert_Click);
 			this.bDropRemove.Name = "bDropRemove";
-			componentResourceManager.ApplyResources(this.bDropRemove, "bDropRemove");
+			resources.ApplyResources(this.bDropRemove, "bDropRemove");
 			this.bDropRemove.Click += new global::System.EventHandler(this.btDropRemove_Click);
 			this.bPerimeterOpen.Name = "bPerimeterOpen";
-			componentResourceManager.ApplyResources(this.bPerimeterOpen, "bPerimeterOpen");
+			resources.ApplyResources(this.bPerimeterOpen, "bPerimeterOpen");
 			this.bPerimeterOpen.Click += new global::System.EventHandler(this.btPerimeterOpen_Click);
 			this.bPerimeterClose.Name = "bPerimeterClose";
-			componentResourceManager.ApplyResources(this.bPerimeterClose, "bPerimeterClose");
+			resources.ApplyResources(this.bPerimeterClose, "bPerimeterClose");
 			this.bPerimeterClose.Click += new global::System.EventHandler(this.btPerimeterClose_Click);
 			this.bAngleDegreeType.Name = "bAngleDegreeType";
-			componentResourceManager.ApplyResources(this.bAngleDegreeType, "bAngleDegreeType");
+			resources.ApplyResources(this.bAngleDegreeType, "bAngleDegreeType");
 			this.bAngleDegreeType.Click += new global::System.EventHandler(this.btAngleDegreeType_Click);
 			this.bAngleSlopeType.Name = "bAngleSlopeType";
-			componentResourceManager.ApplyResources(this.bAngleSlopeType, "bAngleSlopeType");
+			resources.ApplyResources(this.bAngleSlopeType, "bAngleSlopeType");
 			this.bAngleSlopeType.Click += new global::System.EventHandler(this.btAngleSlopeType_Click);
-			componentResourceManager.ApplyResources(this.bDeductionDuplicate, "bDeductionDuplicate");
+			resources.ApplyResources(this.bDeductionDuplicate, "bDeductionDuplicate");
 			this.bDeductionDuplicate.BeginGroup = true;
 			this.bDeductionDuplicate.Name = "bDeductionDuplicate";
 			this.bDeductionDuplicate.Click += new global::System.EventHandler(this.btDeductionDuplicate_Click);
-			componentResourceManager.ApplyResources(this.bCut, "bCut");
+			resources.ApplyResources(this.bCut, "bCut");
 			this.bCut.BeginGroup = true;
 			this.bCut.GlobalName = "bCut";
 			this.bCut.Image = global::QuoterPlan.Properties.Resources.cut_16x16;
@@ -2696,47 +2703,47 @@
 			this.bCut.Name = "bCut";
 			this.bCut.PopupAnimation = global::DevComponents.DotNetBar.ePopupAnimation.SystemDefault;
 			this.bCut.Click += new global::System.EventHandler(this.btEditCut_Click);
-			componentResourceManager.ApplyResources(this.bCopy, "bCopy");
+			resources.ApplyResources(this.bCopy, "bCopy");
 			this.bCopy.GlobalName = "bCopy";
 			this.bCopy.Image = global::QuoterPlan.Properties.Resources.copy_16x16;
 			this.bCopy.ImageIndex = 4;
 			this.bCopy.Name = "bCopy";
 			this.bCopy.PopupAnimation = global::DevComponents.DotNetBar.ePopupAnimation.SystemDefault;
 			this.bCopy.Click += new global::System.EventHandler(this.btEditCopy_Click);
-			componentResourceManager.ApplyResources(this.bPaste, "bPaste");
+			resources.ApplyResources(this.bPaste, "bPaste");
 			this.bPaste.GlobalName = "bPaste";
 			this.bPaste.Image = global::QuoterPlan.Properties.Resources.paste_16x16;
 			this.bPaste.ImageIndex = 12;
 			this.bPaste.Name = "bPaste";
 			this.bPaste.PopupAnimation = global::DevComponents.DotNetBar.ePopupAnimation.SystemDefault;
 			this.bPaste.Click += new global::System.EventHandler(this.btEditPaste_Click);
-			componentResourceManager.ApplyResources(this.bDelete, "bDelete");
+			resources.ApplyResources(this.bDelete, "bDelete");
 			this.bDelete.Image = global::QuoterPlan.Properties.Resources.delete_16x16;
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Click += new global::System.EventHandler(this.btEditDelete_Click);
-			componentResourceManager.ApplyResources(this.bToggleMeasures, "bToggleMeasures");
+			resources.ApplyResources(this.bToggleMeasures, "bToggleMeasures");
 			this.bToggleMeasures.BeginGroup = true;
 			this.bToggleMeasures.Name = "bToggleMeasures";
 			this.bToggleMeasures.Click += new global::System.EventHandler(this.btToggleMeasures_Click);
-			componentResourceManager.ApplyResources(this.bZoomToObject, "bZoomToObject");
+			resources.ApplyResources(this.bZoomToObject, "bZoomToObject");
 			this.bZoomToObject.BeginGroup = true;
 			this.bZoomToObject.Image = global::QuoterPlan.Properties.Resources.zoom_16x16;
 			this.bZoomToObject.Name = "bZoomToObject";
 			this.bZoomToObject.Click += new global::System.EventHandler(this.btZoomToObject_Click);
-			componentResourceManager.ApplyResources(this.bZoomToGroup, "bZoomToGroup");
+			resources.ApplyResources(this.bZoomToGroup, "bZoomToGroup");
 			this.bZoomToGroup.Image = global::QuoterPlan.Properties.Resources.selection_16x16_alt;
 			this.bZoomToGroup.Name = "bZoomToGroup";
 			this.bZoomToGroup.Click += new global::System.EventHandler(this.btZoomToGroup_Click);
-			componentResourceManager.ApplyResources(this.bBringToFront, "bBringToFront");
+			resources.ApplyResources(this.bBringToFront, "bBringToFront");
 			this.bBringToFront.BeginGroup = true;
 			this.bBringToFront.Image = global::QuoterPlan.Properties.Resources.bring_to_front_16x16;
 			this.bBringToFront.Name = "bBringToFront";
 			this.bBringToFront.Click += new global::System.EventHandler(this.btEditBringToFront_Click);
-			componentResourceManager.ApplyResources(this.bSendToBack, "bSendToBack");
+			resources.ApplyResources(this.bSendToBack, "bSendToBack");
 			this.bSendToBack.Image = global::QuoterPlan.Properties.Resources.send_to_back_16x16;
 			this.bSendToBack.Name = "bSendToBack";
 			this.bSendToBack.Click += new global::System.EventHandler(this.btEditSendToBack_Click);
-			componentResourceManager.ApplyResources(this.bSelectGroup, "bSelectGroup");
+			resources.ApplyResources(this.bSelectGroup, "bSelectGroup");
 			this.bSelectGroup.BeginGroup = true;
 			this.bSelectGroup.Name = "bSelectGroup";
 			this.bSelectGroup.Click += new global::System.EventHandler(this.btEditSelectGroup_Click);
@@ -2745,23 +2752,23 @@
 			{
 				this.bSelectThisGroup1
 			});
-			componentResourceManager.ApplyResources(this.bSelectThisGroup, "bSelectThisGroup");
+			resources.ApplyResources(this.bSelectThisGroup, "bSelectThisGroup");
 			this.bSelectThisGroup1.Name = "bSelectThisGroup1";
-			componentResourceManager.ApplyResources(this.bSelectThisGroup1, "bSelectThisGroup1");
+			resources.ApplyResources(this.bSelectThisGroup1, "bSelectThisGroup1");
 			this.bSelectObjectType.Name = "bSelectObjectType";
 			this.bSelectObjectType.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.bSelectObjectType1
 			});
-			componentResourceManager.ApplyResources(this.bSelectObjectType, "bSelectObjectType");
+			resources.ApplyResources(this.bSelectObjectType, "bSelectObjectType");
 			this.bSelectObjectType1.Name = "bSelectObjectType1";
-			componentResourceManager.ApplyResources(this.bSelectObjectType1, "bSelectObjectType1");
-			componentResourceManager.ApplyResources(this.bSelectAll, "bSelectAll");
+			resources.ApplyResources(this.bSelectObjectType1, "bSelectObjectType1");
+			resources.ApplyResources(this.bSelectAll, "bSelectAll");
 			this.bSelectAll.GlobalName = "bSelectAll";
 			this.bSelectAll.Name = "bSelectAll";
 			this.bSelectAll.PopupAnimation = global::DevComponents.DotNetBar.ePopupAnimation.SystemDefault;
 			this.bSelectAll.Click += new global::System.EventHandler(this.btEditSelectAll_Click);
-			componentResourceManager.ApplyResources(this.bUnselectAll, "bUnselectAll");
+			resources.ApplyResources(this.bUnselectAll, "bUnselectAll");
 			this.bUnselectAll.Name = "bUnselectAll";
 			this.bUnselectAll.Click += new global::System.EventHandler(this.btUnselectAll_Click);
 			this.bLayerMoveTo.BeginGroup = true;
@@ -2770,37 +2777,37 @@
 			{
 				this.bLayerMoveTo1
 			});
-			componentResourceManager.ApplyResources(this.bLayerMoveTo, "bLayerMoveTo");
+			resources.ApplyResources(this.bLayerMoveTo, "bLayerMoveTo");
 			this.bLayerMoveTo.Click += new global::System.EventHandler(this.btLayerMoveTo_Click);
 			this.bLayerMoveTo1.Name = "bLayerMoveTo1";
-			componentResourceManager.ApplyResources(this.bLayerMoveTo1, "bLayerMoveTo1");
+			resources.ApplyResources(this.bLayerMoveTo1, "bLayerMoveTo1");
 			this.bGroupMoveTo.Name = "bGroupMoveTo";
 			this.bGroupMoveTo.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
 				this.bGroupMoveTo1
 			});
-			componentResourceManager.ApplyResources(this.bGroupMoveTo, "bGroupMoveTo");
+			resources.ApplyResources(this.bGroupMoveTo, "bGroupMoveTo");
 			this.bGroupMoveTo.Click += new global::System.EventHandler(this.btGroupMoveTo_Click);
 			this.bGroupMoveTo1.Name = "bGroupMoveTo1";
-			componentResourceManager.ApplyResources(this.bGroupMoveTo1, "bGroupMoveTo1");
-			componentResourceManager.ApplyResources(this.bGroupMoveToNew, "bGroupMoveToNew");
+			resources.ApplyResources(this.bGroupMoveTo1, "bGroupMoveTo1");
+			resources.ApplyResources(this.bGroupMoveToNew, "bGroupMoveToNew");
 			this.bGroupMoveToNew.Name = "bGroupMoveToNew";
 			this.bGroupMoveToNew.Click += new global::System.EventHandler(this.btGroupMoveToNew_Click);
 			this.ribbonTabStart.Name = "ribbonTabStart";
 			this.ribbonTabStart.Panel = this.ribbonPanel;
-			componentResourceManager.ApplyResources(this.ribbonTabStart, "ribbonTabStart");
+			resources.ApplyResources(this.ribbonTabStart, "ribbonTabStart");
 			this.ribbonTabPlans.Name = "ribbonTabPlans";
 			this.ribbonTabPlans.Panel = this.ribbonPanelPlans;
-			componentResourceManager.ApplyResources(this.ribbonTabPlans, "ribbonTabPlans");
+			resources.ApplyResources(this.ribbonTabPlans, "ribbonTabPlans");
 			this.ribbonTabReport.Name = "ribbonTabReport";
 			this.ribbonTabReport.Panel = this.ribbonPanelReport;
-			componentResourceManager.ApplyResources(this.ribbonTabReport, "ribbonTabReport");
+			resources.ApplyResources(this.ribbonTabReport, "ribbonTabReport");
 			this.ribbonTabEstimatingItems.Checked = true;
 			this.ribbonTabEstimatingItems.Group = this.ribbonTabItemDBManagement;
 			this.ribbonTabEstimatingItems.Name = "ribbonTabEstimatingItems";
 			this.ribbonTabEstimatingItems.Panel = this.ribbonPanelEstimating;
-			componentResourceManager.ApplyResources(this.ribbonTabEstimatingItems, "ribbonTabEstimatingItems");
-			componentResourceManager.ApplyResources(this.ribbonTabItemDBManagement, "ribbonTabItemDBManagement");
+			resources.ApplyResources(this.ribbonTabEstimatingItems, "ribbonTabEstimatingItems");
+			resources.ApplyResources(this.ribbonTabItemDBManagement, "ribbonTabItemDBManagement");
 			this.ribbonTabItemDBManagement.Name = "ribbonTabItemDBManagement";
 			this.ribbonTabItemDBManagement.Style.BackColor = global::System.Drawing.Color.FromArgb(174, 109, 148);
 			this.ribbonTabItemDBManagement.Style.BackColor2 = global::System.Drawing.Color.FromArgb(144, 72, 123);
@@ -2823,11 +2830,11 @@
 			this.ribbonTabTemplates.Group = this.ribbonTabItemDBManagement;
 			this.ribbonTabTemplates.Name = "ribbonTabTemplates";
 			this.ribbonTabTemplates.Panel = this.ribbonPanelTemplates;
-			componentResourceManager.ApplyResources(this.ribbonTabTemplates, "ribbonTabTemplates");
+			resources.ApplyResources(this.ribbonTabTemplates, "ribbonTabTemplates");
 			this.ribbonTabExtensions.Group = this.ribbonTabItemDBManagement;
 			this.ribbonTabExtensions.Name = "ribbonTabExtensions";
 			this.ribbonTabExtensions.Panel = this.ribbonPanelExtensions;
-			componentResourceManager.ApplyResources(this.ribbonTabExtensions, "ribbonTabExtensions");
+			resources.ApplyResources(this.ribbonTabExtensions, "ribbonTabExtensions");
 			this.ribbonTabExtensions.Visible = false;
 			this.lblTrialMessage.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.TextOnlyAlways;
 			this.lblTrialMessage.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Far;
@@ -2843,13 +2850,13 @@
 				this.btLicenseBuy,
 				this.btLicenseActivate
 			});
-			componentResourceManager.ApplyResources(this.btLicensing, "btLicensing");
+			resources.ApplyResources(this.btLicensing, "btLicensing");
 			this.btLicensing.Click += new global::System.EventHandler(this.btLicensing_Click);
 			this.btLicenseBuy.Name = "btLicenseBuy";
-			componentResourceManager.ApplyResources(this.btLicenseBuy, "btLicenseBuy");
+			resources.ApplyResources(this.btLicenseBuy, "btLicenseBuy");
 			this.btLicenseBuy.Click += new global::System.EventHandler(this.btLicenseBuy_Click);
 			this.btLicenseActivate.Name = "btLicenseActivate";
-			componentResourceManager.ApplyResources(this.btLicenseActivate, "btLicenseActivate");
+			resources.ApplyResources(this.btLicenseActivate, "btLicenseActivate");
 			this.btLicenseActivate.Click += new global::System.EventHandler(this.btLicenseActivate_Click);
 			this.btSettings.AutoExpandOnClick = true;
 			this.btSettings.Image = global::QuoterPlan.Properties.Resources.settings_16x16;
@@ -2894,18 +2901,18 @@
 			this.lblLanguage.PaddingLeft = 10;
 			this.lblLanguage.PaddingTop = 3;
 			this.lblLanguage.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblLanguage, "lblLanguage");
+			resources.ApplyResources(this.lblLanguage, "lblLanguage");
 			this.btLanguageEnglish.Name = "btLanguageEnglish";
 			this.btLanguageEnglish.OptionGroup = "Language";
-			componentResourceManager.ApplyResources(this.btLanguageEnglish, "btLanguageEnglish");
+			resources.ApplyResources(this.btLanguageEnglish, "btLanguageEnglish");
 			this.btLanguageEnglish.Click += new global::System.EventHandler(this.btLanguageEnglish_Click);
 			this.btLanguageFrench.Name = "btLanguageFrench";
 			this.btLanguageFrench.OptionGroup = "Language";
-			componentResourceManager.ApplyResources(this.btLanguageFrench, "btLanguageFrench");
+			resources.ApplyResources(this.btLanguageFrench, "btLanguageFrench");
 			this.btLanguageFrench.Click += new global::System.EventHandler(this.btLanguageFrench_Click);
 			this.btLanguageSpanish.Name = "btLanguageSpanish";
 			this.btLanguageSpanish.OptionGroup = "Language";
-			componentResourceManager.ApplyResources(this.btLanguageSpanish, "btLanguageSpanish");
+			resources.ApplyResources(this.btLanguageSpanish, "btLanguageSpanish");
 			this.btLanguageSpanish.Click += new global::System.EventHandler(this.btLanguageSpanish_Click);
 			this.lblScrollSpeed.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblScrollSpeed.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -2915,7 +2922,7 @@
 			this.lblScrollSpeed.PaddingLeft = 10;
 			this.lblScrollSpeed.PaddingTop = 3;
 			this.lblScrollSpeed.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblScrollSpeed, "lblScrollSpeed");
+			resources.ApplyResources(this.lblScrollSpeed, "lblScrollSpeed");
 			this.sliderScrollSpeed.AutoCollapseOnClick = false;
 			this.sliderScrollSpeed.CanCustomize = false;
 			this.sliderScrollSpeed.LabelVisible = false;
@@ -2940,7 +2947,7 @@
 			this.containerScroll.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblScrollFast.CanCustomize = false;
 			this.lblScrollFast.Name = "lblScrollFast";
-			componentResourceManager.ApplyResources(this.lblScrollFast, "lblScrollFast");
+			resources.ApplyResources(this.lblScrollFast, "lblScrollFast");
 			this.lblScrollFast.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblScrollFast.WordWrap = true;
 			this.lblScrollPadding.CanCustomize = false;
@@ -2949,7 +2956,7 @@
 			this.lblScrollPadding.Width = 100;
 			this.lblScrollSlow.CanCustomize = false;
 			this.lblScrollSlow.Name = "lblScrollSlow";
-			componentResourceManager.ApplyResources(this.lblScrollSlow, "lblScrollSlow");
+			resources.ApplyResources(this.lblScrollSlow, "lblScrollSlow");
 			this.lblScrollSlow.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblScrollSlow.WordWrap = true;
 			this.lblDataFolder.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
@@ -2960,7 +2967,7 @@
 			this.lblDataFolder.PaddingLeft = 10;
 			this.lblDataFolder.PaddingTop = 3;
 			this.lblDataFolder.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblDataFolder, "lblDataFolder");
+			resources.ApplyResources(this.lblDataFolder, "lblDataFolder");
 			this.lblDataFolder.Visible = false;
 			this.lblPersonalPreferences.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblPersonalPreferences.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -2974,24 +2981,24 @@
 			{
 				this.buttonItem3
 			});
-			componentResourceManager.ApplyResources(this.lblPersonalPreferences, "lblPersonalPreferences");
+			resources.ApplyResources(this.lblPersonalPreferences, "lblPersonalPreferences");
 			this.buttonItem3.Name = "buttonItem3";
-			componentResourceManager.ApplyResources(this.buttonItem3, "buttonItem3");
+			resources.ApplyResources(this.buttonItem3, "buttonItem3");
 			this.btSelectDataFolder.Name = "btSelectDataFolder";
-			componentResourceManager.ApplyResources(this.btSelectDataFolder, "btSelectDataFolder");
+			resources.ApplyResources(this.btSelectDataFolder, "btSelectDataFolder");
 			this.btSelectDataFolder.Click += new global::System.EventHandler(this.btSelectDataFolder_Click);
 			this.btPersonalPreferences.Name = "btPersonalPreferences";
-			componentResourceManager.ApplyResources(this.btPersonalPreferences, "btPersonalPreferences");
+			resources.ApplyResources(this.btPersonalPreferences, "btPersonalPreferences");
 			this.btPersonalPreferences.Click += new global::System.EventHandler(this.btPersonalPreferences_Click);
 			this.btImportationPreferences.Name = "btImportationPreferences";
-			componentResourceManager.ApplyResources(this.btImportationPreferences, "btImportationPreferences");
+			resources.ApplyResources(this.btImportationPreferences, "btImportationPreferences");
 			this.btImportationPreferences.Click += new global::System.EventHandler(this.btImportationPreferences_Click);
 			this.btEnableAutoBackup.BeginGroup = true;
 			this.btEnableAutoBackup.Name = "btEnableAutoBackup";
-			componentResourceManager.ApplyResources(this.btEnableAutoBackup, "btEnableAutoBackup");
+			resources.ApplyResources(this.btEnableAutoBackup, "btEnableAutoBackup");
 			this.btEnableAutoBackup.Click += new global::System.EventHandler(this.btEnableAutoBackup_Click);
 			this.btSetDBReadOnly.Name = "btSetDBReadOnly";
-			componentResourceManager.ApplyResources(this.btSetDBReadOnly, "btSetDBReadOnly");
+			resources.ApplyResources(this.btSetDBReadOnly, "btSetDBReadOnly");
 			this.btSetDBReadOnly.Click += new global::System.EventHandler(this.btSetDBReadOnly_Click);
 			this.lblTheme.BackColor = global::System.Drawing.Color.FromArgb(221, 231, 238);
 			this.lblTheme.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
@@ -3001,10 +3008,10 @@
 			this.lblTheme.PaddingLeft = 10;
 			this.lblTheme.PaddingTop = 3;
 			this.lblTheme.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblTheme, "lblTheme");
+			resources.ApplyResources(this.lblTheme, "lblTheme");
 			this.btStyleMetro.CanCustomize = false;
 			this.btStyleMetro.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleMetro, "btStyleMetro");
+			resources.ApplyResources(this.btStyleMetro, "btStyleMetro");
 			this.btStyleMetro.Name = "btStyleMetro";
 			this.btStyleMetro.OptionGroup = "style";
 			this.AppCommandTheme.Name = "AppCommandTheme";
@@ -3012,50 +3019,50 @@
 			this.btStyleClassicBlue.BeginGroup = true;
 			this.btStyleClassicBlue.CanCustomize = false;
 			this.btStyleClassicBlue.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleClassicBlue, "btStyleClassicBlue");
+			resources.ApplyResources(this.btStyleClassicBlue, "btStyleClassicBlue");
 			this.btStyleClassicBlue.Name = "btStyleClassicBlue";
 			this.btStyleClassicBlue.OptionGroup = "style";
 			this.btStyleClassicSilver.CanCustomize = false;
 			this.btStyleClassicSilver.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleClassicSilver, "btStyleClassicSilver");
+			resources.ApplyResources(this.btStyleClassicSilver, "btStyleClassicSilver");
 			this.btStyleClassicSilver.Name = "btStyleClassicSilver";
 			this.btStyleClassicSilver.OptionGroup = "style";
 			this.btStyleClassicBlack.CanCustomize = false;
 			this.btStyleClassicBlack.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleClassicBlack, "btStyleClassicBlack");
+			resources.ApplyResources(this.btStyleClassicBlack, "btStyleClassicBlack");
 			this.btStyleClassicBlack.Name = "btStyleClassicBlack";
 			this.btStyleClassicBlack.OptionGroup = "style";
 			this.btStyleClassicExecutive.CanCustomize = false;
 			this.btStyleClassicExecutive.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleClassicExecutive, "btStyleClassicExecutive");
+			resources.ApplyResources(this.btStyleClassicExecutive, "btStyleClassicExecutive");
 			this.btStyleClassicExecutive.Name = "btStyleClassicExecutive";
 			this.btStyleClassicExecutive.OptionGroup = "style";
 			this.btStyleRetroBlue.BeginGroup = true;
 			this.btStyleRetroBlue.CanCustomize = false;
 			this.btStyleRetroBlue.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleRetroBlue, "btStyleRetroBlue");
+			resources.ApplyResources(this.btStyleRetroBlue, "btStyleRetroBlue");
 			this.btStyleRetroBlue.Name = "btStyleRetroBlue";
 			this.btStyleRetroBlue.OptionGroup = "style";
 			this.btStyleRetroSilver.CanCustomize = false;
 			this.btStyleRetroSilver.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleRetroSilver, "btStyleRetroSilver");
+			resources.ApplyResources(this.btStyleRetroSilver, "btStyleRetroSilver");
 			this.btStyleRetroSilver.Name = "btStyleRetroSilver";
 			this.btStyleRetroSilver.OptionGroup = "style";
 			this.btStyleRetroBlack.CanCustomize = false;
 			this.btStyleRetroBlack.Checked = true;
 			this.btStyleRetroBlack.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleRetroBlack, "btStyleRetroBlack");
+			resources.ApplyResources(this.btStyleRetroBlack, "btStyleRetroBlack");
 			this.btStyleRetroBlack.Name = "btStyleRetroBlack";
 			this.btStyleRetroBlack.OptionGroup = "style";
 			this.btStyleRetroGlass.CanCustomize = false;
 			this.btStyleRetroGlass.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleRetroGlass, "btStyleRetroGlass");
+			resources.ApplyResources(this.btStyleRetroGlass, "btStyleRetroGlass");
 			this.btStyleRetroGlass.Name = "btStyleRetroGlass";
 			this.btStyleRetroGlass.OptionGroup = "style";
 			this.btStyleModern.BeginGroup = true;
 			this.btStyleModern.CanCustomize = false;
 			this.btStyleModern.Command = this.AppCommandTheme;
-			componentResourceManager.ApplyResources(this.btStyleModern, "btStyleModern");
+			resources.ApplyResources(this.btStyleModern, "btStyleModern");
 			this.btStyleModern.Name = "btStyleModern";
 			this.btStyleModern.OptionGroup = "style";
 			this.btStyleModern.Visible = false;
@@ -3064,7 +3071,7 @@
 			this.btSetThemeColor.Command = this.AppCommandTheme;
 			this.btSetThemeColor.DisplayMoreColors = false;
 			this.btSetThemeColor.Name = "btSetThemeColor";
-			componentResourceManager.ApplyResources(this.btSetThemeColor, "btSetThemeColor");
+			resources.ApplyResources(this.btSetThemeColor, "btSetThemeColor");
 			this.btSetThemeColor.SelectedColorChanged += new global::System.EventHandler(this.btSetThemeColor_SelectedColorChanged);
 			this.btSetThemeColor.ColorPreview += new global::DevComponents.DotNetBar.ColorPreviewEventHandler(this.btSetThemeColor_ColorPreview);
 			this.btSetThemeColor.PopupShowing += new global::System.EventHandler(this.btSetThemeColor_PopupShowing);
@@ -3077,13 +3084,13 @@
 			this.lblPanels.PaddingLeft = 10;
 			this.lblPanels.PaddingTop = 3;
 			this.lblPanels.SingleLineColor = global::System.Drawing.Color.FromArgb(197, 197, 197);
-			componentResourceManager.ApplyResources(this.lblPanels, "lblPanels");
+			resources.ApplyResources(this.lblPanels, "lblPanels");
 			this.btResetDefaultPanelsLayout.Name = "btResetDefaultPanelsLayout";
-			componentResourceManager.ApplyResources(this.btResetDefaultPanelsLayout, "btResetDefaultPanelsLayout");
+			resources.ApplyResources(this.btResetDefaultPanelsLayout, "btResetDefaultPanelsLayout");
 			this.btResetDefaultPanelsLayout.Click += new global::System.EventHandler(this.btResetDefaultPanelsLayout_Click);
-			this.btHelp.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btHelp.Image");
+			this.btHelp.Image = (global::System.Drawing.Image)resources.GetObject("btHelp.Image");
 			this.btHelp.Name = "btHelp";
-			componentResourceManager.ApplyResources(this.btHelp, "btHelp");
+			resources.ApplyResources(this.btHelp, "btHelp");
 			this.btHelp.Click += new global::System.EventHandler(this.btHelp_Click);
 			this.startButton.AutoExpandOnClick = true;
 			this.startButton.CanCustomize = false;
@@ -3097,7 +3104,7 @@
 			{
 				this.itemContainerFileMenu
 			});
-			componentResourceManager.ApplyResources(this.startButton, "startButton");
+			resources.ApplyResources(this.startButton, "startButton");
 			this.startButton.PopupOpen += new global::DevComponents.DotNetBar.DotNetBarManager.PopupOpenEventHandler(this.startButton_PopupOpen);
 			this.startButton.PopupClose += new global::System.EventHandler(this.startButton_PopupClose);
 			this.itemContainerFileMenu.BackgroundStyle.Class = "RibbonFileMenuTwoColumnContainer";
@@ -3134,79 +3141,79 @@
 			this.itemContainerFileMenu2.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btProjectNew.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectNew.CanCustomize = false;
-			this.btProjectNew.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btProjectNew.Image");
+			this.btProjectNew.Image = (global::System.Drawing.Image)resources.GetObject("btProjectNew.Image");
 			this.btProjectNew.ImagePaddingVertical = 5;
 			this.btProjectNew.Name = "btProjectNew";
 			this.btProjectNew.Shortcuts.Add(global::DevComponents.DotNetBar.eShortcut.CtrlN);
 			this.btProjectNew.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btProjectNew, "btProjectNew");
+			resources.ApplyResources(this.btProjectNew, "btProjectNew");
 			this.btProjectNew.Click += new global::System.EventHandler(this.btProjectNew_Click);
 			this.btProjectOpen.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectOpen.CanCustomize = false;
-			this.btProjectOpen.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btProjectOpen.Image");
+			this.btProjectOpen.Image = (global::System.Drawing.Image)resources.GetObject("btProjectOpen.Image");
 			this.btProjectOpen.ImagePaddingVertical = 5;
 			this.btProjectOpen.Name = "btProjectOpen";
 			this.btProjectOpen.Shortcuts.Add(global::DevComponents.DotNetBar.eShortcut.CtrlO);
 			this.btProjectOpen.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btProjectOpen, "btProjectOpen");
+			resources.ApplyResources(this.btProjectOpen, "btProjectOpen");
 			this.btProjectOpen.Click += new global::System.EventHandler(this.btProjectOpen_Click);
 			this.btProjectSave.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectSave.CanCustomize = false;
-			this.btProjectSave.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btProjectSave.Image");
+			this.btProjectSave.Image = (global::System.Drawing.Image)resources.GetObject("btProjectSave.Image");
 			this.btProjectSave.ImagePaddingVertical = 5;
 			this.btProjectSave.Name = "btProjectSave";
 			this.btProjectSave.Shortcuts.Add(global::DevComponents.DotNetBar.eShortcut.CtrlS);
 			this.btProjectSave.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btProjectSave, "btProjectSave");
+			resources.ApplyResources(this.btProjectSave, "btProjectSave");
 			this.btProjectSave.Click += new global::System.EventHandler(this.btProjectSave_Click);
 			this.btProjectSaveAs.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectSaveAs.CanCustomize = false;
-			this.btProjectSaveAs.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btProjectSaveAs.Image");
+			this.btProjectSaveAs.Image = (global::System.Drawing.Image)resources.GetObject("btProjectSaveAs.Image");
 			this.btProjectSaveAs.ImagePaddingVertical = 5;
 			this.btProjectSaveAs.Name = "btProjectSaveAs";
 			this.btProjectSaveAs.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btProjectSaveAs, "btProjectSaveAs");
+			resources.ApplyResources(this.btProjectSaveAs, "btProjectSaveAs");
 			this.btProjectSaveAs.Click += new global::System.EventHandler(this.btProjectSaveAs_Click);
 			this.btProjectInfo.BeginGroup = true;
 			this.btProjectInfo.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectInfo.CanCustomize = false;
 			this.btProjectInfo.Image = global::QuoterPlan.Properties.Resources.properties;
 			this.btProjectInfo.Name = "btProjectInfo";
-			componentResourceManager.ApplyResources(this.btProjectInfo, "btProjectInfo");
+			resources.ApplyResources(this.btProjectInfo, "btProjectInfo");
 			this.btProjectInfo.Click += new global::System.EventHandler(this.btProjectInfo_Click);
 			this.btProjectClose.BeginGroup = true;
 			this.btProjectClose.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btProjectClose.CanCustomize = false;
-			this.btProjectClose.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btProjectClose.Image");
+			this.btProjectClose.Image = (global::System.Drawing.Image)resources.GetObject("btProjectClose.Image");
 			this.btProjectClose.ImagePaddingVertical = 5;
 			this.btProjectClose.Name = "btProjectClose";
 			this.btProjectClose.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btProjectClose, "btProjectClose");
+			resources.ApplyResources(this.btProjectClose, "btProjectClose");
 			this.btProjectClose.Click += new global::System.EventHandler(this.btProjectClose_Click);
 			this.btHelpContent.BeginGroup = true;
 			this.btHelpContent.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btHelpContent.CanCustomize = false;
-			this.btHelpContent.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btHelpContent.Image");
+			this.btHelpContent.Image = (global::System.Drawing.Image)resources.GetObject("btHelpContent.Image");
 			this.btHelpContent.ImagePaddingVertical = 5;
 			this.btHelpContent.Name = "btHelpContent";
 			this.btHelpContent.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btHelpContent, "btHelpContent");
+			resources.ApplyResources(this.btHelpContent, "btHelpContent");
 			this.btHelpContent.Click += new global::System.EventHandler(this.btHelpContent_Click);
 			this.btHelpYoutube.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btHelpYoutube.CanCustomize = false;
-			this.btHelpYoutube.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btHelpYoutube.Image");
+			this.btHelpYoutube.Image = (global::System.Drawing.Image)resources.GetObject("btHelpYoutube.Image");
 			this.btHelpYoutube.ImagePaddingVertical = 5;
 			this.btHelpYoutube.Name = "btHelpYoutube";
 			this.btHelpYoutube.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btHelpYoutube, "btHelpYoutube");
+			resources.ApplyResources(this.btHelpYoutube, "btHelpYoutube");
 			this.btHelpYoutube.Click += new global::System.EventHandler(this.btHelpYoutube_Click);
 			this.btHelpAbout.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
 			this.btHelpAbout.CanCustomize = false;
-			this.btHelpAbout.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btHelpAbout.Image");
+			this.btHelpAbout.Image = (global::System.Drawing.Image)resources.GetObject("btHelpAbout.Image");
 			this.btHelpAbout.ImagePaddingVertical = 5;
 			this.btHelpAbout.Name = "btHelpAbout";
 			this.btHelpAbout.SubItemsExpandWidth = 24;
-			componentResourceManager.ApplyResources(this.btHelpAbout, "btHelpAbout");
+			resources.ApplyResources(this.btHelpAbout, "btHelpAbout");
 			this.btHelpAbout.Click += new global::System.EventHandler(this.btHelpAbout_Click);
 			this.btLicenseDeactivate.BeginGroup = true;
 			this.btLicenseDeactivate.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
@@ -3214,7 +3221,7 @@
 			this.btLicenseDeactivate.Image = global::QuoterPlan.Properties.Resources.deactivate;
 			this.btLicenseDeactivate.ImagePaddingVertical = 5;
 			this.btLicenseDeactivate.Name = "btLicenseDeactivate";
-			componentResourceManager.ApplyResources(this.btLicenseDeactivate, "btLicenseDeactivate");
+			resources.ApplyResources(this.btLicenseDeactivate, "btLicenseDeactivate");
 			this.btLicenseDeactivate.Click += new global::System.EventHandler(this.btLicenseDeactivate_Click);
 			this.btExit.BeginGroup = true;
 			this.btExit.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
@@ -3222,7 +3229,7 @@
 			this.btExit.Image = global::QuoterPlan.Properties.Resources.exit;
 			this.btExit.Name = "btExit";
 			this.btExit.Shortcuts.Add(global::DevComponents.DotNetBar.eShortcut.AltF4);
-			componentResourceManager.ApplyResources(this.btExit, "btExit");
+			resources.ApplyResources(this.btExit, "btExit");
 			this.btExit.Click += new global::System.EventHandler(this.btExit_Click);
 			this.galleryRecentProjects.BackgroundStyle.Class = "RibbonFileMenuColumnTwoContainer";
 			this.galleryRecentProjects.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -3248,7 +3255,7 @@
 			this.lblFileRecentProjects.PaddingBottom = 2;
 			this.lblFileRecentProjects.PaddingTop = 2;
 			this.lblFileRecentProjects.Stretch = true;
-			componentResourceManager.ApplyResources(this.lblFileRecentProjects, "lblFileRecentProjects");
+			resources.ApplyResources(this.lblFileRecentProjects, "lblFileRecentProjects");
 			this.btSave.Image = global::QuoterPlan.Properties.Resources.document_save_16x16;
 			this.btSave.Name = "btSave";
 			this.btSave.Click += new global::System.EventHandler(this.btProjectSave_Click);
@@ -3260,8 +3267,8 @@
 			this.btRedo.Name = "btRedo";
 			this.btRedo.Click += new global::System.EventHandler(this.btEditRedo_Click);
 			this.galleryGroup1.Name = "galleryGroup1";
-			componentResourceManager.ApplyResources(this.galleryGroup1, "galleryGroup1");
-			componentResourceManager.ApplyResources(this.barStatus, "barStatus");
+			resources.ApplyResources(this.galleryGroup1, "galleryGroup1");
+			resources.ApplyResources(this.barStatus, "barStatus");
 			this.barStatus.AccessibleRole = global::System.Windows.Forms.AccessibleRole.StatusBar;
 			this.barStatus.AntiAlias = true;
 			this.barStatus.BarType = global::DevComponents.DotNetBar.eBarType.StatusBar;
@@ -3288,14 +3295,14 @@
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.PaddingBottom = 3;
 			this.lblStatus.PaddingTop = 3;
-			componentResourceManager.ApplyResources(this.lblStatus, "lblStatus");
+			resources.ApplyResources(this.lblStatus, "lblStatus");
 			this.lblStatus.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblStatusBarPadding.Name = "lblStatusBarPadding";
 			this.lblStatusBarPadding.Width = 3;
 			this.lblOrtho.Name = "lblOrtho";
 			this.lblOrtho.PaddingBottom = 1;
 			this.lblOrtho.PaddingRight = 3;
-			componentResourceManager.ApplyResources(this.lblOrtho, "lblOrtho");
+			resources.ApplyResources(this.lblOrtho, "lblOrtho");
 			this.lblOrtho.TextAlignment = global::System.Drawing.StringAlignment.Far;
 			this.switchOrtho.ButtonWidth = 100;
 			this.switchOrtho.Name = "switchOrtho";
@@ -3315,7 +3322,7 @@
 			this.qualitySlider.LabelVisible = false;
 			this.qualitySlider.Maximum = 1;
 			this.qualitySlider.Name = "qualitySlider";
-			componentResourceManager.ApplyResources(this.qualitySlider, "qualitySlider");
+			resources.ApplyResources(this.qualitySlider, "qualitySlider");
 			this.qualitySlider.TrackMarker = false;
 			this.qualitySlider.Value = 1;
 			this.qualitySlider.Width = 60;
@@ -3328,7 +3335,7 @@
 			{
 				this.lblStatusPadding2
 			});
-			componentResourceManager.ApplyResources(this.lblZoom, "lblZoom");
+			resources.ApplyResources(this.lblZoom, "lblZoom");
 			this.lblZoom.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.lblZoom.Width = 35;
 			this.lblStatusPadding2.Name = "lblStatusPadding2";
@@ -3337,7 +3344,7 @@
 			this.zoomSlider.Maximum = 300;
 			this.zoomSlider.Minimum = 10;
 			this.zoomSlider.Name = "zoomSlider";
-			componentResourceManager.ApplyResources(this.zoomSlider, "zoomSlider");
+			resources.ApplyResources(this.zoomSlider, "zoomSlider");
 			this.zoomSlider.TrackMarker = false;
 			this.zoomSlider.Value = 0;
 			this.zoomSlider.Width = 200;
@@ -3355,7 +3362,7 @@
 			this.lstLayers.Columns.Add(this.columnLayerName);
 			this.lstLayers.Columns.Add(this.columnLayerOpacity);
 			this.lstLayers.ColumnsVisible = false;
-			componentResourceManager.ApplyResources(this.lstLayers, "lstLayers");
+			resources.ApplyResources(this.lstLayers, "lstLayers");
 			this.lstLayers.DragDropEnabled = false;
 			this.lstLayers.DragDropNodeCopyEnabled = false;
 			this.lstLayers.ExpandBorderColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
@@ -3377,14 +3384,14 @@
 			this.lstLayers.Styles.Add(this.elementStyle2);
 			this.lstLayers.Styles.Add(this.elementStyle8);
 			this.columnLayerVisible.Name = "columnLayerVisible";
-			componentResourceManager.ApplyResources(this.columnLayerVisible, "columnLayerVisible");
+			resources.ApplyResources(this.columnLayerVisible, "columnLayerVisible");
 			this.columnLayerVisible.Width.AutoSize = true;
 			this.columnLayerName.MaxInputLength = 50;
 			this.columnLayerName.Name = "columnLayerName";
 			this.columnLayerName.StretchToFill = true;
-			componentResourceManager.ApplyResources(this.columnLayerName, "columnLayerName");
+			resources.ApplyResources(this.columnLayerName, "columnLayerName");
 			this.columnLayerOpacity.Name = "columnLayerOpacity";
-			componentResourceManager.ApplyResources(this.columnLayerOpacity, "columnLayerOpacity");
+			resources.ApplyResources(this.columnLayerOpacity, "columnLayerOpacity");
 			this.columnLayerOpacity.Width.Absolute = 90;
 			this.nodeConnector2.LineColor = global::System.Drawing.SystemColors.ControlText;
 			this.elementStyle1.BorderTopWidth = 1;
@@ -3439,7 +3446,7 @@
 			this.barLayers.CanReorderTabs = false;
 			this.barLayers.CanUndock = false;
 			this.barLayers.ColorScheme.PredefinedColorScheme = global::DevComponents.DotNetBar.ePredefinedColorScheme.Silver2003;
-			componentResourceManager.ApplyResources(this.barLayers, "barLayers");
+			resources.ApplyResources(this.barLayers, "barLayers");
 			this.barLayers.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barLayers.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -3459,7 +3466,7 @@
 			this.barLayers.Stretch = true;
 			this.barLayers.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.barLayers.TabStop = false;
-			this.btLayerAdd.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btLayerAdd.Image");
+			this.btLayerAdd.Image = (global::System.Drawing.Image)resources.GetObject("btLayerAdd.Image");
 			this.btLayerAdd.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btLayerAdd.Name = "btLayerAdd";
 			this.btLayerAdd.Click += new global::System.EventHandler(this.btLayerAdd_Click);
@@ -3467,7 +3474,7 @@
 			this.btLayerRemove.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btLayerRemove.Name = "btLayerRemove";
 			this.btLayerRemove.Click += new global::System.EventHandler(this.btLayerRemove_Click);
-			this.btLayerRename.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btLayerRename.Image");
+			this.btLayerRename.Image = (global::System.Drawing.Image)resources.GetObject("btLayerRename.Image");
 			this.btLayerRename.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btLayerRename.Name = "btLayerRename";
 			this.btLayerRename.Click += new global::System.EventHandler(this.btLayerEdit_Click);
@@ -3508,10 +3515,10 @@
 				this.btLayersMakeInvisible
 			});
 			this.btLayersMakeVisible.Name = "btLayersMakeVisible";
-			componentResourceManager.ApplyResources(this.btLayersMakeVisible, "btLayersMakeVisible");
+			resources.ApplyResources(this.btLayersMakeVisible, "btLayersMakeVisible");
 			this.btLayersMakeVisible.Click += new global::System.EventHandler(this.btLayersMakeVisible_Click);
 			this.btLayersMakeInvisible.Name = "btLayersMakeInvisible";
-			componentResourceManager.ApplyResources(this.btLayersMakeInvisible, "btLayersMakeInvisible");
+			resources.ApplyResources(this.btLayersMakeInvisible, "btLayersMakeInvisible");
 			this.btLayersMakeInvisible.Click += new global::System.EventHandler(this.btLayersMakeInvisible_Click);
 			this.barDisplayResults.CanAutoHide = false;
 			this.barDisplayResults.CanCustomize = false;
@@ -3522,7 +3529,7 @@
 			this.barDisplayResults.CanMove = false;
 			this.barDisplayResults.CanReorderTabs = false;
 			this.barDisplayResults.CanUndock = false;
-			componentResourceManager.ApplyResources(this.barDisplayResults, "barDisplayResults");
+			resources.ApplyResources(this.barDisplayResults, "barDisplayResults");
 			this.barDisplayResults.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barDisplayResults.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -3544,14 +3551,14 @@
 			this.lblDisplayResults.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Far;
 			this.lblDisplayResults.Name = "lblDisplayResults";
 			this.lblDisplayResults.PaddingRight = 3;
-			componentResourceManager.ApplyResources(this.lblDisplayResults, "lblDisplayResults");
+			resources.ApplyResources(this.lblDisplayResults, "lblDisplayResults");
 			this.btDisplayResultsForThisPlan.AutoCheckOnClick = true;
 			this.btDisplayResultsForThisPlan.CanCustomize = false;
 			this.btDisplayResultsForThisPlan.Checked = true;
 			this.btDisplayResultsForThisPlan.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Far;
 			this.btDisplayResultsForThisPlan.Name = "btDisplayResultsForThisPlan";
 			this.btDisplayResultsForThisPlan.OptionGroup = "DisplayResults";
-			componentResourceManager.ApplyResources(this.btDisplayResultsForThisPlan, "btDisplayResultsForThisPlan");
+			resources.ApplyResources(this.btDisplayResultsForThisPlan, "btDisplayResultsForThisPlan");
 			this.lblDisplayResultsPadding.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Far;
 			this.lblDisplayResultsPadding.Name = "lblDisplayResultsPadding";
 			this.lblDisplayResultsPadding.Width = 1;
@@ -3560,7 +3567,7 @@
 			this.btDisplayResultsForAllPlans.ItemAlignment = global::DevComponents.DotNetBar.eItemAlignment.Far;
 			this.btDisplayResultsForAllPlans.Name = "btDisplayResultsForAllPlans";
 			this.btDisplayResultsForAllPlans.OptionGroup = "DisplayResults";
-			componentResourceManager.ApplyResources(this.btDisplayResultsForAllPlans, "btDisplayResultsForAllPlans");
+			resources.ApplyResources(this.btDisplayResultsForAllPlans, "btDisplayResultsForAllPlans");
 			this.tabProperties.BackColor = global::System.Drawing.Color.FromArgb(113, 113, 113);
 			this.tabProperties.CanReorderTabs = false;
 			this.tabProperties.ColorScheme.TabBorder = global::System.Drawing.Color.Transparent;
@@ -3587,7 +3594,7 @@
 			});
 			this.tabProperties.Controls.Add(this.tabControlPanel1);
 			this.tabProperties.Controls.Add(this.tabControlPanel2);
-			componentResourceManager.ApplyResources(this.tabProperties, "tabProperties");
+			resources.ApplyResources(this.tabProperties, "tabProperties");
 			this.tabProperties.ForeColor = global::System.Drawing.Color.Black;
 			this.tabProperties.Name = "tabProperties";
 			this.tabProperties.SelectedTabFont = new global::System.Drawing.Font("Microsoft Sans Serif", 8.25f, global::System.Drawing.FontStyle.Bold);
@@ -3600,7 +3607,7 @@
 			this.tabControlPanel1.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.tabControlPanel1.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.tabControlPanel1.Controls.Add(this.superTabProperties);
-			componentResourceManager.ApplyResources(this.tabControlPanel1, "tabControlPanel1");
+			resources.ApplyResources(this.tabControlPanel1, "tabControlPanel1");
 			this.tabControlPanel1.Name = "tabControlPanel1";
 			this.tabControlPanel1.Style.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
 			this.tabControlPanel1.Style.BorderWidth = 0;
@@ -3619,7 +3626,7 @@
 				this.superTabProperties.ControlBox.CloseBox
 			});
 			this.superTabProperties.Controls.Add(this.superTabControlPanel1);
-			componentResourceManager.ApplyResources(this.superTabProperties, "superTabProperties");
+			resources.ApplyResources(this.superTabProperties, "superTabProperties");
 			this.superTabProperties.ForeColor = global::System.Drawing.Color.Black;
 			this.superTabProperties.Name = "superTabProperties";
 			this.superTabProperties.ReorderTabsEnabled = false;
@@ -3634,16 +3641,16 @@
 			this.superTabProperties.TabsVisible = false;
 			this.superTabProperties.TabVerticalSpacing = 5;
 			this.superTabControlPanel1.Controls.Add(this.gridObjectProperties);
-			componentResourceManager.ApplyResources(this.superTabControlPanel1, "superTabControlPanel1");
+			resources.ApplyResources(this.superTabControlPanel1, "superTabControlPanel1");
 			this.superTabControlPanel1.Name = "superTabControlPanel1";
 			this.superTabControlPanel1.TabItem = this.superTabItem1;
-			componentResourceManager.ApplyResources(this.gridObjectProperties, "gridObjectProperties");
+			resources.ApplyResources(this.gridObjectProperties, "gridObjectProperties");
 			this.gridObjectProperties.GridLinesColor = global::System.Drawing.Color.WhiteSmoke;
 			this.gridObjectProperties.Name = "gridObjectProperties";
 			this.superTabItem1.AttachedControl = this.superTabControlPanel1;
 			this.superTabItem1.GlobalItem = false;
 			this.superTabItem1.Name = "superTabItem1";
-			componentResourceManager.ApplyResources(this.superTabItem1, "superTabItem1");
+			resources.ApplyResources(this.superTabItem1, "superTabItem1");
 			this.superTabItem1.TextAlignment = new global::DevComponents.DotNetBar.eItemAlignment?(global::DevComponents.DotNetBar.eItemAlignment.Center);
 			this.tabItem1.AttachedControl = this.tabControlPanel1;
 			this.tabItem1.Name = "tabItem1";
@@ -3651,7 +3658,7 @@
 			this.tabControlPanel2.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.tabControlPanel2.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.tabControlPanel2.Controls.Add(this.extensionsManager);
-			componentResourceManager.ApplyResources(this.tabControlPanel2, "tabControlPanel2");
+			resources.ApplyResources(this.tabControlPanel2, "tabControlPanel2");
 			this.tabControlPanel2.Name = "tabControlPanel2";
 			this.tabControlPanel2.Style.BackColor2.Color = global::System.Drawing.Color.FromArgb(251, 250, 247);
 			this.tabControlPanel2.Style.BorderSide = (global::DevComponents.DotNetBar.eBorderSide.Left | global::DevComponents.DotNetBar.eBorderSide.Right | global::DevComponents.DotNetBar.eBorderSide.Top);
@@ -3659,14 +3666,14 @@
 			this.tabControlPanel2.TabItem = this.tabItem2;
 			this.tabControlPanel2.UseCustomStyle = true;
 			this.extensionsManager.BackColor = global::System.Drawing.SystemColors.Window;
-			componentResourceManager.ApplyResources(this.extensionsManager, "extensionsManager");
+			resources.ApplyResources(this.extensionsManager, "extensionsManager");
 			this.extensionsManager.HelpUtilities = null;
 			this.extensionsManager.Name = "extensionsManager";
 			this.tabItem2.AttachedControl = this.tabControlPanel2;
 			this.tabItem2.Name = "tabItem2";
-			componentResourceManager.ApplyResources(this.tabItem2, "tabItem2");
+			resources.ApplyResources(this.tabItem2, "tabItem2");
 			this.cbObjects.DisableInternalDrawing = true;
-			componentResourceManager.ApplyResources(this.cbObjects, "cbObjects");
+			resources.ApplyResources(this.cbObjects, "cbObjects");
 			this.cbObjects.DrawMode = global::System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.cbObjects.DropDownHeight = 220;
 			this.cbObjects.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -3675,7 +3682,7 @@
 			this.cbObjects.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.cbObjects.WatermarkEnabled = false;
 			this.panControl.BackColor = global::System.Drawing.SystemColors.Window;
-			componentResourceManager.ApplyResources(this.panControl, "panControl");
+			resources.ApplyResources(this.panControl, "panControl");
 			this.panControl.Name = "panControl";
 			this.panControl.PanFromScrolling = false;
 			this.panControl.PanRectangle = new global::System.Drawing.Rectangle(0, 0, 1, 1);
@@ -3697,7 +3704,7 @@
 			this.lstRecentPlans.Columns.Add(this.columnHeader2);
 			this.lstRecentPlans.Columns.Add(this.columnHeader5);
 			this.lstRecentPlans.ColumnsVisible = false;
-			componentResourceManager.ApplyResources(this.lstRecentPlans, "lstRecentPlans");
+			resources.ApplyResources(this.lstRecentPlans, "lstRecentPlans");
 			this.lstRecentPlans.DragDropEnabled = false;
 			this.lstRecentPlans.DragDropNodeCopyEnabled = false;
 			this.lstRecentPlans.ExpandBorderColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
@@ -3715,14 +3722,14 @@
 			this.lstRecentPlans.Styles.Add(this.elementStyle4);
 			this.columnHeader1.Editable = false;
 			this.columnHeader1.Name = "columnHeader1";
-			componentResourceManager.ApplyResources(this.columnHeader1, "columnHeader1");
+			resources.ApplyResources(this.columnHeader1, "columnHeader1");
 			this.columnHeader1.Width.Absolute = 22;
 			this.columnHeader2.Name = "columnHeader2";
 			this.columnHeader2.StretchToFill = true;
-			componentResourceManager.ApplyResources(this.columnHeader2, "columnHeader2");
+			resources.ApplyResources(this.columnHeader2, "columnHeader2");
 			this.columnHeader2.Width.AutoSize = true;
 			this.columnHeader5.Name = "columnHeader5";
-			componentResourceManager.ApplyResources(this.columnHeader5, "columnHeader5");
+			resources.ApplyResources(this.columnHeader5, "columnHeader5");
 			this.columnHeader5.Width.Absolute = 3;
 			this.nodeConnector3.LineColor = global::System.Drawing.SystemColors.ControlText;
 			this.elementStyle3.BackColor2SchemePart = global::DevComponents.DotNetBar.eColorSchemePart.ItemHotBackground2;
@@ -3768,7 +3775,7 @@
 			this.barRecentPlans.CanReorderTabs = false;
 			this.barRecentPlans.CanUndock = false;
 			this.barRecentPlans.ColorScheme.PredefinedColorScheme = global::DevComponents.DotNetBar.ePredefinedColorScheme.Silver2003;
-			componentResourceManager.ApplyResources(this.barRecentPlans, "barRecentPlans");
+			resources.ApplyResources(this.barRecentPlans, "barRecentPlans");
 			this.barRecentPlans.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barRecentPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -3780,7 +3787,7 @@
 			this.barRecentPlans.Stretch = true;
 			this.barRecentPlans.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.barRecentPlans.TabStop = false;
-			this.btPlanRename.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlanRename.Image");
+			this.btPlanRename.Image = (global::System.Drawing.Image)resources.GetObject("btPlanRename.Image");
 			this.btPlanRename.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btPlanRename.Name = "btPlanRename";
 			this.btPlanRename.Click += new global::System.EventHandler(this.btPlanRename_Click);
@@ -3799,7 +3806,7 @@
 			this.treeObjects.Columns.Add(this.columnObjectVisible);
 			this.treeObjects.Columns.Add(this.columnObjectPadding);
 			this.treeObjects.ColumnsVisible = false;
-			componentResourceManager.ApplyResources(this.treeObjects, "treeObjects");
+			resources.ApplyResources(this.treeObjects, "treeObjects");
 			this.treeObjects.DragDropNodeCopyEnabled = false;
 			this.treeObjects.DropAsChildOffset = 0;
 			this.treeObjects.ExpandWidth = 12;
@@ -3819,30 +3826,30 @@
 			this.treeObjects.Styles.Add(this.elementStyle7);
 			this.columnObjectIcon.Name = "columnObjectIcon";
 			this.columnObjectIcon.SortingEnabled = false;
-			componentResourceManager.ApplyResources(this.columnObjectIcon, "columnObjectIcon");
+			resources.ApplyResources(this.columnObjectIcon, "columnObjectIcon");
 			this.columnObjectIcon.Width.Absolute = 44;
 			this.columnObjectName.MaxInputLength = 50;
 			this.columnObjectName.Name = "columnObjectName";
 			this.columnObjectName.SortingEnabled = false;
-			componentResourceManager.ApplyResources(this.columnObjectName, "columnObjectName");
+			resources.ApplyResources(this.columnObjectName, "columnObjectName");
 			this.columnObjectName.Width.Relative = 46;
 			this.columnObjectInfo.Name = "columnObjectInfo";
 			this.columnObjectInfo.SortingEnabled = false;
 			this.columnObjectInfo.StretchToFill = true;
-			componentResourceManager.ApplyResources(this.columnObjectInfo, "columnObjectInfo");
+			resources.ApplyResources(this.columnObjectInfo, "columnObjectInfo");
 			this.columnObjectInfo.Width.Relative = 31;
 			this.columnObjectColor.Name = "columnObjectColor";
 			this.columnObjectColor.SortingEnabled = false;
-			componentResourceManager.ApplyResources(this.columnObjectColor, "columnObjectColor");
+			resources.ApplyResources(this.columnObjectColor, "columnObjectColor");
 			this.columnObjectColor.Visible = false;
 			this.columnObjectColor.Width.AutoSize = true;
 			this.columnObjectVisible.Name = "columnObjectVisible";
 			this.columnObjectVisible.SortingEnabled = false;
-			componentResourceManager.ApplyResources(this.columnObjectVisible, "columnObjectVisible");
+			resources.ApplyResources(this.columnObjectVisible, "columnObjectVisible");
 			this.columnObjectVisible.Width.AutoSize = true;
 			this.columnObjectPadding.Name = "columnObjectPadding";
 			this.columnObjectPadding.SortingEnabled = false;
-			componentResourceManager.ApplyResources(this.columnObjectPadding, "columnObjectPadding");
+			resources.ApplyResources(this.columnObjectPadding, "columnObjectPadding");
 			this.columnObjectPadding.Width.Absolute = 1;
 			this.nodeConnector1.LineColor = global::System.Drawing.SystemColors.ControlText;
 			this.elementStyle7.BackColor = global::System.Drawing.Color.FromArgb(221, 230, 247);
@@ -3868,14 +3875,14 @@
 			this.elementStyle7.TextColor = global::System.Drawing.Color.Black;
 			this.panelPlanName.Controls.Add(this.txtPlanName);
 			this.panelPlanName.Controls.Add(this.cbPlans);
-			componentResourceManager.ApplyResources(this.panelPlanName, "panelPlanName");
+			resources.ApplyResources(this.panelPlanName, "panelPlanName");
 			this.panelPlanName.Name = "panelPlanName";
 			this.txtPlanName.AssociatedLabel = null;
-			componentResourceManager.ApplyResources(this.txtPlanName, "txtPlanName");
+			resources.ApplyResources(this.txtPlanName, "txtPlanName");
 			this.txtPlanName.Name = "txtPlanName";
 			this.txtPlanName.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 			this.cbPlans.DisableInternalDrawing = true;
-			componentResourceManager.ApplyResources(this.cbPlans, "cbPlans");
+			resources.ApplyResources(this.cbPlans, "cbPlans");
 			this.cbPlans.DrawMode = global::System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.cbPlans.DropDownHeight = 220;
 			this.cbPlans.DropDownStyle = global::System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -3894,7 +3901,7 @@
 			this.barGroups.CanReorderTabs = false;
 			this.barGroups.CanUndock = false;
 			this.barGroups.ColorScheme.PredefinedColorScheme = global::DevComponents.DotNetBar.ePredefinedColorScheme.Silver2003;
-			componentResourceManager.ApplyResources(this.barGroups, "barGroups");
+			resources.ApplyResources(this.barGroups, "barGroups");
 			this.barGroups.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barGroups.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -3929,7 +3936,7 @@
 			this.btGroupRemove.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btGroupRemove.Name = "btGroupRemove";
 			this.btGroupRemove.Click += new global::System.EventHandler(this.btGroupRemove_Click);
-			this.btGroupRename.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btGroupRename.Image");
+			this.btGroupRename.Image = (global::System.Drawing.Image)resources.GetObject("btGroupRename.Image");
 			this.btGroupRename.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btGroupRename.Name = "btGroupRename";
 			this.btGroupRename.Click += new global::System.EventHandler(this.btGroupRename_Click);
@@ -3952,10 +3959,10 @@
 				this.btGroupsMakeInvisible
 			});
 			this.btGroupsMakeVisible.Name = "btGroupsMakeVisible";
-			componentResourceManager.ApplyResources(this.btGroupsMakeVisible, "btGroupsMakeVisible");
+			resources.ApplyResources(this.btGroupsMakeVisible, "btGroupsMakeVisible");
 			this.btGroupsMakeVisible.Click += new global::System.EventHandler(this.btGroupsMakeVisible_Click);
 			this.btGroupsMakeInvisible.Name = "btGroupsMakeInvisible";
-			componentResourceManager.ApplyResources(this.btGroupsMakeInvisible, "btGroupsMakeInvisible");
+			resources.ApplyResources(this.btGroupsMakeInvisible, "btGroupsMakeInvisible");
 			this.btGroupsMakeInvisible.Click += new global::System.EventHandler(this.btGroupsMakeInvisible_Click);
 			this.checkBoxItem1.Name = "checkBoxItem1";
 			this.checkBoxItem1.TextVisible = false;
@@ -3965,11 +3972,11 @@
 			this.sliderItem1.TrackMarker = false;
 			this.sliderItem1.Value = 0;
 			this.checkBoxItem2.Name = "checkBoxItem2";
-			componentResourceManager.ApplyResources(this.checkBoxItem2, "checkBoxItem2");
+			resources.ApplyResources(this.checkBoxItem2, "checkBoxItem2");
 			this.checkBoxItem2.TextVisible = false;
 			this.sliderItem2.LabelVisible = false;
 			this.sliderItem2.Name = "sliderItem2";
-			componentResourceManager.ApplyResources(this.sliderItem2, "sliderItem2");
+			resources.ApplyResources(this.sliderItem2, "sliderItem2");
 			this.sliderItem2.TrackMarker = false;
 			this.sliderItem2.Value = 0;
 			this.timer1.Interval = 10.0;
@@ -3990,14 +3997,14 @@
 			this.backgroundWorker.WorkerReportsProgress = true;
 			this.backgroundWorker.WorkerSupportsCancellation = true;
 			this.flowPlans.AllowDrop = true;
-			componentResourceManager.ApplyResources(this.flowPlans, "flowPlans");
+			resources.ApplyResources(this.flowPlans, "flowPlans");
 			this.flowPlans.BackColor = global::System.Drawing.SystemColors.Window;
 			this.flowPlans.Name = "flowPlans";
 			this.sliderItem4.LabelVisible = false;
 			this.sliderItem4.Maximum = 300;
 			this.sliderItem4.Minimum = 10;
 			this.sliderItem4.Name = "sliderItem4";
-			componentResourceManager.ApplyResources(this.sliderItem4, "sliderItem4");
+			resources.ApplyResources(this.sliderItem4, "sliderItem4");
 			this.sliderItem4.TrackMarker = false;
 			this.sliderItem4.Value = 0;
 			this.sliderItem4.Width = 200;
@@ -4012,13 +4019,13 @@
 			this.itemContainerBrightness.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblBrightness.Name = "lblBrightness";
 			this.lblBrightness.PaddingTop = 12;
-			componentResourceManager.ApplyResources(this.lblBrightness, "lblBrightness");
+			resources.ApplyResources(this.lblBrightness, "lblBrightness");
 			this.lblBrightness.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.sliderBrightness.LabelPosition = global::DevComponents.DotNetBar.eSliderLabelPosition.Bottom;
 			this.sliderBrightness.Maximum = 255;
 			this.sliderBrightness.Minimum = -255;
 			this.sliderBrightness.Name = "sliderBrightness";
-			componentResourceManager.ApplyResources(this.sliderBrightness, "sliderBrightness");
+			resources.ApplyResources(this.sliderBrightness, "sliderBrightness");
 			this.sliderBrightness.TextColor = global::System.Drawing.Color.Black;
 			this.sliderBrightness.Value = 0;
 			this.sliderBrightness.ValueChanged += new global::System.EventHandler(this.sliderBrightness_ValueChanged);
@@ -4035,12 +4042,12 @@
 			this.itemContainerContrast.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblContrast.Name = "lblContrast";
 			this.lblContrast.PaddingTop = 12;
-			componentResourceManager.ApplyResources(this.lblContrast, "lblContrast");
+			resources.ApplyResources(this.lblContrast, "lblContrast");
 			this.lblContrast.TextAlignment = global::System.Drawing.StringAlignment.Center;
 			this.sliderContrast.LabelPosition = global::DevComponents.DotNetBar.eSliderLabelPosition.Bottom;
 			this.sliderContrast.Minimum = -100;
 			this.sliderContrast.Name = "sliderContrast";
-			componentResourceManager.ApplyResources(this.sliderContrast, "sliderContrast");
+			resources.ApplyResources(this.sliderContrast, "sliderContrast");
 			this.sliderContrast.TextColor = global::System.Drawing.Color.Black;
 			this.sliderContrast.Value = 0;
 			this.sliderContrast.ValueChanged += new global::System.EventHandler(this.sliderContrast_ValueChanged);
@@ -4048,7 +4055,7 @@
 			this.ribbonBarBrightnessContrast.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarBrightnessContrast.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarBrightnessContrast.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarBrightnessContrast, "ribbonBarBrightnessContrast");
+			resources.ApplyResources(this.ribbonBarBrightnessContrast, "ribbonBarBrightnessContrast");
 			this.ribbonBarBrightnessContrast.HorizontalItemAlignment = global::DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
 			this.ribbonBarBrightnessContrast.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -4075,28 +4082,28 @@
 			this.lblBrightnessContrastPadding3.Name = "lblBrightnessContrastPadding3";
 			this.lblBrightnessContrastPadding3.Width = 5;
 			this.btBrightnessContrastApply.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrightnessContrastApply.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrightnessContrastApply.Image");
+			this.btBrightnessContrastApply.Image = (global::System.Drawing.Image)resources.GetObject("btBrightnessContrastApply.Image");
 			this.btBrightnessContrastApply.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btBrightnessContrastApply.Name = "btBrightnessContrastApply";
-			componentResourceManager.ApplyResources(this.btBrightnessContrastApply, "btBrightnessContrastApply");
+			resources.ApplyResources(this.btBrightnessContrastApply, "btBrightnessContrastApply");
 			this.btBrightnessContrastApply.Click += new global::System.EventHandler(this.btBrightnessContrastApply_Click);
 			this.btBrightnessContrastCancel.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrightnessContrastCancel.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrightnessContrastCancel.Image");
+			this.btBrightnessContrastCancel.Image = (global::System.Drawing.Image)resources.GetObject("btBrightnessContrastCancel.Image");
 			this.btBrightnessContrastCancel.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btBrightnessContrastCancel.Name = "btBrightnessContrastCancel";
-			componentResourceManager.ApplyResources(this.btBrightnessContrastCancel, "btBrightnessContrastCancel");
+			resources.ApplyResources(this.btBrightnessContrastCancel, "btBrightnessContrastCancel");
 			this.btBrightnessContrastCancel.Click += new global::System.EventHandler(this.btBrightnessContrastCancel_Click);
 			this.btBrightnessContrastRestore.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btBrightnessContrastRestore.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btBrightnessContrastRestore.Image");
+			this.btBrightnessContrastRestore.Image = (global::System.Drawing.Image)resources.GetObject("btBrightnessContrastRestore.Image");
 			this.btBrightnessContrastRestore.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btBrightnessContrastRestore.Name = "btBrightnessContrastRestore";
 			this.btBrightnessContrastRestore.Stretch = true;
-			componentResourceManager.ApplyResources(this.btBrightnessContrastRestore, "btBrightnessContrastRestore");
+			resources.ApplyResources(this.btBrightnessContrastRestore, "btBrightnessContrastRestore");
 			this.btBrightnessContrastRestore.Click += new global::System.EventHandler(this.btBrightnessContrastRestore_Click);
 			this.panelBrightnessContrast.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.panelBrightnessContrast.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelBrightnessContrast.Controls.Add(this.ribbonBarBrightnessContrast);
-			componentResourceManager.ApplyResources(this.panelBrightnessContrast, "panelBrightnessContrast");
+			resources.ApplyResources(this.panelBrightnessContrast, "panelBrightnessContrast");
 			this.panelBrightnessContrast.Name = "panelBrightnessContrast";
 			this.panelBrightnessContrast.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelBrightnessContrast.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -4108,7 +4115,7 @@
 			this.panelRotation.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.panelRotation.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelRotation.Controls.Add(this.ribbonBarRotation);
-			componentResourceManager.ApplyResources(this.panelRotation, "panelRotation");
+			resources.ApplyResources(this.panelRotation, "panelRotation");
 			this.panelRotation.Name = "panelRotation";
 			this.panelRotation.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelRotation.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -4121,7 +4128,7 @@
 			this.ribbonBarRotation.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarRotation.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarRotation.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarRotation, "ribbonBarRotation");
+			resources.ApplyResources(this.ribbonBarRotation, "ribbonBarRotation");
 			this.ribbonBarRotation.HorizontalItemAlignment = global::DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
 			this.ribbonBarRotation.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -4141,32 +4148,32 @@
 			this.ribbonBarRotation.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarRotation.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.btFlipHorizontally.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btFlipHorizontally.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btFlipHorizontally.Image");
+			this.btFlipHorizontally.Image = (global::System.Drawing.Image)resources.GetObject("btFlipHorizontally.Image");
 			this.btFlipHorizontally.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btFlipHorizontally.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btFlipHorizontally.Name = "btFlipHorizontally";
-			componentResourceManager.ApplyResources(this.btFlipHorizontally, "btFlipHorizontally");
+			resources.ApplyResources(this.btFlipHorizontally, "btFlipHorizontally");
 			this.btFlipHorizontally.Click += new global::System.EventHandler(this.btFlipHorizontally_Click);
 			this.btFlipVertically.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btFlipVertically.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btFlipVertically.Image");
+			this.btFlipVertically.Image = (global::System.Drawing.Image)resources.GetObject("btFlipVertically.Image");
 			this.btFlipVertically.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btFlipVertically.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btFlipVertically.Name = "btFlipVertically";
-			componentResourceManager.ApplyResources(this.btFlipVertically, "btFlipVertically");
+			resources.ApplyResources(this.btFlipVertically, "btFlipVertically");
 			this.btFlipVertically.Click += new global::System.EventHandler(this.btFlipVertically_Click);
 			this.btRotateLeft.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btRotateLeft.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btRotateLeft.Image");
+			this.btRotateLeft.Image = (global::System.Drawing.Image)resources.GetObject("btRotateLeft.Image");
 			this.btRotateLeft.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btRotateLeft.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btRotateLeft.Name = "btRotateLeft";
-			componentResourceManager.ApplyResources(this.btRotateLeft, "btRotateLeft");
+			resources.ApplyResources(this.btRotateLeft, "btRotateLeft");
 			this.btRotateLeft.Click += new global::System.EventHandler(this.btRotateLeft_Click);
 			this.btRotateRight.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btRotateRight.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btRotateRight.Image");
+			this.btRotateRight.Image = (global::System.Drawing.Image)resources.GetObject("btRotateRight.Image");
 			this.btRotateRight.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btRotateRight.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btRotateRight.Name = "btRotateRight";
-			componentResourceManager.ApplyResources(this.btRotateRight, "btRotateRight");
+			resources.ApplyResources(this.btRotateRight, "btRotateRight");
 			this.btRotateRight.Click += new global::System.EventHandler(this.btRotateRight_Click);
 			this.lblBarRotationPadding1.Name = "lblBarRotationPadding1";
 			this.lblBarRotationPadding1.Width = 10;
@@ -4176,35 +4183,35 @@
 			this.lblBarRotationPadding2.Name = "lblBarRotationPadding2";
 			this.lblBarRotationPadding2.Width = 5;
 			this.btRotationApply.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btRotationApply.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btRotationApply.Image");
+			this.btRotationApply.Image = (global::System.Drawing.Image)resources.GetObject("btRotationApply.Image");
 			this.btRotationApply.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btRotationApply.Name = "btRotationApply";
-			componentResourceManager.ApplyResources(this.btRotationApply, "btRotationApply");
+			resources.ApplyResources(this.btRotationApply, "btRotationApply");
 			this.btRotationApply.Click += new global::System.EventHandler(this.btRotationApply_Click);
 			this.btRotationCancel.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btRotationCancel.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btRotationCancel.Image");
+			this.btRotationCancel.Image = (global::System.Drawing.Image)resources.GetObject("btRotationCancel.Image");
 			this.btRotationCancel.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btRotationCancel.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btRotationCancel.Name = "btRotationCancel";
-			componentResourceManager.ApplyResources(this.btRotationCancel, "btRotationCancel");
+			resources.ApplyResources(this.btRotationCancel, "btRotationCancel");
 			this.btRotationCancel.Click += new global::System.EventHandler(this.btRotationCancel_Click);
 			this.webBrowser.AllowWebBrowserDrop = false;
 			this.webBrowser.IsWebBrowserContextMenuEnabled = false;
-			componentResourceManager.ApplyResources(this.webBrowser, "webBrowser");
+			resources.ApplyResources(this.webBrowser, "webBrowser");
 			this.webBrowser.Name = "webBrowser";
 			this.webBrowser.WebBrowserShortcutsEnabled = false;
 			this.webBrowser.PreviewKeyDown += new global::System.Windows.Forms.PreviewKeyDownEventHandler(this.webBrowser_PreviewKeyDown);
-			componentResourceManager.ApplyResources(this.comboItem1, "comboItem1");
-			componentResourceManager.ApplyResources(this.comboItem2, "comboItem2");
-			componentResourceManager.ApplyResources(this.comboItem3, "comboItem3");
-			componentResourceManager.ApplyResources(this.comboItem4, "comboItem4");
-			componentResourceManager.ApplyResources(this.comboItem5, "comboItem5");
-			componentResourceManager.ApplyResources(this.comboItem6, "comboItem6");
+			resources.ApplyResources(this.comboItem1, "comboItem1");
+			resources.ApplyResources(this.comboItem2, "comboItem2");
+			resources.ApplyResources(this.comboItem3, "comboItem3");
+			resources.ApplyResources(this.comboItem4, "comboItem4");
+			resources.ApplyResources(this.comboItem5, "comboItem5");
+			resources.ApplyResources(this.comboItem6, "comboItem6");
 			this.labelItem1.Name = "labelItem1";
-			componentResourceManager.ApplyResources(this.labelItem1, "labelItem1");
+			resources.ApplyResources(this.labelItem1, "labelItem1");
 			this.panelWelcome.BackColor = global::System.Drawing.Color.Transparent;
 			this.panelWelcome.Controls.Add(this.panelWelcomeMenu);
-			componentResourceManager.ApplyResources(this.panelWelcome, "panelWelcome");
+			resources.ApplyResources(this.panelWelcome, "panelWelcome");
 			this.panelWelcome.Name = "panelWelcome";
 			this.panelWelcome.Resize += new global::System.EventHandler(this.panelWelcome_Resize);
 			this.panelWelcomeMenu.CanvasColor = global::System.Drawing.SystemColors.Control;
@@ -4214,7 +4221,7 @@
 			this.panelWelcomeMenu.Controls.Add(this.lstRecentProjects);
 			this.panelWelcomeMenu.Controls.Add(this.btOpen);
 			this.panelWelcomeMenu.Controls.Add(this.picWelcome);
-			componentResourceManager.ApplyResources(this.panelWelcomeMenu, "panelWelcomeMenu");
+			resources.ApplyResources(this.panelWelcomeMenu, "panelWelcomeMenu");
 			this.panelWelcomeMenu.Name = "panelWelcomeMenu";
 			this.panelWelcomeMenu.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelWelcomeMenu.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -4224,11 +4231,11 @@
 			this.panelWelcomeMenu.Style.BorderWidth = 10;
 			this.panelWelcomeMenu.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
 			this.panelWelcomeMenu.Style.GradientAngle = 90;
-			componentResourceManager.ApplyResources(this.lblRecentProjects, "lblRecentProjects");
+			resources.ApplyResources(this.lblRecentProjects, "lblRecentProjects");
 			this.lblRecentProjects.Name = "lblRecentProjects";
 			this.lblRecentProjects.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.btNew.AccessibleRole = global::System.Windows.Forms.AccessibleRole.PushButton;
-			componentResourceManager.ApplyResources(this.btNew, "btNew");
+			resources.ApplyResources(this.btNew, "btNew");
 			this.btNew.AntiAlias = true;
 			this.btNew.ColorTable = global::DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
 			this.btNew.FocusCuesEnabled = false;
@@ -4239,7 +4246,7 @@
 			this.btNew.Click += new global::System.EventHandler(this.btProjectNew_Click);
 			this.lstRecentProjects.AllowDrop = true;
 			this.lstRecentProjects.AllowUserToResizeColumns = false;
-			componentResourceManager.ApplyResources(this.lstRecentProjects, "lstRecentProjects");
+			resources.ApplyResources(this.lstRecentProjects, "lstRecentProjects");
 			this.lstRecentProjects.BackColor = global::System.Drawing.SystemColors.Window;
 			this.lstRecentProjects.BackgroundStyle.CornerDiameter = 0;
 			this.lstRecentProjects.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -4269,10 +4276,10 @@
 			this.lstRecentProjects.KeyDown += new global::System.Windows.Forms.KeyEventHandler(this.lstRecentProjects_KeyDown);
 			this.columnHeader3.Name = "columnHeader3";
 			this.columnHeader3.StretchToFill = true;
-			componentResourceManager.ApplyResources(this.columnHeader3, "columnHeader3");
+			resources.ApplyResources(this.columnHeader3, "columnHeader3");
 			this.columnHeader3.Width.AutoSize = true;
 			this.columnHeader4.Name = "columnHeader4";
-			componentResourceManager.ApplyResources(this.columnHeader4, "columnHeader4");
+			resources.ApplyResources(this.columnHeader4, "columnHeader4");
 			this.columnHeader4.Width.Absolute = 150;
 			this.nodeConnector4.LineColor = global::System.Drawing.SystemColors.ControlText;
 			this.elementStyle5.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
@@ -4295,7 +4302,7 @@
 			this.elementStyle6.PaddingTop = 1;
 			this.elementStyle6.TextColor = global::System.Drawing.Color.Black;
 			this.btOpen.AccessibleRole = global::System.Windows.Forms.AccessibleRole.PushButton;
-			componentResourceManager.ApplyResources(this.btOpen, "btOpen");
+			resources.ApplyResources(this.btOpen, "btOpen");
 			this.btOpen.AntiAlias = true;
 			this.btOpen.ColorTable = global::DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
 			this.btOpen.FocusCuesEnabled = false;
@@ -4306,7 +4313,7 @@
 			this.btOpen.Click += new global::System.EventHandler(this.btProjectOpen_Click);
 			this.picWelcome.BackColor = global::System.Drawing.Color.White;
 			this.picWelcome.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-			componentResourceManager.ApplyResources(this.picWelcome, "picWelcome");
+			resources.ApplyResources(this.picWelcome, "picWelcome");
 			this.picWelcome.Name = "picWelcome";
 			this.picWelcome.TabStop = false;
 			this.superTooltip.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
@@ -4314,7 +4321,7 @@
 			this.panelPlansAction.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.panelPlansAction.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelPlansAction.Controls.Add(this.ribbonBarPlansAction);
-			componentResourceManager.ApplyResources(this.panelPlansAction, "panelPlansAction");
+			resources.ApplyResources(this.panelPlansAction, "panelPlansAction");
 			this.panelPlansAction.Name = "panelPlansAction";
 			this.panelPlansAction.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelPlansAction.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -4327,7 +4334,7 @@
 			this.ribbonBarPlansAction.BackgroundMouseOverStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlansAction.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.ribbonBarPlansAction.ContainerControlProcessDialogKey = true;
-			componentResourceManager.ApplyResources(this.ribbonBarPlansAction, "ribbonBarPlansAction");
+			resources.ApplyResources(this.ribbonBarPlansAction, "ribbonBarPlansAction");
 			this.ribbonBarPlansAction.HorizontalItemAlignment = global::DevComponents.DotNetBar.eHorizontalItemsAlignment.Center;
 			this.ribbonBarPlansAction.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -4349,7 +4356,7 @@
 			this.ribbonBarPlansAction.TitleStyleMouseOver.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.progressPlansAction.Name = "progressPlansAction";
 			this.progressPlansAction.ProgressBarType = global::DevComponents.DotNetBar.eCircularProgressType.Donut;
-			componentResourceManager.ApplyResources(this.progressPlansAction, "progressPlansAction");
+			resources.ApplyResources(this.progressPlansAction, "progressPlansAction");
 			this.itemContainerExportType.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.itemContainerExportType.LayoutOrientation = global::DevComponents.DotNetBar.eOrientation.Vertical;
 			this.itemContainerExportType.Name = "itemContainerExportType";
@@ -4361,12 +4368,12 @@
 			});
 			this.itemContainerExportType.TitleStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
 			this.lblBarPlansActionPadding3.Name = "lblBarPlansActionPadding3";
-			componentResourceManager.ApplyResources(this.checkBoxExportSingleFile, "checkBoxExportSingleFile");
+			resources.ApplyResources(this.checkBoxExportSingleFile, "checkBoxExportSingleFile");
 			this.checkBoxExportSingleFile.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.checkBoxExportSingleFile.Checked = true;
 			this.checkBoxExportSingleFile.CheckState = global::System.Windows.Forms.CheckState.Checked;
 			this.checkBoxExportSingleFile.Name = "checkBoxExportSingleFile";
-			componentResourceManager.ApplyResources(this.checkBoxExportMultiFiles, "checkBoxExportMultiFiles");
+			resources.ApplyResources(this.checkBoxExportMultiFiles, "checkBoxExportMultiFiles");
 			this.checkBoxExportMultiFiles.CheckBoxStyle = global::DevComponents.DotNetBar.eCheckBoxStyle.RadioButton;
 			this.checkBoxExportMultiFiles.Name = "checkBoxExportMultiFiles";
 			this.lblBarPlansActionPadding4.Name = "lblBarPlansActionPadding4";
@@ -4375,13 +4382,13 @@
 			this.btPlansActionSelectAll.Image = global::QuoterPlan.Properties.Resources.select_all_32x32;
 			this.btPlansActionSelectAll.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlansActionSelectAll.Name = "btPlansActionSelectAll";
-			componentResourceManager.ApplyResources(this.btPlansActionSelectAll, "btPlansActionSelectAll");
+			resources.ApplyResources(this.btPlansActionSelectAll, "btPlansActionSelectAll");
 			this.btPlansActionSelectAll.Click += new global::System.EventHandler(this.btPlansActionSelectAll_Click);
 			this.btPlansActionSelectNone.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlansActionSelectNone.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlansActionSelectNone.Image");
+			this.btPlansActionSelectNone.Image = (global::System.Drawing.Image)resources.GetObject("btPlansActionSelectNone.Image");
 			this.btPlansActionSelectNone.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlansActionSelectNone.Name = "btPlansActionSelectNone";
-			componentResourceManager.ApplyResources(this.btPlansActionSelectNone, "btPlansActionSelectNone");
+			resources.ApplyResources(this.btPlansActionSelectNone, "btPlansActionSelectNone");
 			this.btPlansActionSelectNone.Click += new global::System.EventHandler(this.btPlansActionSelectNone_Click);
 			this.lblBarPlansActionPadding1.Name = "lblBarPlansActionPadding1";
 			this.lblBarPlansActionPadding1.Width = 10;
@@ -4396,23 +4403,23 @@
 			this.btPlansActionApply.ImagePaddingVertical = 5;
 			this.btPlansActionApply.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlansActionApply.Name = "btPlansActionApply";
-			componentResourceManager.ApplyResources(this.btPlansActionApply, "btPlansActionApply");
+			resources.ApplyResources(this.btPlansActionApply, "btPlansActionApply");
 			this.btPlansActionApply.Click += new global::System.EventHandler(this.btPlansActionApply_Click);
 			this.btPlansActionCancel.ButtonStyle = global::DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-			this.btPlansActionCancel.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btPlansActionCancel.Image");
+			this.btPlansActionCancel.Image = (global::System.Drawing.Image)resources.GetObject("btPlansActionCancel.Image");
 			this.btPlansActionCancel.ImageListSizeSelection = global::DevComponents.DotNetBar.eButtonImageListSelection.Default;
 			this.btPlansActionCancel.ImagePaddingHorizontal = 10;
 			this.btPlansActionCancel.ImagePaddingVertical = 5;
 			this.btPlansActionCancel.ImagePosition = global::DevComponents.DotNetBar.eImagePosition.Top;
 			this.btPlansActionCancel.Name = "btPlansActionCancel";
-			componentResourceManager.ApplyResources(this.btPlansActionCancel, "btPlansActionCancel");
+			resources.ApplyResources(this.btPlansActionCancel, "btPlansActionCancel");
 			this.btPlansActionCancel.Click += new global::System.EventHandler(this.btPlansActionCancel_Click);
 			this.mainControl.BackColor = global::System.Drawing.SystemColors.Control;
 			this.mainControl.Brightness = 0;
 			this.mainControl.Contrast = 0;
-			componentResourceManager.ApplyResources(this.mainControl, "mainControl");
+			resources.ApplyResources(this.mainControl, "mainControl");
 			this.mainControl.Name = "mainControl";
-			this.mainControl.Origin = (global::System.Drawing.PointF)componentResourceManager.GetObject("mainControl.Origin");
+			this.mainControl.Origin = (global::System.Drawing.PointF)resources.GetObject("mainControl.Origin");
 			this.mainControl.ScrollbarsVisible = true;
 			this.mainControl.UseDynamicAdjustments = false;
 			this.mainControl.Zoom = 100;
@@ -4449,7 +4456,7 @@
 			this.dotNetBarManager.TopDockSite = this.dockSite3;
 			this.dotNetBarManager.UseGlobalColorScheme = true;
 			this.dockSite4.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite4, "dockSite4");
+			resources.ApplyResources(this.dockSite4, "dockSite4");
 			this.dockSite4.DocumentDockContainer = new global::DevComponents.DotNetBar.DocumentDockContainer();
 			this.dockSite4.Name = "dockSite4";
 			this.dockSite4.TabStop = false;
@@ -4457,7 +4464,7 @@
 			this.dockSite1.Controls.Add(this.containerBarLayers);
 			this.dockSite1.Controls.Add(this.containerBarNavigation);
 			this.dockSite1.Controls.Add(this.containerBarProperties);
-			componentResourceManager.ApplyResources(this.dockSite1, "dockSite1");
+			resources.ApplyResources(this.dockSite1, "dockSite1");
 			this.dockSite1.DocumentDockContainer = new global::DevComponents.DotNetBar.DocumentDockContainer(new global::DevComponents.DotNetBar.DocumentBaseContainer[]
 			{
 				new global::DevComponents.DotNetBar.DocumentBarContainer(this.containerBarNavigation, 285, 180),
@@ -4466,7 +4473,7 @@
 			}, global::DevComponents.DotNetBar.eOrientation.Vertical);
 			this.dockSite1.Name = "dockSite1";
 			this.dockSite1.TabStop = false;
-			componentResourceManager.ApplyResources(this.containerBarLayers, "containerBarLayers");
+			resources.ApplyResources(this.containerBarLayers, "containerBarLayers");
 			this.containerBarLayers.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarLayers.AutoSyncBarCaption = true;
 			this.containerBarLayers.CanCustomize = false;
@@ -4488,7 +4495,7 @@
 			this.panelDockLayers.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelDockLayers.Controls.Add(this.lstLayers);
 			this.panelDockLayers.Controls.Add(this.barLayers);
-			componentResourceManager.ApplyResources(this.panelDockLayers, "panelDockLayers");
+			resources.ApplyResources(this.panelDockLayers, "panelDockLayers");
 			this.panelDockLayers.Name = "panelDockLayers";
 			this.panelDockLayers.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockLayers.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -4497,8 +4504,8 @@
 			this.panelDockLayers.Style.GradientAngle = 90;
 			this.dockContainerItemLayers.Control = this.panelDockLayers;
 			this.dockContainerItemLayers.Name = "dockContainerItemLayers";
-			componentResourceManager.ApplyResources(this.dockContainerItemLayers, "dockContainerItemLayers");
-			componentResourceManager.ApplyResources(this.containerBarNavigation, "containerBarNavigation");
+			resources.ApplyResources(this.dockContainerItemLayers, "dockContainerItemLayers");
+			resources.ApplyResources(this.containerBarNavigation, "containerBarNavigation");
 			this.containerBarNavigation.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarNavigation.AutoSyncBarCaption = true;
 			this.containerBarNavigation.CanCustomize = false;
@@ -4519,7 +4526,7 @@
 			this.containerBarNavigation.TabStop = false;
 			this.panelDockPreview.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelDockPreview.Controls.Add(this.panControl);
-			componentResourceManager.ApplyResources(this.panelDockPreview, "panelDockPreview");
+			resources.ApplyResources(this.panelDockPreview, "panelDockPreview");
 			this.panelDockPreview.Name = "panelDockPreview";
 			this.panelDockPreview.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockPreview.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -4528,8 +4535,8 @@
 			this.panelDockPreview.Style.GradientAngle = 90;
 			this.dockContainerItemPreview.Control = this.panelDockPreview;
 			this.dockContainerItemPreview.Name = "dockContainerItemPreview";
-			componentResourceManager.ApplyResources(this.dockContainerItemPreview, "dockContainerItemPreview");
-			componentResourceManager.ApplyResources(this.containerBarProperties, "containerBarProperties");
+			resources.ApplyResources(this.dockContainerItemPreview, "dockContainerItemPreview");
+			resources.ApplyResources(this.containerBarProperties, "containerBarProperties");
 			this.containerBarProperties.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarProperties.AutoSyncBarCaption = true;
 			this.containerBarProperties.CanCustomize = false;
@@ -4552,7 +4559,7 @@
 			this.panelDockProperties.Controls.Add(this.barDisplayResults);
 			this.panelDockProperties.Controls.Add(this.tabProperties);
 			this.panelDockProperties.Controls.Add(this.cbObjects);
-			componentResourceManager.ApplyResources(this.panelDockProperties, "panelDockProperties");
+			resources.ApplyResources(this.panelDockProperties, "panelDockProperties");
 			this.panelDockProperties.Name = "panelDockProperties";
 			this.panelDockProperties.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockProperties.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -4562,12 +4569,12 @@
 			this.panelDockProperties.Resize += new global::System.EventHandler(this.panelDockProperties_Resize);
 			this.dockContainerItemProperties.Control = this.panelDockProperties;
 			this.dockContainerItemProperties.Name = "dockContainerItemProperties";
-			componentResourceManager.ApplyResources(this.dockContainerItemProperties, "dockContainerItemProperties");
+			resources.ApplyResources(this.dockContainerItemProperties, "dockContainerItemProperties");
 			this.dockSite2.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
 			this.dockSite2.Controls.Add(this.containerBarGroups);
 			this.dockSite2.Controls.Add(this.containerBarRecentPlans);
 			this.dockSite2.Controls.Add(this.containerBarEstimating);
-			componentResourceManager.ApplyResources(this.dockSite2, "dockSite2");
+			resources.ApplyResources(this.dockSite2, "dockSite2");
 			this.dockSite2.DocumentDockContainer = new global::DevComponents.DotNetBar.DocumentDockContainer(new global::DevComponents.DotNetBar.DocumentBaseContainer[]
 			{
 				new global::DevComponents.DotNetBar.DocumentDockContainer(new global::DevComponents.DotNetBar.DocumentBaseContainer[]
@@ -4582,7 +4589,7 @@
 			}, global::DevComponents.DotNetBar.eOrientation.Horizontal);
 			this.dockSite2.Name = "dockSite2";
 			this.dockSite2.TabStop = false;
-			componentResourceManager.ApplyResources(this.containerBarGroups, "containerBarGroups");
+			resources.ApplyResources(this.containerBarGroups, "containerBarGroups");
 			this.containerBarGroups.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarGroups.AutoSyncBarCaption = true;
 			this.containerBarGroups.CanCustomize = false;
@@ -4605,7 +4612,7 @@
 			this.panelDockGroups.Controls.Add(this.treeObjects);
 			this.panelDockGroups.Controls.Add(this.panelPlanName);
 			this.panelDockGroups.Controls.Add(this.barGroups);
-			componentResourceManager.ApplyResources(this.panelDockGroups, "panelDockGroups");
+			resources.ApplyResources(this.panelDockGroups, "panelDockGroups");
 			this.panelDockGroups.Name = "panelDockGroups";
 			this.panelDockGroups.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockGroups.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -4614,8 +4621,8 @@
 			this.panelDockGroups.Style.GradientAngle = 90;
 			this.dockContainerItemGroups.Control = this.panelDockGroups;
 			this.dockContainerItemGroups.Name = "dockContainerItemGroups";
-			componentResourceManager.ApplyResources(this.dockContainerItemGroups, "dockContainerItemGroups");
-			componentResourceManager.ApplyResources(this.containerBarRecentPlans, "containerBarRecentPlans");
+			resources.ApplyResources(this.dockContainerItemGroups, "dockContainerItemGroups");
+			resources.ApplyResources(this.containerBarRecentPlans, "containerBarRecentPlans");
 			this.containerBarRecentPlans.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarRecentPlans.AutoSyncBarCaption = true;
 			this.containerBarRecentPlans.CanCustomize = false;
@@ -4637,7 +4644,7 @@
 			this.panelDockRecentPlans.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelDockRecentPlans.Controls.Add(this.lstRecentPlans);
 			this.panelDockRecentPlans.Controls.Add(this.barRecentPlans);
-			componentResourceManager.ApplyResources(this.panelDockRecentPlans, "panelDockRecentPlans");
+			resources.ApplyResources(this.panelDockRecentPlans, "panelDockRecentPlans");
 			this.panelDockRecentPlans.Name = "panelDockRecentPlans";
 			this.panelDockRecentPlans.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockRecentPlans.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -4646,8 +4653,8 @@
 			this.panelDockRecentPlans.Style.GradientAngle = 90;
 			this.dockContainerItemRecentPlans.Control = this.panelDockRecentPlans;
 			this.dockContainerItemRecentPlans.Name = "dockContainerItemRecentPlans";
-			componentResourceManager.ApplyResources(this.dockContainerItemRecentPlans, "dockContainerItemRecentPlans");
-			componentResourceManager.ApplyResources(this.containerBarEstimating, "containerBarEstimating");
+			resources.ApplyResources(this.dockContainerItemRecentPlans, "dockContainerItemRecentPlans");
+			resources.ApplyResources(this.containerBarEstimating, "containerBarEstimating");
 			this.containerBarEstimating.AccessibleRole = global::System.Windows.Forms.AccessibleRole.ToolBar;
 			this.containerBarEstimating.AutoSyncBarCaption = true;
 			this.containerBarEstimating.CanCustomize = false;
@@ -4669,14 +4676,14 @@
 			this.panelDockEstimating.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelDockEstimating.Controls.Add(this.treeEstimatingItems);
 			this.panelDockEstimating.Controls.Add(this.barEstimatingItems);
-			componentResourceManager.ApplyResources(this.panelDockEstimating, "panelDockEstimating");
+			resources.ApplyResources(this.panelDockEstimating, "panelDockEstimating");
 			this.panelDockEstimating.Name = "panelDockEstimating";
 			this.panelDockEstimating.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelDockEstimating.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarBackground;
 			this.panelDockEstimating.Style.BorderColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
 			this.panelDockEstimating.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.ItemText;
 			this.panelDockEstimating.Style.GradientAngle = 90;
-			componentResourceManager.ApplyResources(this.treeEstimatingItems, "treeEstimatingItems");
+			resources.ApplyResources(this.treeEstimatingItems, "treeEstimatingItems");
 			this.treeEstimatingItems.LookAndFeel.SkinName = "Office 2010 Silver";
 			this.treeEstimatingItems.Name = "treeEstimatingItems";
 			this.treeEstimatingItems.OptionsView.FocusRectStyle = global::DevExpress.XtraTreeList.DrawFocusRectStyle.RowFullFocus;
@@ -4694,7 +4701,7 @@
 			this.barEstimatingItems.CanReorderTabs = false;
 			this.barEstimatingItems.CanUndock = false;
 			this.barEstimatingItems.ColorScheme.PredefinedColorScheme = global::DevComponents.DotNetBar.ePredefinedColorScheme.Silver2003;
-			componentResourceManager.ApplyResources(this.barEstimatingItems, "barEstimatingItems");
+			resources.ApplyResources(this.barEstimatingItems, "barEstimatingItems");
 			this.barEstimatingItems.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barEstimatingItems.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -4709,10 +4716,10 @@
 			this.barEstimatingItems.Stretch = true;
 			this.barEstimatingItems.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.barEstimatingItems.TabStop = false;
-			this.btEstimatingItemsExpandAll.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingItemsExpandAll.Image");
+			this.btEstimatingItemsExpandAll.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingItemsExpandAll.Image");
 			this.btEstimatingItemsExpandAll.Name = "btEstimatingItemsExpandAll";
 			this.btEstimatingItemsExpandAll.Click += new global::System.EventHandler(this.btEstimatingItemsExpandAll_Click);
-			this.btEstimatingItemsCollapseAll.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingItemsCollapseAll.Image");
+			this.btEstimatingItemsCollapseAll.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingItemsCollapseAll.Image");
 			this.btEstimatingItemsCollapseAll.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btEstimatingItemsCollapseAll.Name = "btEstimatingItemsCollapseAll";
 			this.btEstimatingItemsCollapseAll.Click += new global::System.EventHandler(this.btEstimatingItemsCollapseAll_Click);
@@ -4721,40 +4728,40 @@
 			this.btEstimatingItemsUpdatePrices.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btEstimatingItemsUpdatePrices.Name = "btEstimatingItemsUpdatePrices";
 			this.btEstimatingItemsUpdatePrices.Click += new global::System.EventHandler(this.btEstimatingItemsUpdatePrices_Click);
-			this.btEstimatingItemsPrint.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btEstimatingItemsPrint.Image");
+			this.btEstimatingItemsPrint.Image = (global::System.Drawing.Image)resources.GetObject("btEstimatingItemsPrint.Image");
 			this.btEstimatingItemsPrint.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btEstimatingItemsPrint.Name = "btEstimatingItemsPrint";
 			this.btEstimatingItemsPrint.Visible = false;
 			this.btEstimatingItemsPrint.Click += new global::System.EventHandler(this.btEstimatingItemsPrint_Click);
 			this.dockContainerItemEstimating.Control = this.panelDockEstimating;
 			this.dockContainerItemEstimating.Name = "dockContainerItemEstimating";
-			componentResourceManager.ApplyResources(this.dockContainerItemEstimating, "dockContainerItemEstimating");
+			resources.ApplyResources(this.dockContainerItemEstimating, "dockContainerItemEstimating");
 			this.dockSite8.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite8, "dockSite8");
+			resources.ApplyResources(this.dockSite8, "dockSite8");
 			this.dockSite8.Name = "dockSite8";
 			this.dockSite8.TabStop = false;
 			this.dockSite5.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite5, "dockSite5");
+			resources.ApplyResources(this.dockSite5, "dockSite5");
 			this.dockSite5.Name = "dockSite5";
 			this.dockSite5.TabStop = false;
 			this.dockSite6.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite6, "dockSite6");
+			resources.ApplyResources(this.dockSite6, "dockSite6");
 			this.dockSite6.Name = "dockSite6";
 			this.dockSite6.TabStop = false;
 			this.dockSite7.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite7, "dockSite7");
+			resources.ApplyResources(this.dockSite7, "dockSite7");
 			this.dockSite7.Name = "dockSite7";
 			this.dockSite7.TabStop = false;
 			this.dockSite3.AccessibleRole = global::System.Windows.Forms.AccessibleRole.Window;
-			componentResourceManager.ApplyResources(this.dockSite3, "dockSite3");
+			resources.ApplyResources(this.dockSite3, "dockSite3");
 			this.dockSite3.DocumentDockContainer = new global::DevComponents.DotNetBar.DocumentDockContainer();
 			this.dockSite3.Name = "dockSite3";
 			this.dockSite3.TabStop = false;
 			this.lblNoPlan.BackColor = global::System.Drawing.SystemColors.Control;
-			componentResourceManager.ApplyResources(this.lblNoPlan, "lblNoPlan");
+			resources.ApplyResources(this.lblNoPlan, "lblNoPlan");
 			this.lblNoPlan.Name = "lblNoPlan";
 			this.lblNoPlan.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			this.imageCollection.ImageStream = (global::DevExpress.Utils.ImageCollectionStreamer)componentResourceManager.GetObject("imageCollection.ImageStream");
+			this.imageCollection.ImageStream = (global::DevExpress.Utils.ImageCollectionStreamer)resources.GetObject("imageCollection.ImageStream");
 			this.imageCollection.Images.SetKeyName(0, "PrintDialog_16x16.png");
 			this.imageCollection.Images.SetKeyName(1, "PrintViaPDF_16x16.png");
 			this.imageCollection.Images.SetKeyName(2, "material_16x16.png");
@@ -4766,11 +4773,11 @@
 			this.imageCollection.Images.SetKeyName(8, "FolderOpen_16x16_72.png");
 			this.reportsControl.BackColor = global::System.Drawing.SystemColors.Control;
 			this.reportsControl.Dirty = false;
-			componentResourceManager.ApplyResources(this.reportsControl, "reportsControl");
+			resources.ApplyResources(this.reportsControl, "reportsControl");
 			this.reportsControl.Name = "reportsControl";
 			this.dockContainerEstimating.Name = "dockContainerEstimating";
-			componentResourceManager.ApplyResources(this.dockContainerEstimating, "dockContainerEstimating");
-			componentResourceManager.ApplyResources(this.treeDBEstimatingItems, "treeDBEstimatingItems");
+			resources.ApplyResources(this.dockContainerEstimating, "dockContainerEstimating");
+			resources.ApplyResources(this.treeDBEstimatingItems, "treeDBEstimatingItems");
 			this.treeDBEstimatingItems.LookAndFeel.SkinName = "Office 2010 Silver";
 			this.treeDBEstimatingItems.Name = "treeDBEstimatingItems";
 			this.treeDBEstimatingItems.OptionsBehavior.EnableFiltering = true;
@@ -4779,7 +4786,7 @@
 			this.treeDBEstimatingItems.OptionsView.ShowFilterPanelMode = global::DevExpress.XtraTreeList.ShowFilterPanelMode.Never;
 			this.treeDBEstimatingItems.OptionsView.ShowHorzLines = false;
 			this.treeDBEstimatingItems.OptionsView.ShowVertLines = false;
-			componentResourceManager.ApplyResources(this.treeTemplatesLibrary, "treeTemplatesLibrary");
+			resources.ApplyResources(this.treeTemplatesLibrary, "treeTemplatesLibrary");
 			this.treeTemplatesLibrary.LookAndFeel.SkinName = "Office 2010 Silver";
 			this.treeTemplatesLibrary.Name = "treeTemplatesLibrary";
 			this.treeTemplatesLibrary.OptionsBehavior.EnableFiltering = true;
@@ -4789,7 +4796,7 @@
 			this.treeTemplatesLibrary.OptionsView.ShowHorzLines = false;
 			this.treeTemplatesLibrary.OptionsView.ShowVertLines = false;
 			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.None;
-			componentResourceManager.ApplyResources(this, "$this");
+			resources.ApplyResources(this, "$this");
 			base.Controls.Add(this.treeTemplatesLibrary);
 			base.Controls.Add(this.mainControl);
 			base.Controls.Add(this.treeDBEstimatingItems);
@@ -4882,8 +4889,6 @@
 			((global::System.ComponentModel.ISupportInitialize)this.treeTemplatesLibrary).EndInit();
 			base.ResumeLayout(false);
 		}
-
-		private global::System.ComponentModel.IContainer components;
 
 		private global::DevComponents.DotNetBar.RibbonControl ribbonControl;
 

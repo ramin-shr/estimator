@@ -1,0 +1,759 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;lblSection.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblPrice.Name" xml:space="preserve">
+    <value>lblPrice</value>
+  </data>
+  <data name="&gt;&gt;lblPrice.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblSubSection.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 27</value>
+  </data>
+  <data name="btCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;cbUnitOfMeasure.Type" xml:space="preserve">
+    <value>QuoterPlan.ComboBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cbUnitOfMeasure.Name" xml:space="preserve">
+    <value>cbUnitOfMeasure</value>
+  </data>
+  <data name="lblSubSection.Text" xml:space="preserve">
+    <value>Sub section:</value>
+  </data>
+  <data name="lblSubSection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 13</value>
+  </data>
+  <data name="&gt;&gt;cbSection.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtBidCode.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;txtItemID.Name" xml:space="preserve">
+    <value>txtItemID</value>
+  </data>
+  <data name="&gt;&gt;txtItemID.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblCoverageMeasure.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;txtBidCode.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Parent" xml:space="preserve">
+    <value>groupBox</value>
+  </data>
+  <data name="cbPurchaseUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>427, 88</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageUnit.Name" xml:space="preserve">
+    <value>lblCoverageUnit</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageUnit.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblSection.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txtPrice.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;txtPrice.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtPrice.Name" xml:space="preserve">
+    <value>txtPrice</value>
+  </data>
+  <data name="&gt;&gt;groupBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="txtProductName.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="lblSection.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblUnitOfMeasure.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="groupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 14</value>
+  </data>
+  <data name="txtCoverateUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 20</value>
+  </data>
+  <data name="lblPurchaseUnit.Text" xml:space="preserve">
+    <value>Purchase unit:</value>
+  </data>
+  <data name="lblPurchaseUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 13</value>
+  </data>
+  <data name="&gt;&gt;cbPurchaseUnit.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="lblSubSection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>236, 17</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Estimating Item</value>
+  </data>
+  <data name="lblBidCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 13</value>
+  </data>
+  <data name="lblBidCode.Text" xml:space="preserve">
+    <value>Bid code:</value>
+  </data>
+  <data name="lblPrice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>348, 69</value>
+  </data>
+  <data name="cbSection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 21</value>
+  </data>
+  <data name="&gt;&gt;cbSection.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cbPurchaseUnit.Name" xml:space="preserve">
+    <value>cbPurchaseUnit</value>
+  </data>
+  <data name="&gt;&gt;cbPurchaseUnit.Type" xml:space="preserve">
+    <value>QuoterPlan.ComboBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="lblProductName.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblCoverageUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>101</value>
+  </data>
+  <data name="lblUnitOfMeasure.TabIndex" type="System.Int32, mscorlib">
+    <value>93</value>
+  </data>
+  <data name="lblCoverageMeasure.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;cbPurchaseUnit.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="lblPrice.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>570, 270</value>
+  </data>
+  <data name="&gt;&gt;lblSection.Name" xml:space="preserve">
+    <value>lblSection</value>
+  </data>
+  <data name="&gt;&gt;lblSection.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="lblSection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 16</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Name" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblCoverageMeasure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>192, 145</value>
+  </data>
+  <data name="txtItemID.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 239</value>
+  </data>
+  <data name="txtItemID.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="groupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>540, 208</value>
+  </data>
+  <data name="groupBox.Text" xml:space="preserve">
+    <value>Item Details</value>
+  </data>
+  <data name="txtCoverageValue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 142</value>
+  </data>
+  <data name="panelGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtProductName.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtProductName.Name" xml:space="preserve">
+    <value>txtProductName</value>
+  </data>
+  <data name="txtItemID.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 20</value>
+  </data>
+  <data name="cbUnitOfMeasure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 142</value>
+  </data>
+  <data name="txtCoverateUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;cbUnitOfMeasure.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtPrice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 88</value>
+  </data>
+  <data name="cbSection.Items1" xml:space="preserve">
+    <value>Plumbing</value>
+  </data>
+  <data name="cbSection.Items2" xml:space="preserve">
+    <value>Roofing ans others</value>
+  </data>
+  <data name="&gt;&gt;txtItemID.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="txtProductName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>309, 20</value>
+  </data>
+  <data name="groupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cbPurchaseUnit.Items" xml:space="preserve">
+    <value>Measuring a paint area</value>
+  </data>
+  <data name="&gt;&gt;lblBidCode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>469, 232</value>
+  </data>
+  <data name="lblUnitOfMeasure.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblPurchaseUnit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbPurchaseUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageUnit.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;cbUnitOfMeasure.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblBidCode.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtCoverageValue.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;lblProductName.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;txtCoverateUnit.Name" xml:space="preserve">
+    <value>txtCoverateUnit</value>
+  </data>
+  <data name="&gt;&gt;txtCoverateUnit.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="lblBidCode.TabIndex" type="System.Int32, mscorlib">
+    <value>109</value>
+  </data>
+  <data name="&gt;&gt;btOk.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtItemID.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblBidCode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblSection.Text" xml:space="preserve">
+    <value>Section:</value>
+  </data>
+  <data name="lblSection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="&gt;&gt;lblSubSection.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;txtCoverageValue.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageUnit.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;btCancel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblPurchaseUnit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;txtCoverageValue.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;lblSubSection.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblSection.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="txtBidCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 20</value>
+  </data>
+  <data name="&gt;&gt;lblBidCode.Name" xml:space="preserve">
+    <value>lblBidCode</value>
+  </data>
+  <data name="&gt;&gt;lblBidCode.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="txtCoverageValue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 20</value>
+  </data>
+  <data name="btCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbSection.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblProductName.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="cbSubSection.Items" xml:space="preserve">
+    <value>Measuring a paint area</value>
+  </data>
+  <data name="&gt;&gt;btOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="panelGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="btOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 27</value>
+  </data>
+  <data name="btOk.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;txtCoverateUnit.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;txtProductName.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="lblSection.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="txtItemID.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="txtProductName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 88</value>
+  </data>
+  <data name="&gt;&gt;txtCoverateUnit.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageMeasure.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;lblUnitOfMeasure.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="lblBidCode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="lblSubSection.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblCoverageUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 15</value>
+  </data>
+  <data name="lblCoverageMeasure.TabIndex" type="System.Int32, mscorlib">
+    <value>96</value>
+  </data>
+  <data name="lblPrice.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblProductName.TabIndex" type="System.Int32, mscorlib">
+    <value>87</value>
+  </data>
+  <data name="&gt;&gt;lblUnitOfMeasure.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageMeasure.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageMeasure.Name" xml:space="preserve">
+    <value>lblCoverageMeasure</value>
+  </data>
+  <data name="cbSubSection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 21</value>
+  </data>
+  <data name="txtItemID.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;txtCoverageValue.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtCoverageValue.Name" xml:space="preserve">
+    <value>txtCoverageValue</value>
+  </data>
+  <data name="&gt;&gt;txtProductName.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;txtBidCode.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtBidCode.Name" xml:space="preserve">
+    <value>txtBidCode</value>
+  </data>
+  <data name="txtPrice.MaxLength" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;lblSubSection.Name" xml:space="preserve">
+    <value>lblSubSection</value>
+  </data>
+  <data name="&gt;&gt;lblSubSection.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="txtPrice.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="cbSubSection.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblCoverageMeasure.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtCoverageValue.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="cbSubSection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 35</value>
+  </data>
+  <data name="txtCoverateUnit.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;lblPrice.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="lblUnitOfMeasure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 13</value>
+  </data>
+  <data name="lblUnitOfMeasure.Text" xml:space="preserve">
+    <value>Coverage rate:</value>
+  </data>
+  <data name="cbUnitOfMeasure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 21</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>DBEstimatingItemForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>QuoterPlan.BaseForm, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="lblBidCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>348, 123</value>
+  </data>
+  <data name="&gt;&gt;btOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btOk.Name" xml:space="preserve">
+    <value>btOk</value>
+  </data>
+  <data name="lblUnitOfMeasure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 123</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Name" xml:space="preserve">
+    <value>btCancel</value>
+  </data>
+  <data name="txtCoverateUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 142</value>
+  </data>
+  <data name="lblSubSection.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblProductName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 69</value>
+  </data>
+  <data name="&gt;&gt;cbSection.Name" xml:space="preserve">
+    <value>cbSection</value>
+  </data>
+  <data name="&gt;&gt;cbSection.Type" xml:space="preserve">
+    <value>QuoterPlan.ComboBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseUnit.Name" xml:space="preserve">
+    <value>lblPurchaseUnit</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseUnit.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Name" xml:space="preserve">
+    <value>groupBox</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cbSection.Items" xml:space="preserve">
+    <value>Painting</value>
+  </data>
+  <data name="&gt;&gt;lblUnitOfMeasure.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblUnitOfMeasure.Name" xml:space="preserve">
+    <value>lblUnitOfMeasure</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="panelGroup.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>534, 189</value>
+  </data>
+  <data name="txtPrice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="lblCoverageUnit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbUnitOfMeasure.Items" xml:space="preserve">
+    <value>SQFT</value>
+  </data>
+  <data name="lblProductName.Text" xml:space="preserve">
+    <value>Item name:</value>
+  </data>
+  <data name="lblProductName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 13</value>
+  </data>
+  <data name="cbSection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>29, 35</value>
+  </data>
+  <data name="lblCoverageMeasure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 15</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseUnit.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;lblPrice.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="lblCoverageUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>274, 145</value>
+  </data>
+  <data name="lblPurchaseUnit.TabIndex" type="System.Int32, mscorlib">
+    <value>92</value>
+  </data>
+  <data name="&gt;&gt;lblProductName.Name" xml:space="preserve">
+    <value>lblProductName</value>
+  </data>
+  <data name="&gt;&gt;lblProductName.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;cbSubSection.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;cbSubSection.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>374, 232</value>
+  </data>
+  <data name="lblCoverageUnit.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblPurchaseUnit.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="cbUnitOfMeasure.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="txtBidCode.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="btOk.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblPrice.Text" xml:space="preserve">
+    <value>Cost:</value>
+  </data>
+  <data name="lblPrice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="&gt;&gt;txtPrice.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="cbPurchaseUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 21</value>
+  </data>
+  <data name="&gt;&gt;cbSubSection.Name" xml:space="preserve">
+    <value>cbSubSection</value>
+  </data>
+  <data name="&gt;&gt;cbSubSection.Type" xml:space="preserve">
+    <value>QuoterPlan.ComboBoxEx, ActiveTakeoff, Version=3.0.15.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtBidCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 142</value>
+  </data>
+  <data name="lblPrice.TabIndex" type="System.Int32, mscorlib">
+    <value>98</value>
+  </data>
+  <data name="txtProductName.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lblPurchaseUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>424, 69</value>
+  </data>
+  <data name="lblProductName.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;txtBidCode.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+</root>

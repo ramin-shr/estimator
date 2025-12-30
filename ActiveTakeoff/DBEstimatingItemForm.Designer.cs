@@ -2,19 +2,26 @@
 {
 	public partial class DBEstimatingItemForm : global::QuoterPlan.BaseForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.DBEstimatingItemForm));
-			this.btOk = new global::System.Windows.Forms.Button();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(DBEstimatingItemForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+            this.btOk = new global::System.Windows.Forms.Button();
 			this.btCancel = new global::System.Windows.Forms.Button();
 			this.groupBox = new global::System.Windows.Forms.GroupBox();
 			this.panelGroup = new global::System.Windows.Forms.Panel();
@@ -40,17 +47,17 @@
 			this.groupBox.SuspendLayout();
 			this.panelGroup.SuspendLayout();
 			base.SuspendLayout();
-			componentResourceManager.ApplyResources(this.btOk, "btOk");
+			resources.ApplyResources(this.btOk, "btOk");
 			this.btOk.Name = "btOk";
 			this.btOk.UseVisualStyleBackColor = true;
 			this.btOk.Click += new global::System.EventHandler(this.btOk_Click);
 			this.btCancel.DialogResult = global::System.Windows.Forms.DialogResult.Cancel;
-			componentResourceManager.ApplyResources(this.btCancel, "btCancel");
+			resources.ApplyResources(this.btCancel, "btCancel");
 			this.btCancel.Name = "btCancel";
 			this.btCancel.UseVisualStyleBackColor = true;
 			this.groupBox.Controls.Add(this.panelGroup);
 			this.groupBox.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.groupBox, "groupBox");
+			resources.ApplyResources(this.groupBox, "groupBox");
 			this.groupBox.Name = "groupBox";
 			this.groupBox.TabStop = false;
 			this.panelGroup.Controls.Add(this.lblBidCode);
@@ -71,14 +78,14 @@
 			this.panelGroup.Controls.Add(this.lblProductName);
 			this.panelGroup.Controls.Add(this.txtProductName);
 			this.panelGroup.Controls.Add(this.cbPurchaseUnit);
-			componentResourceManager.ApplyResources(this.panelGroup, "panelGroup");
+			resources.ApplyResources(this.panelGroup, "panelGroup");
 			this.panelGroup.Name = "panelGroup";
-			componentResourceManager.ApplyResources(this.lblBidCode, "lblBidCode");
+			resources.ApplyResources(this.lblBidCode, "lblBidCode");
 			this.lblBidCode.ForeColor = global::System.Drawing.Color.Black;
 			this.lblBidCode.Name = "lblBidCode";
 			this.lblBidCode.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtBidCode.AssociatedLabel = this.lblBidCode;
-			componentResourceManager.ApplyResources(this.txtBidCode, "txtBidCode");
+			resources.ApplyResources(this.txtBidCode, "txtBidCode");
 			this.txtBidCode.Name = "txtBidCode";
 			this.txtBidCode.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtBidCode.Click += new global::System.EventHandler(this.txtField_Enter);
@@ -89,17 +96,17 @@
 			this.cbUnitOfMeasure.FormattingEnabled = true;
 			this.cbUnitOfMeasure.Items.AddRange(new object[]
 			{
-				componentResourceManager.GetString("cbUnitOfMeasure.Items")
+				resources.GetString("cbUnitOfMeasure.Items")
 			});
-			componentResourceManager.ApplyResources(this.cbUnitOfMeasure, "cbUnitOfMeasure");
+			resources.ApplyResources(this.cbUnitOfMeasure, "cbUnitOfMeasure");
 			this.cbUnitOfMeasure.Name = "cbUnitOfMeasure";
 			this.cbUnitOfMeasure.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 			this.cbUnitOfMeasure.SelectedIndexChanged += new global::System.EventHandler(this.cbUnitOfMeasure_SelectedIndexChanged);
-			componentResourceManager.ApplyResources(this.lblUnitOfMeasure, "lblUnitOfMeasure");
+			resources.ApplyResources(this.lblUnitOfMeasure, "lblUnitOfMeasure");
 			this.lblUnitOfMeasure.ForeColor = global::System.Drawing.Color.Black;
 			this.lblUnitOfMeasure.Name = "lblUnitOfMeasure";
 			this.lblUnitOfMeasure.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			componentResourceManager.ApplyResources(this.lblSubSection, "lblSubSection");
+			resources.ApplyResources(this.lblSubSection, "lblSubSection");
 			this.lblSubSection.BackColor = global::System.Drawing.Color.Transparent;
 			this.lblSubSection.ForeColor = global::System.Drawing.Color.Black;
 			this.lblSubSection.Name = "lblSubSection";
@@ -109,9 +116,9 @@
 			this.cbSubSection.FormattingEnabled = true;
 			this.cbSubSection.Items.AddRange(new object[]
 			{
-				componentResourceManager.GetString("cbSubSection.Items")
+				resources.GetString("cbSubSection.Items")
 			});
-			componentResourceManager.ApplyResources(this.cbSubSection, "cbSubSection");
+			resources.ApplyResources(this.cbSubSection, "cbSubSection");
 			this.cbSubSection.Name = "cbSubSection";
 			this.cbSubSection.Sorted = true;
 			this.cbSubSection.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
@@ -120,38 +127,38 @@
 			this.cbSection.FormattingEnabled = true;
 			this.cbSection.Items.AddRange(new object[]
 			{
-				componentResourceManager.GetString("cbSection.Items"),
-				componentResourceManager.GetString("cbSection.Items1"),
-				componentResourceManager.GetString("cbSection.Items2")
+				resources.GetString("cbSection.Items"),
+				resources.GetString("cbSection.Items1"),
+				resources.GetString("cbSection.Items2")
 			});
-			componentResourceManager.ApplyResources(this.cbSection, "cbSection");
+			resources.ApplyResources(this.cbSection, "cbSection");
 			this.cbSection.Name = "cbSection";
 			this.cbSection.Sorted = true;
 			this.cbSection.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 			this.cbSection.SelectedIndexChanged += new global::System.EventHandler(this.cbSection_SelectedIndexChanged);
-			componentResourceManager.ApplyResources(this.lblSection, "lblSection");
+			resources.ApplyResources(this.lblSection, "lblSection");
 			this.lblSection.BackColor = global::System.Drawing.Color.Transparent;
 			this.lblSection.ForeColor = global::System.Drawing.Color.Black;
 			this.lblSection.Name = "lblSection";
 			this.lblSection.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.lblCoverageUnit.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.lblCoverageUnit, "lblCoverageUnit");
+			resources.ApplyResources(this.lblCoverageUnit, "lblCoverageUnit");
 			this.lblCoverageUnit.Name = "lblCoverageUnit";
 			this.lblCoverageUnit.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtCoverateUnit.AssociatedLabel = null;
-			componentResourceManager.ApplyResources(this.txtCoverateUnit, "txtCoverateUnit");
+			resources.ApplyResources(this.txtCoverateUnit, "txtCoverateUnit");
 			this.txtCoverateUnit.Name = "txtCoverateUnit";
 			this.txtCoverateUnit.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtCoverateUnit.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtCoverateUnit.Enter += new global::System.EventHandler(this.txtField_Enter);
 			this.txtCoverateUnit.KeyPress += new global::System.Windows.Forms.KeyPressEventHandler(this.txtDouble_KeyPress);
 			this.txtCoverateUnit.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtDouble_Validating);
-			componentResourceManager.ApplyResources(this.lblPrice, "lblPrice");
+			resources.ApplyResources(this.lblPrice, "lblPrice");
 			this.lblPrice.ForeColor = global::System.Drawing.Color.Black;
 			this.lblPrice.Name = "lblPrice";
 			this.lblPrice.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtPrice.AssociatedLabel = this.lblPrice;
-			componentResourceManager.ApplyResources(this.txtPrice, "txtPrice");
+			resources.ApplyResources(this.txtPrice, "txtPrice");
 			this.txtPrice.Name = "txtPrice";
 			this.txtPrice.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtPrice.Click += new global::System.EventHandler(this.txtField_Enter);
@@ -159,27 +166,27 @@
 			this.txtPrice.KeyPress += new global::System.Windows.Forms.KeyPressEventHandler(this.txtDouble_KeyPress);
 			this.txtPrice.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtCurrency_Validating);
 			this.lblCoverageMeasure.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.lblCoverageMeasure, "lblCoverageMeasure");
+			resources.ApplyResources(this.lblCoverageMeasure, "lblCoverageMeasure");
 			this.lblCoverageMeasure.Name = "lblCoverageMeasure";
 			this.lblCoverageMeasure.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtCoverageValue.AssociatedLabel = null;
-			componentResourceManager.ApplyResources(this.txtCoverageValue, "txtCoverageValue");
+			resources.ApplyResources(this.txtCoverageValue, "txtCoverageValue");
 			this.txtCoverageValue.Name = "txtCoverageValue";
 			this.txtCoverageValue.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtCoverageValue.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtCoverageValue.Enter += new global::System.EventHandler(this.txtField_Enter);
 			this.txtCoverageValue.KeyPress += new global::System.Windows.Forms.KeyPressEventHandler(this.txtDouble_KeyPress);
 			this.txtCoverageValue.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtDouble_Validating);
-			componentResourceManager.ApplyResources(this.lblPurchaseUnit, "lblPurchaseUnit");
+			resources.ApplyResources(this.lblPurchaseUnit, "lblPurchaseUnit");
 			this.lblPurchaseUnit.ForeColor = global::System.Drawing.Color.Black;
 			this.lblPurchaseUnit.Name = "lblPurchaseUnit";
 			this.lblPurchaseUnit.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			componentResourceManager.ApplyResources(this.lblProductName, "lblProductName");
+			resources.ApplyResources(this.lblProductName, "lblProductName");
 			this.lblProductName.ForeColor = global::System.Drawing.Color.Black;
 			this.lblProductName.Name = "lblProductName";
 			this.lblProductName.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductName.AssociatedLabel = this.lblProductName;
-			componentResourceManager.ApplyResources(this.txtProductName, "txtProductName");
+			resources.ApplyResources(this.txtProductName, "txtProductName");
 			this.txtProductName.Name = "txtProductName";
 			this.txtProductName.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductName.Click += new global::System.EventHandler(this.txtField_Enter);
@@ -189,22 +196,22 @@
 			this.cbPurchaseUnit.FormattingEnabled = true;
 			this.cbPurchaseUnit.Items.AddRange(new object[]
 			{
-				componentResourceManager.GetString("cbPurchaseUnit.Items")
+				resources.GetString("cbPurchaseUnit.Items")
 			});
-			componentResourceManager.ApplyResources(this.cbPurchaseUnit, "cbPurchaseUnit");
+			resources.ApplyResources(this.cbPurchaseUnit, "cbPurchaseUnit");
 			this.cbPurchaseUnit.Name = "cbPurchaseUnit";
 			this.cbPurchaseUnit.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
 			this.cbPurchaseUnit.SelectedIndexChanged += new global::System.EventHandler(this.cbPurchaseUnit_Update);
 			this.cbPurchaseUnit.TextUpdate += new global::System.EventHandler(this.cbPurchaseUnit_Update);
 			this.cbPurchaseUnit.Enter += new global::System.EventHandler(this.cbField_Enter);
 			this.txtItemID.AssociatedLabel = null;
-			componentResourceManager.ApplyResources(this.txtItemID, "txtItemID");
+			resources.ApplyResources(this.txtItemID, "txtItemID");
 			this.txtItemID.Name = "txtItemID";
 			this.txtItemID.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtItemID.Click += new global::System.EventHandler(this.txtField2_Enter);
 			this.txtItemID.Enter += new global::System.EventHandler(this.txtField2_Enter);
 			base.AcceptButton = this.btOk;
-			componentResourceManager.ApplyResources(this, "$this");
+			resources.ApplyResources(this, "$this");
 			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
 			base.CancelButton = this.btCancel;
 			base.Controls.Add(this.txtItemID);
@@ -224,8 +231,6 @@
 			base.ResumeLayout(false);
 			base.PerformLayout();
 		}
-
-		private global::System.ComponentModel.IContainer components;
 
 		private global::System.Windows.Forms.Button btOk;
 

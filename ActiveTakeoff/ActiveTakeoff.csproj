@@ -575,16 +575,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutForm.resources" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ActiveTakeoff.exe.licenses" />
-    <EmbeddedResource Include="BaseForm.resources" />
-    <EmbeddedResource Include="CEstimatingItemsBrowserForm.resources" />
-    <EmbeddedResource Include="CEstimatingsItemsControl.resources" />
-    <EmbeddedResource Include="ColorPicker.resources" />
-    <EmbeddedResource Include="ColorPickerCombo.resources" />
-    <EmbeddedResource Include="DataFolderForm.resources" />
-    <EmbeddedResource Include="DBEstimatingItemForm.resources" />
-    <EmbeddedResource Include="DimensionForm.resources" />
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CEstimatingItemsBrowserForm.resx">
+      <DependentUpon>CEstimatingItemsBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CEstimatingsItemsControl.resx">
+      <DependentUpon>CEstimatingsItemsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPicker.resx">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPickerCombo.resx">
+      <DependentUpon>ColorPickerCombo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataFolderForm.resx">
+      <DependentUpon>DataFolderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBEstimatingItemForm.resx">
+      <DependentUpon>DBEstimatingItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DimensionForm.resx">
+      <DependentUpon>DimensionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DimensionInput.resources" />
     <EmbeddedResource Include="DimensionInputEx.resources" />
     <EmbeddedResource Include="DrawObjectColorIndicator.resources" />
@@ -592,11 +610,17 @@
     <EmbeddedResource Include="EELinkManager.resources" />
     <EmbeddedResource Include="Ellipse.cur" />
     <EmbeddedResource Include="ExtensionsManager.resources" />
-    <EmbeddedResource Include="FormulaBuilderForm.resources" />
+    <EmbeddedResource Include="FormulaBuilderForm.resx">
+      <DependentUpon>FormulaBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="help.cur" />
-    <EmbeddedResource Include="ImportSettingsForm.resources" />
+    <EmbeddedResource Include="ImportSettingsForm.resx">
+      <DependentUpon>ImportSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Line.cur" />
-    <EmbeddedResource Include="MainForm.resources" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageBoxEx.resources" />
     <EmbeddedResource Include="NoteEditForm.resources" />
     <EmbeddedResource Include="Pan.cur" />
@@ -610,7 +634,10 @@
     <EmbeddedResource Include="PresetEditForm.resources" />
     <EmbeddedResource Include="ProgressForm.resources" />
     <EmbeddedResource Include="ProjectForm.resources" />
-    <EmbeddedResource Include="Properties\Resources.resources" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Rectangle.cur" />
     <EmbeddedResource Include="ReportEditForm.resources" />
     <EmbeddedResource Include="ReportsControl.resources" />
@@ -619,12 +646,24 @@
     <EmbeddedResource Include="TaxesConfiguration.resources" />
     <EmbeddedResource Include="TextTool.cur" />
     <EmbeddedResource Include="ToolEditForm.resources" />
-    <EmbeddedResource Include="XtraReportEstimatingByGroups.resources" />
-    <EmbeddedResource Include="XtraReportEstimatingByPlans.resources" />
-    <EmbeddedResource Include="XtraReportEstimatingTotalsByPlans.resources" />
-    <EmbeddedResource Include="XtraReportQuote.resources" />
-    <EmbeddedResource Include="XtraReportTakeoffByGroups.resources" />
-    <EmbeddedResource Include="XtraReportTakeoffByPlans.resources" />
+    <EmbeddedResource Include="XtraReportEstimatingByGroups.resx">
+      <DependentUpon>XtraReportEstimatingByGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReportEstimatingByPlans.resx">
+      <DependentUpon>XtraReportEstimatingByPlans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReportEstimatingTotalsByPlans.resx">
+      <DependentUpon>XtraReportEstimatingTotalsByPlans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReportQuote.resx">
+      <DependentUpon>XtraReportQuote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReportTakeoffByGroups.resx">
+      <DependentUpon>XtraReportTakeoffByGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XtraReportTakeoffByPlans.resx">
+      <DependentUpon>XtraReportTakeoffByPlans.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

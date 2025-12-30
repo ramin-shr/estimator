@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 27</value>
+  </data>
+  <data name="btCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="btSelect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 27</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="panelEx2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panelEx4.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.PanelEx, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;panelEx4.Name" xml:space="preserve">
+    <value>panelEx4</value>
+  </data>
+  <data name="btCommercialDatabase.Text" xml:space="preserve">
+    <value>Commercial</value>
+  </data>
+  <data name="&gt;&gt;btSelect.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lblSpacer.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.LabelItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;lblSpacer.Name" xml:space="preserve">
+    <value>lblSpacer</value>
+  </data>
+  <data name="&gt;&gt;panelEx2.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.PanelEx, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;panelEx2.Name" xml:space="preserve">
+    <value>panelEx2</value>
+  </data>
+  <data name="barCOffice.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 25</value>
+  </data>
+  <data name="barCOffice.Text" xml:space="preserve">
+    <value>bar1</value>
+  </data>
+  <data name="barCOffice.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="barCOffice.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Name" xml:space="preserve">
+    <value>btSelect</value>
+  </data>
+  <data name="btCommercialDatabase.Category" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="&gt;&gt;barCOffice.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;panelEx2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panelEx3.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.PanelEx, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;panelEx3.Name" xml:space="preserve">
+    <value>panelEx3</value>
+  </data>
+  <data name="&gt;&gt;panelEx2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Contractor's Office</value>
+  </data>
+  <data name="&gt;&gt;barCOffice.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panelEx1.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.PanelEx, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;panelEx1.Name" xml:space="preserve">
+    <value>panelEx1</value>
+  </data>
+  <data name="expandableSplitter1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="panelEx3.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="btCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="btSelect.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="barCOffice.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="panelEx1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>474, 824</value>
+  </data>
+  <data name="barCOffice.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="&gt;&gt;panelEx3.Parent" xml:space="preserve">
+    <value>panelEx2</value>
+  </data>
+  <data name="&gt;&gt;listItems.Name" xml:space="preserve">
+    <value>listItems</value>
+  </data>
+  <data name="&gt;&gt;listItems.Type" xml:space="preserve">
+    <value>DevExpress.XtraTreeList.TreeList, DevExpress.XtraTreeList.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="listItems.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="listItems.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 255</value>
+  </data>
+  <data name="lblSelect.Text" xml:space="preserve">
+    <value>Database:</value>
+  </data>
+  <data name="&gt;&gt;btItemsExpandAll.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;btItemsExpandAll.Name" xml:space="preserve">
+    <value>btItemsExpandAll</value>
+  </data>
+  <data name="&gt;&gt;panelEx3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btItemsCollapseAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAMRJREFUOE+l
+        kE0KwjAQhecuXkDweN0lk2YlpShu/UF3IroTFyWVWhDxLIIXGHkFuxlMCRa+xXzv8QIlEaF/UCIVJVJR
+        wvv85ZwTZlbAe58fowOOWe6P50+QRwestV1xWsykKOc9uOGRRweMMV2xnC0U8MgHB+qmRUl98IMD1hgJ
+        9U1Wm50s19se3PDI4wPWShUa2R9OCvjBf+AcS7i2cr5UCnjk0QFmfqPE1navfcENn2VZiA4Q0ZiIJhFG
+        0YFUlEhFiVQ+zAfeQtmNYyUAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btResidentialDatabase.Text" xml:space="preserve">
+    <value>Residential</value>
+  </data>
+  <data name="&gt;&gt;expandableSplitter1.Name" xml:space="preserve">
+    <value>expandableSplitter1</value>
+  </data>
+  <data name="&gt;&gt;expandableSplitter1.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ExpandableSplitter, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="panelEx3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panelEx4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 324</value>
+  </data>
+  <data name="&gt;&gt;expandableSplitter1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;expandableSplitter1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="expandableSplitter1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="expandableSplitter1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 6</value>
+  </data>
+  <data name="btItemsExpandAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAM9JREFUOE+l
+        kE0KwjAQRnMXLyB4vO4yk2YlpShu/UF3IroTF6WVWhDxLIIXGPkC3RicEhx4JPNm8hVqRMT8QyRSiUQq
+        kfA+fznnhJkj4L3Pj2qAY5b74/kTzNUAIgqL02ImRTnHcjjRw2OuBlhrw2I5WwRQ/R0e88GApu3Cw++C
+        Hwwga6VubrLa7GS53oaHONHDY64HEElVt7I/nAKo/g4/+A+cY6mvnZwvVQQ85moAM7+xxEThaz3o4bMs
+        q9UAY8zYGDNRGKkBqUQilUik8gHkiuLZdvSykgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>243, 6</value>
+  </data>
+  <data name="&gt;&gt;treeSections.Parent" xml:space="preserve">
+    <value>panelEx1</value>
+  </data>
+  <data name="&gt;&gt;treeSections.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;panelEx4.Parent" xml:space="preserve">
+    <value>panelEx2</value>
+  </data>
+  <data name="btResidentialDatabase.Category" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="treeSections.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;btCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="barCOffice.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;panelEx4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panelEx4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 39</value>
+  </data>
+  <data name="panelEx4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="btCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="panelEx2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 363</value>
+  </data>
+  <data name="panelEx2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;treeSections.Type" xml:space="preserve">
+    <value>DevExpress.XtraTreeList.TreeList, DevExpress.XtraTreeList.v14.2, Version=14.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="&gt;&gt;treeSections.Name" xml:space="preserve">
+    <value>treeSections</value>
+  </data>
+  <data name="panelEx3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 363</value>
+  </data>
+  <data name="panelEx3.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelEx1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 430</value>
+  </data>
+  <data name="panelEx1.Text" xml:space="preserve">
+    <value>panelEx1</value>
+  </data>
+  <data name="panelEx1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Parent" xml:space="preserve">
+    <value>panelEx4</value>
+  </data>
+  <data name="&gt;&gt;btCommercialDatabase.Name" xml:space="preserve">
+    <value>btCommercialDatabase</value>
+  </data>
+  <data name="&gt;&gt;btCommercialDatabase.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;lblSelect.Name" xml:space="preserve">
+    <value>lblSelect</value>
+  </data>
+  <data name="&gt;&gt;lblSelect.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.LabelItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;listItems.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="expandableSplitter1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btItemsCollapseAll.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;btItemsCollapseAll.Name" xml:space="preserve">
+    <value>btItemsCollapseAll</value>
+  </data>
+  <data name="btSelect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="expandableSplitter1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 455</value>
+  </data>
+  <data name="listItems.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;listItems.Parent" xml:space="preserve">
+    <value>panelEx3</value>
+  </data>
+  <data name="treeSections.Size" type="System.Drawing.Size, System.Drawing">
+    <value>474, 430</value>
+  </data>
+  <data name="treeSections.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>CEstimatingItemsBrowserForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>QuoterPlan.BaseForm, QuoterPlan, Version=3.0.3.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Name" xml:space="preserve">
+    <value>btCancel</value>
+  </data>
+  <data name="panelEx2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 461</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;panelEx1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="panelEx1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="listItems.TabIndex" type="System.Int32, mscorlib">
+    <value>42</value>
+  </data>
+  <data name="btSelect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 6</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Parent" xml:space="preserve">
+    <value>panelEx4</value>
+  </data>
+  <data name="panelEx4.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="&gt;&gt;barCOffice.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.Bar, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;barCOffice.Name" xml:space="preserve">
+    <value>barCOffice</value>
+  </data>
+  <data name="treeSections.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;btResidentialDatabase.Name" xml:space="preserve">
+    <value>btResidentialDatabase</value>
+  </data>
+  <data name="&gt;&gt;btResidentialDatabase.Type" xml:space="preserve">
+    <value>DevComponents.DotNetBar.ButtonItem, DevComponents.DotNetBar2, Version=10.8.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04</value>
+  </data>
+  <data name="&gt;&gt;panelEx1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+</root>

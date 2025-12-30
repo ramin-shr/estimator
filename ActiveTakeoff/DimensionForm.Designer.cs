@@ -1,40 +1,47 @@
 ﻿namespace QuoterPlan
 {
-	public partial class DimensionForm : global::QuoterPlan.BaseForm
+	public partial class DimensionForm : BaseForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.DimensionForm));
-			this.panel1 = new global::System.Windows.Forms.Panel();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+            this.panel1 = new global::System.Windows.Forms.Panel();
 			this.label1 = new global::System.Windows.Forms.Label();
 			this.btOk = new global::System.Windows.Forms.Button();
 			this.btCancel = new global::System.Windows.Forms.Button();
 			base.SuspendLayout();
-			componentResourceManager.ApplyResources(this.panel1, "panel1");
+			resources.ApplyResources(this.panel1, "panel1");
 			this.panel1.Name = "panel1";
-			componentResourceManager.ApplyResources(this.label1, "label1");
+			resources.ApplyResources(this.label1, "label1");
 			this.label1.Name = "label1";
-			this.btOk.Image = global::QuoterPlan.Properties.Resources.accept_16x16;
-			componentResourceManager.ApplyResources(this.btOk, "btOk");
+			this.btOk.Image = Properties.Resources.accept_16x16;
+			resources.ApplyResources(this.btOk, "btOk");
 			this.btOk.Name = "btOk";
 			this.btOk.UseVisualStyleBackColor = true;
 			this.btOk.Click += new global::System.EventHandler(this.btOk_Click);
 			this.btCancel.DialogResult = global::System.Windows.Forms.DialogResult.Cancel;
-			this.btCancel.Image = global::QuoterPlan.Properties.Resources.delete_16x16;
-			componentResourceManager.ApplyResources(this.btCancel, "btCancel");
+			this.btCancel.Image = Properties.Resources.delete_16x16;
+			resources.ApplyResources(this.btCancel, "btCancel");
 			this.btCancel.Name = "btCancel";
 			this.btCancel.UseVisualStyleBackColor = true;
 			this.btCancel.Click += new global::System.EventHandler(this.btCancel_Click);
-			componentResourceManager.ApplyResources(this, "$this");
+			resources.ApplyResources(this, "$this");
 			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
 			base.CancelButton = this.btCancel;
 			base.Controls.Add(this.btCancel);
@@ -50,8 +57,6 @@
 			base.ResumeLayout(false);
 			base.PerformLayout();
 		}
-
-		private global::System.ComponentModel.IContainer components;
 
 		private global::System.Windows.Forms.Panel panel1;
 

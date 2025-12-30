@@ -1,29 +1,35 @@
-﻿namespace QuoterPlan
+﻿// BaseForm.Designer.cs
+namespace QuoterPlan
 {
-	public partial class BaseForm : global::DevComponents.DotNetBar.Office2007Form
-	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+    partial class BaseForm
+    {
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.BaseForm));
-			base.SuspendLayout();
-			componentResourceManager.ApplyResources(this, "$this");
-			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = global::System.Drawing.SystemColors.Window;
-			base.KeyPreview = true;
-			base.Name = "BaseForm";
-			base.KeyDown += new global::System.Windows.Forms.KeyEventHandler(this.BaseForm_KeyDown);
-			base.ResumeLayout(false);
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
 
-		private global::System.ComponentModel.IContainer components;
-	}
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.KeyPreview = true;
+            this.Name = "BaseForm";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BaseForm_KeyDown);
+
+            this.ResumeLayout(false);
+        }
+    }
 }

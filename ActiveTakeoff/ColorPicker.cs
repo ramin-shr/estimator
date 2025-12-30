@@ -11,7 +11,7 @@ namespace QuoterPlan
 {
     public class ColorPicker : UserControl
     {
-        private IContainer components;
+        private System.ComponentModel.IContainer components = null;
 
         private LabelEx lblAdvancedColors;
 
@@ -267,26 +267,32 @@ namespace QuoterPlan
 
         private void InitializeComponent()
         {
-            ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ColorPicker));
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
             this.lblAdvancedColors = new LabelEx();
             this.lblStandardColors = new LabelEx();
             this.colorCombControl = new ColorCombControl();
             base.SuspendLayout();
-            componentResourceManager.ApplyResources(this.lblAdvancedColors, "lblAdvancedColors");
+            resources.ApplyResources(this.lblAdvancedColors, "lblAdvancedColors");
             this.lblAdvancedColors.BackColor = Color.Transparent;
             this.lblAdvancedColors.ForeColor = Color.Black;
             this.lblAdvancedColors.Name = "lblAdvancedColors";
             this.lblAdvancedColors.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            componentResourceManager.ApplyResources(this.lblStandardColors, "lblStandardColors");
+            resources.ApplyResources(this.lblStandardColors, "lblStandardColors");
             this.lblStandardColors.BackColor = Color.Transparent;
             this.lblStandardColors.ForeColor = Color.Black;
             this.lblStandardColors.Name = "lblStandardColors";
             this.lblStandardColors.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            componentResourceManager.ApplyResources(this.colorCombControl, "colorCombControl");
+            resources.ApplyResources(this.colorCombControl, "colorCombControl");
             this.colorCombControl.Name = "colorCombControl";
             this.colorCombControl.SelectedColorChanged += new EventHandler(this.colorCombControl_SelectedColorChanged);
             this.colorCombControl.MouseOverColorChanged += new EventHandler(this.colorCombControl_MouseOverColorChanged);
-            componentResourceManager.ApplyResources(this, "$this");
+            resources.ApplyResources(this, "$this");
             base.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = Color.WhiteSmoke;
             base.Controls.Add(this.lblAdvancedColors);

@@ -1,35 +1,39 @@
 ﻿namespace QuoterPlan
 {
-	public partial class FormulaBuilderForm : global::QuoterPlan.BaseForm
+	public partial class FormulaBuilderForm : BaseForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.FormulaBuilderForm));
-			this.btOk = new global::System.Windows.Forms.Button();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+            this.btOk = new global::System.Windows.Forms.Button();
 			this.btCancel = new global::System.Windows.Forms.Button();
 			this.fctb = new global::FastColoredTextBoxNS.FastColoredTextBox();
-			this.btDivide = new global::QuoterPlan.ButtonEx();
-			this.btMultiply = new global::QuoterPlan.ButtonEx();
-			this.btMinus = new global::QuoterPlan.ButtonEx();
-			this.btPlus = new global::QuoterPlan.ButtonEx();
-			this.btCeil = new global::QuoterPlan.ButtonEx();
-			this.btRound = new global::QuoterPlan.ButtonEx();
-			this.btFloor = new global::QuoterPlan.ButtonEx();
-			this.btSqrt = new global::QuoterPlan.ButtonEx();
-			this.btPower = new global::QuoterPlan.ButtonEx();
-			this.labelEx3 = new global::QuoterPlan.LabelEx();
+			this.btDivide = new ButtonEx();
+			this.btMultiply = new ButtonEx();
+			this.btMinus = new ButtonEx();
+			this.btPlus = new ButtonEx();
+			this.btCeil = new ButtonEx();
+			this.btRound = new ButtonEx();
+			this.btFloor = new ButtonEx();
+			this.btSqrt = new ButtonEx();
+			this.btPower = new ButtonEx();
+			this.labelEx3 = new LabelEx();
 			this.treeResults = new global::DevExpress.XtraTreeList.TreeList();
-			this.labelEx1 = new global::QuoterPlan.LabelEx();
-			this.labelEx2 = new global::QuoterPlan.LabelEx();
+			this.labelEx1 = new LabelEx();
+			this.labelEx2 = new LabelEx();
 			((global::System.ComponentModel.ISupportInitialize)this.fctb).BeginInit();
 			((global::System.ComponentModel.ISupportInitialize)this.treeResults).BeginInit();
 			base.SuspendLayout();
@@ -75,7 +79,7 @@
 			this.fctb.DelayedTextChangedInterval = 500;
 			this.fctb.DisabledColor = global::System.Drawing.Color.FromArgb(100, 180, 180, 180);
 			this.fctb.Font = new global::System.Drawing.Font("Consolas", 9.75f);
-			this.fctb.Hotkeys = componentResourceManager.GetString("fctb.Hotkeys");
+			this.fctb.Hotkeys = resources.GetString("fctb.Hotkeys");
 			this.fctb.IsReplaceMode = false;
 			this.fctb.LeftBracket = '(';
 			this.fctb.Location = new global::System.Drawing.Point(12, 46);
@@ -83,7 +87,7 @@
 			this.fctb.Paddings = new global::System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.fctb.RightBracket = ')';
 			this.fctb.SelectionColor = global::System.Drawing.Color.FromArgb(50, 0, 0, 255);
-			this.fctb.ServiceColors = (global::FastColoredTextBoxNS.ServiceColors)componentResourceManager.GetObject("fctb.ServiceColors");
+			this.fctb.ServiceColors = (global::FastColoredTextBoxNS.ServiceColors)resources.GetObject("fctb.ServiceColors");
 			this.fctb.ShowLineNumbers = false;
 			this.fctb.Size = new global::System.Drawing.Size(360, 80);
 			this.fctb.TabIndex = 0;
@@ -229,38 +233,36 @@
 			base.PerformLayout();
 		}
 
-		private global::System.ComponentModel.IContainer components;
-
 		private global::System.Windows.Forms.Button btOk;
 
 		private global::System.Windows.Forms.Button btCancel;
 
 		private global::FastColoredTextBoxNS.FastColoredTextBox fctb;
 
-		private global::QuoterPlan.ButtonEx btDivide;
+		private ButtonEx btDivide;
 
-		private global::QuoterPlan.ButtonEx btMultiply;
+		private ButtonEx btMultiply;
 
-		private global::QuoterPlan.ButtonEx btMinus;
+		private ButtonEx btMinus;
 
-		private global::QuoterPlan.ButtonEx btPlus;
+		private ButtonEx btPlus;
 
-		private global::QuoterPlan.ButtonEx btCeil;
+		private ButtonEx btCeil;
 
-		private global::QuoterPlan.ButtonEx btRound;
+		private ButtonEx btRound;
 
-		private global::QuoterPlan.ButtonEx btFloor;
+		private ButtonEx btFloor;
 
-		private global::QuoterPlan.ButtonEx btSqrt;
+		private ButtonEx btSqrt;
 
-		private global::QuoterPlan.ButtonEx btPower;
+		private ButtonEx btPower;
 
-		private global::QuoterPlan.LabelEx labelEx3;
+		private LabelEx labelEx3;
 
 		private global::DevExpress.XtraTreeList.TreeList treeResults;
 
-		private global::QuoterPlan.LabelEx labelEx1;
+		private LabelEx labelEx1;
 
-		private global::QuoterPlan.LabelEx labelEx2;
+		private LabelEx labelEx2;
 	}
 }

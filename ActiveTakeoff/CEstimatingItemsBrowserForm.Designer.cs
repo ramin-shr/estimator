@@ -2,19 +2,26 @@
 {
 	public partial class CEstimatingItemsBrowserForm : global::QuoterPlan.BaseForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.CEstimatingItemsBrowserForm));
-			this.panelEx1 = new global::DevComponents.DotNetBar.PanelEx();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+            this.panelEx1 = new global::DevComponents.DotNetBar.PanelEx();
 			this.treeSections = new global::DevExpress.XtraTreeList.TreeList();
 			this.barCOffice = new global::DevComponents.DotNetBar.Bar();
 			this.btItemsExpandAll = new global::DevComponents.DotNetBar.ButtonItem();
@@ -41,7 +48,7 @@
 			this.panelEx1.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.panelEx1.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelEx1.Controls.Add(this.treeSections);
-			componentResourceManager.ApplyResources(this.panelEx1, "panelEx1");
+			resources.ApplyResources(this.panelEx1, "panelEx1");
 			this.panelEx1.Name = "panelEx1";
 			this.panelEx1.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelEx1.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -50,7 +57,7 @@
 			this.panelEx1.Style.BorderColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
 			this.panelEx1.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
 			this.panelEx1.Style.GradientAngle = 90;
-			componentResourceManager.ApplyResources(this.treeSections, "treeSections");
+			resources.ApplyResources(this.treeSections, "treeSections");
 			this.treeSections.LookAndFeel.SkinName = "Office 2010 Silver";
 			this.treeSections.Name = "treeSections";
 			this.treeSections.OptionsView.FocusRectStyle = global::DevExpress.XtraTreeList.DrawFocusRectStyle.RowFullFocus;
@@ -68,7 +75,7 @@
 			this.barCOffice.CanReorderTabs = false;
 			this.barCOffice.CanUndock = false;
 			this.barCOffice.ColorScheme.PredefinedColorScheme = global::DevComponents.DotNetBar.ePredefinedColorScheme.Silver2003;
-			componentResourceManager.ApplyResources(this.barCOffice, "barCOffice");
+			resources.ApplyResources(this.barCOffice, "barCOffice");
 			this.barCOffice.DockTabAlignment = global::DevComponents.DotNetBar.eTabStripAlignment.Left;
 			this.barCOffice.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
 			{
@@ -85,10 +92,10 @@
 			this.barCOffice.Stretch = true;
 			this.barCOffice.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.barCOffice.TabStop = false;
-			this.btItemsExpandAll.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btItemsExpandAll.Image");
+			this.btItemsExpandAll.Image = (global::System.Drawing.Image)resources.GetObject("btItemsExpandAll.Image");
 			this.btItemsExpandAll.Name = "btItemsExpandAll";
 			this.btItemsExpandAll.Click += new global::System.EventHandler(this.btItemsExpandAll_Click);
-			this.btItemsCollapseAll.Image = (global::System.Drawing.Image)componentResourceManager.GetObject("btItemsCollapseAll.Image");
+			this.btItemsCollapseAll.Image = (global::System.Drawing.Image)resources.GetObject("btItemsCollapseAll.Image");
 			this.btItemsCollapseAll.ImageFixedSize = new global::System.Drawing.Size(16, 16);
 			this.btItemsCollapseAll.Name = "btItemsCollapseAll";
 			this.btItemsCollapseAll.Click += new global::System.EventHandler(this.btItemsCollapseAll_Click);
@@ -96,19 +103,19 @@
 			this.lblSpacer.Name = "lblSpacer";
 			this.lblSpacer.Width = 6;
 			this.lblSelect.Name = "lblSelect";
-			componentResourceManager.ApplyResources(this.lblSelect, "lblSelect");
-			componentResourceManager.ApplyResources(this.btResidentialDatabase, "btResidentialDatabase");
+			resources.ApplyResources(this.lblSelect, "lblSelect");
+			resources.ApplyResources(this.btResidentialDatabase, "btResidentialDatabase");
 			this.btResidentialDatabase.Checked = true;
 			this.btResidentialDatabase.Name = "btResidentialDatabase";
 			this.btResidentialDatabase.Click += new global::System.EventHandler(this.btResidentialDatabase_Click);
-			componentResourceManager.ApplyResources(this.btCommercialDatabase, "btCommercialDatabase");
+			resources.ApplyResources(this.btCommercialDatabase, "btCommercialDatabase");
 			this.btCommercialDatabase.Name = "btCommercialDatabase";
 			this.btCommercialDatabase.Click += new global::System.EventHandler(this.btCommercialDatabase_Click);
 			this.panelEx2.CanvasColor = global::System.Drawing.SystemColors.Control;
 			this.panelEx2.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelEx2.Controls.Add(this.panelEx4);
 			this.panelEx2.Controls.Add(this.panelEx3);
-			componentResourceManager.ApplyResources(this.panelEx2, "panelEx2");
+			resources.ApplyResources(this.panelEx2, "panelEx2");
 			this.panelEx2.Name = "panelEx2";
 			this.panelEx2.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelEx2.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -121,7 +128,7 @@
 			this.panelEx4.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelEx4.Controls.Add(this.btSelect);
 			this.panelEx4.Controls.Add(this.btCancel);
-			componentResourceManager.ApplyResources(this.panelEx4, "panelEx4");
+			resources.ApplyResources(this.panelEx4, "panelEx4");
 			this.panelEx4.Name = "panelEx4";
 			this.panelEx4.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelEx4.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -130,19 +137,19 @@
 			this.panelEx4.Style.BorderColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
 			this.panelEx4.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
 			this.panelEx4.Style.GradientAngle = 90;
-			componentResourceManager.ApplyResources(this.btSelect, "btSelect");
+			resources.ApplyResources(this.btSelect, "btSelect");
 			this.btSelect.Name = "btSelect";
 			this.btSelect.UseVisualStyleBackColor = true;
 			this.btSelect.Click += new global::System.EventHandler(this.btSelect_Click);
 			this.btCancel.DialogResult = global::System.Windows.Forms.DialogResult.Cancel;
-			componentResourceManager.ApplyResources(this.btCancel, "btCancel");
+			resources.ApplyResources(this.btCancel, "btCancel");
 			this.btCancel.Name = "btCancel";
 			this.btCancel.UseVisualStyleBackColor = true;
 			this.btCancel.Click += new global::System.EventHandler(this.btCancel_Click);
 			this.panelEx3.CanvasColor = global::System.Drawing.Color.Transparent;
 			this.panelEx3.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
 			this.panelEx3.Controls.Add(this.listItems);
-			componentResourceManager.ApplyResources(this.panelEx3, "panelEx3");
+			resources.ApplyResources(this.panelEx3, "panelEx3");
 			this.panelEx3.Name = "panelEx3";
 			this.panelEx3.Style.Alignment = global::System.Drawing.StringAlignment.Center;
 			this.panelEx3.Style.BackColor1.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
@@ -151,7 +158,7 @@
 			this.panelEx3.Style.BorderColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
 			this.panelEx3.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
 			this.panelEx3.Style.GradientAngle = 90;
-			componentResourceManager.ApplyResources(this.listItems, "listItems");
+			resources.ApplyResources(this.listItems, "listItems");
 			this.listItems.LookAndFeel.SkinName = "Office 2010 Silver";
 			this.listItems.Name = "listItems";
 			this.listItems.OptionsView.FocusRectStyle = global::DevExpress.XtraTreeList.DrawFocusRectStyle.RowFullFocus;
@@ -162,7 +169,7 @@
 			this.expandableSplitter1.BackColor2SchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
 			this.expandableSplitter1.BackColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
 			this.expandableSplitter1.Cursor = global::System.Windows.Forms.Cursors.HSplit;
-			componentResourceManager.ApplyResources(this.expandableSplitter1, "expandableSplitter1");
+			resources.ApplyResources(this.expandableSplitter1, "expandableSplitter1");
 			this.expandableSplitter1.ExpandFillColor = global::System.Drawing.Color.FromArgb(101, 147, 207);
 			this.expandableSplitter1.ExpandFillColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
 			this.expandableSplitter1.ExpandLineColor = global::System.Drawing.Color.FromArgb(0, 0, 0);
@@ -189,7 +196,7 @@
 			this.expandableSplitter1.SplitterMoving += new global::System.Windows.Forms.SplitterEventHandler(this.expandableSplitter1_SplitterMoving);
 			this.expandableSplitter1.SplitterMoved += new global::System.Windows.Forms.SplitterEventHandler(this.expandableSplitter1_SplitterMoved);
 			base.AcceptButton = this.btSelect;
-			componentResourceManager.ApplyResources(this, "$this");
+			resources.ApplyResources(this, "$this");
 			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
 			base.CancelButton = this.btCancel;
 			base.Controls.Add(this.panelEx2);
@@ -215,38 +222,36 @@
 			base.ResumeLayout(false);
 		}
 
-		private global::System.ComponentModel.IContainer components;
+		private DevComponents.DotNetBar.PanelEx panelEx1;
 
-		private global::DevComponents.DotNetBar.PanelEx panelEx1;
+		private DevComponents.DotNetBar.PanelEx panelEx2;
 
-		private global::DevComponents.DotNetBar.PanelEx panelEx2;
+		private DevComponents.DotNetBar.ExpandableSplitter expandableSplitter1;
 
-		private global::DevComponents.DotNetBar.ExpandableSplitter expandableSplitter1;
+		private DevExpress.XtraTreeList.TreeList treeSections;
 
-		private global::DevExpress.XtraTreeList.TreeList treeSections;
+		private DevExpress.XtraTreeList.TreeList listItems;
 
-		private global::DevExpress.XtraTreeList.TreeList listItems;
+		private DevComponents.DotNetBar.Bar barCOffice;
 
-		private global::DevComponents.DotNetBar.Bar barCOffice;
+		private DevComponents.DotNetBar.ButtonItem btItemsExpandAll;
 
-		private global::DevComponents.DotNetBar.ButtonItem btItemsExpandAll;
+		private DevComponents.DotNetBar.ButtonItem btItemsCollapseAll;
 
-		private global::DevComponents.DotNetBar.ButtonItem btItemsCollapseAll;
+		private System.Windows.Forms.Button btSelect;
 
-		private global::System.Windows.Forms.Button btSelect;
+		private System.Windows.Forms.Button btCancel;
 
-		private global::System.Windows.Forms.Button btCancel;
+		private DevComponents.DotNetBar.PanelEx panelEx3;
 
-		private global::DevComponents.DotNetBar.PanelEx panelEx3;
+		private DevComponents.DotNetBar.PanelEx panelEx4;
 
-		private global::DevComponents.DotNetBar.PanelEx panelEx4;
+		private DevComponents.DotNetBar.ButtonItem btResidentialDatabase;
 
-		private global::DevComponents.DotNetBar.ButtonItem btResidentialDatabase;
+		private DevComponents.DotNetBar.ButtonItem btCommercialDatabase;
 
-		private global::DevComponents.DotNetBar.ButtonItem btCommercialDatabase;
+		private DevComponents.DotNetBar.LabelItem lblSpacer;
 
-		private global::DevComponents.DotNetBar.LabelItem lblSpacer;
-
-		private global::DevComponents.DotNetBar.LabelItem lblSelect;
+		private DevComponents.DotNetBar.LabelItem lblSelect;
 	}
 }

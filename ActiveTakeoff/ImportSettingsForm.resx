@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;lblProductCodePosition.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblProductCodePosition.Name" xml:space="preserve">
+    <value>lblProductCodePosition</value>
+  </data>
+  <data name="btFileToImport.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btFileToImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 24</value>
+  </data>
+  <data name="btCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 27</value>
+  </data>
+  <data name="btCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtFileToImport.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Parent" xml:space="preserve">
+    <value>groupBox</value>
+  </data>
+  <data name="&gt;&gt;btFileToImport.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;groupBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="groupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 14</value>
+  </data>
+  <data name="&gt;&gt;txtProductPricePosition.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lblProductCodePosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 15</value>
+  </data>
+  <data name="lblProductCodePosition.Text" xml:space="preserve">
+    <value>Product code position:</value>
+  </data>
+  <data name="&gt;&gt;btFileToImport.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtProductPricePosition.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;txtProductPricePosition.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="lblProductPricePosition.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Import Settings</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtFileToImport.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;txtFileToImport.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;btFileToImport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btFileToImport.Name" xml:space="preserve">
+    <value>btFileToImport</value>
+  </data>
+  <data name="btCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btFileToImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>540, 253</value>
+  </data>
+  <data name="lblFieldSeparator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>339, 94</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Name" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;panelGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btOk.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="groupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>512, 197</value>
+  </data>
+  <data name="groupBox.Text" xml:space="preserve">
+    <value>Settings details</value>
+  </data>
+  <data name="&gt;&gt;txtFieldSeparator.Name" xml:space="preserve">
+    <value>txtFieldSeparator</value>
+  </data>
+  <data name="&gt;&gt;txtFieldSeparator.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="txtFileToImport.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="panelGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lblProductPricePosition.Text" xml:space="preserve">
+    <value>Price to import position:</value>
+  </data>
+  <data name="lblProductPricePosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 15</value>
+  </data>
+  <data name="txtFileToImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>420, 23</value>
+  </data>
+  <data name="&gt;&gt;txtProductCodePosition.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="groupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>441, 218</value>
+  </data>
+  <data name="txtFieldSeparator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>342, 113</value>
+  </data>
+  <data name="&gt;&gt;txtProductCodePosition.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtFileToImport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>27, 48</value>
+  </data>
+  <data name="&gt;&gt;lblFileToImport.Name" xml:space="preserve">
+    <value>lblFileToImport</value>
+  </data>
+  <data name="&gt;&gt;lblFileToImport.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btHelp.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblFileToImport.TabIndex" type="System.Int32, mscorlib">
+    <value>90</value>
+  </data>
+  <data name="&gt;&gt;txtFileToImport.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtFileToImport.Name" xml:space="preserve">
+    <value>txtFileToImport</value>
+  </data>
+  <data name="&gt;&gt;btHelp.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btOk.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lblFieldSeparator.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtFieldSeparator.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="txtProductCodePosition.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btCancel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblProductCodePosition.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblFieldSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 15</value>
+  </data>
+  <data name="lblFieldSeparator.Text" xml:space="preserve">
+    <value>Field separator:</value>
+  </data>
+  <data name="lblProductCodePosition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 94</value>
+  </data>
+  <data name="lblFileToImport.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblProductPricePosition.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblProductPricePosition.Name" xml:space="preserve">
+    <value>lblProductPricePosition</value>
+  </data>
+  <data name="btCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblProductPricePosition.TabIndex" type="System.Int32, mscorlib">
+    <value>92</value>
+  </data>
+  <data name="&gt;&gt;btOk.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblFieldSeparator.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblFileToImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="panelGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 19</value>
+  </data>
+  <data name="btOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 27</value>
+  </data>
+  <data name="btOk.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="lblFieldSeparator.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lblProductPricePosition.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtProductPricePosition.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lblFileToImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 15</value>
+  </data>
+  <data name="lblFileToImport.Text" xml:space="preserve">
+    <value>File to import:</value>
+  </data>
+  <data name="txtProductCodePosition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 113</value>
+  </data>
+  <data name="&gt;&gt;txtFieldSeparator.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btFileToImport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>453, 47</value>
+  </data>
+  <data name="txtFieldSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 23</value>
+  </data>
+  <data name="lblFieldSeparator.TabIndex" type="System.Int32, mscorlib">
+    <value>94</value>
+  </data>
+  <data name="btHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 218</value>
+  </data>
+  <data name="&gt;&gt;lblProductPricePosition.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txtFieldSeparator.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="txtProductCodePosition.MaxLength" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="lblFieldSeparator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;lblFileToImport.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;lblFieldSeparator.Type" xml:space="preserve">
+    <value>QuoterPlan.LabelEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;lblFieldSeparator.Name" xml:space="preserve">
+    <value>lblFieldSeparator</value>
+  </data>
+  <data name="lblProductPricePosition.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblProductPricePosition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>180, 94</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ImportSettingsForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>QuoterPlan.BaseForm, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;btOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btOk.Name" xml:space="preserve">
+    <value>btOk</value>
+  </data>
+  <data name="btHelp.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btCancel.Name" xml:space="preserve">
+    <value>btCancel</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Name" xml:space="preserve">
+    <value>groupBox</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtProductCodePosition.Name" xml:space="preserve">
+    <value>txtProductCodePosition</value>
+  </data>
+  <data name="&gt;&gt;txtProductCodePosition.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txtProductPricePosition.Name" xml:space="preserve">
+    <value>txtProductPricePosition</value>
+  </data>
+  <data name="txtProductPricePosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 23</value>
+  </data>
+  <data name="&gt;&gt;txtProductPricePosition.Type" xml:space="preserve">
+    <value>QuoterPlan.TextBoxEx, ActiveTakeoff, Version=3.0.14.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="txtProductPricePosition.Location" type="System.Drawing.Point, System.Drawing">
+    <value>183, 113</value>
+  </data>
+  <data name="&gt;&gt;lblFileToImport.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="&gt;&gt;btHelp.Name" xml:space="preserve">
+    <value>btHelp</value>
+  </data>
+  <data name="&gt;&gt;btHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="btHelp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="panelGroup.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>506, 175</value>
+  </data>
+  <data name="&gt;&gt;lblProductCodePosition.Parent" xml:space="preserve">
+    <value>panelGroup</value>
+  </data>
+  <data name="lblProductCodePosition.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblFileToImport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="txtFieldSeparator.MaxLength" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btHelp.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="btHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 27</value>
+  </data>
+  <data name="btFileToImport.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 218</value>
+  </data>
+  <data name="&gt;&gt;lblProductCodePosition.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btOk.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="&gt;&gt;groupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="txtProductCodePosition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 23</value>
+  </data>
+  <data name="lblProductCodePosition.TabIndex" type="System.Int32, mscorlib">
+    <value>89</value>
+  </data>
+</root>

@@ -2,19 +2,28 @@
 {
 	public partial class ImportSettingsForm : global::QuoterPlan.BaseForm
 	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        private System.ComponentModel.IContainer components = null;
 
-		private void InitializeComponent()
-		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.ImportSettingsForm));
-			this.btOk = new global::System.Windows.Forms.Button();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+
+            this.SuspendLayout();
+            this.btOk = new global::System.Windows.Forms.Button();
 			this.btCancel = new global::System.Windows.Forms.Button();
 			this.groupBox = new global::System.Windows.Forms.GroupBox();
 			this.panelGroup = new global::System.Windows.Forms.Panel();
@@ -31,18 +40,18 @@
 			this.groupBox.SuspendLayout();
 			this.panelGroup.SuspendLayout();
 			base.SuspendLayout();
-			componentResourceManager.ApplyResources(this.btOk, "btOk");
+			resources.ApplyResources(this.btOk, "btOk");
 			this.btOk.Name = "btOk";
 			this.btOk.UseVisualStyleBackColor = true;
 			this.btOk.Click += new global::System.EventHandler(this.btOk_Click);
 			this.btCancel.DialogResult = global::System.Windows.Forms.DialogResult.Cancel;
-			componentResourceManager.ApplyResources(this.btCancel, "btCancel");
+			resources.ApplyResources(this.btCancel, "btCancel");
 			this.btCancel.Name = "btCancel";
 			this.btCancel.UseVisualStyleBackColor = true;
 			this.btCancel.Click += new global::System.EventHandler(this.btCancel_Click);
 			this.groupBox.Controls.Add(this.panelGroup);
 			this.groupBox.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.groupBox, "groupBox");
+			resources.ApplyResources(this.groupBox, "groupBox");
 			this.groupBox.Name = "groupBox";
 			this.groupBox.TabStop = false;
 			this.panelGroup.Controls.Add(this.lblFieldSeparator);
@@ -54,60 +63,60 @@
 			this.panelGroup.Controls.Add(this.btFileToImport);
 			this.panelGroup.Controls.Add(this.txtFileToImport);
 			this.panelGroup.Controls.Add(this.lblFileToImport);
-			componentResourceManager.ApplyResources(this.panelGroup, "panelGroup");
+			resources.ApplyResources(this.panelGroup, "panelGroup");
 			this.panelGroup.Name = "panelGroup";
-			componentResourceManager.ApplyResources(this.lblFieldSeparator, "lblFieldSeparator");
+			resources.ApplyResources(this.lblFieldSeparator, "lblFieldSeparator");
 			this.lblFieldSeparator.ForeColor = global::System.Drawing.Color.Black;
 			this.lblFieldSeparator.Name = "lblFieldSeparator";
 			this.lblFieldSeparator.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtFieldSeparator.AssociatedLabel = this.lblFieldSeparator;
-			componentResourceManager.ApplyResources(this.txtFieldSeparator, "txtFieldSeparator");
+			resources.ApplyResources(this.txtFieldSeparator, "txtFieldSeparator");
 			this.txtFieldSeparator.Name = "txtFieldSeparator";
 			this.txtFieldSeparator.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtFieldSeparator.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtFieldSeparator.Enter += new global::System.EventHandler(this.txtField_Enter);
-			componentResourceManager.ApplyResources(this.lblProductPricePosition, "lblProductPricePosition");
+			resources.ApplyResources(this.lblProductPricePosition, "lblProductPricePosition");
 			this.lblProductPricePosition.ForeColor = global::System.Drawing.Color.Black;
 			this.lblProductPricePosition.Name = "lblProductPricePosition";
 			this.lblProductPricePosition.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductPricePosition.AssociatedLabel = this.lblProductPricePosition;
-			componentResourceManager.ApplyResources(this.txtProductPricePosition, "txtProductPricePosition");
+			resources.ApplyResources(this.txtProductPricePosition, "txtProductPricePosition");
 			this.txtProductPricePosition.Name = "txtProductPricePosition";
 			this.txtProductPricePosition.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductPricePosition.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtProductPricePosition.KeyPress += new global::System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
 			this.txtProductPricePosition.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtNumeric_Validating);
-			componentResourceManager.ApplyResources(this.lblProductCodePosition, "lblProductCodePosition");
+			resources.ApplyResources(this.lblProductCodePosition, "lblProductCodePosition");
 			this.lblProductCodePosition.ForeColor = global::System.Drawing.Color.Black;
 			this.lblProductCodePosition.Name = "lblProductCodePosition";
 			this.lblProductCodePosition.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductCodePosition.AssociatedLabel = this.lblProductCodePosition;
-			componentResourceManager.ApplyResources(this.txtProductCodePosition, "txtProductCodePosition");
+			resources.ApplyResources(this.txtProductCodePosition, "txtProductCodePosition");
 			this.txtProductCodePosition.Name = "txtProductCodePosition";
 			this.txtProductCodePosition.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtProductCodePosition.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtProductCodePosition.KeyPress += new global::System.Windows.Forms.KeyPressEventHandler(this.txtNumeric_KeyPress);
 			this.txtProductCodePosition.Validating += new global::System.ComponentModel.CancelEventHandler(this.txtNumeric_Validating);
-			componentResourceManager.ApplyResources(this.btFileToImport, "btFileToImport");
+			resources.ApplyResources(this.btFileToImport, "btFileToImport");
 			this.btFileToImport.Name = "btFileToImport";
 			this.btFileToImport.UseVisualStyleBackColor = true;
 			this.btFileToImport.Click += new global::System.EventHandler(this.btFileToImport_Click);
 			this.txtFileToImport.AssociatedLabel = this.txtFileToImport;
-			componentResourceManager.ApplyResources(this.txtFileToImport, "txtFileToImport");
+			resources.ApplyResources(this.txtFileToImport, "txtFileToImport");
 			this.txtFileToImport.Name = "txtFileToImport";
 			this.txtFileToImport.ReadOnly = true;
 			this.txtFileToImport.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			this.txtFileToImport.Click += new global::System.EventHandler(this.txtField_Enter);
 			this.txtFileToImport.Enter += new global::System.EventHandler(this.txtField_Enter);
-			componentResourceManager.ApplyResources(this.lblFileToImport, "lblFileToImport");
+			resources.ApplyResources(this.lblFileToImport, "lblFileToImport");
 			this.lblFileToImport.ForeColor = global::System.Drawing.Color.Black;
 			this.lblFileToImport.Name = "lblFileToImport";
 			this.lblFileToImport.TextRenderingHint = global::System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			componentResourceManager.ApplyResources(this.btHelp, "btHelp");
+			resources.ApplyResources(this.btHelp, "btHelp");
 			this.btHelp.Name = "btHelp";
 			this.btHelp.UseVisualStyleBackColor = true;
 			this.btHelp.Click += new global::System.EventHandler(this.btHelp_Click);
-			componentResourceManager.ApplyResources(this, "$this");
+			resources.ApplyResources(this, "$this");
 			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
 			base.Controls.Add(this.btHelp);
 			base.Controls.Add(this.btOk);
@@ -124,8 +133,6 @@
 			this.panelGroup.PerformLayout();
 			base.ResumeLayout(false);
 		}
-
-		private global::System.ComponentModel.IContainer components;
 
 		private global::System.Windows.Forms.Button btOk;
 

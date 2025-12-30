@@ -1,55 +1,66 @@
-﻿namespace QuoterPlan
-{
-	public partial class AboutForm : global::QuoterPlan.BaseForm
-	{
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+﻿using DevComponents.DotNetBar;
+using DevComponents.DotNetBar.Controls;
 
-		private void InitializeComponent()
+namespace QuoterPlan
+{
+	public partial class AboutForm : QuoterPlan.BaseForm
+	{
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
 		{
-			global::System.ComponentModel.ComponentResourceManager componentResourceManager = new global::System.ComponentModel.ComponentResourceManager(typeof(global::QuoterPlan.AboutForm));
-			this.panelTop = new global::DevComponents.DotNetBar.PanelEx();
-			this.picLogo = new global::System.Windows.Forms.PictureBox();
-			this.panelBottom = new global::DevComponents.DotNetBar.PanelEx();
-			this.lblVersion = new global::DevComponents.DotNetBar.LabelX();
-			this.btOk = new global::DevComponents.DotNetBar.ButtonX();
-			this.lblWebSite = new global::DevComponents.DotNetBar.LabelX();
-			this.lblCopyright = new global::DevComponents.DotNetBar.LabelX();
-			this.lblCopyrightNotice = new global::DevComponents.DotNetBar.LabelX();
-			this.lblProductKey = new global::DevComponents.DotNetBar.LabelX();
-			this.lblPleaseWait = new global::DevComponents.DotNetBar.LabelX();
-			this.txtProductKey = new global::DevComponents.DotNetBar.Controls.TextBoxX();
-			this.lblProductKeyValue = new global::DevComponents.DotNetBar.LabelX();
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
+
+            this.panelTop = new PanelEx();
+			this.picLogo = new System.Windows.Forms.PictureBox();
+			this.panelBottom = new PanelEx();
+			this.lblVersion = new LabelX();
+			this.btOk = new ButtonX();
+			this.lblWebSite = new LabelX();
+			this.lblCopyright = new LabelX();
+			this.lblCopyrightNotice = new LabelX();
+			this.lblProductKey = new LabelX();
+			this.lblPleaseWait = new LabelX();
+			this.txtProductKey = new DevComponents.DotNetBar.Controls.TextBoxX();
+			this.lblProductKeyValue = new LabelX();
 			this.panelTop.SuspendLayout();
-			((global::System.ComponentModel.ISupportInitialize)this.picLogo).BeginInit();
+			((System.ComponentModel.ISupportInitialize)this.picLogo).BeginInit();
 			this.panelBottom.SuspendLayout();
 			base.SuspendLayout();
-			this.panelTop.CanvasColor = global::System.Drawing.SystemColors.Control;
-			this.panelTop.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+			this.panelTop.CanvasColor = System.Drawing.SystemColors.Control;
+			this.panelTop.ColorSchemeStyle = eDotNetBarStyle.StyleManagerControlled;
 			this.panelTop.Controls.Add(this.picLogo);
-			componentResourceManager.ApplyResources(this.panelTop, "panelTop");
+			resources.ApplyResources(this.panelTop, "panelTop");
 			this.panelTop.Name = "panelTop";
-			this.panelTop.Style.Alignment = global::System.Drawing.StringAlignment.Center;
-			this.panelTop.Style.BackColor1.Color = global::System.Drawing.Color.FromArgb(14, 70, 126);
-			this.panelTop.Style.BackColor2.Color = global::System.Drawing.Color.FromArgb(14, 70, 126);
-			this.panelTop.Style.Border = global::DevComponents.DotNetBar.eBorderType.SingleLine;
-			this.panelTop.Style.BorderColor.Color = global::System.Drawing.Color.DimGray;
-			this.panelTop.Style.BorderSide = global::DevComponents.DotNetBar.eBorderSide.Bottom;
-			this.panelTop.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
+			this.panelTop.Style.Alignment = System.Drawing.StringAlignment.Center;
+			this.panelTop.Style.BackColor1.Color = System.Drawing.Color.FromArgb(14, 70, 126);
+			this.panelTop.Style.BackColor2.Color = System.Drawing.Color.FromArgb(14, 70, 126);
+			this.panelTop.Style.Border = eBorderType.SingleLine;
+			this.panelTop.Style.BorderColor.Color = System.Drawing.Color.DimGray;
+			this.panelTop.Style.BorderSide = eBorderSide.Bottom;
+			this.panelTop.Style.ForeColor.ColorSchemePart = eColorSchemePart.PanelText;
 			this.panelTop.Style.GradientAngle = 90;
-			this.picLogo.BackColor = global::System.Drawing.Color.White;
-			this.picLogo.BorderStyle = global::System.Windows.Forms.BorderStyle.FixedSingle;
-			componentResourceManager.ApplyResources(this.picLogo, "picLogo");
+			this.picLogo.BackColor = System.Drawing.Color.White;
+			this.picLogo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			resources.ApplyResources(this.picLogo, "picLogo");
 			this.picLogo.Name = "picLogo";
 			this.picLogo.TabStop = false;
-			this.panelBottom.CanvasColor = global::System.Drawing.SystemColors.Control;
-			this.panelBottom.ColorSchemeStyle = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+			this.panelBottom.CanvasColor = System.Drawing.SystemColors.Control;
+			this.panelBottom.ColorSchemeStyle = eDotNetBarStyle.StyleManagerControlled;
 			this.panelBottom.Controls.Add(this.lblVersion);
 			this.panelBottom.Controls.Add(this.btOk);
 			this.panelBottom.Controls.Add(this.lblWebSite);
@@ -59,88 +70,88 @@
 			this.panelBottom.Controls.Add(this.lblPleaseWait);
 			this.panelBottom.Controls.Add(this.txtProductKey);
 			this.panelBottom.Controls.Add(this.lblProductKeyValue);
-			componentResourceManager.ApplyResources(this.panelBottom, "panelBottom");
+			resources.ApplyResources(this.panelBottom, "panelBottom");
 			this.panelBottom.Name = "panelBottom";
-			this.panelBottom.Style.Alignment = global::System.Drawing.StringAlignment.Center;
-			this.panelBottom.Style.BackColor1.Color = global::System.Drawing.Color.White;
+			this.panelBottom.Style.Alignment = System.Drawing.StringAlignment.Center;
+			this.panelBottom.Style.BackColor1.Color = System.Drawing.Color.White;
 			this.panelBottom.Style.BackColor2.Alpha = 100;
-			this.panelBottom.Style.BackColor2.Color = global::System.Drawing.Color.WhiteSmoke;
+			this.panelBottom.Style.BackColor2.Color = System.Drawing.Color.WhiteSmoke;
 			this.panelBottom.Style.BackgroundImageAlpha = 200;
-			this.panelBottom.Style.Border = global::DevComponents.DotNetBar.eBorderType.SingleLine;
-			this.panelBottom.Style.BorderColor.Color = global::System.Drawing.Color.DimGray;
-			this.panelBottom.Style.BorderSide = global::DevComponents.DotNetBar.eBorderSide.None;
-			this.panelBottom.Style.ForeColor.ColorSchemePart = global::DevComponents.DotNetBar.eColorSchemePart.PanelText;
+			this.panelBottom.Style.Border = eBorderType.SingleLine;
+			this.panelBottom.Style.BorderColor.Color = System.Drawing.Color.DimGray;
+			this.panelBottom.Style.BorderSide = eBorderSide.None;
+			this.panelBottom.Style.ForeColor.ColorSchemePart = eColorSchemePart.PanelText;
 			this.panelBottom.Style.GradientAngle = 270;
-			this.lblVersion.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblVersion.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.lblVersion, "lblVersion");
+			this.lblVersion.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblVersion.ForeColor = System.Drawing.Color.Black;
+			resources.ApplyResources(this.lblVersion, "lblVersion");
 			this.lblVersion.Name = "lblVersion";
-			this.lblVersion.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblVersion.TextAlignment = global::System.Drawing.StringAlignment.Center;
-			this.btOk.AccessibleRole = global::System.Windows.Forms.AccessibleRole.PushButton;
-			componentResourceManager.ApplyResources(this.btOk, "btOk");
-			this.btOk.ColorTable = global::DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-			this.btOk.DialogResult = global::System.Windows.Forms.DialogResult.OK;
+			this.lblVersion.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblVersion.TextAlignment = System.Drawing.StringAlignment.Center;
+			this.btOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+			resources.ApplyResources(this.btOk, "btOk");
+			this.btOk.ColorTable = eButtonColor.OrangeWithBackground;
+			this.btOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btOk.FocusCuesEnabled = false;
 			this.btOk.Name = "btOk";
-			this.btOk.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			componentResourceManager.ApplyResources(this.lblWebSite, "lblWebSite");
-			this.lblWebSite.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblWebSite.Cursor = global::System.Windows.Forms.Cursors.Hand;
-			this.lblWebSite.ForeColor = global::System.Drawing.Color.FromArgb(14, 70, 126);
+			this.btOk.Style = eDotNetBarStyle.StyleManagerControlled;
+			resources.ApplyResources(this.lblWebSite, "lblWebSite");
+			this.lblWebSite.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblWebSite.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.lblWebSite.ForeColor = System.Drawing.Color.FromArgb(14, 70, 126);
 			this.lblWebSite.Name = "lblWebSite";
-			this.lblWebSite.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblWebSite.TextAlignment = global::System.Drawing.StringAlignment.Center;
-			this.lblWebSite.Click += new global::System.EventHandler(this.lblWebSite_Click);
-			this.lblCopyright.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblCopyright.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.lblCopyright, "lblCopyright");
+			this.lblWebSite.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblWebSite.TextAlignment = System.Drawing.StringAlignment.Center;
+			this.lblWebSite.Click += new System.EventHandler(this.lblWebSite_Click);
+			this.lblCopyright.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblCopyright.ForeColor = System.Drawing.Color.Black;
+			resources.ApplyResources(this.lblCopyright, "lblCopyright");
 			this.lblCopyright.Name = "lblCopyright";
-			this.lblCopyright.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblCopyright.TextAlignment = global::System.Drawing.StringAlignment.Center;
-			this.lblCopyrightNotice.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			componentResourceManager.ApplyResources(this.lblCopyrightNotice, "lblCopyrightNotice");
-			this.lblCopyrightNotice.ForeColor = global::System.Drawing.Color.Black;
+			this.lblCopyright.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblCopyright.TextAlignment = System.Drawing.StringAlignment.Center;
+			this.lblCopyrightNotice.BackgroundStyle.CornerType = eCornerType.Square;
+			resources.ApplyResources(this.lblCopyrightNotice, "lblCopyrightNotice");
+			this.lblCopyrightNotice.ForeColor = System.Drawing.Color.Black;
 			this.lblCopyrightNotice.Name = "lblCopyrightNotice";
 			this.lblCopyrightNotice.PaddingBottom = 10;
 			this.lblCopyrightNotice.PaddingLeft = 20;
 			this.lblCopyrightNotice.PaddingRight = 20;
-			this.lblCopyrightNotice.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblCopyrightNotice.TextAlignment = global::System.Drawing.StringAlignment.Far;
+			this.lblCopyrightNotice.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblCopyrightNotice.TextAlignment = System.Drawing.StringAlignment.Far;
 			this.lblCopyrightNotice.WordWrap = true;
-			componentResourceManager.ApplyResources(this.lblProductKey, "lblProductKey");
-			this.lblProductKey.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblProductKey.ForeColor = global::System.Drawing.Color.Black;
+			resources.ApplyResources(this.lblProductKey, "lblProductKey");
+			this.lblProductKey.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblProductKey.ForeColor = System.Drawing.Color.Black;
 			this.lblProductKey.Name = "lblProductKey";
-			this.lblProductKey.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblPleaseWait.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblPleaseWait.Cursor = global::System.Windows.Forms.Cursors.Hand;
-			this.lblPleaseWait.ForeColor = global::System.Drawing.Color.DarkRed;
-			componentResourceManager.ApplyResources(this.lblPleaseWait, "lblPleaseWait");
+			this.lblProductKey.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblPleaseWait.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblPleaseWait.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.lblPleaseWait.ForeColor = System.Drawing.Color.DarkRed;
+			resources.ApplyResources(this.lblPleaseWait, "lblPleaseWait");
 			this.lblPleaseWait.Name = "lblPleaseWait";
-			this.lblPleaseWait.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblPleaseWait.TextAlignment = global::System.Drawing.StringAlignment.Center;
-			componentResourceManager.ApplyResources(this.txtProductKey, "txtProductKey");
+			this.lblPleaseWait.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblPleaseWait.TextAlignment = System.Drawing.StringAlignment.Center;
+			resources.ApplyResources(this.txtProductKey, "txtProductKey");
 			this.txtProductKey.Border.Class = "TextBoxBorder";
-			this.txtProductKey.Border.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
+			this.txtProductKey.Border.CornerType = eCornerType.Square;
 			this.txtProductKey.Name = "txtProductKey";
 			this.txtProductKey.ReadOnly = true;
-			this.txtProductKey.Click += new global::System.EventHandler(this.txtProductKey_Enter);
-			this.txtProductKey.Enter += new global::System.EventHandler(this.txtProductKey_Enter);
-			this.lblProductKeyValue.BackgroundStyle.CornerType = global::DevComponents.DotNetBar.eCornerType.Square;
-			this.lblProductKeyValue.ForeColor = global::System.Drawing.Color.Black;
-			componentResourceManager.ApplyResources(this.lblProductKeyValue, "lblProductKeyValue");
+			this.txtProductKey.Click += new System.EventHandler(this.txtProductKey_Enter);
+			this.txtProductKey.Enter += new System.EventHandler(this.txtProductKey_Enter);
+			this.lblProductKeyValue.BackgroundStyle.CornerType = eCornerType.Square;
+			this.lblProductKeyValue.ForeColor = System.Drawing.Color.Black;
+			resources.ApplyResources(this.lblProductKeyValue, "lblProductKeyValue");
 			this.lblProductKeyValue.Name = "lblProductKeyValue";
-			this.lblProductKeyValue.SingleLineColor = global::System.Drawing.Color.Black;
-			this.lblProductKeyValue.Style = global::DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-			this.lblProductKeyValue.Click += new global::System.EventHandler(this.txtProductKey_Enter);
-			this.lblProductKeyValue.Enter += new global::System.EventHandler(this.txtProductKey_Enter);
-			componentResourceManager.ApplyResources(this, "$this");
-			base.AutoScaleMode = global::System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = global::System.Drawing.SystemColors.Window;
+			this.lblProductKeyValue.SingleLineColor = System.Drawing.Color.Black;
+			this.lblProductKeyValue.Style = eDotNetBarStyle.StyleManagerControlled;
+			this.lblProductKeyValue.Click += new System.EventHandler(this.txtProductKey_Enter);
+			this.lblProductKeyValue.Enter += new System.EventHandler(this.txtProductKey_Enter);
+			resources.ApplyResources(this, "$this");
+			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.SystemColors.Window;
 			base.Controls.Add(this.panelTop);
 			base.Controls.Add(this.panelBottom);
-			base.FormBorderStyle = global::System.Windows.Forms.FormBorderStyle.Fixed3D;
+			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			base.MaximizeBox = false;
 			base.MinimizeBox = false;
 			base.Name = "AboutForm";
@@ -148,36 +159,34 @@
 			base.ShowInTaskbar = false;
 			this.panelTop.ResumeLayout(false);
 			this.panelTop.PerformLayout();
-			((global::System.ComponentModel.ISupportInitialize)this.picLogo).EndInit();
+			((System.ComponentModel.ISupportInitialize)this.picLogo).EndInit();
 			this.panelBottom.ResumeLayout(false);
 			this.panelBottom.PerformLayout();
 			base.ResumeLayout(false);
 		}
 
-		private global::System.ComponentModel.IContainer components;
+		System.Windows.Forms.PictureBox picLogo;
 
-		private global::System.Windows.Forms.PictureBox picLogo;
+		PanelEx panelTop;
 
-		private global::DevComponents.DotNetBar.PanelEx panelTop;
+		PanelEx panelBottom;
 
-		private global::DevComponents.DotNetBar.PanelEx panelBottom;
+		LabelX lblVersion;
 
-		private global::DevComponents.DotNetBar.LabelX lblVersion;
+		ButtonX btOk;
 
-		private global::DevComponents.DotNetBar.ButtonX btOk;
+		LabelX lblWebSite;
 
-		private global::DevComponents.DotNetBar.LabelX lblWebSite;
+		LabelX lblCopyright;
 
-		private global::DevComponents.DotNetBar.LabelX lblCopyright;
+		LabelX lblCopyrightNotice;
 
-		private global::DevComponents.DotNetBar.LabelX lblCopyrightNotice;
+		TextBoxX txtProductKey;
 
-		private global::DevComponents.DotNetBar.Controls.TextBoxX txtProductKey;
+		LabelX lblProductKey;
 
-		private global::DevComponents.DotNetBar.LabelX lblProductKey;
+		LabelX lblPleaseWait;
 
-		private global::DevComponents.DotNetBar.LabelX lblPleaseWait;
-
-		private global::DevComponents.DotNetBar.LabelX lblProductKeyValue;
+		LabelX lblProductKeyValue;
 	}
 }

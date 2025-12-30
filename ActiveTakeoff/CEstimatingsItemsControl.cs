@@ -23,8 +23,6 @@ namespace QuoterPlan
 {
     public class CEstimatingsItemsControl : BaseUserControl
     {
-        private IContainer components;
-
         private Bar barProducts;
 
         private ButtonItem btProductAdd;
@@ -196,15 +194,6 @@ namespace QuoterPlan
             this.EnableMenu(false);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && this.components != null)
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private void EnableMenu(bool enable = true)
         {
             if (this.listItems.Nodes.Count == 0)
@@ -216,9 +205,25 @@ namespace QuoterPlan
             this.btFormula.Enabled = (!enable ? false : this.listItems.Nodes.Count > 0);
         }
 
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+
+            base.Dispose(disposing);
+        }
+
         private void InitializeComponent()
         {
-            ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CEstimatingsItemsControl));
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
             this.barProducts = new Bar();
             this.btProductAdd = new ButtonItem();
             this.btProductRemove = new ButtonItem();
@@ -262,7 +267,7 @@ namespace QuoterPlan
             this.barProducts.TabIndex = 29;
             this.barProducts.TabStop = false;
             this.barProducts.Text = "barLayers";
-            this.btProductAdd.Image = (Image)componentResourceManager.GetObject("btProductAdd.Image");
+            this.btProductAdd.Image = (Image)resources.GetObject("btProductAdd.Image");
             this.btProductAdd.ImageFixedSize = new Size(16, 16);
             this.btProductAdd.Name = "btProductAdd";
             this.btProductAdd.Click += new EventHandler(this.btProductAdd_Click);
@@ -271,7 +276,7 @@ namespace QuoterPlan
             this.btProductRemove.Name = "btProductRemove";
             this.btProductRemove.Click += new EventHandler(this.btProductRemove_Click);
             this.btFormula.BeginGroup = true;
-            this.btFormula.Image = (Image)componentResourceManager.GetObject("btFormula.Image");
+            this.btFormula.Image = (Image)resources.GetObject("btFormula.Image");
             this.btFormula.ImageFixedSize = new Size(16, 16);
             this.btFormula.Name = "btFormula";
             this.btFormula.Click += new EventHandler(this.btProductLink_Click);

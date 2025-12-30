@@ -28,3 +28,10 @@ C:\Estimator\ActiveTakeoff\bin\Debug\QuoterPlanControls.pdb
 C:\Estimator\ActiveTakeoff\obj\x86\Debug\ActiveTa.C9E9DBE9.Up2Date
 C:\Estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.exe
 C:\Estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.pdb
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\QuoterPlan.AboutForm.resources
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\QuoterPlan.BaseForm.resources
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\QuoterPlan.CEstimatingItemsBrowserForm.resources
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\QuoterPlan.CEstimatingsItemsControl.resources
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\QuoterPlan.Properties.Resources.resources
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.csproj.GenerateResource.cache
+C:\Estimator\ActiveTakeoff\obj\x86\Debug\ActiveTakeoff.exe.licenses

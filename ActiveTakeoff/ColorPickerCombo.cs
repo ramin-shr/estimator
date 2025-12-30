@@ -9,7 +9,7 @@ namespace QuoterPlan
 {
     public class ColorPickerCombo : DevComponents.DotNetBar.Controls.ComboBoxEx
     {
-        private IContainer components;
+        private System.ComponentModel.IContainer components = null;
 
         public new ColorPickerCombo.ColorInfo SelectedItem
         {
@@ -115,7 +115,13 @@ namespace QuoterPlan
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(ColorPickerCombo));
+
             base.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
             this.BackColor = Color.White;
             base.Name = "ColorPicker";
             base.Size = new Size(216, 123);
