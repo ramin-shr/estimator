@@ -448,7 +448,11 @@
       <DependentUpon>ProjectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="QuoteItem.cs" />
     <Compile Include="QuoteItems.cs" />
@@ -636,7 +640,8 @@
     <EmbeddedResource Include="ProjectForm.resources" />
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Rectangle.cur" />
     <EmbeddedResource Include="ReportEditForm.resources" />

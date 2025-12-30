@@ -15,7 +15,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources =
-                new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
+                new System.ComponentModel.ComponentResourceManager(typeof(DimensionForm));
 
             this.SuspendLayout();
 

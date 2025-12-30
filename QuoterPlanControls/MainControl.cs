@@ -409,12 +409,17 @@ namespace QuoterPlanControls
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(MainControl));
+
+            this.SuspendLayout();
+
+            // If you have a BaseForm.resx, keep this. If not, delete this line.
+            resources.ApplyResources(this, "$this");
             this.hScrollBar = new HScrollBar();
             this.vScrollBar = new VScrollBar();
             this.drawingBoard1 = new DrawingBoard();
-
             base.SuspendLayout();
-
             this.hScrollBar.Anchor = AnchorStyles.None;
             this.hScrollBar.Enabled = false;
             this.hScrollBar.LargeChange = 20;
@@ -423,7 +428,6 @@ namespace QuoterPlanControls
             this.hScrollBar.Size = new Size(0x1fe, 17);
             this.hScrollBar.TabIndex = 4;
             this.hScrollBar.KeyDown += new KeyEventHandler(this.drawingBoard1_KeyDown);
-
             this.vScrollBar.Anchor = AnchorStyles.None;
             this.vScrollBar.Enabled = false;
             this.vScrollBar.LargeChange = 20;
@@ -432,7 +436,6 @@ namespace QuoterPlanControls
             this.vScrollBar.Size = new Size(17, 0x1a9);
             this.vScrollBar.TabIndex = 3;
             this.vScrollBar.KeyDown += new KeyEventHandler(this.drawingBoard1_KeyDown);
-
             this.drawingBoard1.BackColor = SystemColors.Control;
             this.drawingBoard1.Brightness = 0;
             this.drawingBoard1.CausesValidation = false;
@@ -440,7 +443,7 @@ namespace QuoterPlanControls
             this.drawingBoard1.Location = new Point(0, 0);
             this.drawingBoard1.Margin = new Padding(0);
             this.drawingBoard1.Name = "drawingBoard1";
-            this.drawingBoard1.Origin = new PointF(0f, 0f); // <- fixed (no resources)
+            this.drawingBoard1.Origin = (PointF)resources.GetObject("drawingBoard1.Origin");
             this.drawingBoard1.Size = new Size(0, 0);
             this.drawingBoard1.TabIndex = 0;
             this.drawingBoard1.UseDynamicAdjustments = false;
@@ -451,22 +454,17 @@ namespace QuoterPlanControls
             this.drawingBoard1.MouseDown += new MouseEventHandler(this.drawingBoard1_MouseDown);
             this.drawingBoard1.MouseMove += new MouseEventHandler(this.drawingBoard1_MouseMove);
             this.drawingBoard1.MouseUp += new MouseEventHandler(this.drawingBoard1_MouseUp);
-
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = AutoScaleMode.Font;
             base.BorderStyle = BorderStyle.Fixed3D;
-
             base.Controls.Add(this.vScrollBar);
             base.Controls.Add(this.drawingBoard1);
             base.Controls.Add(this.hScrollBar);
-
             base.Margin = new Padding(0);
             base.Name = "MainControl";
             base.Size = new Size(0x20e, 0x1c6);
-
             this.KeyDown += new KeyEventHandler(this.MainControl_KeyDown);
             base.Resize += new EventHandler(this.MainControl_Resize);
-
             base.ResumeLayout(false);
         }
 
@@ -763,7 +761,7 @@ namespace QuoterPlanControls
 
         public event OriginChangeEventHandler OnOriginChange;
 
-        public event PaintEventHandler OnPaint;
+        public event QuoterPlanControls.PaintEventHandler OnPaint;
 
         public event ZoomChangeEventHandler OnZoomChange;
     }
