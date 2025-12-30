@@ -3,34 +3,31 @@
   "WorkspaceRootPath": "C:\\estimator\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\mainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|C:\\estimator\\quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\maincontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|c:\\estimator\\activetakeoff\\aboutform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|C:\\estimator\\activetakeoff\\aboutform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6BE1348B-04DF-495F-9931-234B29A4B833}|ActiveTakeoff\\ActiveTakeoff.csproj|solutionrelative:activetakeoff\\aboutform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\drawingboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\drawingboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|QuoterPlanControls||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\pancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|C:\\estimator\\quoterplancontrols\\pancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|solutionrelative:quoterplancontrols\\pancontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E63429C2-052D-4446-8FBD-79326DD332D0}|QuoterPlanControls\\QuoterPlanControls.csproj|c:\\estimator\\quoterplancontrols\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,27 +37,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MainForm.cs",
-              "RelativeDocumentMoniker": "ActiveTakeoff\\MainForm.cs",
-              "ToolTip": "C:\\estimator\\ActiveTakeoff\\MainForm.cs [Design]",
-              "RelativeToolTip": "ActiveTakeoff\\MainForm.cs [Design]",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\Program.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\Program.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\Program.cs",
+              "RelativeToolTip": "ActiveTakeoff\\Program.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAiwFEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T07:17:13Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+              "WhenOpened": "2025-12-30T10:29:35.931Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MainForm.cs",
+              "RelativeDocumentMoniker": "ActiveTakeoff\\MainForm.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\MainForm.cs*",
+              "RelativeToolTip": "ActiveTakeoff\\MainForm.cs*",
+              "ViewState": "AgIAAL0BAAAAAAAAAAAUwMgBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T08:14:12.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AboutForm.Designer.cs",
               "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\AboutForm.Designer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\AboutForm.Designer.cs",
@@ -68,8 +75,7 @@
               "RelativeToolTip": "ActiveTakeoff\\AboutForm.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T06:38:54.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-30T06:38:54.26Z"
             },
             {
               "$type": "Document",
@@ -80,36 +86,22 @@
               "ToolTip": "C:\\estimator\\QuoterPlanControls\\PanControl.cs [Design]",
               "RelativeToolTip": "QuoterPlanControls\\PanControl.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T06:34:00.103Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-12-30T06:34:00.103Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "QuoterPlanControls",
-              "DocumentMoniker": "C:\\Estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
+              "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
               "RelativeDocumentMoniker": "QuoterPlanControls\\QuoterPlanControls.csproj",
-              "ToolTip": "C:\\Estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
+              "ToolTip": "C:\\estimator\\QuoterPlanControls\\QuoterPlanControls.csproj",
               "RelativeToolTip": "QuoterPlanControls\\QuoterPlanControls.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-12-30T06:33:53.566Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-30T06:33:53.566Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DrawingBoard.cs [Design]",
-              "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\DrawingBoard.cs",
-              "RelativeDocumentMoniker": "QuoterPlanControls\\DrawingBoard.cs",
-              "ToolTip": "C:\\estimator\\QuoterPlanControls\\DrawingBoard.cs [Design]",
-              "RelativeToolTip": "QuoterPlanControls\\DrawingBoard.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T06:32:03.046Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MainControl.cs",
               "DocumentMoniker": "C:\\estimator\\QuoterPlanControls\\MainControl.cs",
               "RelativeDocumentMoniker": "QuoterPlanControls\\MainControl.cs",
@@ -117,18 +109,17 @@
               "RelativeToolTip": "QuoterPlanControls\\MainControl.cs",
               "ViewState": "AgIAAKoBAAAAAAAAAAAowL0BAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T06:22:21.312Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-30T06:22:21.312Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Estimator\\ActiveTakeoff\\MainForm.Designer.cs",
+              "DocumentMoniker": "C:\\estimator\\ActiveTakeoff\\MainForm.Designer.cs",
               "RelativeDocumentMoniker": "ActiveTakeoff\\MainForm.Designer.cs",
-              "ToolTip": "C:\\Estimator\\ActiveTakeoff\\MainForm.Designer.cs",
+              "ToolTip": "C:\\estimator\\ActiveTakeoff\\MainForm.Designer.cs",
               "RelativeToolTip": "ActiveTakeoff\\MainForm.Designer.cs",
-              "ViewState": "AgIAANAOAAAAAAAAAAAowOYOAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJkaAAAAAAAAAAASwKQaAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-30T06:05:08.859Z",
               "EditorCaption": ""

@@ -454,7 +454,7 @@ namespace QuoterPlan
 			this.InitializeGui();
 			this.FileClose(false);
 			this.InitializeSession();
-			this.InitializeDockingWindows();
+			//this.InitializeDockingWindows();
 			Utilities.SetObjectFocus(this.lstRecentProjects);
 		}
 
