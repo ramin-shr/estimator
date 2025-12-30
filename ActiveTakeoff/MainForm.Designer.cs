@@ -959,9 +959,13 @@ namespace QuoterPlan
             this.ribbonPrintReport.CanCustomize = false;
             this.ribbonPrintReport.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonPrintReport, "ribbonPrintReport");
-            SubItemsCollection subItemsCollection2 = this.ribbonPrintReport.Items;
-            BaseItem[] baseItemArray6 = new BaseItem[] { this.btReportPrint, this.btReportPrintPreview, this.btReportPrintSetup };
-            subItemsCollection2.AddRange(baseItemArray6);
+            this.ribbonPrintReport.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btReportPrint,
+    this.btReportPrintPreview,
+    this.btReportPrintSetup
+            });
+
             this.ribbonPrintReport.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonPrintReport.Name = "ribbonPrintReport";
             this.ribbonPrintReport.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -996,9 +1000,12 @@ namespace QuoterPlan
             this.ribbonReportOrder.CanCustomize = false;
             this.ribbonReportOrder.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonReportOrder, "ribbonReportOrder");
-            SubItemsCollection items3 = this.ribbonReportOrder.Items;
-            BaseItem[] baseItemArray7 = new BaseItem[] { this.btReportFilter, this.btReportSettings };
-            items3.AddRange(baseItemArray7);
+            this.ribbonReportOrder.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btReportFilter,
+    this.btReportSettings
+            });
+
             this.ribbonReportOrder.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonReportOrder.Name = "ribbonReportOrder";
             this.ribbonReportOrder.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -1010,9 +1017,19 @@ namespace QuoterPlan
             this.btReportFilter.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btReportFilter.ImagePosition = eImagePosition.Top;
             this.btReportFilter.Name = "btReportFilter";
-            SubItemsCollection subItems1 = this.btReportFilter.SubItems;
-            BaseItem[] baseItemArray8 = new BaseItem[] { this.lblReportSystemType, this.btReportScaleImperial, this.btReportScaleMetric, this.lblReportPrecision, this.btReportScalePrecision64, this.btReportScalePrecision32, this.btReportScalePrecision16, this.btReportScalePrecision8, this.lblReportTheme };
-            subItems1.AddRange(baseItemArray8);
+            this.btReportFilter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblReportSystemType,
+    this.btReportScaleImperial,
+    this.btReportScaleMetric,
+    this.lblReportPrecision,
+    this.btReportScalePrecision64,
+    this.btReportScalePrecision32,
+    this.btReportScalePrecision16,
+    this.btReportScalePrecision8,
+    this.lblReportTheme
+            });
+
             resources.ApplyResources(this.btReportFilter, "btReportFilter");
             this.btReportFilter.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btReportEdit_PopupOpen);
             this.btReportFilter.Click += new EventHandler(this.btReportEdit_Click);
@@ -1095,9 +1112,12 @@ namespace QuoterPlan
             this.ribbonBarPrintExport.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonBarPrintExport.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarPrintExport, "ribbonBarPrintExport");
-            SubItemsCollection subItemsCollection3 = this.ribbonBarPrintExport.Items;
-            BaseItem[] baseItemArray9 = new BaseItem[] { this.btPrintPlan, this.btExportPlanToPDF };
-            subItemsCollection3.AddRange(baseItemArray9);
+            this.ribbonBarPrintExport.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btPrintPlan,
+    this.btExportPlanToPDF
+            });
+
             this.ribbonBarPrintExport.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarPrintExport.Name = "ribbonBarPrintExport";
             this.ribbonBarPrintExport.OverflowButtonImage = Resources.print;
@@ -1111,9 +1131,13 @@ namespace QuoterPlan
             this.btPrintPlan.ImagePaddingVertical = 5;
             this.btPrintPlan.ImagePosition = eImagePosition.Top;
             this.btPrintPlan.Name = "btPrintPlan";
-            SubItemsCollection subItems2 = this.btPrintPlan.SubItems;
-            BaseItem[] baseItemArray10 = new BaseItem[] { this.lblPrintPlanOptions, this.btPrintPlanFullSize, this.btPrintPlanWindow };
-            subItems2.AddRange(baseItemArray10);
+            this.btPrintPlan.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblPrintPlanOptions,
+    this.btPrintPlanFullSize,
+    this.btPrintPlanWindow
+            });
+
             resources.ApplyResources(this.btPrintPlan, "btPrintPlan");
             this.btPrintPlan.Click += new EventHandler(this.btPrintPlan_Click);
             this.lblPrintPlanOptions.BackColor = Color.FromArgb(221, 231, 238);
@@ -1155,9 +1179,12 @@ namespace QuoterPlan
             this.ribbonBarImage.CanCustomize = false;
             this.ribbonBarImage.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarImage, "ribbonBarImage");
-            SubItemsCollection items4 = this.ribbonBarImage.Items;
-            BaseItem[] baseItemArray11 = new BaseItem[] { this.btBrightnessContrast, this.btRotation };
-            items4.AddRange(baseItemArray11);
+            this.ribbonBarImage.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btBrightnessContrast,
+    this.btRotation
+            });
+
             this.ribbonBarImage.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarImage.Name = "ribbonBarImage";
             this.ribbonBarImage.OverflowButtonImage = (Image)resources.GetObject("ribbonBarImage.OverflowButtonImage");
@@ -1184,9 +1211,12 @@ namespace QuoterPlan
             this.ribbonBarBrowse.CanCustomize = false;
             this.ribbonBarBrowse.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarBrowse, "ribbonBarBrowse");
-            SubItemsCollection subItemsCollection4 = this.ribbonBarBrowse.Items;
-            BaseItem[] baseItemArray12 = new BaseItem[] { this.itemContainerBrowse1, this.itemContainerBrowse2 };
-            subItemsCollection4.AddRange(baseItemArray12);
+            this.ribbonBarBrowse.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.itemContainerBrowse1,
+    this.itemContainerBrowse2
+            });
+
             this.ribbonBarBrowse.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarBrowse.Name = "ribbonBarBrowse";
             this.ribbonBarBrowse.OverflowButtonImage = (Image)resources.GetObject("ribbonBarBrowse.OverflowButtonImage");
@@ -1199,9 +1229,12 @@ namespace QuoterPlan
             this.itemContainerBrowse1.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerBrowse1.MultiLine = true;
             this.itemContainerBrowse1.Name = "itemContainerBrowse1";
-            SubItemsCollection subItems3 = this.itemContainerBrowse1.SubItems;
-            BaseItem[] baseItemArray13 = new BaseItem[] { this.lblBrowseGroup, this.itemContainerBrowse3 };
-            subItems3.AddRange(baseItemArray13);
+            this.itemContainerBrowse1.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblBrowseGroup,
+    this.itemContainerBrowse3
+            });
+
             this.itemContainerBrowse1.TitleStyle.CornerType = eCornerType.Square;
             this.lblBrowseGroup.Name = "lblBrowseGroup";
             this.lblBrowseGroup.PaddingTop = 3;
@@ -1214,9 +1247,12 @@ namespace QuoterPlan
             this.itemContainerBrowse3.FixedSize = new Size(88, 0);
             this.itemContainerBrowse3.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
             this.itemContainerBrowse3.Name = "itemContainerBrowse3";
-            SubItemsCollection subItems4 = this.itemContainerBrowse3.SubItems;
-            BaseItem[] baseItemArray14 = new BaseItem[] { this.btBrowsePrevious, this.btBrowseNext };
-            subItems4.AddRange(baseItemArray14);
+            this.itemContainerBrowse3.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btBrowsePrevious,
+    this.btBrowseNext
+            });
+
             this.itemContainerBrowse3.TitleStyle.CornerType = eCornerType.Square;
             this.btBrowsePrevious.ButtonStyle = eButtonStyle.ImageAndText;
             this.btBrowsePrevious.Image = (Image)resources.GetObject("btBrowsePrevious.Image");
@@ -1236,9 +1272,12 @@ namespace QuoterPlan
             this.itemContainerBrowse2.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerBrowse2.MultiLine = true;
             this.itemContainerBrowse2.Name = "itemContainerBrowse2";
-            SubItemsCollection subItems5 = this.itemContainerBrowse2.SubItems;
-            BaseItem[] baseItemArray15 = new BaseItem[] { this.lblBrowseObjectType, this.itemContainerBrowse4 };
-            subItems5.AddRange(baseItemArray15);
+            this.itemContainerBrowse2.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblBrowseObjectType,
+    this.itemContainerBrowse4
+            });
+
             this.itemContainerBrowse2.TitleStyle.CornerType = eCornerType.Square;
             this.lblBrowseObjectType.Name = "lblBrowseObjectType";
             this.lblBrowseObjectType.PaddingTop = 3;
@@ -1251,9 +1290,12 @@ namespace QuoterPlan
             this.itemContainerBrowse4.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
             this.itemContainerBrowse4.MinimumSize = new Size(88, 0);
             this.itemContainerBrowse4.Name = "itemContainerBrowse4";
-            SubItemsCollection subItemsCollection5 = this.itemContainerBrowse4.SubItems;
-            BaseItem[] baseItemArray16 = new BaseItem[] { this.btBrowseObjectTypePrevious, this.btBrowseObjectTypeNext };
-            subItemsCollection5.AddRange(baseItemArray16);
+            this.itemContainerBrowse4.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btBrowseObjectTypePrevious,
+    this.btBrowseObjectTypeNext
+            });
+
             this.itemContainerBrowse4.TitleStyle.CornerType = eCornerType.Square;
             this.btBrowseObjectTypePrevious.ButtonStyle = eButtonStyle.ImageAndText;
             this.btBrowseObjectTypePrevious.Image = (Image)resources.GetObject("btBrowseObjectTypePrevious.Image");
@@ -1273,9 +1315,16 @@ namespace QuoterPlan
             this.ribbonBarZoom.CanCustomize = false;
             this.ribbonBarZoom.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarZoom, "ribbonBarZoom");
-            SubItemsCollection items5 = this.ribbonBarZoom.Items;
-            BaseItem[] baseItemArray17 = new BaseItem[] { this.btZoomToSelection, this.btZoomToWindow, this.btZoomActualSize, this.btZoomIn, this.btZoomOut, this.btBookmarks };
-            items5.AddRange(baseItemArray17);
+            this.ribbonBarZoom.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btZoomToSelection,
+    this.btZoomToWindow,
+    this.btZoomActualSize,
+    this.btZoomIn,
+    this.btZoomOut,
+    this.btBookmarks
+            });
+
             this.ribbonBarZoom.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarZoom.Name = "ribbonBarZoom";
             this.ribbonBarZoom.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -1302,9 +1351,13 @@ namespace QuoterPlan
             this.btZoomActualSize.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btZoomActualSize.ImagePosition = eImagePosition.Top;
             this.btZoomActualSize.Name = "btZoomActualSize";
-            SubItemsCollection subItems6 = this.btZoomActualSize.SubItems;
-            BaseItem[] baseItemArray18 = new BaseItem[] { this.btZoom75, this.btZoom50, this.btZoom25 };
-            subItems6.AddRange(baseItemArray18);
+            this.btZoomActualSize.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btZoom75,
+    this.btZoom50,
+    this.btZoom25
+            });
+
             resources.ApplyResources(this.btZoomActualSize, "btZoomActualSize");
             this.btZoomActualSize.Click += new EventHandler(this.btZoomActualSize_Click);
             this.btZoom75.CanCustomize = false;
@@ -1347,9 +1400,17 @@ namespace QuoterPlan
             this.btBookmarks.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btBookmarks.ImagePosition = eImagePosition.Top;
             this.btBookmarks.Name = "btBookmarks";
-            SubItemsCollection subItemsCollection6 = this.btBookmarks.SubItems;
-            BaseItem[] baseItemArray19 = new BaseItem[] { this.btZoomTo75, this.btZoomTo50, this.btZoomTo25, this.btZoomTo150, this.btZoomTo200, this.buttonItem61, this.btModifyBookmarks };
-            subItemsCollection6.AddRange(baseItemArray19);
+            this.btBookmarks.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btZoomTo75,
+    this.btZoomTo50,
+    this.btZoomTo25,
+    this.btZoomTo150,
+    this.btZoomTo200,
+    this.buttonItem61,
+    this.btModifyBookmarks
+            });
+
             resources.ApplyResources(this.btBookmarks, "btBookmarks");
             this.btBookmarks.Visible = false;
             this.btZoomTo75.Name = "btZoomTo75";
@@ -1373,9 +1434,13 @@ namespace QuoterPlan
             this.ribbonBarAnnotations.CanCustomize = false;
             this.ribbonBarAnnotations.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarAnnotations, "ribbonBarAnnotations");
-            SubItemsCollection items6 = this.ribbonBarAnnotations.Items;
-            BaseItem[] baseItemArray20 = new BaseItem[] { this.btMarkZone, this.btInsertNote, this.btInsertPicture };
-            items6.AddRange(baseItemArray20);
+            this.ribbonBarAnnotations.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btMarkZone,
+    this.btInsertNote,
+    this.btInsertPicture
+            });
+
             this.ribbonBarAnnotations.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarAnnotations.Name = "ribbonBarAnnotations";
             this.ribbonBarAnnotations.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -1411,9 +1476,17 @@ namespace QuoterPlan
             this.ribbonBarTools.CanCustomize = false;
             this.ribbonBarTools.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarTools, "ribbonBarTools");
-            SubItemsCollection items7 = this.ribbonBarTools.Items;
-            BaseItem[] baseItemArray21 = new BaseItem[] { this.btToolSelection, this.btToolPan, this.btToolArea, this.btToolPerimeter, this.btToolRuler, this.btToolCounter, this.btToolAngle };
-            items7.AddRange(baseItemArray21);
+            this.ribbonBarTools.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btToolSelection,
+    this.btToolPan,
+    this.btToolArea,
+    this.btToolPerimeter,
+    this.btToolRuler,
+    this.btToolCounter,
+    this.btToolAngle
+            });
+
             this.ribbonBarTools.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarTools.Name = "ribbonBarTools";
             this.ribbonBarTools.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -1441,9 +1514,17 @@ namespace QuoterPlan
             this.btToolArea.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btToolArea.ImagePosition = eImagePosition.Top;
             this.btToolArea.Name = "btToolArea";
-            SubItemsCollection subItems7 = this.btToolArea.SubItems;
-            BaseItem[] baseItemArray22 = new BaseItem[] { this.lblNoArea, this.lblAreaFilter, this.itemContainerAreaFilter, this.lblAreaGroups, this.galleryAreaGroups, this.lblAreaTemplates, this.galleryAreaTemplates };
-            subItems7.AddRange(baseItemArray22);
+            this.btToolArea.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblNoArea,
+    this.lblAreaFilter,
+    this.itemContainerAreaFilter,
+    this.lblAreaGroups,
+    this.galleryAreaGroups,
+    this.lblAreaTemplates,
+    this.galleryAreaTemplates
+            });
+
             resources.ApplyResources(this.btToolArea, "btToolArea");
             this.btToolArea.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btToolArea_PopupOpen);
             this.btToolArea.Click += new EventHandler(this.btToolArea_Click);
@@ -1470,9 +1551,13 @@ namespace QuoterPlan
             this.itemContainerAreaFilter.ItemSpacing = 0;
             this.itemContainerAreaFilter.Name = "itemContainerAreaFilter";
             this.itemContainerAreaFilter.ResizeItemsToFit = false;
-            SubItemsCollection subItemsCollection7 = this.itemContainerAreaFilter.SubItems;
-            BaseItem[] baseItemArray23 = new BaseItem[] { this.txtAreaFilter, this.btAreaFilterClear, this.lblAreaFilterPadding };
-            subItemsCollection7.AddRange(baseItemArray23);
+            this.itemContainerAreaFilter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.txtAreaFilter,
+    this.btAreaFilterClear,
+    this.lblAreaFilterPadding
+            });
+
             this.itemContainerAreaFilter.TitleStyle.CornerType = eCornerType.Square;
             this.txtAreaFilter.CanCustomize = false;
             this.txtAreaFilter.ItemAlignment = eItemAlignment.Center;
@@ -1533,9 +1618,17 @@ namespace QuoterPlan
             this.btToolPerimeter.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btToolPerimeter.ImagePosition = eImagePosition.Top;
             this.btToolPerimeter.Name = "btToolPerimeter";
-            SubItemsCollection subItems8 = this.btToolPerimeter.SubItems;
-            BaseItem[] baseItemArray24 = new BaseItem[] { this.lblNoPerimeter, this.lblPerimeterFilter, this.itemContainerPerimeterFilter, this.lblPerimeterGroups, this.galleryPerimeterGroups, this.lblPerimeterTemplates, this.galleryPerimeterTemplates };
-            subItems8.AddRange(baseItemArray24);
+            this.btToolPerimeter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblNoPerimeter,
+    this.lblPerimeterFilter,
+    this.itemContainerPerimeterFilter,
+    this.lblPerimeterGroups,
+    this.galleryPerimeterGroups,
+    this.lblPerimeterTemplates,
+    this.galleryPerimeterTemplates
+            });
+
             resources.ApplyResources(this.btToolPerimeter, "btToolPerimeter");
             this.btToolPerimeter.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btToolPerimeter_PopupOpen);
             this.btToolPerimeter.Click += new EventHandler(this.btToolPerimeter_Click);
@@ -1562,9 +1655,12 @@ namespace QuoterPlan
             this.itemContainerPerimeterFilter.ItemSpacing = 0;
             this.itemContainerPerimeterFilter.Name = "itemContainerPerimeterFilter";
             this.itemContainerPerimeterFilter.ResizeItemsToFit = false;
-            SubItemsCollection subItemsCollection8 = this.itemContainerPerimeterFilter.SubItems;
-            BaseItem[] baseItemArray25 = new BaseItem[] { this.txtPerimeterFilter, this.btPerimeterFilterClear };
-            subItemsCollection8.AddRange(baseItemArray25);
+            this.itemContainerPerimeterFilter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.txtPerimeterFilter,
+    this.btPerimeterFilterClear
+            });
+
             this.itemContainerPerimeterFilter.TitleStyle.CornerType = eCornerType.Square;
             this.txtPerimeterFilter.CanCustomize = false;
             this.txtPerimeterFilter.Name = "txtPerimeterFilter";
@@ -1623,9 +1719,17 @@ namespace QuoterPlan
             this.btToolRuler.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btToolRuler.ImagePosition = eImagePosition.Top;
             this.btToolRuler.Name = "btToolRuler";
-            SubItemsCollection subItems9 = this.btToolRuler.SubItems;
-            BaseItem[] baseItemArray26 = new BaseItem[] { this.lblNoDistance, this.lblDistanceFilter, this.itemContainerDistanceFilter, this.lblDistanceGroups, this.galleryDistanceGroups, this.lblDistanceTemplates, this.galleryDistanceTemplates };
-            subItems9.AddRange(baseItemArray26);
+            this.btToolRuler.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblNoDistance,
+    this.lblDistanceFilter,
+    this.itemContainerDistanceFilter,
+    this.lblDistanceGroups,
+    this.galleryDistanceGroups,
+    this.lblDistanceTemplates,
+    this.galleryDistanceTemplates
+            });
+
             resources.ApplyResources(this.btToolRuler, "btToolRuler");
             this.btToolRuler.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btToolRuler_PopupOpen);
             this.btToolRuler.Click += new EventHandler(this.btToolRuler_Click);
@@ -1652,9 +1756,12 @@ namespace QuoterPlan
             this.itemContainerDistanceFilter.ItemSpacing = 0;
             this.itemContainerDistanceFilter.Name = "itemContainerDistanceFilter";
             this.itemContainerDistanceFilter.ResizeItemsToFit = false;
-            SubItemsCollection subItemsCollection9 = this.itemContainerDistanceFilter.SubItems;
-            BaseItem[] baseItemArray27 = new BaseItem[] { this.txtDistanceFilter, this.btDistanceFilterClear };
-            subItemsCollection9.AddRange(baseItemArray27);
+            this.itemContainerDistanceFilter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.txtDistanceFilter,
+    this.btDistanceFilterClear
+            });
+
             this.itemContainerDistanceFilter.TitleStyle.CornerType = eCornerType.Square;
             this.txtDistanceFilter.CanCustomize = false;
             this.txtDistanceFilter.Name = "txtDistanceFilter";
@@ -1714,9 +1821,17 @@ namespace QuoterPlan
             this.btToolCounter.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btToolCounter.ImagePosition = eImagePosition.Top;
             this.btToolCounter.Name = "btToolCounter";
-            SubItemsCollection subItems10 = this.btToolCounter.SubItems;
-            BaseItem[] baseItemArray28 = new BaseItem[] { this.lblNoCounter, this.lblCounterFilter, this.itemContainerCounterFilter, this.lblCounterGroups, this.galleryCounterGroups, this.lblCounterTemplates, this.galleryCounterTemplates };
-            subItems10.AddRange(baseItemArray28);
+            this.btToolCounter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblNoCounter,
+    this.lblCounterFilter,
+    this.itemContainerCounterFilter,
+    this.lblCounterGroups,
+    this.galleryCounterGroups,
+    this.lblCounterTemplates,
+    this.galleryCounterTemplates
+            });
+
             resources.ApplyResources(this.btToolCounter, "btToolCounter");
             this.btToolCounter.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btToolCounter_PopupOpen);
             this.btToolCounter.Click += new EventHandler(this.btToolCounter_Click);
@@ -1743,9 +1858,12 @@ namespace QuoterPlan
             this.itemContainerCounterFilter.ItemSpacing = 0;
             this.itemContainerCounterFilter.Name = "itemContainerCounterFilter";
             this.itemContainerCounterFilter.ResizeItemsToFit = false;
-            SubItemsCollection subItemsCollection10 = this.itemContainerCounterFilter.SubItems;
-            BaseItem[] baseItemArray29 = new BaseItem[] { this.txtCounterFilter, this.btCounterFilterClear };
-            subItemsCollection10.AddRange(baseItemArray29);
+            this.itemContainerCounterFilter.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.txtCounterFilter,
+    this.btCounterFilterClear
+            });
+
             this.itemContainerCounterFilter.TitleStyle.CornerType = eCornerType.Square;
             this.txtCounterFilter.CanCustomize = false;
             this.txtCounterFilter.Name = "txtCounterFilter";
@@ -1826,9 +1944,18 @@ namespace QuoterPlan
             this.btScaleSet.ImagePaddingVertical = 3;
             this.btScaleSet.ImagePosition = eImagePosition.Top;
             this.btScaleSet.Name = "btScaleSet";
-            SubItemsCollection subItems11 = this.btScaleSet.SubItems;
-            BaseItem[] baseItemArray30 = new BaseItem[] { this.lblSystemType, this.btScaleImperial, this.btScaleMetric, this.lblPrecision, this.btScalePrecision64, this.btScalePrecision32, this.btScalePrecision16, this.btScalePrecision8 };
-            subItems11.AddRange(baseItemArray30);
+            this.btScaleSet.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblSystemType,
+    this.btScaleImperial,
+    this.btScaleMetric,
+    this.lblPrecision,
+    this.btScalePrecision64,
+    this.btScalePrecision32,
+    this.btScalePrecision16,
+    this.btScalePrecision8
+            });
+
             this.btScaleSet.Click += new EventHandler(this.btScaleSet_Click);
             this.lblSystemType.BackColor = Color.FromArgb(221, 231, 238);
             this.lblSystemType.BorderSide = eBorderSide.None;
@@ -1878,9 +2005,14 @@ namespace QuoterPlan
             this.ribbonBarEdit.CanCustomize = false;
             this.ribbonBarEdit.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarEdit, "ribbonBarEdit");
-            SubItemsCollection items8 = this.ribbonBarEdit.Items;
-            BaseItem[] baseItemArray31 = new BaseItem[] { this.btEditPaste, this.itemContainerEdit, this.itemContainerUndoRedo, this.btEditSendData };
-            items8.AddRange(baseItemArray31);
+            this.ribbonBarEdit.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btEditPaste,
+    this.itemContainerEdit,
+    this.itemContainerUndoRedo,
+    this.btEditSendData
+            });
+
             this.ribbonBarEdit.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarEdit.Name = "ribbonBarEdit";
             this.ribbonBarEdit.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -1897,9 +2029,13 @@ namespace QuoterPlan
             this.itemContainerEdit.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
             this.itemContainerEdit.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerEdit.Name = "itemContainerEdit";
-            SubItemsCollection subItemsCollection11 = this.itemContainerEdit.SubItems;
-            BaseItem[] baseItemArray32 = new BaseItem[] { this.btEditCut, this.btEditCopy, this.btEditDelete };
-            subItemsCollection11.AddRange(baseItemArray32);
+            this.itemContainerEdit.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btEditCut,
+    this.btEditCopy,
+    this.btEditDelete
+            });
+
             this.itemContainerEdit.TitleStyle.CornerType = eCornerType.Square;
             this.itemContainerEdit.VerticalItemAlignment = eVerticalItemsAlignment.Middle;
             this.btEditCut.Image = (Image)resources.GetObject("btEditCut.Image");
@@ -1923,9 +2059,12 @@ namespace QuoterPlan
             this.itemContainerUndoRedo.ItemSpacing = 3;
             this.itemContainerUndoRedo.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerUndoRedo.Name = "itemContainerUndoRedo";
-            SubItemsCollection subItems12 = this.itemContainerUndoRedo.SubItems;
-            BaseItem[] baseItemArray33 = new BaseItem[] { this.btEditUndo, this.btEditRedo };
-            subItems12.AddRange(baseItemArray33);
+            this.itemContainerUndoRedo.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btEditUndo,
+    this.btEditRedo
+            });
+
             this.itemContainerUndoRedo.TitleStyle.CornerType = eCornerType.Square;
             this.itemContainerUndoRedo.VerticalItemAlignment = eVerticalItemsAlignment.Middle;
             this.itemContainerUndoRedo.Visible = false;
@@ -1962,9 +2101,12 @@ namespace QuoterPlan
             this.itemContainerLayouts.BackgroundStyle.CornerType = eCornerType.Square;
             this.itemContainerLayouts.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerLayouts.Name = "itemContainerLayouts";
-            SubItemsCollection subItemsCollection12 = this.itemContainerLayouts.SubItems;
-            BaseItem[] baseItemArray34 = new BaseItem[] { this.opTakeoffLayout, this.opEstimatingLayout };
-            subItemsCollection12.AddRange(baseItemArray34);
+            this.itemContainerLayouts.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.opTakeoffLayout,
+    this.opEstimatingLayout
+            });
+
             this.itemContainerLayouts.TitleStyle.CornerType = eCornerType.Square;
             this.itemContainerLayouts.VerticalItemAlignment = eVerticalItemsAlignment.Middle;
             this.opTakeoffLayout.CheckBoxPosition = eCheckBoxPosition.Right;
@@ -1991,9 +2133,13 @@ namespace QuoterPlan
             this.ribbonTemplate.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonTemplate.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonTemplate, "ribbonTemplate");
-            SubItemsCollection items9 = this.ribbonTemplate.Items;
-            BaseItem[] baseItemArray35 = new BaseItem[] { this.btTemplateModify, this.btTemplateDuplicate, this.btTemplateDelete };
-            items9.AddRange(baseItemArray35);
+            this.ribbonTemplate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btTemplateModify,
+    this.btTemplateDuplicate,
+    this.btTemplateDelete
+            });
+
             this.ribbonTemplate.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonTemplate.Name = "ribbonTemplate";
             this.ribbonTemplate.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2029,9 +2175,14 @@ namespace QuoterPlan
             this.ribbonTemplateCreate.CanCustomize = false;
             this.ribbonTemplateCreate.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonTemplateCreate, "ribbonTemplateCreate");
-            SubItemsCollection items10 = this.ribbonTemplateCreate.Items;
-            BaseItem[] baseItemArray36 = new BaseItem[] { this.btTemplateArea, this.btTemplatePerimeter, this.btTemplateLength, this.btTemplateCounter };
-            items10.AddRange(baseItemArray36);
+            this.ribbonTemplateCreate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btTemplateArea,
+    this.btTemplatePerimeter,
+    this.btTemplateLength,
+    this.btTemplateCounter
+            });
+
             this.ribbonTemplateCreate.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonTemplateCreate.Name = "ribbonTemplateCreate";
             this.ribbonTemplateCreate.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2074,9 +2225,12 @@ namespace QuoterPlan
             this.ribbonTemplateDatabase.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonTemplateDatabase.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonTemplateDatabase, "ribbonTemplateDatabase");
-            SubItemsCollection items11 = this.ribbonTemplateDatabase.Items;
-            BaseItem[] baseItemArray37 = new BaseItem[] { this.btTemplateTradesPackages, this.btTemplateCompactDatabase };
-            items11.AddRange(baseItemArray37);
+            this.ribbonTemplateDatabase.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btTemplateTradesPackages,
+    this.btTemplateCompactDatabase
+            });
+
             this.ribbonTemplateDatabase.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonTemplateDatabase.Name = "ribbonTemplateDatabase";
             this.ribbonTemplateDatabase.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2111,9 +2265,12 @@ namespace QuoterPlan
             this.ribbonBarMultiPlans.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonBarMultiPlans.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarMultiPlans, "ribbonBarMultiPlans");
-            SubItemsCollection items12 = this.ribbonBarMultiPlans.Items;
-            BaseItem[] baseItemArray38 = new BaseItem[] { this.btPlansPrint, this.btPlansExport };
-            items12.AddRange(baseItemArray38);
+            this.ribbonBarMultiPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btPlansPrint,
+    this.btPlansExport
+            });
+
             this.ribbonBarMultiPlans.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarMultiPlans.Name = "ribbonBarMultiPlans";
             this.ribbonBarMultiPlans.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2142,9 +2299,15 @@ namespace QuoterPlan
             this.ribbonBarPlans.CanCustomize = false;
             this.ribbonBarPlans.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarPlans, "ribbonBarPlans");
-            SubItemsCollection items13 = this.ribbonBarPlans.Items;
-            BaseItem[] baseItemArray39 = new BaseItem[] { this.btPlanLoad, this.btPlanProperties, this.btPlanRemove, this.btPlanExport, this.btPlanDuplicate };
-            items13.AddRange(baseItemArray39);
+            this.ribbonBarPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btPlanLoad,
+    this.btPlanProperties,
+    this.btPlanRemove,
+    this.btPlanExport,
+    this.btPlanDuplicate
+            });
+
             this.ribbonBarPlans.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarPlans.Name = "ribbonBarPlans";
             this.ribbonBarPlans.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2192,9 +2355,12 @@ namespace QuoterPlan
             this.ribbonBarPlansInsert.CanCustomize = false;
             this.ribbonBarPlansInsert.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarPlansInsert, "ribbonBarPlansInsert");
-            SubItemsCollection subItemsCollection13 = this.ribbonBarPlansInsert.Items;
-            BaseItem[] baseItemArray40 = new BaseItem[] { this.btPlanInsertFromPDF, this.btPlanInsertFromImage };
-            subItemsCollection13.AddRange(baseItemArray40);
+            this.ribbonBarPlansInsert.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btPlanInsertFromPDF,
+    this.btPlanInsertFromImage
+            });
+
             this.ribbonBarPlansInsert.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarPlansInsert.Name = "ribbonBarPlansInsert";
             this.ribbonBarPlansInsert.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2207,9 +2373,18 @@ namespace QuoterPlan
             this.btPlanInsertFromPDF.ImageListSizeSelection = eButtonImageListSelection.Default;
             this.btPlanInsertFromPDF.ImagePosition = eImagePosition.Top;
             this.btPlanInsertFromPDF.Name = "btPlanInsertFromPDF";
-            SubItemsCollection subItems13 = this.btPlanInsertFromPDF.SubItems;
-            BaseItem[] baseItemArray41 = new BaseItem[] { this.iblImportDPI, this.op172Dpi, this.op300Dpi, this.opOtherDpi, this.sliderDpi, this.itemContainerDpi, this.iblImportColorManagement, this.opConvertToColor };
-            subItems13.AddRange(baseItemArray41);
+            this.btPlanInsertFromPDF.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.iblImportDPI,
+    this.op172Dpi,
+    this.op300Dpi,
+    this.opOtherDpi,
+    this.sliderDpi,
+    this.itemContainerDpi,
+    this.iblImportColorManagement,
+    this.opConvertToColor
+            });
+
             resources.ApplyResources(this.btPlanInsertFromPDF, "btPlanInsertFromPDF");
             this.btPlanInsertFromPDF.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.btPlanInsertFromPDF_PopupOpen);
             this.btPlanInsertFromPDF.Click += new EventHandler(this.btPlanInsertFromPDF_Click);
@@ -2266,9 +2441,13 @@ namespace QuoterPlan
             this.itemContainerDpi.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
             this.itemContainerDpi.Name = "itemContainerDpi";
             this.itemContainerDpi.ResizeItemsToFit = false;
-            SubItemsCollection subItems14 = this.itemContainerDpi.SubItems;
-            BaseItem[] baseItemArray42 = new BaseItem[] { this.lblDpi1, this.labelDpiPadding1, this.lblDpi2 };
-            subItems14.AddRange(baseItemArray42);
+            this.itemContainerDpi.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblDpi1,
+    this.labelDpiPadding1,
+    this.lblDpi2
+            });
+
             this.itemContainerDpi.TitleStyle.CornerType = eCornerType.Square;
             this.lblDpi1.CanCustomize = false;
             this.lblDpi1.Name = "lblDpi1";
@@ -2328,9 +2507,13 @@ namespace QuoterPlan
             this.ribbonExtension.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonExtension.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonExtension, "ribbonExtension");
-            SubItemsCollection items14 = this.ribbonExtension.Items;
-            BaseItem[] baseItemArray43 = new BaseItem[] { this.btExtensionModify, this.btExtensionDuplicate, this.btExtensionDelete };
-            items14.AddRange(baseItemArray43);
+            this.ribbonExtension.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btExtensionModify,
+    this.btExtensionDuplicate,
+    this.btExtensionDelete
+            });
+
             this.ribbonExtension.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonExtension.Name = "ribbonExtension";
             this.ribbonExtension.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2363,9 +2546,14 @@ namespace QuoterPlan
             this.ribbonExtensionCreate.CanCustomize = false;
             this.ribbonExtensionCreate.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonExtensionCreate, "ribbonExtensionCreate");
-            SubItemsCollection subItemsCollection14 = this.ribbonExtensionCreate.Items;
-            BaseItem[] baseItemArray44 = new BaseItem[] { this.btExtensionArea, this.btExtensionPerimeter, this.btExtensionRuler, this.btExtensionCounter };
-            subItemsCollection14.AddRange(baseItemArray44);
+            this.ribbonExtensionCreate.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btExtensionArea,
+    this.btExtensionPerimeter,
+    this.btExtensionRuler,
+    this.btExtensionCounter
+            });
+
             this.ribbonExtensionCreate.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonExtensionCreate.Name = "ribbonExtensionCreate";
             this.ribbonExtensionCreate.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2404,9 +2592,12 @@ namespace QuoterPlan
             this.ribbonExtensionDatabase.BackgroundStyle.CornerType = eCornerType.Square;
             this.ribbonExtensionDatabase.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonExtensionDatabase, "ribbonExtensionDatabase");
-            SubItemsCollection items15 = this.ribbonExtensionDatabase.Items;
-            BaseItem[] baseItemArray45 = new BaseItem[] { this.btExtensionTradesPackages, this.btExtensionCompactDatabase };
-            items15.AddRange(baseItemArray45);
+            this.ribbonExtensionDatabase.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btExtensionTradesPackages,
+    this.btExtensionCompactDatabase
+            });
+
             this.ribbonExtensionDatabase.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonExtensionDatabase.Name = "ribbonExtensionDatabase";
             this.ribbonExtensionDatabase.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -2437,9 +2628,47 @@ namespace QuoterPlan
             this.bEditPopup.GlobalName = "bEditPopup";
             this.bEditPopup.Name = "bEditPopup";
             this.bEditPopup.PopupAnimation = ePopupAnimation.SystemDefault;
-            SubItemsCollection subItems15 = this.bEditPopup.SubItems;
-            BaseItem[] baseItemArray46 = new BaseItem[] { this.bAutoAdjustToZone, this.bEditNote, this.bPointInsert, this.bPointRemove, this.bSetHeight, this.bGroupAddObject, this.bDeductionCreate, this.bDeductionsEdit, this.bPerimeterCreateFromArea, this.bOpeningCreateFromPosition, this.bOpeningDuplicate, this.bOpeningCreateFromSegment, this.bOpeningDelete, this.bDropInsert, this.bDropRemove, this.bPerimeterOpen, this.bPerimeterClose, this.bAngleDegreeType, this.bAngleSlopeType, this.bDeductionDuplicate, this.bCut, this.bCopy, this.bPaste, this.bDelete, this.bToggleMeasures, this.bZoomToObject, this.bZoomToGroup, this.bBringToFront, this.bSendToBack, this.bSelectGroup, this.bSelectThisGroup, this.bSelectObjectType, this.bSelectAll, this.bUnselectAll, this.bLayerMoveTo, this.bGroupMoveTo, this.bGroupMoveToNew };
-            subItems15.AddRange(baseItemArray46);
+            this.bEditPopup.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.bAutoAdjustToZone,
+    this.bEditNote,
+    this.bPointInsert,
+    this.bPointRemove,
+    this.bSetHeight,
+    this.bGroupAddObject,
+    this.bDeductionCreate,
+    this.bDeductionsEdit,
+    this.bPerimeterCreateFromArea,
+    this.bOpeningCreateFromPosition,
+    this.bOpeningDuplicate,
+    this.bOpeningCreateFromSegment,
+    this.bOpeningDelete,
+    this.bDropInsert,
+    this.bDropRemove,
+    this.bPerimeterOpen,
+    this.bPerimeterClose,
+    this.bAngleDegreeType,
+    this.bAngleSlopeType,
+    this.bDeductionDuplicate,
+    this.bCut,
+    this.bCopy,
+    this.bPaste,
+    this.bDelete,
+    this.bToggleMeasures,
+    this.bZoomToObject,
+    this.bZoomToGroup,
+    this.bBringToFront,
+    this.bSendToBack,
+    this.bSelectGroup,
+    this.bSelectThisGroup,
+    this.bSelectObjectType,
+    this.bSelectAll,
+    this.bUnselectAll,
+    this.bLayerMoveTo,
+    this.bGroupMoveTo,
+    this.bGroupMoveToNew
+            });
+
             resources.ApplyResources(this.bEditPopup, "bEditPopup");
             this.bEditPopup.Visible = false;
             resources.ApplyResources(this.bAutoAdjustToZone, "bAutoAdjustToZone");
@@ -2647,9 +2876,12 @@ namespace QuoterPlan
             this.btLicensing.Image = Resources.activate_16x16;
             this.btLicensing.ItemAlignment = eItemAlignment.Far;
             this.btLicensing.Name = "btLicensing";
-            SubItemsCollection subItemsCollection15 = this.btLicensing.SubItems;
-            BaseItem[] menuBox = new BaseItem[] { this.btLicenseBuy, this.btLicenseActivate };
-            subItemsCollection15.AddRange(menuBox);
+            this.btLicensing.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btLicenseBuy,
+    this.btLicenseActivate
+            });
+
             resources.ApplyResources(this.btLicensing, "btLicensing");
             this.btLicensing.Click += new EventHandler(this.btLicensing_Click);
             this.btLicenseBuy.Name = "btLicenseBuy";
@@ -2662,9 +2894,38 @@ namespace QuoterPlan
             this.btSettings.Image = Resources.settings_16x16;
             this.btSettings.ItemAlignment = eItemAlignment.Far;
             this.btSettings.Name = "btSettings";
-            SubItemsCollection subItems16 = this.btSettings.SubItems;
-            menuBox = new BaseItem[] { this.lblLanguage, this.btLanguageEnglish, this.btLanguageFrench, this.btLanguageSpanish, this.lblScrollSpeed, this.sliderScrollSpeed, this.containerScroll, this.lblDataFolder, this.lblPersonalPreferences, this.btSelectDataFolder, this.btPersonalPreferences, this.btImportationPreferences, this.btEnableAutoBackup, this.btSetDBReadOnly, this.lblTheme, this.btStyleMetro, this.btStyleClassicBlue, this.btStyleClassicSilver, this.btStyleClassicBlack, this.btStyleClassicExecutive, this.btStyleRetroBlue, this.btStyleRetroSilver, this.btStyleRetroBlack, this.btStyleRetroGlass, this.btStyleModern, this.btSetThemeColor, this.lblPanels, this.btResetDefaultPanelsLayout };
-            subItems16.AddRange(menuBox);
+            this.btSettings.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblLanguage,
+    this.btLanguageEnglish,
+    this.btLanguageFrench,
+    this.btLanguageSpanish,
+    this.lblScrollSpeed,
+    this.sliderScrollSpeed,
+    this.containerScroll,
+    this.lblDataFolder,
+    this.lblPersonalPreferences,
+    this.btSelectDataFolder,
+    this.btPersonalPreferences,
+    this.btImportationPreferences,
+    this.btEnableAutoBackup,
+    this.btSetDBReadOnly,
+    this.lblTheme,
+    this.btStyleMetro,
+    this.btStyleClassicBlue,
+    this.btStyleClassicSilver,
+    this.btStyleClassicBlack,
+    this.btStyleClassicExecutive,
+    this.btStyleRetroBlue,
+    this.btStyleRetroSilver,
+    this.btStyleRetroBlack,
+    this.btStyleRetroGlass,
+    this.btStyleModern,
+    this.btSetThemeColor,
+    this.lblPanels,
+    this.btResetDefaultPanelsLayout
+            });
+
             this.lblLanguage.BackColor = Color.FromArgb(221, 231, 238);
             this.lblLanguage.BorderSide = eBorderSide.None;
             this.lblLanguage.CanCustomize = false;
@@ -2710,9 +2971,13 @@ namespace QuoterPlan
             this.containerScroll.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
             this.containerScroll.Name = "containerScroll";
             this.containerScroll.ResizeItemsToFit = false;
-            SubItemsCollection subItemsCollection16 = this.containerScroll.SubItems;
-            menuBox = new BaseItem[] { this.lblScrollFast, this.lblScrollPadding, this.lblScrollSlow };
-            subItemsCollection16.AddRange(menuBox);
+            this.containerScroll.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblScrollFast,
+    this.lblScrollPadding,
+    this.lblScrollSlow
+            });
+
             this.containerScroll.TitleStyle.CornerType = eCornerType.Square;
             this.lblScrollFast.CanCustomize = false;
             this.lblScrollFast.Name = "lblScrollFast";
@@ -2746,9 +3011,11 @@ namespace QuoterPlan
             this.lblPersonalPreferences.PaddingLeft = 10;
             this.lblPersonalPreferences.PaddingTop = 3;
             this.lblPersonalPreferences.SingleLineColor = Color.FromArgb(197, 197, 197);
-            SubItemsCollection subItems17 = this.lblPersonalPreferences.SubItems;
-            menuBox = new BaseItem[] { this.buttonItem3 };
-            subItems17.AddRange(menuBox);
+            this.lblPersonalPreferences.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.buttonItem3
+            });
+
             resources.ApplyResources(this.lblPersonalPreferences, "lblPersonalPreferences");
             this.buttonItem3.Name = "buttonItem3";
             resources.ApplyResources(this.buttonItem3, "buttonItem3");
@@ -2868,9 +3135,11 @@ namespace QuoterPlan
             this.startButton.ImagePaddingVertical = 2;
             this.startButton.Name = "startButton";
             this.startButton.ShowSubItems = false;
-            SubItemsCollection subItemsCollection17 = this.startButton.SubItems;
-            menuBox = new BaseItem[] { this.itemContainerFileMenu };
-            subItemsCollection17.AddRange(menuBox);
+            this.startButton.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.itemContainerFileMenu
+            });
+
             resources.ApplyResources(this.startButton, "startButton");
             this.startButton.PopupOpen += new DotNetBarManager.PopupOpenEventHandler(this.startButton_PopupOpen);
             this.startButton.PopupClose += new EventHandler(this.startButton_PopupClose);
@@ -2879,9 +3148,12 @@ namespace QuoterPlan
             this.itemContainerFileMenu.CanCustomize = false;
             this.itemContainerFileMenu.ItemSpacing = 0;
             this.itemContainerFileMenu.Name = "itemContainerFileMenu";
-            SubItemsCollection subItems18 = this.itemContainerFileMenu.SubItems;
-            menuBox = new BaseItem[] { this.itemContainerFileMenu2, this.galleryRecentProjects };
-            subItems18.AddRange(menuBox);
+            this.itemContainerFileMenu.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.itemContainerFileMenu2,
+    this.galleryRecentProjects
+            });
+
             this.itemContainerFileMenu.TitleStyle.CornerType = eCornerType.Square;
             this.itemContainerFileMenu2.BackgroundStyle.Class = "RibbonFileMenuColumnOneContainer";
             this.itemContainerFileMenu2.BackgroundStyle.CornerType = eCornerType.Square;
@@ -2889,9 +3161,21 @@ namespace QuoterPlan
             this.itemContainerFileMenu2.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerFileMenu2.MinimumSize = new Size(200, 0);
             this.itemContainerFileMenu2.Name = "itemContainerFileMenu2";
-            SubItemsCollection subItemsCollection18 = this.itemContainerFileMenu2.SubItems;
-            menuBox = new BaseItem[] { this.btProjectNew, this.btProjectOpen, this.btProjectSave, this.btProjectSaveAs, this.btProjectInfo, this.btProjectClose, this.btHelpContent, this.btHelpYoutube, this.btHelpAbout, this.btLicenseDeactivate, this.btExit };
-            subItemsCollection18.AddRange(menuBox);
+            this.itemContainerFileMenu2.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btProjectNew,
+    this.btProjectOpen,
+    this.btProjectSave,
+    this.btProjectSaveAs,
+    this.btProjectInfo,
+    this.btProjectClose,
+    this.btHelpContent,
+    this.btHelpYoutube,
+    this.btHelpAbout,
+    this.btLicenseDeactivate,
+    this.btExit
+            });
+
             this.itemContainerFileMenu2.TitleStyle.CornerType = eCornerType.Square;
             this.btProjectNew.ButtonStyle = eButtonStyle.ImageAndText;
             this.btProjectNew.CanCustomize = false;
@@ -2996,9 +3280,11 @@ namespace QuoterPlan
             this.galleryRecentProjects.MultiLine = false;
             this.galleryRecentProjects.Name = "galleryRecentProjects";
             this.galleryRecentProjects.PopupUsesStandardScrollbars = false;
-            SubItemsCollection subItems19 = this.galleryRecentProjects.SubItems;
-            menuBox = new BaseItem[] { this.lblFileRecentProjects };
-            subItems19.AddRange(menuBox);
+            this.galleryRecentProjects.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblFileRecentProjects
+            });
+
             this.galleryRecentProjects.TitleStyle.CornerType = eCornerType.Square;
             this.lblFileRecentProjects.BorderSide = eBorderSide.Bottom;
             this.lblFileRecentProjects.BorderType = eBorderType.Etched;
@@ -3026,9 +3312,20 @@ namespace QuoterPlan
             this.barStatus.AntiAlias = true;
             this.barStatus.BarType = eBarType.StatusBar;
             this.barStatus.GrabHandleStyle = eGrabHandleStyle.ResizeHandle;
-            SubItemsCollection items16 = this.barStatus.Items;
-            menuBox = new BaseItem[] { this.lblStatus, this.lblStatusBarPadding, this.lblOrtho, this.switchOrtho, this.lblStatusBarPadding2, this.lblImageQuality, this.qualitySlider, this.lblStatusBarPadding3, this.lblZoom, this.zoomSlider };
-            items16.AddRange(menuBox);
+            this.barStatus.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblStatus,
+    this.lblStatusBarPadding,
+    this.lblOrtho,
+    this.switchOrtho,
+    this.lblStatusBarPadding2,
+    this.lblImageQuality,
+    this.qualitySlider,
+    this.lblStatusBarPadding3,
+    this.lblZoom,
+    this.zoomSlider
+            });
+
             this.barStatus.Name = "barStatus";
             this.barStatus.PaddingBottom = 3;
             this.barStatus.PaddingTop = 2;
@@ -3074,9 +3371,11 @@ namespace QuoterPlan
             this.lblStatusBarPadding3.Width = 3;
             this.lblZoom.Name = "lblZoom";
             this.lblZoom.PaddingBottom = 1;
-            SubItemsCollection subItemsCollection19 = this.lblZoom.SubItems;
-            menuBox = new BaseItem[] { this.lblStatusPadding2 };
-            subItemsCollection19.AddRange(menuBox);
+            this.lblZoom.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblStatusPadding2
+            });
+
             resources.ApplyResources(this.lblZoom, "lblZoom");
             this.lblZoom.TextAlignment = StringAlignment.Center;
             this.lblZoom.Width = 35;
@@ -3190,9 +3489,19 @@ namespace QuoterPlan
             this.barLayers.ColorScheme.PredefinedColorScheme = ePredefinedColorScheme.Silver2003;
             resources.ApplyResources(this.barLayers, "barLayers");
             this.barLayers.DockTabAlignment = eTabStripAlignment.Left;
-            SubItemsCollection items17 = this.barLayers.Items;
-            menuBox = new BaseItem[] { this.btLayerAdd, this.btLayerRemove, this.btLayerRename, this.btLayerMoveUp, this.btLayerMoveDown, this.btLayerSaveList, this.btLayerSaveListAs, this.btLayerOpenList, this.btLayersToggle };
-            items17.AddRange(menuBox);
+            this.barLayers.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btLayerAdd,
+    this.btLayerRemove,
+    this.btLayerRename,
+    this.btLayerMoveUp,
+    this.btLayerMoveDown,
+    this.btLayerSaveList,
+    this.btLayerSaveListAs,
+    this.btLayerOpenList,
+    this.btLayersToggle
+            });
+
             this.barLayers.Name = "barLayers";
             this.barLayers.RoundCorners = false;
             this.barLayers.SaveLayoutChanges = false;
@@ -3242,9 +3551,12 @@ namespace QuoterPlan
             this.btLayersToggle.ImagePaddingVertical = 2;
             this.btLayersToggle.ImagePosition = eImagePosition.Top;
             this.btLayersToggle.Name = "btLayersToggle";
-            SubItemsCollection subItems20 = this.btLayersToggle.SubItems;
-            menuBox = new BaseItem[] { this.btLayersMakeVisible, this.btLayersMakeInvisible };
-            subItems20.AddRange(menuBox);
+            this.btLayersToggle.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btLayersMakeVisible,
+    this.btLayersMakeInvisible
+            });
+
             this.btLayersMakeVisible.Name = "btLayersMakeVisible";
             resources.ApplyResources(this.btLayersMakeVisible, "btLayersMakeVisible");
             this.btLayersMakeVisible.Click += new EventHandler(this.btLayersMakeVisible_Click);
@@ -3262,9 +3574,14 @@ namespace QuoterPlan
             this.barDisplayResults.CanUndock = false;
             resources.ApplyResources(this.barDisplayResults, "barDisplayResults");
             this.barDisplayResults.DockTabAlignment = eTabStripAlignment.Left;
-            SubItemsCollection items18 = this.barDisplayResults.Items;
-            menuBox = new BaseItem[] { this.lblDisplayResults, this.btDisplayResultsForThisPlan, this.lblDisplayResultsPadding, this.btDisplayResultsForAllPlans };
-            items18.AddRange(menuBox);
+            this.barDisplayResults.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblDisplayResults,
+    this.btDisplayResultsForThisPlan,
+    this.lblDisplayResultsPadding,
+    this.btDisplayResultsForAllPlans
+            });
+
             this.barDisplayResults.Name = "barDisplayResults";
             this.barDisplayResults.PaddingBottom = 4;
             this.barDisplayResults.PaddingLeft = 0;
@@ -3335,9 +3652,12 @@ namespace QuoterPlan
             this.superTabProperties.ControlBox.CloseBox.Name = Resources.Coller;
             this.superTabProperties.ControlBox.MenuBox.Name = Resources.Coller;
             this.superTabProperties.ControlBox.Name = Resources.Coller;
-            SubItemsCollection subItemsCollection20 = this.superTabProperties.ControlBox.SubItems;
-            menuBox = new BaseItem[] { this.superTabProperties.ControlBox.MenuBox, this.superTabProperties.ControlBox.CloseBox };
-            subItemsCollection20.AddRange(menuBox);
+            this.superTabProperties.ControlBox.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.superTabProperties.ControlBox.MenuBox,
+    this.superTabProperties.ControlBox.CloseBox
+            });
+
             this.superTabProperties.Controls.Add(this.superTabControlPanel1);
             resources.ApplyResources(this.superTabProperties, "superTabProperties");
             this.superTabProperties.ForeColor = Color.Black;
@@ -3346,9 +3666,11 @@ namespace QuoterPlan
             this.superTabProperties.SelectedTabIndex = 0;
             this.superTabProperties.TabAlignment = eTabStripAlignment.Bottom;
             this.superTabProperties.TabHorizontalSpacing = 3;
-            SubItemsCollection tabs = this.superTabProperties.Tabs;
-            menuBox = new BaseItem[] { this.superTabItem1 };
-            tabs.AddRange(menuBox);
+            this.superTabProperties.Tabs.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.superTabItem1
+            });
+
             this.superTabProperties.TabStyle = eSuperTabStyle.Office2010BackstageBlue;
             this.superTabProperties.TabsVisible = false;
             this.superTabProperties.TabVerticalSpacing = 5;
@@ -3489,9 +3811,11 @@ namespace QuoterPlan
             this.barRecentPlans.ColorScheme.PredefinedColorScheme = ePredefinedColorScheme.Silver2003;
             resources.ApplyResources(this.barRecentPlans, "barRecentPlans");
             this.barRecentPlans.DockTabAlignment = eTabStripAlignment.Left;
-            SubItemsCollection items19 = this.barRecentPlans.Items;
-            menuBox = new BaseItem[] { this.btPlanRename };
-            items19.AddRange(menuBox);
+            this.barRecentPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btPlanRename
+            });
+
             this.barRecentPlans.Name = "barRecentPlans";
             this.barRecentPlans.RoundCorners = false;
             this.barRecentPlans.SaveLayoutChanges = false;
@@ -3614,9 +3938,17 @@ namespace QuoterPlan
             this.barGroups.ColorScheme.PredefinedColorScheme = ePredefinedColorScheme.Silver2003;
             resources.ApplyResources(this.barGroups, "barGroups");
             this.barGroups.DockTabAlignment = eTabStripAlignment.Left;
-            SubItemsCollection items20 = this.barGroups.Items;
-            menuBox = new BaseItem[] { this.btGroupLocate, this.btZoomToObject, this.btGroupSelect, this.btGroupRemove, this.btGroupRename, this.btRenamePlan, this.btGroupsToggle };
-            items20.AddRange(menuBox);
+            this.barGroups.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btGroupLocate,
+    this.btZoomToObject,
+    this.btGroupSelect,
+    this.btGroupRemove,
+    this.btGroupRename,
+    this.btRenamePlan,
+    this.btGroupsToggle
+            });
+
             this.barGroups.Name = "barGroups";
             this.barGroups.RoundCorners = false;
             this.barGroups.SaveLayoutChanges = false;
@@ -3657,9 +3989,12 @@ namespace QuoterPlan
             this.btGroupsToggle.ImagePaddingVertical = 2;
             this.btGroupsToggle.ImagePosition = eImagePosition.Top;
             this.btGroupsToggle.Name = "btGroupsToggle";
-            SubItemsCollection subItems21 = this.btGroupsToggle.SubItems;
-            menuBox = new BaseItem[] { this.btGroupsMakeVisible, this.btGroupsMakeInvisible };
-            subItems21.AddRange(menuBox);
+            this.btGroupsToggle.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btGroupsMakeVisible,
+    this.btGroupsMakeInvisible
+            });
+
             this.btGroupsMakeVisible.Name = "btGroupsMakeVisible";
             resources.ApplyResources(this.btGroupsMakeVisible, "btGroupsMakeVisible");
             this.btGroupsMakeVisible.Click += new EventHandler(this.btGroupsMakeVisible_Click);
@@ -3713,9 +4048,12 @@ namespace QuoterPlan
             this.itemContainerBrightness.BackgroundStyle.CornerType = eCornerType.Square;
             this.itemContainerBrightness.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerBrightness.Name = "itemContainerBrightness";
-            SubItemsCollection subItemsCollection21 = this.itemContainerBrightness.SubItems;
-            menuBox = new BaseItem[] { this.lblBrightness, this.sliderBrightness };
-            subItemsCollection21.AddRange(menuBox);
+            this.itemContainerBrightness.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblBrightness,
+    this.sliderBrightness
+            });
+
             this.itemContainerBrightness.TitleStyle.CornerType = eCornerType.Square;
             this.lblBrightness.Name = "lblBrightness";
             this.lblBrightness.PaddingTop = 12;
@@ -3734,9 +4072,12 @@ namespace QuoterPlan
             this.itemContainerContrast.BackgroundStyle.CornerType = eCornerType.Square;
             this.itemContainerContrast.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerContrast.Name = "itemContainerContrast";
-            SubItemsCollection subItems22 = this.itemContainerContrast.SubItems;
-            menuBox = new BaseItem[] { this.lblContrast, this.sliderContrast };
-            subItems22.AddRange(menuBox);
+            this.itemContainerContrast.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblContrast,
+    this.sliderContrast
+            });
+
             this.itemContainerContrast.TitleStyle.CornerType = eCornerType.Square;
             this.lblContrast.Name = "lblContrast";
             this.lblContrast.PaddingTop = 12;
@@ -3755,9 +4096,19 @@ namespace QuoterPlan
             this.ribbonBarBrightnessContrast.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarBrightnessContrast, "ribbonBarBrightnessContrast");
             this.ribbonBarBrightnessContrast.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
-            SubItemsCollection items21 = this.ribbonBarBrightnessContrast.Items;
-            menuBox = new BaseItem[] { this.itemContainerBrightness, this.lblBrightnessContrastPadding1, this.itemContainerContrast, this.lblBrightnessContrastPadding2, this.lblBrightnessContrastSeparator, this.lblBrightnessContrastPadding3, this.btBrightnessContrastApply, this.btBrightnessContrastCancel, this.btBrightnessContrastRestore };
-            items21.AddRange(menuBox);
+            this.ribbonBarBrightnessContrast.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.itemContainerBrightness,
+    this.lblBrightnessContrastPadding1,
+    this.itemContainerContrast,
+    this.lblBrightnessContrastPadding2,
+    this.lblBrightnessContrastSeparator,
+    this.lblBrightnessContrastPadding3,
+    this.btBrightnessContrastApply,
+    this.btBrightnessContrastCancel,
+    this.btBrightnessContrastRestore
+            });
+
             this.ribbonBarBrightnessContrast.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarBrightnessContrast.Name = "ribbonBarBrightnessContrast";
             this.ribbonBarBrightnessContrast.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -3819,9 +4170,19 @@ namespace QuoterPlan
             this.ribbonBarRotation.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarRotation, "ribbonBarRotation");
             this.ribbonBarRotation.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
-            SubItemsCollection items22 = this.ribbonBarRotation.Items;
-            menuBox = new BaseItem[] { this.btFlipHorizontally, this.btFlipVertically, this.btRotateLeft, this.btRotateRight, this.lblBarRotationPadding1, this.lblBarRotationSeparator, this.lblBarRotationPadding2, this.btRotationApply, this.btRotationCancel };
-            items22.AddRange(menuBox);
+            this.ribbonBarRotation.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btFlipHorizontally,
+    this.btFlipVertically,
+    this.btRotateLeft,
+    this.btRotateRight,
+    this.lblBarRotationPadding1,
+    this.lblBarRotationSeparator,
+    this.lblBarRotationPadding2,
+    this.btRotationApply,
+    this.btRotationCancel
+            });
+
             this.ribbonBarRotation.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarRotation.Name = "ribbonBarRotation";
             this.ribbonBarRotation.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -4016,9 +4377,20 @@ namespace QuoterPlan
             this.ribbonBarPlansAction.ContainerControlProcessDialogKey = true;
             resources.ApplyResources(this.ribbonBarPlansAction, "ribbonBarPlansAction");
             this.ribbonBarPlansAction.HorizontalItemAlignment = eHorizontalItemsAlignment.Center;
-            SubItemsCollection subItemsCollection22 = this.ribbonBarPlansAction.Items;
-            menuBox = new BaseItem[] { this.progressPlansAction, this.itemContainerExportType, this.lblBarPlansActionPadding4, this.btPlansActionSelectAll, this.btPlansActionSelectNone, this.lblBarPlansActionPadding1, this.lblPlansActionSeparator, this.lblBarPlansActionPadding2, this.btPlansActionApply, this.btPlansActionCancel };
-            subItemsCollection22.AddRange(menuBox);
+            this.ribbonBarPlansAction.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.progressPlansAction,
+    this.itemContainerExportType,
+    this.lblBarPlansActionPadding4,
+    this.btPlansActionSelectAll,
+    this.btPlansActionSelectNone,
+    this.lblBarPlansActionPadding1,
+    this.lblPlansActionSeparator,
+    this.lblBarPlansActionPadding2,
+    this.btPlansActionApply,
+    this.btPlansActionCancel
+            });
+
             this.ribbonBarPlansAction.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F";
             this.ribbonBarPlansAction.Name = "ribbonBarPlansAction";
             this.ribbonBarPlansAction.Style = eDotNetBarStyle.StyleManagerControlled;
@@ -4030,9 +4402,13 @@ namespace QuoterPlan
             this.itemContainerExportType.BackgroundStyle.CornerType = eCornerType.Square;
             this.itemContainerExportType.LayoutOrientation = eOrientation.Vertical;
             this.itemContainerExportType.Name = "itemContainerExportType";
-            SubItemsCollection subItems23 = this.itemContainerExportType.SubItems;
-            menuBox = new BaseItem[] { this.lblBarPlansActionPadding3, this.checkBoxExportSingleFile, this.checkBoxExportMultiFiles };
-            subItems23.AddRange(menuBox);
+            this.itemContainerExportType.SubItems.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.lblBarPlansActionPadding3,
+    this.checkBoxExportSingleFile,
+    this.checkBoxExportMultiFiles
+            });
+
             this.itemContainerExportType.TitleStyle.CornerType = eCornerType.Square;
             this.lblBarPlansActionPadding3.Name = "lblBarPlansActionPadding3";
             resources.ApplyResources(this.checkBoxExportSingleFile, "checkBoxExportSingleFile");
@@ -4148,9 +4524,11 @@ namespace QuoterPlan
             this.containerBarLayers.CloseSingleTab = true;
             this.containerBarLayers.Controls.Add(this.panelDockLayers);
             this.containerBarLayers.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection items23 = this.containerBarLayers.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemLayers };
-            items23.AddRange(menuBox);
+            this.containerBarLayers.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemLayers
+            });
+
             this.containerBarLayers.LayoutType = eLayoutType.DockContainer;
             this.containerBarLayers.Name = "containerBarLayers";
             this.containerBarLayers.Stretch = true;
@@ -4179,9 +4557,11 @@ namespace QuoterPlan
             this.containerBarNavigation.CloseSingleTab = true;
             this.containerBarNavigation.Controls.Add(this.panelDockPreview);
             this.containerBarNavigation.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection subItemsCollection23 = this.containerBarNavigation.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemPreview };
-            subItemsCollection23.AddRange(menuBox);
+            this.containerBarNavigation.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemPreview
+            });
+
             this.containerBarNavigation.LayoutType = eLayoutType.DockContainer;
             this.containerBarNavigation.Name = "containerBarNavigation";
             this.containerBarNavigation.Stretch = true;
@@ -4209,9 +4589,11 @@ namespace QuoterPlan
             this.containerBarProperties.CloseSingleTab = true;
             this.containerBarProperties.Controls.Add(this.panelDockProperties);
             this.containerBarProperties.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection items24 = this.containerBarProperties.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemProperties };
-            items24.AddRange(menuBox);
+            this.containerBarProperties.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemProperties
+            });
+
             this.containerBarProperties.LayoutType = eLayoutType.DockContainer;
             this.containerBarProperties.Name = "containerBarProperties";
             this.containerBarProperties.Stretch = true;
@@ -4257,9 +4639,11 @@ namespace QuoterPlan
             this.containerBarGroups.CloseSingleTab = true;
             this.containerBarGroups.Controls.Add(this.panelDockGroups);
             this.containerBarGroups.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection subItemsCollection24 = this.containerBarGroups.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemGroups };
-            subItemsCollection24.AddRange(menuBox);
+            this.containerBarGroups.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemGroups
+            });
+
             this.containerBarGroups.LayoutType = eLayoutType.DockContainer;
             this.containerBarGroups.Name = "containerBarGroups";
             this.containerBarGroups.Stretch = true;
@@ -4289,9 +4673,11 @@ namespace QuoterPlan
             this.containerBarRecentPlans.CloseSingleTab = true;
             this.containerBarRecentPlans.Controls.Add(this.panelDockRecentPlans);
             this.containerBarRecentPlans.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection items25 = this.containerBarRecentPlans.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemRecentPlans };
-            items25.AddRange(menuBox);
+            this.containerBarRecentPlans.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemRecentPlans
+            });
+
             this.containerBarRecentPlans.LayoutType = eLayoutType.DockContainer;
             this.containerBarRecentPlans.Name = "containerBarRecentPlans";
             this.containerBarRecentPlans.Stretch = true;
@@ -4320,9 +4706,11 @@ namespace QuoterPlan
             this.containerBarEstimating.CloseSingleTab = true;
             this.containerBarEstimating.Controls.Add(this.panelDockEstimating);
             this.containerBarEstimating.GrabHandleStyle = eGrabHandleStyle.Caption;
-            SubItemsCollection subItemsCollection25 = this.containerBarEstimating.Items;
-            menuBox = new BaseItem[] { this.dockContainerItemEstimating };
-            subItemsCollection25.AddRange(menuBox);
+            this.containerBarEstimating.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.dockContainerItemEstimating
+            });
+
             this.containerBarEstimating.LayoutType = eLayoutType.DockContainer;
             this.containerBarEstimating.Name = "containerBarEstimating";
             this.containerBarEstimating.Stretch = true;
@@ -4358,9 +4746,14 @@ namespace QuoterPlan
             this.barEstimatingItems.ColorScheme.PredefinedColorScheme = ePredefinedColorScheme.Silver2003;
             resources.ApplyResources(this.barEstimatingItems, "barEstimatingItems");
             this.barEstimatingItems.DockTabAlignment = eTabStripAlignment.Left;
-            SubItemsCollection items26 = this.barEstimatingItems.Items;
-            menuBox = new BaseItem[] { this.btEstimatingItemsExpandAll, this.btEstimatingItemsCollapseAll, this.btEstimatingItemsUpdatePrices, this.btEstimatingItemsPrint };
-            items26.AddRange(menuBox);
+            this.barEstimatingItems.Items.AddRange(new global::DevComponents.DotNetBar.BaseItem[]
+            {
+    this.btEstimatingItemsExpandAll,
+    this.btEstimatingItemsCollapseAll,
+    this.btEstimatingItemsUpdatePrices,
+    this.btEstimatingItemsPrint
+            });
+
             this.barEstimatingItems.Name = "barEstimatingItems";
             this.barEstimatingItems.RoundCorners = false;
             this.barEstimatingItems.SaveLayoutChanges = false;
